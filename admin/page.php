@@ -71,6 +71,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 						data['description'],
 						"<i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i>" + "<i class='fa fa-trash-o  fa-lg remove-indicator' aria-hidden='true'></i>"
 					]).draw();
+				location.reload();
 			}).fail(function() {
 			   alert( "Error adding SDG Indicator, please try again!" );
 			});
@@ -78,7 +79,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			$('#add-indicator-modal').modal('hide');
 			// Clear form data.
 			$(this).find('input[type=text], input[type=password], input[type=number], input[type=email], textarea').val('');
-			location.reload();
+
 		});
 
 		$( ".show_data_table" ).bind( "click", function(e) {
@@ -86,7 +87,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		});
 
 		// Remove indicator on remove icon click
-		$('.remove-indicator').click(function(){
+		$('body').on('click','.remove-indicator', function(){
 			var id = $($(this).parent().parent().children()[0]).text();   
 			var remove_post_url  = "<?php echo SDGS__PLUGIN_URL.'admin/remove_indicator.php'?>";
 			var remove_data = {
