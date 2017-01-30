@@ -78,6 +78,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			$('#add-indicator-modal').modal('hide');
 			// Clear form data.
 			$(this).find('input[type=text], input[type=password], input[type=number], input[type=email], textarea').val('');
+			location.reload();
 		});
 
 		$( ".show_data_table" ).bind( "click", function(e) {
