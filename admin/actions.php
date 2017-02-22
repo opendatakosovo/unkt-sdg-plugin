@@ -34,14 +34,14 @@ if($_POST){
 else{
     global $wpdb;
     $query_indicators = $wpdb->get_results("
-      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
+      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.unit, wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
 
 }
 function get_data(){
     global $wpdb;
     $query_indicators=array();
     $query_indicators = $wpdb->get_results("
-      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
+      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
     echo json_encode($query_indicators);
 }
 
@@ -51,9 +51,11 @@ function addIndicator(){
     $name = htmlspecialchars($_POST["indicator"]);
     $description = htmlspecialchars($_POST['description']);
     $sid = intval(htmlspecialchars($_POST['sdg']));
+    $unit = htmlspecialchars($_POST['unit']);
+
     $insert = " 
         INSERT INTO `{$wpdb->prefix}indicator`( sid, name, description, unit )
-        VALUES('$sid','$name','$description','t'); ";
+        VALUES('$sid','$name','$description','$unit'); ";
     $wpdb->query( $insert );
 }
 function editIndicator(){
@@ -62,8 +64,9 @@ function editIndicator(){
      $name = htmlspecialchars($_POST["indicator"]);
     $description = htmlspecialchars($_POST['description']);
    $sid = intval(htmlspecialchars($_POST['sdg']));
+    $unit = htmlspecialchars($_POST['unit']);
 
-    $update = "UPDATE wp_indicator SET name='$name', description='$description', sid=$sid, unit='t' WHERE id='$id'";
+    $update = "UPDATE wp_indicator SET name='$name', description='$description', sid=$sid, unit='$unit' WHERE id='$id'";
     $wpdb->query( $update );
 
 }

@@ -27,6 +27,16 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		sOut += "</table>";
 		return sOut;
 	}
+
+
+// this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
+		$('.filterme').keyup(function(eve) {
+			if($(this).val().indexOf('.') == 0) {    $(this).val($(this).val().substring(1));
+			}
+		});
+
+
+
 	var newRowData = <?php echo json_encode($query_indicators); ?>;
 	var iTableCounter = 1;
 	var oTable;
@@ -54,6 +64,34 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		});
 		init_table(newRowData);
 		// function to get the data table
+		function init_table(newRowData) {
+			oTable = $('#exampleTable').dataTable({
+
+				"bJQueryUI": true,
+				"aaData": newRowData,
+				"bPaginate": true,
+				"aoColumns": [
+					{
+						"mDataProp": null,
+						"sClass": "control center",
+						"sDefaultContent": '<img src="http://i.imgur.com/SD7Dz.png" class="show-sub-table">'
+					},
+					{"mDataProp": "id"},
+					{"mDataProp": "name"},
+					{"mDataProp": "short_name"},
+					{"mDataProp": "unit"},
+					{"mDataProp": "description"},
+					{"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+
+				],
+				"oLanguage": {
+					"sInfo": "_TOTAL_ entries"
+				},
+				"aaSorting": [[1, 'asc']]
+			});
+			console.log(newRowData);
+			init_sub_table();
+		}
 		function init_sub_table() {
 			$('body').on('click', '#exampleTable tbody td img', function (e) {
 				e.preventDefault();
@@ -114,36 +152,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 			});
 		}
-		function init_table(newRowData) {
-			oTable = $('#exampleTable').dataTable({
-				dom: 'Bfrtip',
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				],
-				"bJQueryUI": true,
-				"aaData": newRowData,
-				"bPaginate": true,
-				"aoColumns": [
-					{
-						"mDataProp": null,
-						"sClass": "control center",
-						"sDefaultContent": '<img src="http://i.imgur.com/SD7Dz.png" class="show-sub-table">'
-					},
-					{"mDataProp": "id"},
-					{"mDataProp": "name"},
-					{"mDataProp": "short_name"},
-					{"mDataProp": "description"},
-					{"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
 
-				],
-				"oLanguage": {
-					"sInfo": "_TOTAL_ entries"
-				},
-				"aaSorting": [[1, 'asc']]
-			});
-			console.log(newRowData);
-			init_sub_table();
-		}
 		$('body').on('click','.edit-modal-measurement',function(){
 			var measurement_id = $($(this).parent().parent().children()[0]).text();
 			$.ajax({
@@ -196,7 +205,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 						$('#exampleTable_'+ indicator_id).dataTable().fnDestroy();
 						console.log(data);
 						oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
-							"bJQueryUI": true,
+
 							"bFilter": true,
 							"aaData": data,
 							"bSort": true, // disables sorting
@@ -243,11 +252,12 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				},
 				success: function (data) {
 					var indicator_id=data[0].iid;
+
 					$('#exampleTable_'+ indicator_id).dataTable().fnDestroy();
-					console.log(data);
+
 					oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
+					
 						"bJQueryUI": true,
-						"bFilter": true,
 						"aaData": data,
 						"bSort": true, // disables sorting
 						"aoColumns": [
@@ -266,7 +276,6 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 					});
 
-					$('#add-measurement-modal').modal('hide');
 					$('#edit-measurement-modal').modal('hide');
 				}
 
@@ -280,8 +289,11 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		$('.show-sub-table').on('click',function(e){
 			e.preventDefault();
 		})
+
 		$('body').on('click', '.edit-modal-indicator', function () {
 			var indicator_id = $($(this).parent().parent().children()[1]).text();
+
+
 			$.ajax({
 				type: "GET",
 				data: 'id=' + indicator_id,
@@ -290,6 +302,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				success: function (data) {
 					$('#edit_indicator_id').val(data[0].id);
 					$('#edit_indicator').val(data[0].name);
+					$('#edit-unit').val(data[0].unit);
 					$('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
 					$('#edit-sdg-description').val(data[0].description);
 				}
@@ -306,6 +319,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					'description': $('#edit-sdg-description').val(),
 					'indicator': $('#edit_indicator').val(),
 					'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
+					'unit':$("#edit-unit").val(),
 					'edit_action_indicator': 'edit_indicator_form'
 				},
 				success: function (data) {
@@ -328,6 +342,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				data: {
 					'description': $('#sdg-description').val(),
 					'indicator': $('#indicator').val(),
+					'unit': $('#unit').val(),
 					'sdg': $("#sdg-type").children(":selected").attr("id"),
 					'action_indicator': 'add_indicator'
 				},
@@ -390,14 +405,14 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 
 	</script>
-<div class="row">
-	<div id="wrapper" class="col-md-12">
+<div class="container" style="margin-top:60px">
+	<div id="" class="col-md-12">
 		<!-- load edit measurement -->
 		<div id="edit-measurement-modal" class="modal fade" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal">×</button>
+						<button class="close" type="button" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
 						<h4 class="modal-title">Edit Measurement</h4>
 					</div>
 					<div class="modal-body">
@@ -410,15 +425,15 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 							</div>
 							<div class="form-group">
 								<label for="value-measurement">Value:</label>
-								<input name="edit-value-measurement" type="text" class="form-control" id="edit-value-measurement" placeholder="Value">
+								<input name="edit-value-measurement" type="text" class="form-control number-values" id="edit-value-measurement" placeholder="Value">
 							</div>
 							<div class="form-group">
 								<label for="value-target-measurement">Target value:</label>
-								<input name="edit-value-target-measurement" type="text" class="form-control" id="edit-target-value-measurement" placeholder="Target value">
+								<input name="edit-value-target-measurement" type="text" class="form-control number-values" id="edit-target-value-measurement" placeholder="Target value">
 							</div>
 							<div class="form-group">
 								<label for="notes-measurement">Notes:</label>
-								<input name="edit-notes-measurement" type="text" class="form-control" id="edit-notes-measurement" placeholder="Notes">
+								<textarea name="edit-notes-measurement" type="text" class="form-control " id="edit-notes-measurement" placeholder="Notes"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="source-measurement">Source:</label>
@@ -427,7 +442,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 							<div class="modal-footer">
 
 								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-								<input type="submit" value="Save changes" name="edit-measurement" class="btn btn-default" id="edit-measuremnt-button">
+								<input type="submit" value="Save changes" name="edit-measurement" class="btn btn-primary" id="edit-measuremnt-button">
 
 							</div><!-- /.modal-content -->
 						</form>
@@ -440,7 +455,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal">×</button>
+						<button class="close" type="button" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
 						<h4 class="modal-title">Add Measurement</h4>
 					</div>
 					<div class="modal-body">
@@ -453,15 +468,15 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 							</div>
 							<div class="form-group">
 								<label for="value-measurement">Value:</label>
-								<input name="value-measurement" type="text" class="form-control" id="value-measurement" placeholder="Value">
+								<input name="value-measurement" type="text" class="form-control number-values" id="value-measurement" placeholder="Value">
 							</div>
 							<div class="form-group">
 								<label for="value-target-measurement">Target value:</label>
-								<input name="value-target-measurement" type="text" class="form-control" id="target-value-measurement" placeholder="Target value">
+								<input name="value-target-measurement" type="text" class="form-control number-values" id="target-value-measurement" placeholder="Target value">
 							</div>
 							<div class="form-group">
 								<label for="notes-measurement">Notes:</label>
-								<input name="notes-measurement" type="text" class="form-control" id="notes-measurement" placeholder="Notes">
+								<textarea name="notes-measurement" type="text" class="form-control" id="notes-measurement" placeholder="Notes"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="source-measurement">Source:</label>
@@ -470,7 +485,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 							<div class="modal-footer">
 
 								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-								<input type="submit" value="Save changes" name="add-measurement" class="btn btn-default" id="add-measuremnt-button">
+								<input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary" id="add-measuremnt-button">
 
 							</div><!-- /.modal-content -->
 						</form>
@@ -484,7 +499,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">×</button>
+				<button class="close" type="button" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
 				<h4 class="modal-title">Edit indicator</h4>
 			</div>
 			<div class="modal-body">
@@ -497,24 +512,28 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					<div class="form-group">
 						<label for='sdg'>SDG:</label>
 						<select id="edit-sdg-type" name="sdg"  class="form-control"  title="Choose 2-4 colors">
-							<option id="1" value="poverty">Poverty</option>
-							<option id="2" value="zero-hunger">Zero hunger</option>
-							<option id="3" value="good-health-and-well-being">Good health and well being</option>
-							<option id="4" value="quality-education">Quality education</option>
-							<option id="5" value="gender-equality">Gender equality</option>
-							<option id="6" value="clean-water-and-sanitation">Clean water and sanitation</option>
-							<option id="7" value="affordable-and-clean-energy">Affordable and clean energy</option>
-							<option id="8" value="decent-work-and-economic-growth">Decent work and economic growth</option>
-							<option id="9" value="industry-innovation-and-infrastructure">Industry innovation and infrastructure</option>
-							<option id="10" value="reduced-inequalities">Reduced Inequalities</option>
-							<option id="11" value="sustainable-cities-and-communities">Sustainable cities and communities</option>
-							<option id="12" value="responsible-consumption-and-production">Responsible consumption and production</option>
-							<option id="13" value="climate-action">Climate action</option>
-							<option id="14" value="life-below-water">Life below water</option>
-							<option id="15" value="life-on-land">Life on land</option>
-							<option id="16" value="peace-justice-and-strong-institutions">Peace justice and strong institutions</option>
-							<option id="17" value="partnerships-for-the-goal">Partnerships for the goal</option>
+							<option id="1" value="poverty">1-Poverty</option>
+							<option id="2" value="zero-hunger">2-Zero hunger</option>
+							<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
+							<option id="4" value="quality-education">4-Quality education</option>
+							<option id="5" value="gender-equality">5-Gender equality</option>
+							<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
+							<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
+							<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
+							<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
+							<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+							<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
+							<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
+							<option id="13" value="climate-action">13-Climate action</option>
+							<option id="14" value="life-below-water">14-Life below water</option>
+							<option id="15" value="life-on-land">15-Life on land</option>
+							<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
+							<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
 						</select>
+					</div>
+					<div class="form-group">
+						<label for="edit-unit">Unit:</label>
+						<input type="text" name="edit-unit" class="form-control number-values" id="edit-unit" placeholder="Unit"/>
 					</div>
 					<div class="form-group">
 						<label for="description">Description:</label>
@@ -523,7 +542,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					<div class="modal-footer">
 
 							<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-							<input type="submit" value="Save changes" name="createInd" class="btn btn-default" id="edit-indicator-button">
+							<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="edit-indicator-button">
 
 					</div><!-- /.modal-content -->
 				</form>
@@ -539,6 +558,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		<th>ID</th>
 		<th>Indicator</th>
 		<th>SDG</th>
+		<th>Unit</th>
 		<th>Description</th>
 		<th>Actions</th>
 	</tr>
@@ -546,7 +566,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 	<tbody></tbody>
 </table>
 
-<div style="display:none" id="div-sub-table">
+<div style="display:none" id="div-sub-table" STYLE="background:#337ab7">
 	<table id="detailsTable">
 		<thead>
 		<tr>
@@ -570,7 +590,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal">×</button>
+							<button class="close" type="button" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
 							<h4 class="modal-title">Add indicator</h4>
 						</div>
 						<div class="modal-body">
@@ -582,24 +602,29 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 								<div class="form-group">
 									<label for='sdg'>SDG:</label>
 									<select id="sdg-type" name="sdg"  class="form-control"  title="Choose 2-4 colors">
-										<option id="1" value="poverty">Poverty</option>
-										<option id="2" value="zero-hunger">Zero hunger</option>
-										<option id="3" value="good-health-and-well-being">Good health and well being</option>
-										<option id="4" value="quality-education">Quality education</option>
-										<option id="5" value="gender-equality">Gender equality</option>
-										<option id="6" value="clean-water-and-sanitation">Clean water and sanitation</option>
-										<option id="7" value="affordable-and-clean-energy">Affordable and clean energy</option>
-										<option id="8" value="decent-work-and-economic-growth">Decent work and economic growth</option>
-										<option id="9" value="industry-innovation-and-infrastructure">Industry innovation and infrastructure</option>
-										<option id="10" value="reduced-inequalities">Reduced Inequalities</option>
-										<option id="11" value="sustainable-cities-and-communities">Sustainable cities and communities</option>
-										<option id="12" value="responsible-consumption-and-production">Responsible consumption and production</option>
-										<option id="13" value="climate-action">Climate action</option>
-										<option id="14" value="life-below-water">Life below water</option>
-										<option id="15" value="life-on-land">Life on land</option>
-										<option id="16" value="peace-justice-and-strong-institutions">Peace justice and strong institutions</option>
-										<option id="17" value="partnerships-for-the-goal">Partnerships for the goal</option>
+										<option>Select SDG</option>
+										<option id="1" value="poverty">1-Poverty</option>
+										<option id="2" value="zero-hunger">2-Zero hunger</option>
+										<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
+										<option id="4" value="quality-education">4-Quality education</option>
+										<option id="5" value="gender-equality">5-Gender equality</option>
+										<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
+										<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
+										<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
+										<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
+										<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+										<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
+										<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
+										<option id="13" value="climate-action">13-Climate action</option>
+										<option id="14" value="life-below-water">14-Life below water</option>
+										<option id="15" value="life-on-land">15-Life on land</option>
+										<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
+										<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
 									</select>
+								</div>
+								<div class="form-group">
+									<label for="unit">Unit:</label>
+									<input type="text" name="unit" class="form-control number-values" id="unit" placeholder="Unit"/>
 								</div>
 								<div class="form-group">
 									<label for="description">Description:</label>
@@ -607,7 +632,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 								</div>
 								<div class="modal-footer">
 									<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-									<input type="submit" value="Save changes" name="createInd" class="btn btn-default" id="add-indicator-button">
+									<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-indicator-button">
 
 								</div>
 						</div><!-- /.modal-content -->
@@ -618,4 +643,18 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			</div><!-- /.modal -->
 </div>
 	</div>
+	</div>
+<style>
+	.show-sub-table{
+		cursor: pointer;
+	}
+</style>
+<script>
+	$('.number-values').keypress(function(eve) {
+		if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this)== 0)) {
+			eve.preventDefault();
+		}
+	})
+
+</script>
 
