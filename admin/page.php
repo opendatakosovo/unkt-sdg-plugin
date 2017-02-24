@@ -297,19 +297,14 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		return sOut;
 	}
 
-
-
 	var newRowData = <?php echo json_encode($query_indicators); ?>;
 	var iTableCounter = 1;
 	var oTable;
 	var oInnerTable;
 	var detailsTableHtml;
 	var oTable;
-
-
 	//Run On HTML Build
 	$(document).ready(function () {
-
 
 		$('#edit-indicator-form').validate({
 			rules: {
@@ -340,80 +335,42 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				},
 				success: function (data) {
 					var indicator_id=$('#edit_indicator_id').val();
-					$('#exampleTable').html('');
-					$('#exampleTable').dataTable().fnDestroy();
-					$('#exampleTable_'+indicator_id).html('');
-
-					init_sub_table();
-					init_table(data);
+					oTable.fnClearTable(0);
+					oTable.fnAddData(data);
+					oTable.fnDraw();
 					$('#edit-indicator-modal').modal('hide');
 				}
 			});
-
 		}
-
 
 	});
 		$('.dateRangePicker').datepicker({
 			autoclose: true
 		});
-
 		// you would probably be using templates here
 		detailsTableHtml = $("#detailsTable").html();
-
 		//Insert a 'details' column to the table
 		var nCloneTh = document.createElement('th');
 		var nCloneTd = document.createElement('td');
 		nCloneTd.innerHTML = '<img src="<?php echo SDGS__PLUGIN_URL.'img/plus.png' ?>" class="show-sub-table" style="width:20px"/>';
 		nCloneTd.className = "center";
-
 		$('#exampleTable thead tr').each(function () {
 			this.insertBefore(nCloneTh, this.childNodes[0]);
 		});
-
 		$('#exampleTable tbody tr').each(function () {
 			this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
 		});
 
-		// function to get the data table
-		function init_table(newRowData) {
-			oTable = $('#exampleTable').dataTable({
-
-				buttons: [
-					'copy', 'csv', 'excel', 'pdf', 'print'
-				],
-				"bJQueryUI": true,
-				"aaData": newRowData,
-				"bPaginate": true,
-				"aoColumns": [
-					{
-						"mDataProp": null,
-						"sClass": "control center",
-						"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL.'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
-					},
-					{"mDataProp": "id"},
-					{"mDataProp": "name"},
-					{"mDataProp": "short_name"},
-					{"mDataProp": "unit"},
-					{"mDataProp": "description"},
-					{"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-
-				],
-				"oLanguage": {
-					"sInfo": "_TOTAL_ entries"
-				},
-				"aaSorting": [[1, 'asc']]
-			});
-			console.log(newRowData);
-			init_sub_table();
-		}
 		function init_sub_table() {
-			$('.show-sub-table').click(function(){
+			$('body').on('click','.show-sub-table',function(e){
+				e.preventDefault();
 				var indicator_id = $($(this).parent().parent().children()[1]).text();
+
 				var s_id = $($(this).parent().parent().children()[3]).text();
 				var nTr = $(this).parents('tr')[0];
 				var nTds = this;
 				if (oTable.fnIsOpen(nTr)) {
+
 					/* This row is already open - close it */
 					this.src = '<?php echo SDGS__PLUGIN_URL.'img/plus.png' ?>';
 				}
@@ -432,16 +389,11 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 							/* This row is already open - close it */
 							this.src = '<?php echo SDGS__PLUGIN_URL.'img/plus.png' ?>';
+							this.id = indicator_id;
 							oTable.fnClose(nTr);
-
-							oInnerTable = $("#exampleTable_" + indicator_id).dataTable();
 
 						}
 						else {
-
-							var rowIndex = oTable.fnGetPosition($(nTds).closest('tr')[0]);
-							var rowIndex1 = oTable.fnGetPosition($(nTds).closest('tr')[0]);
-							$($(this).children()[4]).addClass('label-warning');
 
 							this.src = '<?php echo SDGS__PLUGIN_URL.'img/minus.png' ?>';
 							oTable.fnOpen(nTr, fnFormatDetails(indicator_id, detailsTableHtml), 'details');
@@ -450,7 +402,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 								"bFilter": true,
 								"aaData": data,
 								"bSort": true, // disables sorting
-
+								"info": true,
 								"aoColumns": [
 									{"mDataProp": "id"},
 									{"mDataProp": "date"},
@@ -476,24 +428,43 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 			});
 		}
+		function init_table(newRowData) {
+			oTable = $('#exampleTable').dataTable({
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				],
+				"bJQueryUI": true,
+				"aaData": newRowData,
+				"bPaginate": true,
+
+				"aoColumns": [
+					{
+						"mDataProp": null,
+						"sClass": "control center",
+						"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL.'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
+					},
+					{"mDataProp": "id"},
+					{"mDataProp": "name"},
+					{"mDataProp": "short_name"},
+					{"mDataProp": "unit"},
+					{"mDataProp": "description"},
+					{"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+
+				],
+				"oLanguage": {
+					"sInfo": "_TOTAL_ entries"
+				},
+
+
+				"aaSorting": [[1, 'asc']]
+			});
+
+		}
+
 		init_table(newRowData);
-		$('#add-indicator-form').validate({
-			rules: {
-				indicator: {
-					required: true,
-
-				},
-				add_sdg: {
-					required: true,
-
-				},
-				add_unit: {
-					required: true,
-
-				},
-
-			},
-			submitHandler: function (form) {
+		init_sub_table();
+		$('#add-indicator-form').on('submit', function(e){
+			e.preventDefault();
 				$.ajax({
 					url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
 					type: 'POST', //or POST,
@@ -509,16 +480,18 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					},
 					success: function (data) {
 						var indicator_id=$('#indicator').val();
-						$('#exampleTable').html('');
-						$('#exampleTable').dataTable().fnDestroy();
-						$('#exampleTable_'+indicator_id).dataTable().fnDestroy();
-						init_sub_table();
-						init_table(data);
+						oTable.fnClearTable(0);
+						oTable.fnAddData(data);
+						oTable.fnDraw();
+
 						$('.form-control').val('');
 						$('#add-indicator-modal').modal('hide');
+
 					}
+
 				});
-			}
+
+
 
 		});
 		$('body').on('click','.edit-modal-measurement',function(e){
@@ -742,12 +715,10 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 										dataType: 'json',
 										data: {'id': indicator_id, 'action_indicator': 'remove_indicator_measurements'},
 										success: function (data) {
+											oTable.fnClearTable(0);
+											oTable.fnAddData(data);
+											oTable.fnDraw();
 
-											$('#exampleTable').html('');
-											$('#exampleTable').dataTable().fnDestroy();
-											$('#exampleTable_'+indicator_id).html('');
-											init_sub_table();
-											init_table(data);
 
 										}
 									});
@@ -777,11 +748,10 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 										dataType: 'json',
 										data: {'id': indicator_id, 'action_indicator': 'remove_indicator'},
 										success: function (data) {
-											$('#exampleTable').html('');
-											$('#exampleTable').dataTable().fnDestroy();
-											$('#exampleTable_'+indicator_id).html('');
-											init_sub_table();
-											init_table(data);
+											oTable.fnClearTable(0);
+											oTable.fnAddData(data);
+											oTable.fnDraw();
+
 										}
 									});
 									setTimeout(function(){
@@ -852,9 +822,11 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 													{"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
 												],
 												"bPaginate": true,
+
 												"oLanguage": {
 													"sInfo": "_TOTAL_ entries"
 												},
+
 
 											});
 											$('tr.details .dataTables_info').html('');
@@ -910,29 +882,10 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				}
 			});
 			});
-		$(document).on('click','.pagination', function(ev){
-			console.log("AV");
-			init_sub_table();
-		});
+
+
 		var indicators_array = <?php echo json_encode($query_indicators); ?>;
 	});
-		//Initialse DataTables, with no sorting on the 'details' column
-
-		/*for (index in indicators_array) {
-			$('#exampleTable').DataTable().row.add([
-				indicators_array[index]['id'],
-				indicators_array[index]['name'] + '</br><a href="#" id="'+indicators_array[index]['id']+'" class="show_data_table" >Show Data</a>',
-				capitalizeFirstLetter(indicators_array[index]['short_name'].replace(/\-/g, ' ')),
-				indicators_array[index]['description'],
-				"<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id='" + indicators_array[index]['id'] + "'><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#'><i class='fa fa-trash-o fa-lg remove-indicator' aria-hidden='true'></i></a>"
-			]).draw();
-		}*/
-
-
-		/* Add event listener for opening and closing details
-		 * Note that the indicator for showing which row is open is not controlled by DataTables,
-		 * rather it is done here
-		 */
 
 
 
