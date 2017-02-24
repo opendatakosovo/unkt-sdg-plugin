@@ -31,6 +31,264 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <?php require_once( SDGS__PLUGIN_DIR . 'admin/actions.php' ); ?>
 
+<div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
+	<table id="exampleTable" class="stripe">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Indicator</th>
+			<th>SDG</th>
+			<th>Unit</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
+		<table id="detailsTable">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Date</th>
+				<th>Value</th>
+				<th>Target Value</th>
+				<th>Notes</th>
+				<th>Source</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	<div id="" class="col-md-12">
+		<!-- load edit measurement -->
+		<div id="edit-measurement-modal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">x</button>
+						<h4 class="modal-title">Edit Measurement</h4>
+					</div>
+					<div class="modal-body">
+						<form id="edit-measurement-form" name="edit-measurement">
+							<input type="hidden" id="edit-measurement_id"/>
+							<input type="hidden" id="edit-measurement_sdg"/>
+
+
+							<div class="form-group">
+								<label for="date">Date:</label>
+								<div class="input-group input-append date dateRangePicker">
+									<input name="date" type="text" class="form-control" id="edit-date-measurement" placeholder="Date">
+									<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="value-measurement">Value:</label>
+								<input name="value_measurement" type="text" class="form-control number-values" id="edit-value-measurement" placeholder="Value">
+							</div>
+							<div class="form-group">
+								<label for="value-target-measurement">Target value:</label>
+								<input name="value_target_measurement" type="text" class="form-control number-values" id="edit-target-value-measurement" placeholder="Target value">
+							</div>
+							<div class="form-group">
+								<label for="notes-measurement">Notes:</label>
+								<textarea name="edit-notes-measurement" type="text" class="form-control " id="edit-notes-measurement" placeholder="Notes"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="source-measurement">Source:</label>
+								<input name="edit-source-measurement" type="text" class="form-control" id="edit-source-measurement" placeholder="Source">
+							</div>
+							<div class="modal-footer">
+
+								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+								<input type="submit" value="Save changes" name="edit-measurement" class="btn btn-primary" id="edit-measuremnt-button">
+
+							</div><!-- /.modal-content -->
+						</form>
+					</div>
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- end of load edit measurement modal -->
+		</div>
+		<div id="add-measurement-modal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">x</button>
+						<h4 class="modal-title">Add Measurement</h4>
+					</div>
+					<div class="modal-body">
+						<form id="add-measurement-form" name="add-measurement">
+							<input type="hidden" id="measurement_indicator_id"/>
+							<input type="hidden" id="measurement_sdg"/>
+							<div class="form-group">
+								<label for="date">Date:</label>
+								<div class="input-group input-append date dateRangePicker">
+									<input name="date" type="text" class="form-control" id="date-measurement" placeholder="Date">
+									<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="value-measurement">Value:</label>
+								<input name="value_measurement" type="text" class="form-control number-values" id="value-measurement" placeholder="Value">
+							</div>
+							<div class="form-group">
+								<label for="value-target-measurement">Target value:</label>
+								<input name="value_target_measurement" type="text" class="form-control number-values" id="target-value-measurement" placeholder="Target value">
+							</div>
+							<div class="form-group">
+								<label for="notes-measurement">Notes:</label>
+								<textarea name="notes_measurement" type="text" class="form-control" id="notes-measurement" placeholder="Notes"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="source-measurement">Source:</label>
+								<input name="source_measurement" type="text" class="form-control" id="source-measurement" placeholder="Source">
+							</div>
+							<div class="modal-footer">
+
+								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+								<input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary" id="add-measuremnt-button">
+
+							</div><!-- /.modal-content -->
+						</form>
+					</div>
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- end of measurement modal -->
+		</div>
+		<!-- end of modal measuremtn -->
+		<div id="edit-indicator-modal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">x</button>
+						<h4 class="modal-title">Edit indicator</h4>
+					</div>
+					<div class="modal-body">
+						<form id="edit-indicator-form" name="edit_indicator_form">
+							<div class="form-group">
+								<label for="indicator">Indicator:</label>
+								<input name="indicator"  type="text" class="form-control" id="edit_indicator" placeholder="Indicator">
+							</div>
+							<input type="hidden" id="edit_indicator_id"/>
+							<div class="form-group">
+								<label for='sdg'>SDG:</label>
+								<select id="edit-sdg-type" name="add_sdg"  class="form-control" title="SDG is required">
+									<option id="1" value="poverty">1-Poverty</option>
+									<option id="2" value="zero-hunger">2-Zero hunger</option>
+									<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
+									<option id="4" value="quality-education">4-Quality education</option>
+									<option id="5" value="gender-equality">5-Gender equality</option>
+									<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
+									<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
+									<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
+									<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
+									<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+									<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
+									<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
+									<option id="13" value="climate-action">13-Climate action</option>
+									<option id="14" value="life-below-water">14-Life below water</option>
+									<option id="15" value="life-on-land">15-Life on land</option>
+									<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
+									<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="edit-unit">Unit:</label>
+								<input type="text" name="add_unit" class="form-control number-values" id="edit-unit" placeholder="Unit"/>
+							</div>
+							<div class="form-group">
+								<label for="description">Description:</label>
+								<textarea name="description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
+							</div>
+							<div class="modal-footer">
+
+								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+								<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="edit-indicator-button">
+
+							</div><!-- /.modal-content -->
+						</form>
+					</div>
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
+			<!-- end of edit modal -->
+		</div>
+
+
+		<div class="col-md-12" style="margin-top:20px">
+			<div class="col-md-2">
+				<a class="btn btn-success"  style="width:100%;">Export</a>
+			</div>
+			<div class="col-md-2" >
+				<a class="btn btn-primary" href="#add-indicator-modal" data-toggle="modal" id="add-indicator-link" style="width:100%;">+ Add Indicator</a>
+			</div>
+
+		</div>
+
+
+		<!-- Button trigger modal -->
+
+		<div id="add-indicator-modal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">x</button>
+						<h4 class="modal-title">Add indicator</h4>
+					</div>
+					<div class="modal-body">
+						<form id="add-indicator-form" name="add_indicator"  method="POST">
+							<div class="form-group">
+								<label for="indicator">Indicator:</label>
+								<input name="indicator" type="text" class="form-control" id="indicator" placeholder="Indicator">
+							</div>
+							<div class="form-group">
+								<label for='sdg'>SDG:</label>
+								<select id="sdg-type" name="add_sdg"  class="form-control"  title="SDG is required">
+									<option value="">Select SDG</option>
+									<option id="1" value="poverty">1-Poverty</option>
+									<option id="2" value="zero-hunger">2-Zero hunger</option>
+									<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
+									<option id="4" value="quality-education">4-Quality education</option>
+									<option id="5" value="gender-equality">5-Gender equality</option>
+									<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
+									<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
+									<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
+									<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
+									<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+									<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
+									<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
+									<option id="13" value="climate-action">13-Climate action</option>
+									<option id="14" value="life-below-water">14-Life below water</option>
+									<option id="15" value="life-on-land">15-Life on land</option>
+									<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
+									<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="unit">Unit:</label>
+								<input type="text" name="add_unit" class="form-control number-values" id="unit" placeholder="Unit"/>
+							</div>
+							<div class="form-group">
+								<label for="description">Description:</label>
+								<textarea name="description" class="form-control" id="sdg-description" placeholder="Description"></textarea>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+								<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-indicator-button">
+
+							</div>
+					</div><!-- /.modal-content -->
+					</form>
+				</div>
+
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+	</div>
+</div>
 <script type="text/javascript" charset="utf-8">
 	function fnFormatDetails(table_id, html) {
 		var sOut = "<table id=\"exampleTable_" + table_id + "\">";
@@ -52,52 +310,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 	//Run On HTML Build
 	$(document).ready(function () {
 
-		$('#add-indicator-form').validate({
-			rules: {
-				indicator: {
-					required: true,
 
-				},
-				add_sdg: {
-					required: true,
-
-				},
-				add_unit: {
-					required: true,
-
-				},
-
-			},
-			submitHandler: function (form) {
-				$.ajax({
-					url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
-					type: 'POST', //or POST
-					dataType: 'json',
-					data: {
-						'description': $('#sdg-description').val(),
-						'indicator': $('#indicator').val(),
-						'unit': $('#unit').val(),
-						'sdg': $("#sdg-type").children(":selected").attr("id"),
-						'action_indicator': 'add_indicator',
-
-					},
-					success: function (data) {
-						var indicator_id=$('#indicator').val();
-						$('#exampleTable').html('');
-						$('#exampleTable').dataTable().fnDestroy();
-
-						$('#exampleTable_'+indicator_id).html('');
-						init_sub_table();
-						init_table(data);
-						$('.form-control').val('');
-						$('#add-indicator-modal').modal('hide');
-
-
-					}
-				});
-			}
-
-		});
 		$('#edit-indicator-form').validate({
 			rules: {
 				edit_indicator: {
@@ -130,6 +343,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					$('#exampleTable').html('');
 					$('#exampleTable').dataTable().fnDestroy();
 					$('#exampleTable_'+indicator_id).html('');
+
 					init_sub_table();
 					init_table(data);
 					$('#edit-indicator-modal').modal('hide');
@@ -138,11 +352,12 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 		}
 
+
 	});
 		$('.dateRangePicker').datepicker({
 			autoclose: true
 		});
-		
+
 		// you would probably be using templates here
 		detailsTableHtml = $("#detailsTable").html();
 
@@ -193,8 +408,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			init_sub_table();
 		}
 		function init_sub_table() {
-			$('#exampleTable tbody td img').on('click',function (e) {
-				e.preventDefault();
+			$('.show-sub-table').click(function(){
 				var indicator_id = $($(this).parent().parent().children()[1]).text();
 				var s_id = $($(this).parent().parent().children()[3]).text();
 				var nTr = $(this).parents('tr')[0];
@@ -263,6 +477,50 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 			});
 		}
 		init_table(newRowData);
+		$('#add-indicator-form').validate({
+			rules: {
+				indicator: {
+					required: true,
+
+				},
+				add_sdg: {
+					required: true,
+
+				},
+				add_unit: {
+					required: true,
+
+				},
+
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+					type: 'POST', //or POST,
+					async : true,
+					dataType: 'json',
+					data: {
+						'description': $('#sdg-description').val(),
+						'indicator': $('#indicator').val(),
+						'unit': $('#unit').val(),
+						'sdg': $("#sdg-type").children(":selected").attr("id"),
+						'action_indicator': 'add_indicator',
+
+					},
+					success: function (data) {
+						var indicator_id=$('#indicator').val();
+						$('#exampleTable').html('');
+						$('#exampleTable').dataTable().fnDestroy();
+						$('#exampleTable_'+indicator_id).dataTable().fnDestroy();
+						init_sub_table();
+						init_table(data);
+						$('.form-control').val('');
+						$('#add-indicator-modal').modal('hide');
+					}
+				});
+			}
+
+		});
 		$('body').on('click','.edit-modal-measurement',function(e){
 			e.preventDefault();
 			var measurement_id = $($(this).parent().parent().children()[0]).text();
@@ -652,9 +910,12 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				}
 			});
 			});
-
+		$(document).on('click','.pagination', function(ev){
+			console.log("AV");
+			init_sub_table();
+		});
 		var indicators_array = <?php echo json_encode($query_indicators); ?>;
-	})
+	});
 		//Initialse DataTables, with no sorting on the 'details' column
 
 		/*for (index in indicators_array) {
@@ -678,264 +939,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 	</script>
 
-<div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
-	<table id="exampleTable" class="stripe">
-		<thead>
-		<tr>
-			<th>ID</th>
-			<th>Indicator</th>
-			<th>SDG</th>
-			<th>Unit</th>
-			<th>Description</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
 
-	<div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
-		<table id="detailsTable">
-			<thead>
-			<tr>
-				<th>ID</th>
-				<th>Date</th>
-				<th>Value</th>
-				<th>Target Value</th>
-				<th>Notes</th>
-				<th>Source</th>
-				<th>Actions</th>
-			</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-	</div>
-	<div id="" class="col-md-12">
-		<!-- load edit measurement -->
-		<div id="edit-measurement-modal" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal">x</button>
-						<h4 class="modal-title">Edit Measurement</h4>
-					</div>
-					<div class="modal-body">
-						<form id="edit-measurement-form" name="edit-measurement">
-							<input type="hidden" id="edit-measurement_id"/>
-							<input type="hidden" id="edit-measurement_sdg"/>
-
-
-							<div class="form-group">
-								<label for="date">Date:</label>
-								<div class="input-group input-append date dateRangePicker">
-									<input name="date" type="text" class="form-control" id="edit-date-measurement" placeholder="Date">
-									<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="value-measurement">Value:</label>
-								<input name="value_measurement" type="text" class="form-control number-values" id="edit-value-measurement" placeholder="Value">
-							</div>
-							<div class="form-group">
-								<label for="value-target-measurement">Target value:</label>
-								<input name="value_target_measurement" type="text" class="form-control number-values" id="edit-target-value-measurement" placeholder="Target value">
-							</div>
-							<div class="form-group">
-								<label for="notes-measurement">Notes:</label>
-								<textarea name="edit-notes-measurement" type="text" class="form-control " id="edit-notes-measurement" placeholder="Notes"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="source-measurement">Source:</label>
-								<input name="edit-source-measurement" type="text" class="form-control" id="edit-source-measurement" placeholder="Source">
-							</div>
-							<div class="modal-footer">
-
-								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-								<input type="submit" value="Save changes" name="edit-measurement" class="btn btn-primary" id="edit-measuremnt-button">
-
-							</div><!-- /.modal-content -->
-						</form>
-					</div>
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-			<!-- end of load edit measurement modal -->
-		</div>
-		<div id="add-measurement-modal" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button class="close" type="button" data-dismiss="modal">x</button>
-						<h4 class="modal-title">Add Measurement</h4>
-					</div>
-					<div class="modal-body">
-						<form id="add-measurement-form" name="add-measurement">
-							<input type="hidden" id="measurement_indicator_id"/>
-							<input type="hidden" id="measurement_sdg"/>
-							<div class="form-group">
-								<label for="date">Date:</label>
-								<div class="input-group input-append date dateRangePicker">
-									<input name="date" type="text" class="form-control" id="date-measurement" placeholder="Date">
-									<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="value-measurement">Value:</label>
-								<input name="value_measurement" type="text" class="form-control number-values" id="value-measurement" placeholder="Value">
-							</div>
-							<div class="form-group">
-								<label for="value-target-measurement">Target value:</label>
-								<input name="value_target_measurement" type="text" class="form-control number-values" id="target-value-measurement" placeholder="Target value">
-							</div>
-							<div class="form-group">
-								<label for="notes-measurement">Notes:</label>
-								<textarea name="notes_measurement" type="text" class="form-control" id="notes-measurement" placeholder="Notes"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="source-measurement">Source:</label>
-								<input name="source_measurement" type="text" class="form-control" id="source-measurement" placeholder="Source">
-							</div>
-							<div class="modal-footer">
-
-								<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-								<input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary" id="add-measuremnt-button">
-
-							</div><!-- /.modal-content -->
-						</form>
-					</div>
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-			<!-- end of measurement modal -->
-		</div>
-		<!-- end of modal measuremtn -->
-<div id="edit-indicator-modal" class="modal fade" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">x</button>
-				<h4 class="modal-title">Edit indicator</h4>
-			</div>
-			<div class="modal-body">
-				<form id="edit-indicator-form" name="edit_indicator_form">
-					<div class="form-group">
-						<label for="indicator">Indicator:</label>
-						<input name="indicator"  type="text" class="form-control" id="edit_indicator" placeholder="Indicator">
-					</div>
-					<input type="hidden" id="edit_indicator_id"/>
-					<div class="form-group">
-						<label for='sdg'>SDG:</label>
-						<select id="edit-sdg-type" name="add_sdg"  class="form-control" title="SDG is required">
-							<option id="1" value="poverty">1-Poverty</option>
-							<option id="2" value="zero-hunger">2-Zero hunger</option>
-							<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
-							<option id="4" value="quality-education">4-Quality education</option>
-							<option id="5" value="gender-equality">5-Gender equality</option>
-							<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
-							<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
-							<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
-							<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
-							<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-							<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
-							<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
-							<option id="13" value="climate-action">13-Climate action</option>
-							<option id="14" value="life-below-water">14-Life below water</option>
-							<option id="15" value="life-on-land">15-Life on land</option>
-							<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
-							<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="edit-unit">Unit:</label>
-						<input type="text" name="add_unit" class="form-control number-values" id="edit-unit" placeholder="Unit"/>
-					</div>
-					<div class="form-group">
-						<label for="description">Description:</label>
-						<textarea name="description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
-					</div>
-					<div class="modal-footer">
-
-							<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-							<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="edit-indicator-button">
-
-					</div><!-- /.modal-content -->
-				</form>
-			</div>
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-	<!-- end of edit modal -->
-</div>
-
-
-			<div class="col-md-12" style="margin-top:20px">
-				<div class="col-md-2">
-					<a class="btn btn-success"  style="width:100%;">Export</a>
-				</div>
-				<div class="col-md-2" >
-					<a class="btn btn-primary" href="#add-indicator-modal" data-toggle="modal" id="add-indicator-link" style="width:100%;">+ Add Indicator</a>
-				</div>
-
-			</div>
-
-
-			<!-- Button trigger modal -->
-
-			<div id="add-indicator-modal" class="modal fade" tabindex="-1">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button class="close" type="button" data-dismiss="modal">x</button>
-							<h4 class="modal-title">Add indicator</h4>
-						</div>
-						<div class="modal-body">
-							<form id="add-indicator-form" name="add_indicator"  method="POST">
-								<div class="form-group">
-									<label for="indicator">Indicator:</label>
-									<input name="indicator" type="text" class="form-control" id="indicator" placeholder="Indicator">
-								</div>
-								<div class="form-group">
-									<label for='sdg'>SDG:</label>
-									<select id="sdg-type" name="add_sdg"  class="form-control"  title="SDG is required">
-										<option value="">Select SDG</option>
-										<option id="1" value="poverty">1-Poverty</option>
-										<option id="2" value="zero-hunger">2-Zero hunger</option>
-										<option id="3" value="good-health-and-well-being">3-Good health and well being</option>
-										<option id="4" value="quality-education">4-Quality education</option>
-										<option id="5" value="gender-equality">5-Gender equality</option>
-										<option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
-										<option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
-										<option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
-										<option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
-										<option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-										<option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
-										<option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
-										<option id="13" value="climate-action">13-Climate action</option>
-										<option id="14" value="life-below-water">14-Life below water</option>
-										<option id="15" value="life-on-land">15-Life on land</option>
-										<option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
-										<option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="unit">Unit:</label>
-									<input type="text" name="add_unit" class="form-control number-values" id="unit" placeholder="Unit"/>
-								</div>
-								<div class="form-group">
-									<label for="description">Description:</label>
-									<textarea name="description" class="form-control" id="sdg-description" placeholder="Description"></textarea>
-								</div>
-								<div class="modal-footer">
-									<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-									<input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-indicator-button">
-
-								</div>
-						</div><!-- /.modal-content -->
-						</form>
-					</div>
-
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-
-	</div>
-	</div>
 <style>
 #exampleTable_wrapper .col-sm-6{
 	padding-bottom: 10px;
