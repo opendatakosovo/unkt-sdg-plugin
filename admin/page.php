@@ -669,7 +669,8 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 		$('body').on('click', '.edit-modal-indicator', function (e) {
 			var indicator_id = $($(this).parent().parent().children()[1]).text();
-			e.preventDefault();
+			console.log(indicator_id);
+			
 
 			$.ajax({
 				type: "GET",
@@ -677,6 +678,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 				dataType: 'json',
 				url: "<?php echo SDGS__PLUGIN_URL . 'admin/load_indicator.php' ?>",
 				success: function (data) {
+					console.log(data);
 					$('#edit_indicator_id').val(data[0].id);
 					$('#edit_indicator').val(data[0].name);
 					$('#edit-unit').val(data[0].unit);
@@ -684,6 +686,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 					$('#edit-sdg-description').val(data[0].description);
 				}
 			});
+			e.preventDefault();
 		})
 
 

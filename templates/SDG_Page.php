@@ -1,15 +1,18 @@
 <?php get_header(); ?>
+
 <?php
-
- 
+global $wpdb;
+require_once($_SERVER['DOCUMENT_ROOT']  . '/plugin/wp-config.php');
 ?>
-<script>
-  $(document).ready(function(){
-
-  });
-</script>
-<div class="row">
-
-</div>
-
+<link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL.'css/style.css' ?>>
+<link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL.'css/responsive.css' ?>>
+<?php
+if(isset($_GET)){
+	if($_GET['goal']){
+		include('SDG_Goal_Template.php');
+	}else{
+		include('SDG_Goals.php');
+	}
+}
+?>
 <?php get_footer(); ?>

@@ -1,6 +1,6 @@
 <?php
 global $wpdb;
-require_once($_SERVER['DOCUMENT_ROOT']  . '/wordpress/wp-config.php');
+require_once($_SERVER['DOCUMENT_ROOT']  . '/plugin/wp-config.php');
 
 if($_POST){
 
@@ -48,14 +48,20 @@ if($_POST){
 else{
     global $wpdb;
     $query_indicators = $wpdb->get_results("
-      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.unit, wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
+      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.unit, wp_indicator.id,wp_sdg.s_number 
+      From wp_indicator 
+      INNER JOIN  wp_sdg 
+      ON  wp_indicator.sid=wp_sdg.s_number");
 
 }
 function get_data(){
     global $wpdb;
     $query_indicators=array();
     $query_indicators = $wpdb->get_results("
-      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number");
+      SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number 
+      From wp_indicator 
+      INNER JOIN  wp_sdg 
+      ON  wp_indicator.sid=wp_sdg.s_number");
     echo json_encode($query_indicators);
 }
 
@@ -80,7 +86,10 @@ function editIndicator(){
    $sid = intval(htmlspecialchars($_POST['sdg']));
     $unit = htmlspecialchars($_POST['unit']);
 
-    $update = "UPDATE wp_indicator SET name='$name', description='$description', sid=$sid, unit='$unit' WHERE id='$id'";
+    $update = "
+    UPDATE wp_indicator 
+    SET name='$name', description='$description', sid=$sid, unit='$unit' 
+    WHERE id='$id'";
     $wpdb->query( $update );
 
 }
@@ -90,7 +99,9 @@ function IndicatorIsNotEmpty(){
 
     $id = intval(htmlspecialchars($_POST['id']));
     $query_indicators = $wpdb->get_results("
-    SELECT iid From wp_measurement WHERE iid='$id'");
+    SELECT iid 
+    From wp_measurement 
+    WHERE iid='$id'");
     $count=sizeof($query_indicators);
     if ($count>0){
         $arr = array ('a'=>1);
@@ -151,7 +162,9 @@ function editMeasurement(){
     $notes = htmlspecialchars($_POST['notes']);
     $source_m = htmlspecialchars($_POST['source-m']);
 
-    $update = "UPDATE wp_measurement SET date='$date', value='$value_m', target_value='$target_value_measurement',source_url='$source_m',notes='$notes' WHERE id='$meausrement_id'";
+    $update = "UPDATE wp_measurement 
+    SET date='$date', value='$value_m', target_value='$target_value_measurement',source_url='$source_m',notes='$notes' 
+    WHERE id='$meausrement_id'";
     $wpdb->query($update);
     $query_indicators=array();
     $query_indicators = $wpdb->get_results("

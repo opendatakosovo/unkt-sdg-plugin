@@ -1,0 +1,97 @@
+.sdg-goal:hover{
+	box-shadow: 0 1px 8px gray;
+}
+.sdg-row {
+	padding-bottom: 30px;
+}
+p{
+	font-family: Roboto;
+	font-size: 18pt;
+}
+.sdg-goal-page-01{
+	background-color: #e5233b;;
+}
+.sdg-goal-page-02{
+	background-color: #dda73a;;
+}
+.sdg-goal-page-03{
+	background-color: #4ca146;
+}
+.sdg-goal-page-04{
+	background-color: #c7212f;
+}
+.sdg-goal-page-05{
+	background-color: #ef402d;
+}
+.sdg-goal-page-06{
+	background-color: #27bfe6;
+}
+.sdg-goal-page-07{
+	background-color: #fbc412;
+}
+.sdg-goal-page-08{
+	background-color: #a31c44;
+}
+.sdg-goal-page-09{
+	background-color: #f26a2e;
+}
+.sdg-goal-page-10{
+	background-color: #de1768;
+}
+.sdg-goal-page-11{
+	background-color: #f89d2a;
+}
+.sdg-goal-page-12{
+	background-color: #bf8d2c;
+}
+.sdg-goal-page-13{
+	background-color: #407f46;
+}
+.sdg-goal-page-14{
+	background-color: #1f97d4;
+}
+.sdg-goal-page-15{
+	background-color: #59ba47;
+}
+.sdg-goal-page-16{
+	background-color: #136a9f;
+}
+.sdg-goal-page-17{
+	background-color: #14496b;
+}
+.sdg-goal-page p{
+	color:white;
+	font-size:14pt;
+}
+.sdg-goal-page h1{
+	color:white;
+}
+.sdg-goal-page h2{
+	color:white;
+}
+.sdg-goal-page h3{
+	color:white;
+}
+.sdg-goal-page h4{
+	color:white !important;
+}
+.sdg-goal-page h5{
+	color:white;
+}
+.single-goal-image{
+}
+.indicators {
+    height: auto;
+    padding-left: 50px;
+}
+.sdg-title{
+	color:white;
+	font-family: Roboto;
+    font-size: 31pt;
+}
+.sdg-description{
+	padding:20px;
+}
+.indicator-chart-container{
+	width:90%;
+}
