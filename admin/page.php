@@ -269,7 +269,7 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 							</div>
 							<div class="form-group">
 								<label for="unit">Unit:</label>
-								<input type="text" name="add_unit" class="form-control number-values" id="unit" placeholder="Unit"/>
+								<input type="text" name="add_unit" class="form-control" id="unit" placeholder="Unit"/>
 							</div>
 							<div class="form-group">
 								<label for="description">Description:</label>

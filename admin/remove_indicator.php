@@ -1,6 +1,6 @@
 <?php
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' );
+$scriptName = $_SERVER['SCRIPT_NAME'];
+require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
 
 global $wpdb;
 if($_POST){

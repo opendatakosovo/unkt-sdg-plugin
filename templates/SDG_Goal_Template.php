@@ -1,6 +1,7 @@
 <?php get_header();
 require_once( SDGS__PLUGIN_DIR . 'templates/functions.php' );
-require_once($_SERVER['DOCUMENT_ROOT']  . '/plugin/wp-config.php');
+$scriptName = $_SERVER['SCRIPT_NAME'];
+require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
 
 if(isset($_GET)){
 	$data = get_data(sprintf("%0d", $_GET['goal']));

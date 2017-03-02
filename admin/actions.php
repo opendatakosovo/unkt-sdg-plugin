@@ -1,6 +1,7 @@
 <?php
 global $wpdb;
-require_once($_SERVER['DOCUMENT_ROOT']  . '/plugin/wp-config.php');
+$scriptName = $_SERVER['SCRIPT_NAME'];
+require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
 
 if($_POST){
 
