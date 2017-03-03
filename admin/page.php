@@ -464,11 +464,9 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		init_table(newRowData);
 		init_sub_table();
 		$('#add-indicator-form').on('submit', function(e){
-			e.preventDefault();
 				$.ajax({
 					url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
 					type: 'POST', //or POST,
-					async : true,
 					dataType: 'json',
 					data: {
 						'description': $('#sdg-description').val(),
@@ -483,14 +481,13 @@ define( 'SDGS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 						oTable.fnClearTable(0);
 						oTable.fnAddData(data);
 						oTable.fnDraw();
-
 						$('.form-control').val('');
 						$('#add-indicator-modal').modal('hide');
 
 					}
 
 				});
-
+				e.preventDefault();
 
 
 		});

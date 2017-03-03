@@ -5,8 +5,13 @@
 	padding-bottom: 30px;
 }
 p{
-	font-family: Roboto;
-	font-size: 18pt;
+	font-family: Roboto !important;
+	font-size: 18pt !important;
+	padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+.sdg-goal-page{
+	/*padding-top: 50px;*/
 }
 .sdg-goal-page-01{
 	background-color: #e5233b;;
@@ -60,8 +65,9 @@ p{
 	background-color: #14496b;
 }
 .sdg-goal-page p{
-	color:white;
-	font-size:14pt;
+	color: white !important;
+    
+   
 }
 .sdg-goal-page h1{
 	color:white;
@@ -70,28 +76,60 @@ p{
 	color:white;
 }
 .sdg-goal-page h3{
-	color:white;
+	color:white !important;
 }
 .sdg-goal-page h4{
 	color:white !important;
 }
 .sdg-goal-page h5{
-	color:white;
+	color:white !important;
 }
-.single-goal-image{
+.single-goal-image {
+	max-width: 90% !important;
+    margin-left: 20px !important;
 }
 .indicators {
     height: auto;
-    padding-left: 50px;
+    padding-left: 50px !important;
 }
 .sdg-title{
-	color:white;
-	font-family: Roboto;
-    font-size: 31pt;
+	color: white !important;
+    font-family: Roboto !important;
+    font-size: 31pt !important;
+    text-align: left !important;
+    margin-top: 50px !important;
+    line-height: 40px !important;
+    margin-left: 10%;
+    padding-bottom: 20px;
 }
 .sdg-description{
-	padding:20px;
+	font-size:18pt !important;
+    font-family: Roboto !important;
+	line-height: 25px !important;
+    padding-left: 20px !important;
+    padding-top:10px;
+    text-align: left;
 }
 .indicator-chart-container{
 	width:90%;
+}
+.indicator-title h4{
+    font-family: Roboto !important;
+    font-weight:Medium;
+    font-size: 20pt !important;
+    padding-left: 20px !important;
+}
+.show-chart{
+	margin:7px;
+	font-family:Roboto;
+
+	background-color: #fff !important; 
+    border: none;
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16pt;
+    width: 197px;
+    height: 50px;
 }
