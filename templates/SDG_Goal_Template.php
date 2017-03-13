@@ -146,7 +146,7 @@ function generateChart(id, data, title){
 			</div>
 			<div class="row">
 				<div class="col-md-4 col-xs-12">
-					<img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-'.$_GET['goal'].'.jpg' ?>" />
+					<img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-'.$_GET['goal'].'.jpg' ?>" />
 				</div>
 				
 				<div class="col-md-8 col-xs-12">
