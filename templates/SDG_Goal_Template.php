@@ -33,6 +33,7 @@ if(isset($_GET)){
   	$('.sdg-title').text(sdg_title);
   	$('.sdg-description').append(sdg_text);
 	
+	$('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());	
   });
 function generateChart(id, data, title){
 	$('.indicators').append("\
