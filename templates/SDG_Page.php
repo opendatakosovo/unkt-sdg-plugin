@@ -3,8 +3,9 @@
 <?php
 require_once( SDGS__PLUGIN_DIR . 'templates/functions.php' );
 global $wpdb;
-$scriptName = $_SERVER['SCRIPT_NAME'];
-require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
+$scriptName = split('/',$_SERVER['SCRIPT_NAME']);
+array_pop($scriptName);
+require_once($_SERVER['DOCUMENT_ROOT']  . '/'.$scriptName[1].'/wp-config.php');
 
 ?>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
