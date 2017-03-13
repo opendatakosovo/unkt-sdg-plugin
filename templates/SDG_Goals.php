@@ -12,7 +12,7 @@
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=01">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-01.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="http://unkt.org/wp-content/plugins/unkt-sdg-plugin/img/E_SDG_Icons-01.jpg" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
