@@ -18,26 +18,34 @@ require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-con
 		get_template_part( 'featured-content' );
 	}
 ?>
-
+<script>
+$(document).ready(function(){
+	// Custom template javascript
+	if($('.agencies').length > 0){
+		console.log("Yes");
+		$('.content').width("75%");
+	}else{
+		console.log("No");
+	};
+});
+	
+</script>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
-			<div class="row">
-				<div class="col-md-8">
-					<?php
-					if(isset($_GET)){
-						if($_GET['goal']){
-							include('SDG_Goal_Template.php');
-						}else{
-							include('SDG_Goals.php');
-						}
-					}
-					?>
-				</div>
-				
-			</div>
+			<?php
+			if(isset($_GET)){
+				if($_GET['goal']){
+					include('SDG_Goal_Template.php');
+				}else{
+					include('SDG_Goals.php');
+				}
+			}
+			?>
+			
 		</div><!-- #content -->
-		<?php get_sidebar(); ?>
+		
 	</div><!-- #primary -->
+	<?php get_sidebar(); ?>
 	
 </div><!-- #main-content -->
 

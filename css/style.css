@@ -131,3 +131,13 @@ p{
     width: 197px;
     height: 50px;
 }
+.sidebar{
+	float: left;
+    padding: 0;
+    width: 25%;
+}
+div#primary {
+    width: 75% !important;
+    float:left;
+}
+    
