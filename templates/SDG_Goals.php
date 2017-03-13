@@ -12,97 +12,97 @@
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=01">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="http://unkt.org/wp-content/plugins/unkt-sdg-plugin/img/E_SDG_Icons-01.jpg" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-01.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=02">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-02.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-02.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=03">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-03.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-03.jpg' ?>" />
 		</a>
 	</div>
 </div>
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=04">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-04.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-04.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=05">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-05.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-05.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=06">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-06.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-06.jpg' ?>" />
 		</a>
 	</div>
 </div>
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=07">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-07.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-07.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=08">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-08.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-08.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=09">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-09.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-09.jpg' ?>" />
 		</a>
 	</div>
 </div>
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=10">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-10.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-10.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=11">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-11.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-11.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=12">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-12.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-12.jpg' ?>" />
 		</a>
 	</div>
 </div>
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=13">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-13.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-13.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=14">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-14.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-14.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=15">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-15.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-15.jpg' ?>" />
 		</a>
 	</div>
 </div>
 <div class="row sdg-row">
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=16">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-16.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-16.jpg' ?>" />
 		</a>
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 		<a href="?goal=17">
-			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-17.jpg' ?>" />
+			<img class="img-responsive sdg-goal" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_Icons-17.jpg' ?>" />
 		</a>
 	</div>
 </div>
