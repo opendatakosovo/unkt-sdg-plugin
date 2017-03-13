@@ -1,8 +1,5 @@
-<?php get_header();
+<?php 
 require_once( SDGS__PLUGIN_DIR . 'templates/functions.php' );
-$scriptName = $_SERVER['SCRIPT_NAME'];
-require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
-
 if(isset($_GET)){
 	$data = get_data(sprintf("%0d", $_GET['goal']));
 	
@@ -44,7 +41,7 @@ function generateChart(id, data, title){
 			<div class='col-md-9 col-xs-7 col-sm-7 indicator-title'>\
 					<h4>"+title+"</h4>\
 			</div>\
-			<div class='col-md-3 col-xs-12 col-sm-5'>\
+			<div class='col-md-2 col-xs-12 col-sm-5'>\
 				<button id='"+id+"-chart' class='show-chart' >Show chart</button>\
 			</div>\
 		</div>\
@@ -62,8 +59,10 @@ function generateChart(id, data, title){
 		var displayStatus = $('#'+id).css('display');
 		if(displayStatus == 'none'){
 			$('#'+id).show();
+			$('#'+id+'-chart').text("Hide chart");
 		}else{
 			$('#'+id).hide();
+			$('#'+id+'-chart').text("Show chart");
 		}
 	});
 	$(window).resize(function(e){
@@ -137,28 +136,26 @@ function generateChart(id, data, title){
 	new Highcharts.Chart(chartOptions);
 }
 </script>
-
-<div class=" sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="sdg-title">
+<div class="row">
+	<div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="sdg-title">
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4 col-xs-12">
-				<img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-'.$_GET['goal'].'.jpg' ?>" />
+			<div class="row">
+				<div class="col-md-4 col-xs-12">
+					<img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL.'img/E_SDG_icons-'.$_GET['goal'].'.jpg' ?>" />
+				</div>
+				
+				<div class="col-md-8 col-xs-12">
+					<p class="sdg-description"></p>
+				</div>
+			</div>
+			<div class="row indicators">
 			</div>
 			
-			<div class="col-md-8 col-xs-12">
-				
-				
-				<p class="sdg-description"></p>
-			</div>
 		</div>
-		<div class="row indicators">
-		</div>
-		
 	</div>
 </div>
-<?php get_footer(); ?>
