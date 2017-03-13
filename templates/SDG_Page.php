@@ -21,21 +21,24 @@ require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-con
 
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
-				
-			<?php
-			if(isset($_GET)){
-				if($_GET['goal']){
-					include('SDG_Goal_Template.php');
-				}else{
-					include('SDG_Goals.php');
+			<div class="row">
+			<div class="col-md-8">
+				<?php
+				if(isset($_GET)){
+					if($_GET['goal']){
+						include('SDG_Goal_Template.php');
+					}else{
+						include('SDG_Goals.php');
+					}
 				}
-			}
-			?>
+				?>
+			</div>
+			<?php get_sidebar(); ?>
 			
 		</div><!-- #content -->
 		
 	</div><!-- #primary -->
-	<?php get_sidebar(); ?>
+	
 </div><!-- #main-content -->
 
 
