@@ -6,9 +6,10 @@
 }
 p{
 	font-family: Roboto !important;
-	font-size: 18pt !important;
+	font-size: 18px !important;
 	padding-left: 40px !important;
     padding-right: 40px !important;
+    text-transform: none;
 }
 .sdg-goal-page{
 	/*padding-top: 50px;*/
@@ -95,20 +96,22 @@ p{
 .sdg-title{
 	color: white !important;
     font-family: Roboto !important;
-    font-size: 31pt !important;
+    font-size: 31px !important;
     text-align: left !important;
     margin-top: 50px !important;
     line-height: 40px !important;
     margin-left: 10%;
     padding-bottom: 20px;
+    text-transform: none;
 }
 .sdg-description{
-	font-size:18pt !important;
+	font-size:18px !important;
     font-family: Roboto !important;
 	line-height: 25px !important;
     padding-left: 20px !important;
     padding-top:10px;
     text-align: left;
+    text-transform: none;
 }
 .indicator-chart-container{
 	width:90%;
@@ -116,8 +119,9 @@ p{
 .indicator-title h4{
     font-family: Roboto !important;
     font-weight:Medium;
-    font-size: 20pt !important;
+    font-size: 20px !important;
     padding-left: 20px !important;
+    text-transform: none;
 }
 .show-chart{
 	font-family:Roboto;
