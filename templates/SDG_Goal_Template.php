@@ -15,6 +15,8 @@ if (isset($_GET)) {
 ?>
 <?php ?>
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
+
 <script>
     $(document).ready(function () {
 
@@ -88,7 +90,7 @@ if (isset($_GET)) {
             chart: {
                 renderTo: id,
                 backgroundColor: null,
-                width: $('.indicators').width()
+                width: $('.indicators').width()-30
             },
             title: {
                 text: ''
@@ -115,6 +117,11 @@ if (isset($_GET)) {
                     enabled: false
                 }
             },
+            exporting: {
+                filename: convertToSlug(title),
+                width: 1920
+
+                },
             series: [{
                     data: chartTargetSeries,
                     name: 'value',
@@ -136,6 +143,14 @@ if (isset($_GET)) {
 
         }
         new Highcharts.Chart(chartOptions);
+    }
+    function convertToSlug(Text)
+    {
+        return Text
+            .toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-')
+            ;
     }
 </script>
 <div class="row">
