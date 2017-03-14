@@ -1,12 +1,13 @@
 <?php
 global $wpdb;
-$scriptName = split('/',$_SERVER['SCRIPT_NAME']);
+$scriptName = split('/', $_SERVER['SCRIPT_NAME']);
 array_pop($scriptName);
-require_once($_SERVER['DOCUMENT_ROOT']  . '/'.$scriptName[1].'/wp-config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptName[1] . '/wp-config.php');
 
-function get_data($sid){
+function get_data($sid)
+{
     global $wpdb;
-    $query_indicators=array();
+    $query_indicators = array();
     $query_indicators = $wpdb->get_results("
       SELECT wp_sdg.s_text, 
       wp_sdg.long_name,
@@ -28,20 +29,21 @@ function get_data($sid){
       ON  wp_indicator.id=wp_measurement.iid
       WHERE wp_indicator.sid = $sid
       ");
-    
+
     return json_encode($query_indicators, JSON_PRETTY_PRINT);
-    
+
 }
 
-function get_sdg_data($sid){
-  global $wpdb;
-  $query_sdg=array();
-  $query_sdg = $wpdb->get_results("
+function get_sdg_data($sid)
+{
+    global $wpdb;
+    $query_sdg = array();
+    $query_sdg = $wpdb->get_results("
       SELECT *
       FROM wp_sdg
       WHERE s_number = $sid
       ");
-  return json_encode($query_sdg, JSON_PRETTY_PRINT);
+    return json_encode($query_sdg, JSON_PRETTY_PRINT);
 }
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 $scriptName = $_SERVER['SCRIPT_NAME'];
-require_once($_SERVER['DOCUMENT_ROOT']  . '/'.split('/',$scriptName)[1].'/wp-config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/' . split('/', $scriptName)[1] . '/wp-config.php');
 
 global $wpdb;
-if($_POST){
+if ($_POST) {
 
     $id = intval(htmlspecialchars($_POST['id']));
     $wpdb->query("
@@ -11,9 +11,8 @@ if($_POST){
 
 	    WHERE id='$id';
 	");
-}
-else{
-	echo "Bad request.";
+} else {
+    echo "Bad request.";
 }
 
 ?>
