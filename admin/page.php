@@ -255,9 +255,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
         <div class="col-md-12" style="margin-top:20px">
             <div class="col-md-2">
-                <a class="btn btn-success" style="width:100%;">Export</a>
-            </div>
-            <div class="col-md-2">
                 <a class="btn btn-primary" href="#add-indicator-modal" data-toggle="modal" id="add-indicator-link"
                    style="width:100%;">+ Add Indicator</a>
             </div>
@@ -469,6 +466,15 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 "oLanguage": {
                                     "sInfo": "_TOTAL_ entries"
                                 },
+                                "dom": 'Bfrtip',
+                                "buttons": [
+                                    {
+                                        "extend": 'copyHtml5',
+                                    },
+                                    'excelHtml5',
+                                    'csvHtml5',
+                                    'pdfHtml5'
+                                ],
                             });
                             $(this).attr('id', indicator_id)
                             $('tr.details .dataTables_info').html('');
@@ -484,9 +490,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
         function init_table(newRowData) {
             oTable = $('#exampleTable').dataTable({
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
+
                 "bJQueryUI": true,
                 "aaData": newRowData,
                 "bPaginate": true,
@@ -503,13 +507,19 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                     {"mDataProp": "unit"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-
                 ],
                 "oLanguage": {
                     "sInfo": "_TOTAL_ entries"
                 },
-
-
+                "dom": 'Bfrtip',
+                "buttons": [
+                    {
+                        "extend": 'copyHtml5',
+                    },
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
                 "aaSorting": [[1, 'asc']]
             });
 
@@ -554,7 +564,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                 dataType: 'json',
                 url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>",
                 success: function (data) {
-                    console.log(data);
                     $('#edit-date-measurement').val(data[0].date);
                     $('#edit-value-measurement').val(data[0].value);
                     $('#edit-target-value-measurement').val(data[0].target_value);
@@ -567,9 +576,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                      $('#edit-sdg-description').val(data[0].description);*/
                 }
             });
-        })
-
-
+        });
         $('body').on('click', '.add-measurment', function (e) {
             e.preventDefault();
             var indicator_id = $(this).attr('id');
@@ -578,7 +585,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
             $('#measurement_sdg').val(sdg_id);
             $('#measurement_indicator_id').val(indicator_id);
         })
-
         $('#add-measurement-form').validate({
             rules: {
                 date: {
@@ -616,9 +622,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                         var indicator_id = data[0].iid;
                         var s_id = data[0].sid;
                         $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
-                        console.log(data);
                         oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
-
                             "bFilter": true,
                             "aaData": data,
                             "bSort": true, // disables sorting
@@ -635,6 +639,15 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                             "oLanguage": {
                                 "sInfo": "_TOTAL_ entries"
                             },
+                            "dom": 'Bfrtip',
+                            "buttons": [
+                                {
+                                    "extend": 'copyHtml5',
+                                },
+                                'excelHtml5',
+                                'csvHtml5',
+                                'pdfHtml5'
+                            ],
 
                         });
                         $('tr.details .dataTables_info').html('');
@@ -685,7 +698,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                         var s_id = data[0].sid;
                         $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
                         oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
-
                             "bJQueryUI": true,
                             "aaData": data,
                             "bSort": true, // disables sorting
@@ -702,6 +714,15 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                             "oLanguage": {
                                 "sInfo": "_TOTAL_ entries"
                             },
+                            "dom": 'Bfrtip',
+                            "buttons": [
+                                {
+                                    "extend": 'copyHtml5',
+                                },
+                                'excelHtml5',
+                                'csvHtml5',
+                                'pdfHtml5'
+                            ],
 
                         });
                         $('tr.details .dataTables_info').html('');
@@ -715,20 +736,14 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
             }
         });
-
-
         $('body').on('click', '.edit-modal-indicator', function (e) {
             var indicator_id = $($(this).parent().parent().children()[1]).text();
-            console.log(indicator_id);
-
-
             $.ajax({
                 type: "GET",
                 data: 'id=' + indicator_id,
                 dataType: 'json',
                 url: "<?php echo SDGS__PLUGIN_URL . 'admin/load_indicator.php' ?>",
                 success: function (data) {
-                    console.log(data);
                     $('#edit_indicator_id').val(data[0].id);
                     $('#edit_indicator').val(data[0].name);
                     $('#edit-unit').val(data[0].unit);
@@ -738,8 +753,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
             });
             e.preventDefault();
         })
-
-
         $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
             var indicator_id = $($(this).parent().parent().children()[1]).text();
@@ -821,13 +834,11 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
             });
 
 
-        })
+        });
         $('body').on('click', '.remove-measurement', function (e) {
             e.preventDefault();
             var measurement_id = $($(this).parent().parent().children()[0]).text();
-            console.log(measurement_id);
             var check_if_is_empty;
-            console.log(measurement_id);
             $.ajax({
                 url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
                 type: 'POST', //or POST
@@ -835,7 +846,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                 data: {'id': measurement_id, 'action_measurement': 'check_measurement_table'},
                 success: function (data) {
                     check_if_is_empty = data['a'];
-                    console.log(check_if_is_empty);
                     if (check_if_is_empty == 1) {
                         BootstrapDialog.show({
                             message: 'Are you sure you want to delete the measurement?',
@@ -859,7 +869,6 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                             $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
 
                                             oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
-
                                                 "bJQueryUI": true,
                                                 "aaData": data,
                                                 "bSort": true, // disables sorting
@@ -877,8 +886,15 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                                 "oLanguage": {
                                                     "sInfo": "_TOTAL_ entries"
                                                 },
-
-
+                                                "dom": 'Bfrtip',
+                                                "buttons": [
+                                                    {
+                                                        "extend": 'copyHtml5',
+                                                    },
+                                                    'excelHtml5',
+                                                    'csvHtml5',
+                                                    'pdfHtml5'
+                                                ]
                                             });
                                             $('tr.details .dataTables_info').html('');
                                             $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
