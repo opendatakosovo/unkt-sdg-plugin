@@ -2,7 +2,7 @@
 global $wpdb;
 $scriptName = split('/', $_SERVER['SCRIPT_NAME']);
 array_pop($scriptName);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptName[1] . '/wp-config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptName[0] . '/wp-config.php');
 
 if ($_POST) {
 
