@@ -1,9 +1,3 @@
-<?php
-define('SDGS__PLUGIN_URL', plugin_dir_url(__FILE__));
-define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
-?>
-
-
 <script type="text/javascript"
         src="//cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
@@ -32,7 +26,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
       href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
-<?php require_once(SDGS__PLUGIN_DIR . 'admin/actions.php'); ?>
+<?php //require_once(SDGS__PLUGIN_DIR . 'admin/actions.php'); ?>
 
 <div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
     <table id="exampleTable" class="stripe">
@@ -372,7 +366,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
             },
             submitHandler: function (form) {
                 $.ajax({
-                    url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                    url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
@@ -381,7 +375,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                         'indicator': $('#edit_indicator').val(),
                         'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
                         'unit': $("#edit-unit").val(),
-                        'edit_action_indicator': 'edit_indicator_form'
+                        'action': 'edit_indicator'
                     },
                     success: function (data) {
                         var indicator_id = $('#edit_indicator_id').val();
@@ -429,10 +423,10 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                     this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
                 }
                 $.ajax({
-                    url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                    url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
                     dataType: 'json',
-                    data: {'id': indicator_id, 'action_measurement': 'get_indicator_measurement'},
+                    data: {'id': indicator_id, 'action': 'get_indicator_measurement'},
                     success: function (data) {
 
                         if (oTable.fnIsOpen(nTr)) {
@@ -470,10 +464,28 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 "buttons": [
                                     {
                                         "extend": 'copyHtml5',
+                                        "exportOptions": {
+                                            "columns": [1, 2, 3, 4, 5]
+                                        }
                                     },
-                                    'excelHtml5',
-                                    'csvHtml5',
-                                    'pdfHtml5'
+                                    {
+                                        "extend": 'excelHtml5',
+                                        "exportOptions": {
+                                            "columns": [1, 2, 3, 4, 5]
+                                        }
+                                    },
+                                    {
+                                        "extend": 'pdfHtml5',
+                                        "exportOptions": {
+                                            "columns": [1, 2, 3, 4, 5]
+                                        }
+                                    },
+                                    {
+                                        "extend": 'csvHtml5',
+                                        "exportOptions": {
+                                            "columns": [1, 2, 3, 4, 5]
+                                        }
+                                    }
                                 ],
                             });
                             $(this).attr('id', indicator_id)
@@ -515,10 +527,28 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                 "buttons": [
                     {
                         "extend": 'copyHtml5',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5]
+                        }
                     },
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
+                    {
+                        "extend": 'excelHtml5',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        "extend": 'pdfHtml5',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        "extend": 'csvHtml5',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5]
+                        }
+                    }
                 ],
                 "aaSorting": [[1, 'asc']]
             });
@@ -529,7 +559,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
         init_sub_table();
         $('#add-indicator-form').on('submit', function (e) {
             $.ajax({
-                url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST,
                 dataType: 'json',
                 data: {
@@ -537,10 +567,10 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                     'indicator': $('#indicator').val(),
                     'unit': $('#unit').val(),
                     'sdg': $("#sdg-type").children(":selected").attr("id"),
-                    'action_indicator': 'add_indicator',
-
+                    'action': 'add_indicator'
                 },
                 success: function (data) {
+                    console.log(data);
                     var indicator_id = $('#indicator').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
@@ -562,7 +592,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                 type: "POST",
                 data: {'id': +measurement_id, 'action_measurement': 'load_measurement'},
                 dataType: 'json',
-                url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>",
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
                     $('#edit-date-measurement').val(data[0].date);
                     $('#edit-value-measurement').val(data[0].value);
@@ -605,7 +635,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
                 var indicator_id = $('#measurement_indicator_id').val();
                 $.ajax({
-                    url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                    url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
@@ -616,7 +646,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                         'target-value-measurement': $('#target-value-measurement').val(),
                         'notes': $("#notes-measurement").val(),
                         'source-m': $("#source-measurement").val(),
-                        'action-measurement': 'add-measurement'
+                        'action': 'add_measurement'
                     },
                     success: function (data) {
                         var indicator_id = data[0].iid;
@@ -643,10 +673,28 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                             "buttons": [
                                 {
                                     "extend": 'copyHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
                                 },
-                                'excelHtml5',
-                                'csvHtml5',
-                                'pdfHtml5'
+                                {
+                                    "extend": 'excelHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'pdfHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'csvHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                }
                             ],
 
                         });
@@ -680,7 +728,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
                 var measurement_id = $('#edit-measurement_id').val();
                 $.ajax({
-                    url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                    url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
@@ -690,7 +738,7 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                         'target-value-measurement': $('#edit-target-value-measurement').val(),
                         'notes': $("#edit-notes-measurement").val(),
                         'source-m': $("#edit-source-measurement").val(),
-                        'action-measurement': 'update-measurement'
+                        'action': 'edit_measurement'
                     },
                     success: function (data) {
 
@@ -718,10 +766,28 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                             "buttons": [
                                 {
                                     "extend": 'copyHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
                                 },
-                                'excelHtml5',
-                                'csvHtml5',
-                                'pdfHtml5'
+                                {
+                                    "extend": 'excelHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'pdfHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'csvHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                }
                             ],
 
                         });
@@ -738,31 +804,38 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
         });
         $('body').on('click', '.edit-modal-indicator', function (e) {
             var indicator_id = $($(this).parent().parent().children()[1]).text();
+
             $.ajax({
-                type: "GET",
-                data: 'id=' + indicator_id,
+                type: "POST",
+                data: {'id': indicator_id, 'action': 'get_indicator'},
                 dataType: 'json',
-                url: "<?php echo SDGS__PLUGIN_URL . 'admin/load_indicator.php' ?>",
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
                     $('#edit_indicator_id').val(data[0].id);
                     $('#edit_indicator').val(data[0].name);
                     $('#edit-unit').val(data[0].unit);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
                     $('#edit-sdg-description').val(data[0].description);
+                },
+                error: function (errorThrown) {
+                    alert(errorThrown);
                 }
             });
             e.preventDefault();
         })
         $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
+            console.log("Removing indicator");
             var indicator_id = $($(this).parent().parent().children()[1]).text();
             var check_if_is_empty = 0;
+            console.log(indicator_id);
             $.ajax({
-                url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST
                 dataType: 'json',
-                data: {'id': indicator_id, 'action_indicator': 'check_indicator_is_empty'},
+                data: {'id': indicator_id, 'action': 'check_indicator_is_empty'},
                 success: function (data) {
+                    console.log(data);
                     check_if_is_empty = data['a'];
                     if (check_if_is_empty == 1) {
                         BootstrapDialog.show({
@@ -774,16 +847,14 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 autospin: false,
                                 action: function (dialogRef) {
                                     $.ajax({
-                                        url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
-                                        data: {'id': indicator_id, 'action_indicator': 'remove_indicator_measurements'},
+                                        data: {'id': indicator_id, 'action': 'remove_indicator_measurements'},
                                         success: function (data) {
                                             oTable.fnClearTable(0);
                                             oTable.fnAddData(data);
                                             oTable.fnDraw();
-
-
                                         }
                                     });
                                     setTimeout(function () {
@@ -807,10 +878,10 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 autospin: false,
                                 action: function (dialogRef) {
                                     $.ajax({
-                                        url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
-                                        data: {'id': indicator_id, 'action_indicator': 'remove_indicator'},
+                                        data: {'id': indicator_id, 'action': 'remove_indicator'},
                                         success: function (data) {
                                             oTable.fnClearTable(0);
                                             oTable.fnAddData(data);
@@ -840,10 +911,10 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
             var measurement_id = $($(this).parent().parent().children()[0]).text();
             var check_if_is_empty;
             $.ajax({
-                url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST
                 dataType: 'json',
-                data: {'id': measurement_id, 'action_measurement': 'check_measurement_table'},
+                data: {'id': measurement_id, 'action': 'check_size_of_measurement'},
                 success: function (data) {
                     check_if_is_empty = data['a'];
                     if (check_if_is_empty == 1) {
@@ -856,12 +927,12 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 autospin: false,
                                 action: function (dialogRef) {
                                     $.ajax({
-                                        url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
                                         data: {
                                             'id': measurement_id,
-                                            'action-measurement': 'remove-measurement'
+                                            'action': 'remove_measurement'
                                         },
                                         success: function (data) {
                                             var indicator_id = data[0].iid;
@@ -890,10 +961,28 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                                 "buttons": [
                                                     {
                                                         "extend": 'copyHtml5',
+                                                        "exportOptions": {
+                                                            "columns": [1, 2, 3, 4, 5]
+                                                        }
                                                     },
-                                                    'excelHtml5',
-                                                    'csvHtml5',
-                                                    'pdfHtml5'
+                                                    {
+                                                        "extend": 'excelHtml5',
+                                                        "exportOptions": {
+                                                            "columns": [1, 2, 3, 4, 5]
+                                                        }
+                                                    },
+                                                    {
+                                                        "extend": 'pdfHtml5',
+                                                        "exportOptions": {
+                                                            "columns": [1, 2, 3, 4, 5]
+                                                        }
+                                                    },
+                                                    {
+                                                        "extend": 'csvHtml5',
+                                                        "exportOptions": {
+                                                            "columns": [1, 2, 3, 4, 5]
+                                                        }
+                                                    }
                                                 ]
                                             });
                                             $('tr.details .dataTables_info').html('');
@@ -924,12 +1013,12 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
                                 autospin: false,
                                 action: function (dialogRef) {
                                     $.ajax({
-                                        url: "<?php echo SDGS__PLUGIN_URL . 'admin/actions.php' ?>", //this is the submit URL
+                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
                                         data: {
                                             'id': measurement_id,
-                                            'action_measurement': 'remove_last_measurement_indicator'
+                                            'action': 'remove_last_measurement_indicator'
                                         },
                                         success: function (data) {
                                             init_sub_table();

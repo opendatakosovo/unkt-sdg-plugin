@@ -1,8 +1,4 @@
 <?php
-global $wpdb;
-$scriptName = split('/', $_SERVER['SCRIPT_NAME']);
-array_pop($scriptName);
-require_once($_SERVER['DOCUMENT_ROOT'] . '/' . $scriptName[1] . '/wp-config.php');
 
 function get_data($sid)
 {
