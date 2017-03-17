@@ -12,3 +12,15 @@ div.row{
     padding: 15px;
     cursor: pointer;
 }
+.ui-state-default {
+    border: 1px solid transparent !important;
+     background: rgba(246, 246, 246, 0) !important;
+    font-weight: normal;
+    color: #454545;
+}
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    font-weight: normal;
+     color: #428bca !important;
+}

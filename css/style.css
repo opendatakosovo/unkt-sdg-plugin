@@ -154,3 +154,7 @@ div#primary {
 	width: 77%;
 	margin-left: 4%;
 }
+.highcharts-button {
+	fill-rule: initial !important;
+	fill-opacity: 0 !important;
+}

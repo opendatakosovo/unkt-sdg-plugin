@@ -7,10 +7,8 @@
 <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"/>
@@ -19,6 +17,7 @@
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/admin-style.css' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff2' ?>>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
@@ -26,6 +25,8 @@
       href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <?php //require_once(SDGS__PLUGIN_DIR . 'admin/actions.php'); ?>
 
 <div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
@@ -73,14 +74,11 @@
                             <input type="hidden" id="edit-measurement_id"/>
                             <input type="hidden" id="edit-measurement_sdg"/>
 
-
                             <div class="form-group">
                                 <label for="date">Date:</label>
-                                <div class="input-group input-append date dateRangePicker">
-                                    <input name="date" type="text" class="form-control" id="edit-date-measurement"
-                                           placeholder="Date">
-                                    <span class="input-group-addon add-on"><span
-                                                class="glyphicon glyphicon-calendar"></span></span>
+                                <div class="input-group ">
+                                    <input name="date" type="text" class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="edit-date-measurement" placeholder="Date">
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,11 +127,9 @@
                             <input type="hidden" id="measurement_sdg"/>
                             <div class="form-group">
                                 <label for="date">Date:</label>
-                                <div class="input-group input-append date dateRangePicker">
-                                    <input name="date" type="text" class="form-control" id="date-measurement"
-                                           placeholder="Date">
-                                    <span class="input-group-addon add-on"><span
-                                                class="glyphicon glyphicon-calendar"></span></span>
+                                <div class="input-group ">
+                                    <input name="date" type="text" class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="date-measurement" placeholder="Date">
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -333,6 +329,7 @@
 
     </div>
 </div>
+
 <script type="text/javascript" charset="utf-8">
     function fnFormatDetails(table_id, html) {
         var sOut = "<table id=\"exampleTable_" + table_id + "\">";
@@ -388,9 +385,7 @@
             }
 
         });
-        $('.dateRangePicker').datepicker({
-            autoclose: true
-        });
+
         // you would probably be using templates here
         detailsTableHtml = $("#detailsTable").html();
         //Insert a 'details' column to the table
@@ -570,7 +565,6 @@
                     'action': 'add_indicator'
                 },
                 success: function (data) {
-                    console.log(data);
                     var indicator_id = $('#indicator').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
@@ -590,7 +584,7 @@
             var measurement_id = $($(this).parent().parent().children()[0]).text();
             $.ajax({
                 type: "POST",
-                data: {'id': +measurement_id, 'action_measurement': 'load_measurement'},
+                data: {'id': +measurement_id, 'action': 'load_measurement_selected'},
                 dataType: 'json',
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
@@ -600,21 +594,125 @@
                     $('#edit-notes-measurement').val(data[0].notes);
                     $('#edit-source-measurement').val(data[0].source_url);
                     $('#edit-measurement_id').val(data[0].id);
-
-                    /*$('#edit_indicator').val(data[0].name);
-                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
-                     $('#edit-sdg-description').val(data[0].description);*/
                 }
             });
         });
+        $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
         $('body').on('click', '.add-measurment', function (e) {
-            e.preventDefault();
+
+            // Get clicked Indicator ID
             var indicator_id = $(this).attr('id');
+
+            // Get clicked SDG ID
             var sdg_id = $(this).attr('data-sdg');
 
+            // Set measurement SDG ID
             $('#measurement_sdg').val(sdg_id);
+
+            // Set measurement indicator ID
             $('#measurement_indicator_id').val(indicator_id);
-        })
+
+            // Get the measurements table id
+            var table_id = $(this).parent()[0].id.replace('_info', '');
+
+            // Get unavailable dates by getting the dates column array of the measurements dates
+            var unavailableDates = $('#'+table_id).DataTable().columns(1).data()[0];
+
+            // Add unavailable dates option on the calendar view.
+            $('.date-measurement').datepicker('option', 'beforeShowDay', get_unavailable_dates );
+
+            // Unavailable dates generation
+            function get_unavailable_dates(date){
+                // Get month
+                var month = date.getMonth() + 1;
+
+                // Get day
+                var day = date.getDate();
+
+                // Modify month value by adding a 0 before if it's from 1-9
+                if (month < 10) {
+                    month = '0' + month;
+                }
+
+                // Modify day value by adding a 0 before if it's from 1-9
+                if (day < 10) {
+                    day = '0' + day;
+                }
+
+                // Generate the date
+                var dmy = month + "/" + day + "/" + date.getFullYear();
+
+                // Check if date is in unavailable arrays and disable or enable otherwise
+                if ($.inArray(dmy, unavailableDates) < 0) {
+                    return [true, "", "Choose date"];
+                } else {
+                    return [false, "", "There is a measurement with the same date."];
+                }
+            }
+            e.preventDefault();
+        });
+        $('body').on('click', '.edit-modal-measurement', function (e) {
+            // Get clicked Indicator ID
+            var indicator_id = $(this).attr('id');
+
+            // Get clicked SDG ID
+            var sdg_id = $(this).attr('data-sdg');
+
+            // Set measuremend SDG ID
+            $('#measurement_sdg').val(sdg_id);
+
+            // Set measurement indicator ID
+            $('#measurement_indicator_id').val(indicator_id);
+
+            // Get the current date of the measurement
+            var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
+
+            // Put current date value on the date input
+            $('.edit-date-measurement').val(currentDate);
+
+            // Get the measurements table id
+            var  table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
+
+            // Get unavailable dates by getting the dates column array of the measurements dates
+            var unavailableDates = $('#'+table_id).DataTable().columns(1).data()[0];
+
+            // Add unavailable dates option on the calendar view.
+            $('.date-measurement').datepicker('option', 'beforeShowDay', unavailable_dates );
+
+            // Unavailable dates generation
+            function unavailable_dates(date){
+                // Get month
+                var month = date.getMonth() + 1;
+
+                // Get day
+                var day = date.getDate();
+
+                // Modify month value by adding a 0 before if it's from 1-9
+                if (month < 10) {
+                    month = '0' + month;
+                }
+
+                // Modify day value by adding a 0 before if it's from 1-9
+                if (day < 10) {
+                    day = '0' + day;
+                }
+
+                // Generate the date
+                var dmy = month + "/" + day + "/" + date.getFullYear();
+
+                // Check if date is in unavailable arrays and disable or enable otherwise
+                if ($.inArray(dmy, unavailableDates) < 0) {
+                    return [true, "", "Choose date"];
+                } else {
+                    if( dmy == currentDate ){
+                        return [true, "", "Choose date"];
+                    }else{
+                        return [false, "", "There is a measurement with the same date."];
+                    }
+                }
+            }
+            e.preventDefault();
+        });
         $('#add-measurement-form').validate({
             rules: {
                 date: {
@@ -634,6 +732,7 @@
             submitHandler: function (form) {
 
                 var indicator_id = $('#measurement_indicator_id').val();
+
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
@@ -702,6 +801,7 @@
                         $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
                         $('#add-measurement-modal').modal('hide');
                         $('#add-measurement-form')[0].reset();
+
                     }
 
                 });
@@ -709,6 +809,7 @@
 
             }
         });
+
         $('#edit-measurement-form').validate({
             rules: {
                 date: {
@@ -825,17 +926,14 @@
         })
         $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
-            console.log("Removing indicator");
             var indicator_id = $($(this).parent().parent().children()[1]).text();
             var check_if_is_empty = 0;
-            console.log(indicator_id);
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST
                 dataType: 'json',
                 data: {'id': indicator_id, 'action': 'check_indicator_is_empty'},
                 success: function (data) {
-                    console.log(data);
                     check_if_is_empty = data['a'];
                     if (check_if_is_empty == 1) {
                         BootstrapDialog.show({

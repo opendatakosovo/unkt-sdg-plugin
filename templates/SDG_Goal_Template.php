@@ -119,9 +119,12 @@ if (isset($_GET)) {
             },
             exporting: {
                 filename: convertToSlug(title),
-                width: 1920
-
-                },
+                buttons: {
+                    contextButton: {
+                        symbol: "url(<?php echo SDGS__PLUGIN_URL .'img/download-2-xxl.png' ?>)"
+                    }
+                }
+            },
             series: [{
                     data: chartTargetSeries,
                     name: 'value',
