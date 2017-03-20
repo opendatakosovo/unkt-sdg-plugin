@@ -45,41 +45,54 @@ class Unkt
             add_action('wp_ajax_check_indicator_is_empty', array('Unkt','check_indicator_is_empty'));
             add_action('wp_ajax_get_indicator', array('Unkt','get_indicator'));
         }
+
+        add_action('get_header', array('Unkt','clean_meta_generators'), 100);
         add_action('admin_menu', array('Unkt', 'SDGPluginMenu'));
         add_action('wp_head', array('Unkt','prefix_enqueue_tools'));
-        add_action('wp_head', array('Unkt', 'add_meta_tags'));
-//        add_action('SDG_Page.php', array('Unkt', 'add_meta_tags'));
+;
 
         add_action('wp_enqueue_scripts', array('Unkt','prefix_enqueue_tools'));
         register_activation_hook(__FILE__, array('Unkt','on_activate'));
     }
 
-    public static function add_meta_tags() {
+    //Remove All Meta Generators
+    public static function remove_meta_generators($html) {
         $sdgJsonData = json_decode(self::get_goal_data());
         $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 
-        ?>
+        $pattern_title = '/<meta property(.*)=(.*)"og:title"(.*)>/i';
+        $html = preg_replace($pattern_title, '<meta property="og:title" content="'.  $sdgJsonData[0]->long_name.'" />', $html);
 
-        <!-- Facebook Graph Data -->
-        <meta name="description" content="<?php echo $sdgJsonData[0]->s_text; ?>"/>
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="<?php echo $sdgJsonData[0]->long_name; ?>" />
-        <meta property="og:description" content="<?php echo $sdgJsonData[0]->s_text; ?>" />
-        <meta property="og:url" content="<?php echo $url ?>" />
-        <meta property="og:site_name" content="UNKT" />
-        <meta property="og:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>" />
+        $pattern_description = '/<meta property(.*)=(.*)"og:description"(.*)>/i';
+        $html = preg_replace($pattern_description, '<meta property="og:description" content="'.  $sdgJsonData[0]->s_text.'" />', $html);
+
+        $pattern_image = '/<meta property(.*)=(.*)"og:image"(.*)>/i';
+        $html = preg_replace($pattern_image, '<meta property="og:image" content="'.  SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg'.'" />', $html);
+
+        $pattern_url = '/<meta property(.*)=(.*)"og:url"(.*)>/i';
+        $html = preg_replace($pattern_url, '<meta property="og:url" content="'.$url.'" />', $html);
+
+        $pattern_meta_twitter_title = '/<meta name(.*)=(.*)"twitter:title"(.*)>/i';
+        $html = preg_replace($pattern_meta_twitter_title, '<meta property="twitter:title" content="'.  $sdgJsonData[0]->long_name.'" />', $html);
+
+        $pattern_meta_twitter_description = '/<meta name(.*)=(.*)"twitter:description"(.*)>/i';
+        $html = preg_replace($pattern_meta_twitter_description, '<meta property="twitter:description" content="'.  $sdgJsonData[0]->s_text.'" />', $html);
+
+        $pattern_meta_twitter_image = '/<meta name(.*)=(.*)"twitter:image"(.*)>/i';
+        $html = preg_replace($pattern_meta_twitter_image, '<meta property="twitter:image" content="'.  SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg'.'" />', $html);
+
+        $pattern_meta_twitter_url = '/<meta name(.*)=(.*)"twitter:url"(.*)>/i';
+        $html = preg_replace($pattern_meta_twitter_url, '<meta property="twitter:url" content="'.$url.'" />', $html);
 
 
-        <!-- Twitter Card data -->
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@publisher_handle">
-        <meta name="twitter:title" content="<?php echo $sdgJsonData[0]->long_name; ?>">
-        <meta name="twitter:description" content="<?php echo $sdgJsonData[0]->s_text; ?>">
-        <meta name="twitter:creator" content="@author_handle">
-        <meta name="twitter:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>">
+        return $html;
+    }
 
-    <?php }
+    public static function clean_meta_generators($html) {
+        ob_start(array('UNKT','remove_meta_generators'));
+    }
+
+
 
     public static function SDGPluginMenu()
     {
