@@ -11,11 +11,33 @@ if (isset($_GET)) {
     foreach ($indicatorData as $element) {
         $out[$element['name']][] = ['date' => $element['date'], 'date' => $element['date'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name']];
     }
+    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
 ?>
 <?php ?>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
+<head>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
+    <!-- Facebook Graph Data -->
+    <meta name="description" content="<?php echo $sdgJsonData[0]->s_text; ?>"/>
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="<?php echo $sdgJsonData[0]->long_name; ?>" />
+    <meta property="og:description" content="<?php echo $sdgJsonData[0]->s_text; ?>" />
+    <meta property="og:url" content="<?php echo $url ?>" />
+    <meta property="og:site_name" content="UNKT" />
+    <meta property="og:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>" />
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@publisher_handle">
+    <meta name="twitter:title" content="<?php echo $sdgJsonData[0]->long_name; ?>">
+    <meta name="twitter:description" content="<?php echo $sdgJsonData[0]->s_text; ?>">
+    <meta name="twitter:creator" content="@author_handle">
+    <meta name="twitter:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>">
+</head>
+
 
 <script>
     $(document).ready(function () {

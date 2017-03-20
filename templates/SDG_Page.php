@@ -5,9 +5,12 @@ require_once(SDGS__PLUGIN_DIR . 'templates/functions.php');
 global $wpdb;
 
 ?>
+<head>
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/style.css' ?>>
     <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/responsive.css' ?>>
+</head>
+
     <div id="main-content" class="main-content">
 
         <?php
