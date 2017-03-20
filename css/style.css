@@ -13,6 +13,7 @@ p{
 }
 .sdg-goal-page{
 	/*padding-top: 50px;*/
+	margin-right: 15px !important;
 }
 .sdg-goal-page-01{
 	background-color: #e5233b;;
@@ -92,6 +93,7 @@ p{
 .indicators {
     height: auto;
     padding-left: 50px !important;
+	min-height: 844px !important;
 }
 .sdg-title{
 	color: white !important;
