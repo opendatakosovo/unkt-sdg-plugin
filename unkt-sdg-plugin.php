@@ -13,4 +13,4 @@ define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 require_once( SDGS__PLUGIN_DIR . 'class.unkt.php' );
 $SDGPlugin = Unkt::init();
 // Add the template option so when we create a page we can make it an SDG Template page.
-require_once(SDGS__PLUGIN_DIR . 'page.php');
+require_once(SDGS__PLUGIN_DIR . 'sdg-page.php');

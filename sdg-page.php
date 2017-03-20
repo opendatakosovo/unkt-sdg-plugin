@@ -66,7 +66,7 @@
 
 		// Add your templates to this array.
 		$this->templates = array(
-			'templates/SDG_Page.php' => 'SDG Page',
+			'templates/SDG_Page.php' => 'SDG Goals Page',
 		);
 			
 	} 

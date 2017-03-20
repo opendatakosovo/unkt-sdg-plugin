@@ -26,8 +26,29 @@
 <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<div class="row">
+    <?php
+    $args = [
+        'post_type' => 'page',
+        'meta_key' => '_wp_page_template',
+        'meta_value' => 'templates/SDG_Page.php'
+    ];
+    $pages = get_posts($args);
+    ?>
+    <div class="col-md-12">
+        <h3>Welcome, you can view your SDG Goals page/s below:</h3><br/>
+    </div>
+    <div class="col-md-11 col-md-offset-1">
+        <ol>
+        <?php
+        foreach ($pages as $page)
+            echo '<li><a target="_blank" href="' . get_page_link($page->ID) . '" >' . get_the_title($page->ID) . '</a></li>';
+        ?>
+        </ol>
 
-<?php //require_once(SDGS__PLUGIN_DIR . 'admin/actions.php'); ?>
+    </div>
+</div>
+
 
 <div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
     <table id="exampleTable" class="stripe">
@@ -77,8 +98,11 @@
                             <div class="form-group">
                                 <label for="date">Date:</label>
                                 <div class="input-group ">
-                                    <input name="date" type="text" class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="edit-date-measurement" placeholder="Date">
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
+                                    <input name="date" type="text"
+                                           class=" col-md-12 col-sm-12 col-xs-12 date-measurement"
+                                           id="edit-date-measurement" placeholder="Date">
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                                 onkeydown="return false"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -128,8 +152,11 @@
                             <div class="form-group">
                                 <label for="date">Date:</label>
                                 <div class="input-group ">
-                                    <input name="date" type="text" class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="date-measurement" placeholder="Date">
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
+                                    <input name="date" type="text"
+                                           class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="date-measurement"
+                                           placeholder="Date">
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                                 onkeydown="return false"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -616,13 +643,13 @@
             var table_id = $(this).parent()[0].id.replace('_info', '');
 
             // Get unavailable dates by getting the dates column array of the measurements dates
-            var unavailableDates = $('#'+table_id).DataTable().columns(1).data()[0];
+            var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
 
             // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', get_unavailable_dates );
+            $('.date-measurement').datepicker('option', 'beforeShowDay', get_unavailable_dates);
 
             // Unavailable dates generation
-            function get_unavailable_dates(date){
+            function get_unavailable_dates(date) {
                 // Get month
                 var month = date.getMonth() + 1;
 
@@ -649,6 +676,7 @@
                     return [false, "", "There is a measurement with the same date."];
                 }
             }
+
             e.preventDefault();
         });
         $('body').on('click', '.edit-modal-measurement', function (e) {
@@ -671,16 +699,16 @@
             $('.edit-date-measurement').val(currentDate);
 
             // Get the measurements table id
-            var  table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
+            var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
 
             // Get unavailable dates by getting the dates column array of the measurements dates
-            var unavailableDates = $('#'+table_id).DataTable().columns(1).data()[0];
+            var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
 
             // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', unavailable_dates );
+            $('.date-measurement').datepicker('option', 'beforeShowDay', unavailable_dates);
 
             // Unavailable dates generation
-            function unavailable_dates(date){
+            function unavailable_dates(date) {
                 // Get month
                 var month = date.getMonth() + 1;
 
@@ -704,13 +732,14 @@
                 if ($.inArray(dmy, unavailableDates) < 0) {
                     return [true, "", "Choose date"];
                 } else {
-                    if( dmy == currentDate ){
+                    if (dmy == currentDate) {
                         return [true, "", "Choose date"];
-                    }else{
+                    } else {
                         return [false, "", "There is a measurement with the same date."];
                     }
                 }
             }
+
             e.preventDefault();
         });
         $('#add-measurement-form').validate({
