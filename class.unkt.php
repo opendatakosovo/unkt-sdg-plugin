@@ -47,13 +47,39 @@ class Unkt
         }
         add_action('admin_menu', array('Unkt', 'SDGPluginMenu'));
         add_action('wp_head', array('Unkt','prefix_enqueue_tools'));
-
+        add_action('wp_head', array('Unkt', 'add_meta_tags'));
+//        add_action('SDG_Page.php', array('Unkt', 'add_meta_tags'));
 
         add_action('wp_enqueue_scripts', array('Unkt','prefix_enqueue_tools'));
         register_activation_hook(__FILE__, array('Unkt','on_activate'));
     }
 
+    public static function add_meta_tags() {
+        $sdgJsonData = json_decode(self::get_goal_data());
+        $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 
+        ?>
+
+        <!-- Facebook Graph Data -->
+        <meta name="description" content="<?php echo $sdgJsonData[0]->s_text; ?>"/>
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="<?php echo $sdgJsonData[0]->long_name; ?>" />
+        <meta property="og:description" content="<?php echo $sdgJsonData[0]->s_text; ?>" />
+        <meta property="og:url" content="<?php echo $url ?>" />
+        <meta property="og:site_name" content="UNKT" />
+        <meta property="og:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>" />
+
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@publisher_handle">
+        <meta name="twitter:title" content="<?php echo $sdgJsonData[0]->long_name; ?>">
+        <meta name="twitter:description" content="<?php echo $sdgJsonData[0]->s_text; ?>">
+        <meta name="twitter:creator" content="@author_handle">
+        <meta name="twitter:image" content="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>">
+
+    <?php }
 
     public static function SDGPluginMenu()
     {
@@ -77,6 +103,49 @@ class Unkt
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
 
+    }
+
+    public static function get_goal_data()
+    {
+        $sid = sprintf("%0d", $_GET['goal']);
+        global $wpdb;
+        $query_indicators = array();
+        $query_indicators = $wpdb->get_results("
+      SELECT wp_sdg.s_text, 
+      wp_sdg.long_name,
+      wp_sdg.short_name, 
+      wp_indicator.name,
+      wp_indicator.description,
+      wp_indicator.unit, 
+      wp_indicator.sid,
+      wp_indicator.id, 
+      wp_sdg.s_number, 
+      wp_measurement.date, 
+      wp_measurement.value, 
+      wp_measurement.target_value, 
+      wp_measurement.notes
+      From wp_indicator
+      INNER JOIN  wp_sdg 
+      ON  wp_indicator.sid=wp_sdg.s_number
+      INNER JOIN  wp_measurement 
+      ON  wp_indicator.id=wp_measurement.iid
+      WHERE wp_indicator.sid = $sid
+      ");
+
+        return json_encode($query_indicators, JSON_PRETTY_PRINT);
+
+    }
+
+    public static function get_sdg_data($sid)
+    {
+        global $wpdb;
+        $query_sdg = array();
+        $query_sdg = $wpdb->get_results("
+      SELECT *
+      FROM wp_sdg
+      WHERE s_number = $sid
+      ");
+        return json_encode($query_sdg, JSON_PRETTY_PRINT);
     }
     public static function prefix_enqueue_tools()
     {
