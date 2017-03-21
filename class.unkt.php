@@ -29,7 +29,7 @@ class Unkt
     private static function init_hooks()
     {
         self::$initiated = true;
-        register_activation_hook(__FILE__, array(self, 'install'));
+        register_activation_hook(__FILE__, array('Unkt', 'install'));
         register_uninstall_hook(__FILE__, array('Unkt', 'uninstall'));
 
 
