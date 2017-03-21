@@ -29,75 +29,80 @@ class Unkt
     private static function init_hooks()
     {
         self::$initiated = true;
-        if ( is_admin() ) {
-            add_action('wp_ajax_add_indicator', array('Unkt','add_indicator'));
-            add_action('wp_ajax_edit_indicator', array('Unkt','edit_indicator'));
-            add_action('wp_ajax_remove_indicator_measurements', array('Unkt','remove_indicator_measurements'));
-            add_action('wp_ajax_remove_indicator', array('Unkt','remove_indicator'));
-            add_action('wp_ajax_get_measurement_data', array('Unkt','get_measurement_data'));
-            add_action('wp_ajax_edit_measurement', array('Unkt','edit_measurement'));
-            add_action('wp_ajax_load_measurement_selected', array('Unkt','load_measurement_selected'));
-            add_action('wp_ajax_add_measurement', array('Unkt','add_measurement'));
-            add_action('wp_ajax_check_size_of_measurement', array('Unkt','check_size_of_measurement'));
-            add_action('wp_ajax_remove_measurement', array('Unkt','remove_measurement'));
-            add_action('wp_ajax_remove_last_measurement_indicator', array('Unkt','remove_last_measurement_indicator'));
-            add_action('wp_ajax_get_indicator_measurement', array('Unkt','get_indicator_measurement'));
-            add_action('wp_ajax_check_indicator_is_empty', array('Unkt','check_indicator_is_empty'));
-            add_action('wp_ajax_get_indicator', array('Unkt','get_indicator'));
+        register_activation_hook(__FILE__, array(self, 'install'));
+        register_uninstall_hook(__FILE__, array('Unkt', 'uninstall'));
+
+
+        if (is_admin()) {
+            add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator'));
+            add_action('wp_ajax_edit_indicator', array('Unkt', 'edit_indicator'));
+            add_action('wp_ajax_remove_indicator_measurements', array('Unkt', 'remove_indicator_measurements'));
+            add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
+            add_action('wp_ajax_get_measurement_data', array('Unkt', 'get_measurement_data'));
+            add_action('wp_ajax_edit_measurement', array('Unkt', 'edit_measurement'));
+            add_action('wp_ajax_load_measurement_selected', array('Unkt', 'load_measurement_selected'));
+            add_action('wp_ajax_add_measurement', array('Unkt', 'add_measurement'));
+            add_action('wp_ajax_check_size_of_measurement', array('Unkt', 'check_size_of_measurement'));
+            add_action('wp_ajax_remove_measurement', array('Unkt', 'remove_measurement'));
+            add_action('wp_ajax_remove_last_measurement_indicator', array('Unkt', 'remove_last_measurement_indicator'));
+            add_action('wp_ajax_get_indicator_measurement', array('Unkt', 'get_indicator_measurement'));
+            add_action('wp_ajax_check_indicator_is_empty', array('Unkt', 'check_indicator_is_empty'));
+            add_action('wp_ajax_get_indicator', array('Unkt', 'get_indicator'));
         }
 
-        add_action('get_header', array('Unkt','clean_meta_generators'), 100);
+        add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
         add_action('admin_menu', array('Unkt', 'SDGPluginMenu'));
-        add_action('wp_head', array('Unkt','prefix_enqueue_tools'));
+        add_action('wp_head', array('Unkt', 'prefix_enqueue_tools'));
 
         // REMOVE WP EMOJI
         remove_action('wp_head', 'print_emoji_detection_script', 7);
         remove_action('wp_print_styles', 'print_emoji_styles');
 
-        remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-        remove_action( 'admin_print_styles', 'print_emoji_styles' );
+        remove_action('admin_print_scripts', 'print_emoji_detection_script');
+        remove_action('admin_print_styles', 'print_emoji_styles');
 
-        add_action('wp_enqueue_scripts', array('Unkt','prefix_enqueue_tools'));
-        register_activation_hook(__FILE__, array('Unkt','on_activate'));
+        add_action('wp_enqueue_scripts', array('Unkt', 'prefix_enqueue_tools'));
+
     }
 
     //Remove All Meta Generators
-    public static function remove_meta_generators($html) {
+    public static function remove_meta_generators($html)
+    {
         $sdgJsonData = json_decode(self::get_goal_data());
-        $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+        $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 
         $pattern_title = '/<meta property(.*)=(.*)"og:title"(.*)>/i';
-        $html = preg_replace($pattern_title, '<meta property="og:title" content="'.  $sdgJsonData[0]->long_name.'" />', $html);
+        $html = preg_replace($pattern_title, '<meta property="og:title" content="' . $sdgJsonData[0]->long_name . '" />', $html);
 
         $pattern_description = '/<meta property(.*)=(.*)"og:description"(.*)>/i';
-        $html = preg_replace($pattern_description, '<meta property="og:description" content="'.  $sdgJsonData[0]->s_text.'" />', $html);
+        $html = preg_replace($pattern_description, '<meta property="og:description" content="' . $sdgJsonData[0]->s_text . '" />', $html);
 
         $pattern_image = '/<meta property(.*)=(.*)"og:image"(.*)>/i';
-        $html = preg_replace($pattern_image, '<meta property="og:image" content="'.  SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg'.'" />', $html);
+        $html = preg_replace($pattern_image, '<meta property="og:image" content="' . SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' . '" />', $html);
 
         $pattern_url = '/<meta property(.*)=(.*)"og:url"(.*)>/i';
-        $html = preg_replace($pattern_url, '<meta property="og:url" content="'.$url.'" />', $html);
+        $html = preg_replace($pattern_url, '<meta property="og:url" content="' . $url . '" />', $html);
 
         $pattern_meta_twitter_title = '/<meta name(.*)=(.*)"twitter:title"(.*)>/i';
-        $html = preg_replace($pattern_meta_twitter_title, '<meta property="twitter:title" content="'.  $sdgJsonData[0]->long_name.'" />', $html);
+        $html = preg_replace($pattern_meta_twitter_title, '<meta property="twitter:title" content="' . $sdgJsonData[0]->long_name . '" />', $html);
 
         $pattern_meta_twitter_description = '/<meta name(.*)=(.*)"twitter:description"(.*)>/i';
-        $html = preg_replace($pattern_meta_twitter_description, '<meta property="twitter:description" content="'.  $sdgJsonData[0]->s_text.'" />', $html);
+        $html = preg_replace($pattern_meta_twitter_description, '<meta property="twitter:description" content="' . $sdgJsonData[0]->s_text . '" />', $html);
 
         $pattern_meta_twitter_image = '/<meta name(.*)=(.*)"twitter:image"(.*)>/i';
-        $html = preg_replace($pattern_meta_twitter_image, '<meta property="twitter:image" content="'.  SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg'.'" />', $html);
+        $html = preg_replace($pattern_meta_twitter_image, '<meta property="twitter:image" content="' . SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' . '" />', $html);
 
         $pattern_meta_twitter_url = '/<meta name(.*)=(.*)"twitter:url"(.*)>/i';
-        $html = preg_replace($pattern_meta_twitter_url, '<meta property="twitter:url" content="'.$url.'" />', $html);
+        $html = preg_replace($pattern_meta_twitter_url, '<meta property="twitter:url" content="' . $url . '" />', $html);
 
 
         return $html;
     }
 
-    public static function clean_meta_generators($html) {
-        ob_start(array('UNKT','remove_meta_generators'));
+    public static function clean_meta_generators($html)
+    {
+        ob_start(array('UNKT', 'remove_meta_generators'));
     }
-
 
 
     public static function SDGPluginMenu()
@@ -111,6 +116,7 @@ class Unkt
             SDGS__PLUGIN_URL . 'img/icon.png'
         );
     }
+
     public static function RenderPage()
     {
         global $wpdb;
@@ -166,6 +172,7 @@ class Unkt
       ");
         return json_encode($query_sdg, JSON_PRETTY_PRINT);
     }
+
     public static function prefix_enqueue_tools()
     {
         // jQuery
@@ -185,6 +192,7 @@ class Unkt
         wp_register_style('prefix_datatables', '//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css');
         wp_enqueue_style('prefix_datatables');
     }
+
     public static function add_indicator()
     {
 
@@ -202,6 +210,7 @@ class Unkt
         echo self::get_data();
         die();
     }
+
     public static function edit_indicator()
     {
 
@@ -220,15 +229,17 @@ class Unkt
         echo self::get_data();
         die();
     }
+
     public static function get_indicator()
     {
 
         global $wpdb;
-        $indicator_id=$_POST['id'];
+        $indicator_id = $_POST['id'];
         $query_indicators = $wpdb->get_results(" SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number and wp_indicator.id=$indicator_id");
         echo json_encode($query_indicators);
         die();
     }
+
     public static function remove_indicator_measurements()
     {
 
@@ -248,6 +259,7 @@ class Unkt
         echo self::get_data();
         die();
     }
+
     public static function remove_indicator()
     {
 
@@ -256,12 +268,12 @@ class Unkt
         $id = intval(htmlspecialchars($_POST['id']));
         $query_indicators = $wpdb->get_results("
         SELECT iid From wp_measurement WHERE iid='$id'");
-            $count = sizeof($query_indicators);
-            if ($count > 0) {
-                $arr = array('a' => 1);
-                echo json_encode($arr);
-            }
-            $wpdb->query("
+        $count = sizeof($query_indicators);
+        if ($count > 0) {
+            $arr = array('a' => 1);
+            echo json_encode($arr);
+        }
+        $wpdb->query("
             DELETE FROM `{$wpdb->prefix}indicator`
     
             WHERE id=$id;
@@ -269,6 +281,7 @@ class Unkt
         echo self::get_data();
         die();
     }
+
     public static function get_measurement_data()
     {
 
@@ -280,7 +293,9 @@ class Unkt
         echo json_encode($query_indicators);
         die();
     }
-    public static function edit_measurement(){
+
+    public static function edit_measurement()
+    {
         global $wpdb;
 
         $meausrement_id = htmlspecialchars($_POST["meausrement_id"]);
@@ -306,7 +321,9 @@ class Unkt
         die();
 
     }
-    public static function load_measurement_selected(){
+
+    public static function load_measurement_selected()
+    {
         global $wpdb;
 
         $measurement_id = htmlspecialchars($_POST['id']);
@@ -315,7 +332,9 @@ class Unkt
         echo json_encode($query_indicators);
         die();
     }
-    public static function add_measurement(){
+
+    public static function add_measurement()
+    {
         global $wpdb;
 
         $indicator_id = htmlspecialchars($_POST['indicator_id']);
@@ -348,7 +367,9 @@ class Unkt
         echo json_encode($query_indicators);
         die();
     }
-    public static function check_size_of_measurement(){
+
+    public static function check_size_of_measurement()
+    {
 
         global $wpdb;
 
@@ -370,6 +391,7 @@ class Unkt
         }
         die();
     }
+
     public static function remove_measurement()
     {
         global $wpdb;
@@ -389,6 +411,7 @@ class Unkt
         echo json_encode($query_indicators1);
 
     }
+
     public static function remove_last_measurement_indicator()
     {
         global $wpdb;
@@ -401,15 +424,19 @@ class Unkt
         echo self::get_data();
         die();
     }
-    public static function get_indicator_measurement(){
+
+    public static function get_indicator_measurement()
+    {
         global $wpdb;
-        $indicator_id=htmlspecialchars($_POST['id']);
+        $indicator_id = htmlspecialchars($_POST['id']);
         $query_indicators = $wpdb->get_results("
             SELECT * From wp_measurement WHERE iid='$indicator_id'");
         echo json_encode($query_indicators);
         die();
     }
-    public static function check_indicator_is_empty(){
+
+    public static function check_indicator_is_empty()
+    {
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
@@ -417,16 +444,17 @@ class Unkt
             SELECT iid 
             From wp_measurement 
             WHERE iid='$id'");
-        $count=sizeof($query_indicators);
-        if ($count>0){
-            $arr = array ('a'=>1);
+        $count = sizeof($query_indicators);
+        if ($count > 0) {
+            $arr = array('a' => 1);
             echo json_encode($arr);
-        }else{
-            $arr = array ('a'=>0);
+        } else {
+            $arr = array('a' => 0);
             echo json_encode($arr);
         }
         die();
     }
+
     public static function get_data()
     {
         global $wpdb;
@@ -438,16 +466,16 @@ class Unkt
         return json_encode($query_indicators);
 
     }
-    public static function on_activate()
+
+    public static function install()
     {
         global $wpdb;
         // Register On activation actions.
         // Everything inside the on_activate function is executed
         // once, when the plugin is activated.
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         $create_sdg_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sdg` (
+            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}`sdg (
               `id` bigint(20)  NOT NULL  AUTO_INCREMENT,
               `s_number` bigint(20) NOT NULL,
               `short_name` text NOT NULL,
@@ -455,22 +483,22 @@ class Unkt
               `s_text` text NOT NULL,
               UNIQUE KEY (s_number),
               PRIMARY KEY  (id)
-            ) ENGINE=INNODB  DEFAULT CHARSET=utf8;
+            ) DEFAULT CHARSET=utf8;
         ";
-        dbDelta($create_sdg_table_query);
+
 
         $create_indicators_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}indicator` (
+            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}`indicator (
               `id` bigint(20)  NOT NULL AUTO_INCREMENT,
               `sid` bigint(20)  NOT NULL,
               `name` text NOT NULL,
               `description` text NOT NULL,
               `unit` text NOT NULL,
-              PRIMARY KEY  (id),
-              FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number)
-            ) ENGINE=INNODB  DEFAULT CHARSET=utf8;
+              PRIMARY KEY  (`id`),
+              FOREIGN KEY (`sid`) REFERENCES `{$wpdb->prefix}`sdg(s_number)
+            ) DEFAULT CHARSET=utf8 ;
         ";
-        dbDelta($create_indicators_table_query);
+
 
         $create_measurement_table_query = "
             CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}measurement` (
@@ -483,13 +511,16 @@ class Unkt
               `source_url` text NOT NULL,
               `notes` text NOT NULL,
               PRIMARY KEY  (id),
-              FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number),
-              FOREIGN KEY (iid) REFERENCES {$wpdb->prefix}indicator(id)
-            ) ENGINE=INNODB  DEFAULT CHARSET=utf8;
+              FOREIGN KEY (sid) REFERENCES `{$wpdb->prefix}`sdg(s_number),
+              FOREIGN KEY (iid) REFERENCES `{$wpdb->prefix}`indicator(id)
+            ) DEFAULT CHARSET=utf8;
         ";
-        dbDelta($create_measurement_table_query);
 
-        // Insert dummy data.
+        $wpdb->query($create_sdg_table_query);
+        $wpdb->query($create_indicators_table_query);
+        $wpdb->query($create_measurement_table_query);
+
+        // Insert SDG's
         $insert_sdgs = "
             INSERT INTO `{$wpdb->prefix}sdg`( s_number, short_name, long_name, s_text )
             VALUES(1,'poverty','End poverty in all its forms everywhere','Extreme poverty rates have been cut by more than half since 1990. While this is a remarkable achievement, one in five people in developing regions still live on less than $1.25 a day, and there are millions more who make little more than this daily amount, plus many people risk slipping back into poverty.Poverty is more than the lack of income and resources to ensure a sustainable livelihood. Its manifestations include hunger and malnutrition, limited access to education and other basic services, social discrimination and exclusion as well as the lack of participation in decision-making. Economic growth must be inclusive to provide sustainable jobs and promote equality.'),
@@ -511,7 +542,17 @@ class Unkt
             (17,'partnerships-for-the-goal','Revitalize the global partnership for sustainable development','A successful sustainable development agenda requires partnerships between governments, the private sector and civil society. These inclusive partnerships built upon principles and values, a shared vision, and shared goals that place people and the planet at the centre, are needed at the global, regional, national and local level.\nUrgent action is needed to mobilize, redirect and unlock the transformative power of trillions of dollars of private resources to deliver on sustainable development objectives. Long-term investments, including foreign direct investment, are needed in critical sectors, especially in developing countries. These include sustainable energy, infrastructure and transport, as well as information and communications technologies. The public sector will need to set a clear direction. Review and monitoring frameworks, regulations and incentive structures that enable such investments must be retooled to attract investments and reinforce sustainable development. National oversight mechanisms such as supreme audit institutions and oversight functions by legislatures should be strengthened.')
             ON DUPLICATE KEY UPDATE `s_number` = `s_number`;
         ";
-        dbDelta($insert_sdgs);
+        $wpdb->query($insert_sdgs);
+
+    }
+
+    public static function uninstall()
+    {
+        global $wpdb;
+        $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}`measurement");
+        $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}`indicator");
+        $wpdb->query("DROP TABLE IF EXISTS `{$wpdb->prefix}`sdg");
+
 
     }
 
