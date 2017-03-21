@@ -125,6 +125,40 @@ if (isset($_GET)) {
                     contextButton: {
                         symbol: "url(<?php echo SDGS__PLUGIN_URL .'img/download-2-xxl.png' ?>)"
                     }
+                },
+                chartOptions: {
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    xAxis: {
+                        lineWidth: 1,
+                        minorGridLineWidth: 1,
+                        lineColor: 'gray',
+                        labels: {
+                            enabled: true
+                        },
+                        tickLength: 1,
+                        title: {
+                            enabled: true
+                        }
+                    },
+                    yAxis: {
+                        gridLineColor: 'gray',
+                        labels: {
+                            enabled: true
+                        },
+                        title: {
+                            enabled: true
+                        }
+                    },
+                    chart:{
+                        backgroundColor: 'lightblue',
+                    }
+
                 }
             },
             series: [{
