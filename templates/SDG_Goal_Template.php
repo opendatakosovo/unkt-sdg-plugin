@@ -44,7 +44,7 @@ if (isset($_GET)) {
         <div class='row'>\
             <div class='row'>\
                 <div class='col-md-9 col-xs-7 col-sm-9 indicator-title'>\
-                        <span class='indicator-title'>" + title + "</span>\
+                        <span >" + title + "</span>\
                 </div>\
                 <div class='col-md-3 col-xs-3 col-sm-3'>\
                     <button id='" + id + "-chart' class='show-chart' >SHOW DATA</button>\
