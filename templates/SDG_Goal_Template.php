@@ -43,8 +43,8 @@ if (isset($_GET)) {
         $('.indicators').append("\
         <div class='row'>\
             <div class='row'>\
-                <div class='col-md-9 col-xs-7 col-sm-9 indicator-title'>\
-                        <span >" + title + "</span>\
+                <div class='col-md-9 col-xs-7 col-sm-9 indicator-title-div'>\
+                        <span class='indicator-title'>" + title + "</span>\
                 </div>\
                 <div class='col-md-3 col-xs-3 col-sm-3'>\
                     <button id='" + id + "-chart' class='show-chart' >SHOW DATA</button>\
@@ -78,7 +78,7 @@ if (isset($_GET)) {
             });
         });
         $('#' + id + '-description').append("\
-		<p>" + data[0]['description'] + "</p>\
+		<span class='indicator-description'>" + data[0]['description'] + "</span>\
 	");
         var chartCategories = [];
         var chartSeries = [];
@@ -206,8 +206,8 @@ if (isset($_GET)) {
                      src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
             </div>
 
-            <div class="col-md-8 col-xs-12">
-                <p class="sdg-description"></p>
+            <div class="col-md-7 col-xs-12 sdg-description">
+                <span></span>
             </div>
         </div>
         <div class="row indicators">

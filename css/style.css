@@ -59,15 +59,7 @@
 .sdg-goal-page-17{
 	background-color: #14496b;
 }
-.sdg-goal-page p{
-	color: white !important;
-	font-family: Roboto !important;
-	font-size: 16pt !important;
-	padding-left: 40px !important;
-	padding-right: 40px !important;
-	text-transform: none;
-   
-}
+
 .sdg-goal-page h1{
 	color:white;
 }
@@ -94,23 +86,25 @@
 }
 .sdg-title{
 	color: white !important;
-    font-family: Roboto !important;
-    font-size: 31pt !important;
-    text-align: left !important;
-    margin-top: 50px !important;
-    line-height: 40px !important;
-    margin-left: 10%;
-    padding-bottom: 20px;
+    font-family: Roboto ;
+	font-weight: 500;
+    font-size: 31pt ;
+    text-align: left ;
+    margin-top: 50px ;
+    line-height: 40px ;
+	margin-left: 55px;
+	margin-bottom: 20px;
     text-transform: none;
 }
 .sdg-description{
-	font-size:18pt !important;
-    font-family: Roboto !important;
-	line-height: 25px !important;
-    padding-left: 20px !important;
-    padding-top:10px;
+	font-size:18pt ;
+    font-family: Roboto ;
+	font-weight: 400;
+	line-height: 25px ;
+	padding-left: 40px ;
     text-align: left;
     text-transform: none;
+	color:white;
 }
 .indicator-chart-container{
 	width:90%;
@@ -122,6 +116,17 @@
 	padding-left: 20px !important;
 	text-transform: uppercase;
 	color: white;
+}
+.indicator-description {
+	font-family: Roboto !important;
+	font-weight: 400;
+	font-size: 16pt !important;
+	padding-left: 40px !important;
+	text-transform: uppercase;
+	color: white;
+}
+.indicator-title-div{
+	padding-left:20px;
 }
 .show-chart {
 	font-family: Roboto;
@@ -135,6 +140,7 @@
 	width: 130px;
 	height: 41px;
 	margin-bottom: 10px;
+	margin-left: -20px;
 }
 .sidebar{
 	float: left;
@@ -151,7 +157,7 @@ div#primary {
 .white-line{
 	padding-left: 40px !important;
 	padding-right: 40px !important;
-	width: 77%;
+	width: 76%;
 	margin-left: 4%;
 }
 .highcharts-button {

@@ -1,29 +1,18 @@
 @media screen 
-  and (device-width: 320px) 
-  and (device-height: 640px) {
-
+  and (min-device-width: 320px)
+  and (max-device-width: 640px) {
+  .show-chart{
+    float:left;
+    margin-left:-40px;
+  }
 }
 
 @media screen 
-  and (device-width: 640px) 
-  and (device-height: 800px) {
+  and (min-device-width: 640px)
+  and (max-device-width: 800px) {
+  .show-chart{
+    float:right;
+    margin-right: -60px;
+  }
 
 }
-@media only screen 
-  and (min-device-width: 800px) 
-  and (max-device-width: 1024px) 
-  and (-webkit-min-device-pixel-ratio: 2) {
-    .show-chart{
-      width: 130px;
-      height: 50px;
-    }
-}
-@media only screen 
-  and (min-device-width: 1024px) 
-  and (max-device-width: 1280px){ 
-    .show-chart{
-      width: 130px;
-      height: 50px;
-    }
-}
-
