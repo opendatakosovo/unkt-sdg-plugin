@@ -43,11 +43,11 @@ if (isset($_GET)) {
         $('.indicators').append("\
         <div class='row'>\
             <div class='row'>\
-                <div class='col-md-9 col-xs-8 col-sm-7 indicator-title'>\
+                <div class='col-md-9 col-xs-7 col-sm-9 indicator-title'>\
                         <h4>" + title + "</h4>\
                 </div>\
-                <div class='col-md-2 col-xs-2 col-sm-5'>\
-                    <button id='" + id + "-chart' class='show-chart' >Show chart</button>\
+                <div class='col-md-2 col-xs-3 col-sm-3'>\
+                    <button id='" + id + "-chart' class='show-chart' >SHOW DATA</button>\
                 </div>\
             </div>\
             <div class='row'>\
