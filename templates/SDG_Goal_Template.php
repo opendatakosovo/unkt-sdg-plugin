@@ -52,7 +52,7 @@ if (isset($_GET)) {
             </div>\
             <div class='row'>\
                 <div class='row'>\
-                    <div class='col-md-11 col-xs-10 col-sm-10' id='" + id + "-description' >\
+                    <div class='col-md-11 col-xs-10 col-sm-10 indicator-description-div' id='" + id + "-description' >\
                     </div>\
                 </div>\
             </div>\

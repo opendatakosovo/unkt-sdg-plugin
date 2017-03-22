@@ -101,7 +101,7 @@
     font-family: Roboto ;
 	font-weight: 400;
 	line-height: 25px ;
-	padding-left: 40px ;
+	padding-left: 60px ;
     text-align: left;
     text-transform: none;
 	color:white;
@@ -113,7 +113,6 @@
 	font-family: Roboto !important;
 	font-weight: 500;
 	font-size: 20pt !important;
-	padding-left: 20px !important;
 	text-transform: uppercase;
 	color: white;
 }
@@ -121,12 +120,15 @@
 	font-family: Roboto !important;
 	font-weight: 400;
 	font-size: 16pt !important;
-	padding-left: 40px !important;
 	text-transform: uppercase;
 	color: white;
 }
-.indicator-title-div{
-	padding-left:20px;
+.indicator-description-div{
+	padding-left:60px;
+}
+.indicator-title-div {
+	padding-left: 45px;
+	margin-bottom:20px;
 }
 .show-chart {
 	font-family: Roboto;
