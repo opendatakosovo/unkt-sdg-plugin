@@ -9,7 +9,7 @@ if (isset($_GET)) {
     $sdgJsonData = json_decode($sdg_raw_data);
     $out = [];
     foreach ($indicatorData as $element) {
-        $out[$element['name']][] = ['date' => $element['date'], 'date' => $element['date'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name']];
+        $out[$element['name']][] = ['date' => $element['date'], 'date' => $element['date'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
     }
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
@@ -32,6 +32,8 @@ if (isset($_GET)) {
         for (var index in data) {
             var id = "indicator-chart-" + counter;
             counter++;
+            console.log(data[index]);
+            console.log(index);
             generateChart(id, data[index], index);
         }
         $('.sdg-title').text(sdg_title);
@@ -178,6 +180,12 @@ if (isset($_GET)) {
             },
             credits: {
                 enabled: false
+            },
+            tooltip:{
+                formatter:function  (){
+                    return 'Date: <b>' + this.x +
+                        '</b> Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
+                }
             }
 
         }
