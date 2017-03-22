@@ -115,12 +115,13 @@
 .indicator-chart-container{
 	width:90%;
 }
-.indicator-title h4{
-    font-family: Roboto !important;
-    font-weight:Medium;
-    font-size: 20pt !important;
-	padding-left: 23px !important;
+.indicator-title {
+	font-family: Roboto !important;
+	font-weight: 500;
+	font-size: 20pt !important;
+	padding-left: 20px !important;
 	text-transform: uppercase;
+	color: white;
 }
 .show-chart {
 	font-family: Roboto;

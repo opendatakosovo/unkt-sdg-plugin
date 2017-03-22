@@ -14,7 +14,7 @@
   and (max-device-width: 1024px) 
   and (-webkit-min-device-pixel-ratio: 2) {
     .show-chart{
-      width: 197px;
+      width: 130px;
       height: 50px;
     }
 }
@@ -22,7 +22,7 @@
   and (min-device-width: 1024px) 
   and (max-device-width: 1280px){ 
     .show-chart{
-      width: 197px;
+      width: 130px;
       height: 50px;
     }
 }
