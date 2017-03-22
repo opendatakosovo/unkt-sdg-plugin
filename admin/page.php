@@ -73,8 +73,8 @@
                 <th>Date</th>
                 <th>Value</th>
                 <th>Target Value</th>
-                <th>Notes</th>
                 <th>Source</th>
+                <th>Notes</th>
                 <th>Actions</th>
             </tr>
             </thead>
