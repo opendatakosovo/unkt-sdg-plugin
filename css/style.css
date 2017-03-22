@@ -120,7 +120,7 @@
     font-weight:Medium;
     font-size: 20pt !important;
 	padding-left: 23px !important;
-    text-transform: none;
+	text-transform: uppercase;
 }
 .show-chart {
 	font-family: Roboto;
