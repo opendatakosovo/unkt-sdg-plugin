@@ -147,12 +147,13 @@
     font-family: Roboto !important;
     font-weight: 400;
     font-size: 16pt !important;
-    text-transform: uppercase;
+    text-transform: none;
     color: white;
 }
 
 .indicator-description-div {
     padding-left: 60px;
+    text-transform: none;
 }
 
 .indicator-title-div {

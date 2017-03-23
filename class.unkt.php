@@ -165,10 +165,10 @@ class Unkt
         global $wpdb;
         $query_sdg = array();
         $query_sdg = $wpdb->get_results("
-      SELECT *
-      FROM wp_sdg
-      WHERE s_number = $sid
-      ");
+          SELECT *
+          FROM wp_sdg
+          WHERE s_number = $sid;
+        ");
         return json_encode($query_sdg, JSON_PRETTY_PRINT);
     }
 
@@ -304,7 +304,7 @@ class Unkt
         $source_m = htmlspecialchars($_POST['source-m']);
 
         $update = "UPDATE wp_measurement 
-            SET date='$date', value='$value_m', target_value='$target_value_measurement',source_url='$source_m',notes='$notes' 
+            SET date='$date', value='$value_m', source_url='$source_m',notes='$notes' 
             WHERE id='$meausrement_id'";
         $wpdb->query($update);
         $query_targets = array();

@@ -3,30 +3,30 @@
 function get_data($sid)
 {
     global $wpdb;
-    $query_indicators = array();
-    $query_indicators = $wpdb->get_results("
+    $query_targets = array();
+    $query_targets = $wpdb->get_results("
       SELECT wp_sdg.s_text, 
       wp_sdg.long_name,
       wp_sdg.short_name, 
-      wp_indicator.name,
-      wp_indicator.description,
-      wp_indicator.unit, 
-      wp_indicator.sid,
-      wp_indicator.id, 
+      wp_targets.name,
+      wp_targets.description,
+      wp_targets.unit, 
+      wp_targets.sid,
+      wp_targets.id, 
+      wp_targets.target_value, 
       wp_sdg.s_number, 
       wp_measurement.date, 
       wp_measurement.value, 
-      wp_measurement.target_value, 
       wp_measurement.notes
-      From wp_indicator
+      From wp_targets
       INNER JOIN  wp_sdg 
-      ON  wp_indicator.sid=wp_sdg.s_number
+      ON  wp_targets.sid=wp_sdg.s_number
       INNER JOIN  wp_measurement 
-      ON  wp_indicator.id=wp_measurement.iid
-      WHERE wp_indicator.sid = $sid
+      ON  wp_targets.id=wp_measurement.iid
+      WHERE wp_targets.sid = $sid
       ");
 
-    return json_encode($query_indicators, JSON_PRETTY_PRINT);
+    return json_encode($query_targets, JSON_PRETTY_PRINT);
 
 }
 

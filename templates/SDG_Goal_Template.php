@@ -4,7 +4,6 @@ if (isset($_GET)) {
     $data = get_data(sprintf("%0d", $_GET['goal']));
 
     $targetsData = json_decode($data, true);
-
     $sdg_raw_data = get_sdg_data(sprintf("%0d", $_GET['goal']));
     $sdgJsonData = json_decode($sdg_raw_data);
     $out = [];
@@ -14,7 +13,7 @@ if (isset($_GET)) {
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
 ?>
-<?php ?>
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
 
@@ -32,8 +31,6 @@ if (isset($_GET)) {
         for (var index in data) {
             var id = "indicator-chart-" + counter;
             counter++;
-            console.log(data[index]);
-            console.log(index);
             generateChart(id, data[index], index);
         }
         $('.sdg-title').text(sdg_title);
@@ -42,6 +39,7 @@ if (isset($_GET)) {
         $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
     function generateChart(id, data, title) {
+        console.log(data);
         $('.indicators').append("\
         <div class='row'>\
             <div class='row'>\
@@ -88,13 +86,23 @@ if (isset($_GET)) {
         for (var index in data) {
             chartCategories.push(data[index]['date']);
             chartSeries.push(parseInt(data[index]['value']))
-            chartTargetSeries.push(parseInt(data[index]['target_value']));
+            if(index == 0){
+                chartTargetSeries.push(parseInt(data[0]['value']));
+            }
+            if(index == data.length-1){
+                chartTargetSeries.push(parseInt(data[0]['target_value']));
+            }else{
+                chartTargetSeries.push(null);
+            }
         }
+        console.log(data);
+
         var chartOptions = {
             chart: {
                 renderTo: id,
                 backgroundColor: null,
-                width: $('.indicators').width()-30
+                width: $('.indicators').width()-30,
+
             },
             title: {
                 text: ''
@@ -164,16 +172,28 @@ if (isset($_GET)) {
                 }
             },
             series: [{
-                    data: chartTargetSeries,
+                    data:chartSeries ,
                     name: 'value',
                     color: 'white',
-                    dashStyle: 'solid'
+                    dashStyle: 'solid',
+                tooltip:{
+                    formatter:function  (){
+                        return 'Date: <b>' + this.x +
+                            '</b> Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
+                    }
+                }
                 },
                 {
-                    data: chartSeries,
+                    data: chartTargetSeries,
                     name: 'target value',
                     color: 'white',
-                    dashStyle: 'dash'
+                    dashStyle: 'dash',
+                    tooltip:{
+                        formatter:function  (){
+                            return 'Date: <b>' + this.x +
+                                '</b>Target Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
+                        }
+                    }
                 }],
             legend: {
                 enabled: false
@@ -181,14 +201,18 @@ if (isset($_GET)) {
             credits: {
                 enabled: false
             },
-            tooltip:{
-                formatter:function  (){
-                    return 'Date: <b>' + this.x +
-                        '</b> Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
+            tooltip: {
+                enabled: true,
+                shared : false
+            },
+            plotOptions: {
+                series: {
+                    connectNulls: true
                 }
-            }
+            },
 
-        }
+
+        };
         new Highcharts.Chart(chartOptions);
     }
     function convertToSlug(Text)
