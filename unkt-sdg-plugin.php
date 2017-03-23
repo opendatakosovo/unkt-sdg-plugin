@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: SDGs & Indicators
+ * Plugin Name: SDGs & targetss
  * Plugin URI: http://opendatakosovo.org
  * Description: #TODO: Add description for the plugin
  * Version: 1.0.0
@@ -10,7 +10,7 @@
  */
 define('SDGS__PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
-require_once( SDGS__PLUGIN_DIR . 'class.unkt.php' );
+require_once(SDGS__PLUGIN_DIR . 'class.unkt.php');
 $SDGPlugin = Unkt::init();
 
 // Add the template option so when we create a page we can make it an SDG Template page.
@@ -19,14 +19,14 @@ require_once(SDGS__PLUGIN_DIR . 'sdg-page.php');
 // Register activation and deactivation hooks
 
 register_activation_hook(__FILE__, 'activate');
-register_deactivation_hook(__FILE__,  'deactivate');
+register_deactivation_hook(__FILE__, 'deactivate');
 function activate()
 {
     global $wpdb;
     // Register On activation actions.
     // Everything inside the on_activate function is executed
     // once, when the plugin is activated.
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
     $create_sdg_table_query = "
             CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sdg` (
@@ -40,44 +40,40 @@ function activate()
             ) engine=InnoDB CHARSET=utf8;
         ";
 
-    dbDelta( $create_sdg_table_query );
+    dbDelta($create_sdg_table_query);
 
-    $create_indicators_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}indicator` (
-              `id` bigint(20)  NOT NULL AUTO_INCREMENT,
-              `sid` bigint(20)  NOT NULL,
-              `name` text NOT NULL,
-              `description` text NOT NULL,
-              `unit` text NOT NULL,
+    $create_targets_table_query = "
+            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}targets` (
+              id bigint(20)  NOT NULL AUTO_INCREMENT,
+              sid bigint(20)  NOT NULL,
+              name text NOT NULL,
+              description text NOT NULL,
+              unit text NOT NULL,
+              target_value text NOT NULL,
               PRIMARY KEY  (`id`),
               CONSTRAINT fk_sdg FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number)   
               ON DELETE CASCADE
               ON UPDATE CASCADE
-            ) ENGINE=INNODB;
+            ) ENGINE=INNODB CHARSET=utf8;
         ";
 
-    dbDelta( $create_indicators_table_query );
+    dbDelta($create_targets_table_query);
+
     $create_measurement_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}measurement` (
-              `id` bigint(20)  NOT NULL AUTO_INCREMENT,
-              `sid` bigint(20) NOT NULL,
-              `iid` bigint(20) NOT NULL,
-              `date` text NOT NULL,
-              `value` text NOT NULL,
-              `target_value` text NOT NULL,
-              `source_url` text NOT NULL,
-              `notes` text NOT NULL,
-              PRIMARY KEY  (id),
-              CONSTRAINT fk_sdg_number FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number)
-              ON DELETE CASCADE
-              ON UPDATE CASCADE,
-              CONSTRAINT fk_indicator_number FOREIGN KEY (iid) REFERENCES {$wpdb->prefix}indicator(id)
-              ON DELETE CASCADE
-              ON UPDATE CASCADE
-            ) ENGINE=INNODB;
+           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}measurement` (
+            id bigint(20) NOT NULL AUTO_INCREMENT, 
+            sid bigint(20) NOT NULL, 
+            iid bigint(20) NOT NULL, 
+            date text NOT NULL, 
+            value text NOT NULL, 
+            source_url text NOT NULL, 
+            notes text NOT NULL, 
+            PRIMARY KEY (id),
+            CONSTRAINT fk_sdg_number FOREIGN KEY (sid) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE, 
+            CONSTRAINT fk_targets_number FOREIGN KEY (iid) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE = INNODB CHARSET = utf8;
         ";
-
-    dbDelta( $create_measurement_table_query );
+    dbDelta($create_measurement_table_query);
     // Insert SDG's
     $insert_sdgs = "
             INSERT INTO `{$wpdb->prefix}sdg`( s_number, short_name, long_name, s_text )
@@ -106,9 +102,9 @@ function activate()
 function deactivate()
 {
     global $wpdb;
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}measurement`");
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}indicator`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}targets`");
     dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}sdg`");
 
 

@@ -55,9 +55,10 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Indicator</th>
+            <th>Target</th>
             <th>SDG</th>
             <th>Unit</th>
+            <th>Target value</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -72,7 +73,6 @@
                 <th>ID</th>
                 <th>Date</th>
                 <th>Value</th>
-                <th>Target Value</th>
                 <th>Source</th>
                 <th>Notes</th>
                 <th>Actions</th>
@@ -111,11 +111,6 @@
                                        id="edit-value-measurement" placeholder="Value">
                             </div>
                             <div class="form-group">
-                                <label for="value-target-measurement">Target value:</label>
-                                <input name="value_target_measurement" type="text" class="form-control number-values"
-                                       id="edit-target-value-measurement" placeholder="Target value">
-                            </div>
-                            <div class="form-group">
                                 <label for="notes-measurement">Notes:</label>
                                 <textarea name="edit-notes-measurement" type="text" class="form-control "
                                           id="edit-notes-measurement" placeholder="Notes"></textarea>
@@ -147,7 +142,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="add-measurement-form" name="add-measurement">
-                            <input type="hidden" id="measurement_indicator_id"/>
+                            <input type="hidden" id="measurement_targets_id"/>
                             <input type="hidden" id="measurement_sdg"/>
                             <div class="form-group">
                                 <label for="date">Date:</label>
@@ -163,11 +158,6 @@
                                 <label for="value-measurement">Value:</label>
                                 <input name="value_measurement" type="text" class="form-control number-values"
                                        id="value-measurement" placeholder="Value">
-                            </div>
-                            <div class="form-group">
-                                <label for="value-target-measurement">Target value:</label>
-                                <input name="value_target_measurement" type="text" class="form-control number-values"
-                                       id="target-value-measurement" placeholder="Target value">
                             </div>
                             <div class="form-group">
                                 <label for="notes-measurement">Notes:</label>
@@ -193,21 +183,21 @@
             <!-- end of measurement modal -->
         </div>
         <!-- end of modal measuremtn -->
-        <div id="edit-indicator-modal" class="modal fade" tabindex="-1">
+        <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Edit indicator</h4>
+                        <h4 class="modal-title">Edit targets</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="edit-indicator-form" name="edit_indicator_form">
+                        <form id="edit-targets-form" name="edit_targets_form">
                             <div class="form-group">
-                                <label for="indicator">Indicator:</label>
-                                <input name="indicator" type="text" class="form-control" id="edit_indicator"
-                                       placeholder="Indicator">
+                                <label for="targets">Targets:</label>
+                                <input name="targets" type="text" class="form-control" id="edit_targets"
+                                       placeholder="targets">
                             </div>
-                            <input type="hidden" id="edit_indicator_id"/>
+                            <input type="hidden" id="edit_targets_id"/>
                             <div class="form-group">
                                 <label for='sdg'>SDG:</label>
                                 <select id="edit-sdg-type" name="add_sdg" class="form-control" title="SDG is required">
@@ -250,6 +240,11 @@
                                        placeholder="Unit"/>
                             </div>
                             <div class="form-group">
+                                <label for="edit-target-value">Target value:</label>
+                                <input type="text" name="edit-target-value" class="form-control number-values" id="edit-target-value"
+                                       placeholder="Unit"/>
+                            </div>
+                            <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea name="description" class="form-control" id="edit-sdg-description"
                                           placeholder="Description"></textarea>
@@ -258,7 +253,7 @@
 
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                                 <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
-                                       id="edit-indicator-button">
+                                       id="edit-targets-button">
 
                             </div><!-- /.modal-content -->
                         </form>
@@ -272,8 +267,8 @@
 
         <div class="col-md-12" style="margin-top:20px">
             <div class="col-md-2">
-                <a class="btn btn-primary" href="#add-indicator-modal" data-toggle="modal" id="add-indicator-link"
-                   style="width:100%;">+ Add Indicator</a>
+                <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
+                   style="width:100%;">+ Add targets</a>
             </div>
 
         </div>
@@ -281,19 +276,19 @@
 
         <!-- Button trigger modal -->
 
-        <div id="add-indicator-modal" class="modal fade" tabindex="-1">
+        <div id="add-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add indicator</h4>
+                        <h4 class="modal-title">Add targets</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="add-indicator-form" name="add_indicator" method="POST">
+                        <form id="add-targets-form" name="add_targets" method="POST">
                             <div class="form-group">
-                                <label for="indicator">Indicator:</label>
-                                <input name="indicator" type="text" class="form-control" id="indicator"
-                                       placeholder="Indicator">
+                                <label for="targets">Targets:</label>
+                                <input name="targets" type="text" class="form-control" id="targets"
+                                       placeholder="targets">
                             </div>
                             <div class="form-group">
                                 <label for='sdg'>SDG:</label>
@@ -337,6 +332,10 @@
                                 <input type="text" name="add_unit" class="form-control" id="unit" placeholder="Unit"/>
                             </div>
                             <div class="form-group">
+                                <label for="add_target_value">Target value:</label>
+                                <input type="text" name="add_target_value" class="form-control" id="target_value" placeholder="Target value"/>
+                            </div>
+                            <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea name="description" class="form-control" id="sdg-description"
                                           placeholder="Description"></textarea>
@@ -344,7 +343,7 @@
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                                 <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
-                                       id="add-indicator-button">
+                                       id="add-targets-button">
 
                             </div>
                     </div><!-- /.modal-content -->
@@ -365,7 +364,7 @@
         return sOut;
     }
 
-    var newRowData = <?php echo json_encode($query_indicators); ?>;
+    var newRowData = <?php echo json_encode($query_targets); ?>;
     var iTableCounter = 1;
     var oTable;
     var oInnerTable;
@@ -374,9 +373,9 @@
     //Run On HTML Build
     $(document).ready(function () {
 
-        $('#edit-indicator-form').validate({
+        $('#edit-targets-form').validate({
             rules: {
-                edit_indicator: {
+                edit_targets: {
                     required: true,
                 },
                 edit_add_sdg: {
@@ -394,19 +393,20 @@
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
-                        'indicator_id': $('#edit_indicator_id').val(),
+                        'targets_id': $('#edit_targets_id').val(),
                         'description': $('#edit-sdg-description').val(),
-                        'indicator': $('#edit_indicator').val(),
+                        'targets': $('#edit_targets').val(),
                         'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
                         'unit': $("#edit-unit").val(),
-                        'action': 'edit_indicator'
+                        'target_value': $("#edit-target-value").val(),
+                        'action': 'edit_targets'
                     },
                     success: function (data) {
-                        var indicator_id = $('#edit_indicator_id').val();
+                        var targets_id = $('#edit_targets_id').val();
                         oTable.fnClearTable(0);
                         oTable.fnAddData(data);
                         oTable.fnDraw();
-                        $('#edit-indicator-modal').modal('hide');
+                        $('#edit-targets-modal').modal('hide');
                     }
                 });
             }
@@ -430,7 +430,7 @@
         function init_sub_table() {
             $('body').on('click', '.show-sub-table', function (e) {
                 e.preventDefault();
-                var indicator_id = $($(this).parent().parent().children()[1]).text();
+                var targets_id = $($(this).parent().parent().children()[1]).text();
 
                 var s_id = $($(this).parent().parent().children()[3]).text();
                 var nTr = $(this).parents('tr')[0];
@@ -448,22 +448,22 @@
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
                     dataType: 'json',
-                    data: {'id': indicator_id, 'action': 'get_indicator_measurement'},
+                    data: {'id': targets_id, 'action': 'get_targets_measurement'},
                     success: function (data) {
 
                         if (oTable.fnIsOpen(nTr)) {
 
                             /* This row is already open - close it */
                             this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
-                            this.id = indicator_id;
+                            this.id = targets_id;
                             oTable.fnClose(nTr);
 
                         }
                         else {
 
                             this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
-                            oTable.fnOpen(nTr, fnFormatDetails(indicator_id, detailsTableHtml), 'details');
-                            oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
+                            oTable.fnOpen(nTr, fnFormatDetails(targets_id, detailsTableHtml), 'details');
+                            oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                                 "bJQueryUI": true,
                                 "bFilter": true,
                                 "aaData": data,
@@ -473,10 +473,9 @@
                                     {"mDataProp": "id"},
                                     {"mDataProp": "date"},
                                     {"mDataProp": "value"},
-                                    {"mDataProp": "target_value"},
                                     {"mDataProp": "source_url"},
                                     {"mDataProp": "notes"},
-                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 ],
                                 "bPaginate": true,
                                 "oLanguage": {
@@ -510,9 +509,9 @@
                                     }
                                 ],
                             });
-                            $(this).attr('id', indicator_id)
+                            $(this).attr('id', targets_id)
                             $('tr.details .dataTables_info').html('');
-                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
 
                         }
 
@@ -539,8 +538,9 @@
                     {"mDataProp": "name"},
                     {"mDataProp": "short_name"},
                     {"mDataProp": "unit"},
+                    {"mDataProp": "target_value"},
                     {"mDataProp": "description"},
-                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                 ],
                 "oLanguage": {
                     "sInfo": "_TOTAL_ entries"
@@ -579,25 +579,26 @@
 
         init_table(newRowData);
         init_sub_table();
-        $('#add-indicator-form').on('submit', function (e) {
+        $('#add-targets-form').on('submit', function (e) {
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST,
                 dataType: 'json',
                 data: {
                     'description': $('#sdg-description').val(),
-                    'indicator': $('#indicator').val(),
+                    'targets': $('#targets').val(),
                     'unit': $('#unit').val(),
+                    'target_value': $('#target_value').val(),
                     'sdg': $("#sdg-type").children(":selected").attr("id"),
-                    'action': 'add_indicator'
+                    'action': 'add_targets'
                 },
                 success: function (data) {
-                    var indicator_id = $('#indicator').val();
+                    var targets_id = $('#targets').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
                     oTable.fnDraw();
                     $('.form-control').val('');
-                    $('#add-indicator-modal').modal('hide');
+                    $('#add-targets-modal').modal('hide');
 
                 }
 
@@ -617,7 +618,6 @@
                 success: function (data) {
                     $('#edit-date-measurement').val(data[0].date);
                     $('#edit-value-measurement').val(data[0].value);
-                    $('#edit-target-value-measurement').val(data[0].target_value);
                     $('#edit-notes-measurement').val(data[0].notes);
                     $('#edit-source-measurement').val(data[0].source_url);
                     $('#edit-measurement_id').val(data[0].id);
@@ -627,8 +627,8 @@
         $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
         $('body').on('click', '.add-measurment', function (e) {
 
-            // Get clicked Indicator ID
-            var indicator_id = $(this).attr('id');
+            // Get clicked targets ID
+            var targets_id = $(this).attr('id');
 
             // Get clicked SDG ID
             var sdg_id = $(this).attr('data-sdg');
@@ -636,8 +636,8 @@
             // Set measurement SDG ID
             $('#measurement_sdg').val(sdg_id);
 
-            // Set measurement indicator ID
-            $('#measurement_indicator_id').val(indicator_id);
+            // Set measurement targets ID
+            $('#measurement_targets_id').val(targets_id);
 
             // Get the measurements table id
             var table_id = $(this).parent()[0].id.replace('_info', '');
@@ -680,8 +680,8 @@
             e.preventDefault();
         });
         $('body').on('click', '.edit-modal-measurement', function (e) {
-            // Get clicked Indicator ID
-            var indicator_id = $(this).attr('id');
+            // Get clicked targets ID
+            var targets_id = $(this).attr('id');
 
             // Get clicked SDG ID
             var sdg_id = $(this).attr('data-sdg');
@@ -689,8 +689,8 @@
             // Set measuremend SDG ID
             $('#measurement_sdg').val(sdg_id);
 
-            // Set measurement indicator ID
-            $('#measurement_indicator_id').val(indicator_id);
+            // Set measurement targets ID
+            $('#measurement_targets_id').val(targets_id);
 
             // Get the current date of the measurement
             var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
@@ -760,7 +760,7 @@
             },
             submitHandler: function (form) {
 
-                var indicator_id = $('#measurement_indicator_id').val();
+                var targets_id = $('#measurement_targets_id').val();
 
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -768,19 +768,19 @@
                     dataType: 'json',
                     data: {
                         'm-sdg': $('#measurement_sdg').val(),
-                        'indicator_id': $('#measurement_indicator_id').val(),
+                        'targets_id': $('#measurement_targets_id').val(),
                         'date-m': $('#date-measurement').val(),
                         'value-m': $('#value-measurement').val(),
-                        'target-value-measurement': $('#target-value-measurement').val(),
                         'notes': $("#notes-measurement").val(),
                         'source-m': $("#source-measurement").val(),
                         'action': 'add_measurement'
                     },
                     success: function (data) {
-                        var indicator_id = data[0].iid;
+                        console.log(data)
+                        var targets_id = data[0].iid;
                         var s_id = data[0].sid;
-                        $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
-                        oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
+                        $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+                        oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                             "bFilter": true,
                             "aaData": data,
                             "bSort": true, // disables sorting
@@ -788,10 +788,9 @@
                                 {"mDataProp": "id"},
                                 {"mDataProp": "date"},
                                 {"mDataProp": "value"},
-                                {"mDataProp": "target_value"},
                                 {"mDataProp": "source_url"},
                                 {"mDataProp": "notes"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -827,7 +826,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
                         $('#add-measurement-modal').modal('hide');
                         $('#add-measurement-form')[0].reset();
 
@@ -865,17 +864,16 @@
                         'meausrement_id': measurement_id,
                         'date-m': $('#edit-date-measurement').val(),
                         'value-m': $('#edit-value-measurement').val(),
-                        'target-value-measurement': $('#edit-target-value-measurement').val(),
                         'notes': $("#edit-notes-measurement").val(),
                         'source-m': $("#edit-source-measurement").val(),
                         'action': 'edit_measurement'
                     },
                     success: function (data) {
 
-                        var indicator_id = data[0].iid;
+                        var targets_id = data[0].iid;
                         var s_id = data[0].sid;
-                        $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
-                        oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
+                        $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+                        oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                             "bJQueryUI": true,
                             "aaData": data,
                             "bSort": true, // disables sorting
@@ -883,10 +881,9 @@
                                 {"mDataProp": "id"},
                                 {"mDataProp": "date"},
                                 {"mDataProp": "value"},
-                                {"mDataProp": "target_value"},
                                 {"mDataProp": "source_url"},
                                 {"mDataProp": "notes"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -922,7 +919,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
                         $('#edit-measurement-modal').modal('hide');
                         $('.form-control').val('');
                     }
@@ -932,18 +929,19 @@
 
             }
         });
-        $('body').on('click', '.edit-modal-indicator', function (e) {
-            var indicator_id = $($(this).parent().parent().children()[1]).text();
+        $('body').on('click', '.edit-modal-targets', function (e) {
+            var targets_id = $($(this).parent().parent().children()[1]).text();
 
             $.ajax({
                 type: "POST",
-                data: {'id': indicator_id, 'action': 'get_indicator'},
+                data: {'id': targets_id, 'action': 'get_targets'},
                 dataType: 'json',
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
-                    $('#edit_indicator_id').val(data[0].id);
-                    $('#edit_indicator').val(data[0].name);
+                    $('#edit_targets_id').val(data[0].id);
+                    $('#edit_targets').val(data[0].name);
                     $('#edit-unit').val(data[0].unit);
+                    $('#edit-target-value').val(data[0].target_value);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
                     $('#edit-sdg-description').val(data[0].description);
                 },
@@ -953,20 +951,20 @@
             });
             e.preventDefault();
         })
-        $('body').on('click', '.remove-indicator', function (e) {
+        $('body').on('click', '.remove-targets', function (e) {
             e.preventDefault();
-            var indicator_id = $($(this).parent().parent().children()[1]).text();
+            var targets_id = $($(this).parent().parent().children()[1]).text();
             var check_if_is_empty = 0;
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST', //or POST
                 dataType: 'json',
-                data: {'id': indicator_id, 'action': 'check_indicator_is_empty'},
+                data: {'id': targets_id, 'action': 'check_targets_is_empty'},
                 success: function (data) {
                     check_if_is_empty = data['a'];
                     if (check_if_is_empty == 1) {
                         BootstrapDialog.show({
-                            message: 'The indicator has measurements, are you sure you want to delete',
+                            message: 'The targets has measurements, are you sure you want to delete',
                             buttons: [{
                                 icon: 'glyphicon glyphicon-send',
                                 label: 'OK',
@@ -977,7 +975,7 @@
                                         url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
-                                        data: {'id': indicator_id, 'action': 'remove_indicator_measurements'},
+                                        data: {'id': targets_id, 'action': 'remove_targets_measurements'},
                                         success: function (data) {
                                             oTable.fnClearTable(0);
                                             oTable.fnAddData(data);
@@ -997,7 +995,7 @@
                         });
                     } else {
                         BootstrapDialog.show({
-                            message: 'Are you sure you want to delete the indicator?',
+                            message: 'Are you sure you want to delete the targets?',
                             buttons: [{
                                 icon: 'glyphicon glyphicon-send',
                                 label: 'OK',
@@ -1008,7 +1006,7 @@
                                         url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                                         type: 'POST', //or POST
                                         dataType: 'json',
-                                        data: {'id': indicator_id, 'action': 'remove_indicator'},
+                                        data: {'id': targets_id, 'action': 'remove_targets'},
                                         success: function (data) {
                                             oTable.fnClearTable(0);
                                             oTable.fnAddData(data);
@@ -1062,11 +1060,11 @@
                                             'action': 'remove_measurement'
                                         },
                                         success: function (data) {
-                                            var indicator_id = data[0].iid;
+                                            var targets_id = data[0].iid;
                                             var s_id = data[0].sid;
-                                            $('#exampleTable_' + indicator_id).dataTable().fnDestroy();
+                                            $('#exampleTable_' + targets_id).dataTable().fnDestroy();
 
-                                            oInnerTable = $("#exampleTable_" + indicator_id).dataTable({
+                                            oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                                                 "bJQueryUI": true,
                                                 "aaData": data,
                                                 "bSort": true, // disables sorting
@@ -1074,10 +1072,9 @@
                                                     {"mDataProp": "id"},
                                                     {"mDataProp": "date"},
                                                     {"mDataProp": "value"},
-                                                    {"mDataProp": "target_value"},
                                                     {"mDataProp": "source_url"},
                                                     {"mDataProp": "notes"},
-                                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-indicator' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-measurement-modal' class='edit-modal-measurement' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                                 ],
                                                 "bPaginate": true,
 
@@ -1113,7 +1110,7 @@
                                                 ]
                                             });
                                             $('tr.details .dataTables_info').html('');
-                                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
                                             $('#edit-measurement-modal').modal('hide');
                                             $('.form-control').val('');
                                         }
@@ -1132,7 +1129,7 @@
                         });
                     } else {
                         BootstrapDialog.show({
-                            message: 'Are you sure you want to delete the indicator?',
+                            message: 'Are you sure you want to delete the targets?',
                             buttons: [{
                                 icon: 'glyphicon glyphicon-send',
                                 label: 'OK',
@@ -1145,7 +1142,7 @@
                                         dataType: 'json',
                                         data: {
                                             'id': measurement_id,
-                                            'action': 'remove_last_measurement_indicator'
+                                            'action': 'remove_last_measurement_targets'
                                         },
                                         success: function (data) {
                                             init_sub_table();
@@ -1170,7 +1167,8 @@
         });
 
 
-        var indicators_array = <?php echo json_encode($query_indicators); ?>;
+        var targets_array = <?php echo json_encode($query_targets); ?>;
+        console.log(targets_array);
     });
 
 

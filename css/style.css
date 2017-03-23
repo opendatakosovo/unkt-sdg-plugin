@@ -1,171 +1,224 @@
-.sdg-goal:hover{
-	box-shadow: 0 1px 8px gray;
-}
-.sdg-row {
-	padding-bottom: 30px;
-}
-.sdg-goal-page{
-	/*padding-top: 50px;*/
-	margin-right: 15px !important;
-}
-.sdg-goal-page-01{
-	background-color: #e5233b;;
-}
-.sdg-goal-page-02{
-	background-color: #dda73a;;
-}
-.sdg-goal-page-03{
-	background-color: #4ca146;
-}
-.sdg-goal-page-04{
-	background-color: #c7212f;
-}
-.sdg-goal-page-05{
-	background-color: #ef402d;
-}
-.sdg-goal-page-06{
-	background-color: #27bfe6;
-}
-.sdg-goal-page-07{
-	background-color: #fbc412;
-}
-.sdg-goal-page-08{
-	background-color: #a31c44;
-}
-.sdg-goal-page-09{
-	background-color: #f26a2e;
-}
-.sdg-goal-page-10{
-	background-color: #de1768;
-}
-.sdg-goal-page-11{
-	background-color: #f89d2a;
-}
-.sdg-goal-page-12{
-	background-color: #bf8d2c;
-}
-.sdg-goal-page-13{
-	background-color: #407f46;
-}
-.sdg-goal-page-14{
-	background-color: #1f97d4;
-}
-.sdg-goal-page-15{
-	background-color: #59ba47;
-}
-.sdg-goal-page-16{
-	background-color: #136a9f;
-}
-.sdg-goal-page-17{
-	background-color: #14496b;
+.sdg-goal:hover {
+    box-shadow: 0 1px 8px gray;
 }
 
-.sdg-goal-page h1{
-	color:white;
+.sdg-row {
+    padding-bottom: 30px;
 }
-.sdg-goal-page h2{
-	color:white;
+
+.sdg-goal-page {
+     padding-top: 50px;
 }
-.sdg-goal-page h3{
-	color:white !important;
+
+.sdg-goal-page-01 {
+    background-color: #e5233b;;
 }
-.sdg-goal-page h4{
-	color:white !important;
+
+.sdg-goal-page-02 {
+    background-color: #dda73a;;
 }
-.sdg-goal-page h5{
-	color:white !important;
+
+.sdg-goal-page-03 {
+    background-color: #4ca146;
 }
+
+.sdg-goal-page-04 {
+    background-color: #c7212f;
+}
+
+.sdg-goal-page-05 {
+    background-color: #ef402d;
+}
+
+.sdg-goal-page-06 {
+    background-color: #27bfe6;
+}
+
+.sdg-goal-page-07 {
+    background-color: #fbc412;
+}
+
+.sdg-goal-page-08 {
+    background-color: #a31c44;
+}
+
+.sdg-goal-page-09 {
+    background-color: #f26a2e;
+}
+
+.sdg-goal-page-10 {
+    background-color: #de1768;
+}
+
+.sdg-goal-page-11 {
+    background-color: #f89d2a;
+}
+
+.sdg-goal-page-12 {
+    background-color: #bf8d2c;
+}
+
+.sdg-goal-page-13 {
+    background-color: #407f46;
+}
+
+.sdg-goal-page-14 {
+    background-color: #1f97d4;
+}
+
+.sdg-goal-page-15 {
+    background-color: #59ba47;
+}
+
+.sdg-goal-page-16 {
+    background-color: #136a9f;
+}
+
+.sdg-goal-page-17 {
+    background-color: #14496b;
+}
+
+.sdg-goal-page h1 {
+    color: white;
+}
+
+.sdg-goal-page h2 {
+    color: white;
+}
+
+.sdg-goal-page h3 {
+    color: white !important;
+}
+
+.sdg-goal-page h4 {
+    color: white !important;
+}
+
+.sdg-goal-page h5 {
+    color: white !important;
+}
+
 .single-goal-image {
-	max-width: 90% !important;
+    max-width: 90% !important;
     margin-left: 20px !important;
 }
+
 .indicators {
     height: auto;
     padding-left: 50px !important;
-	min-height: 844px !important;
+    min-height: 844px !important;
 }
-.sdg-title{
-	color: white !important;
-    font-family: Roboto ;
-	font-weight: 500;
-    font-size: 31pt ;
-    text-align: left ;
-    margin-top: 50px ;
-    line-height: 40px ;
-	margin-left: 55px;
-	margin-bottom: 20px;
+
+.sdg-title {
+    color: white !important;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 31pt;
+    text-align: left;
+    margin-top: 50px;
+    line-height: 40px;
+    margin-left: 55px;
+    margin-bottom: 20px;
     text-transform: none;
 }
-.sdg-description{
-	font-size:18pt ;
-    font-family: Roboto ;
-	font-weight: 400;
-	line-height: 25px ;
-	padding-left: 60px ;
+
+.sdg-description {
+    font-size: 18pt;
+    font-family: Roboto;
+    font-weight: 400;
     text-align: left;
     text-transform: none;
-	color:white;
+    color: white;
 }
-.indicator-chart-container{
-	width:90%;
+
+.indicator-chart-container {
+    width: 90%;
 }
+
 .indicator-title {
-	font-family: Roboto !important;
-	font-weight: 500;
-	font-size: 20pt !important;
-	text-transform: uppercase;
-	color: white;
+    font-family: Roboto !important;
+    font-weight: 500;
+    font-size: 20pt !important;
+    text-transform: uppercase;
+    color: white;
 }
+
 .indicator-description {
-	font-family: Roboto !important;
-	font-weight: 400;
-	font-size: 16pt !important;
-	text-transform: uppercase;
-	color: white;
+    font-family: Roboto !important;
+    font-weight: 400;
+    font-size: 16pt !important;
+    text-transform: uppercase;
+    color: white;
 }
-.indicator-description-div{
-	padding-left:60px;
+
+.indicator-description-div {
+    padding-left: 60px;
 }
+
 .indicator-title-div {
-	padding-left: 45px;
-	margin-bottom:20px;
+    padding-left: 45px;
+    margin-bottom: 20px;
 }
+
 .show-chart {
-	font-family: Roboto;
-	background-color: #fff !important;
-	border: none;
-	color: red;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 12pt;
-	width: 130px;
-	height: 41px;
-	margin-bottom: 10px;
-	margin-left: -20px;
+    font-family: Roboto;
+    background-color: #fff !important;
+    border: none;
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12pt;
+    width: 130px;
+    height: 41px;
+    margin-bottom: 10px;
+    margin-left: -20px;
 }
-.sidebar{
-	float: left;
+
+.sidebar {
+    float: left;
     padding: 0;
     width: 25%;
 }
+
 div#primary {
     /*width: 75% !important;*/
-    float:left;
+    float: left;
 }
-.indicator-chart-description{
-	font-size: 16pt !important
+
+.indicator-chart-description {
+    font-size: 16pt !important
 }
-.white-line{
-	padding-left: 40px !important;
-	padding-right: 40px !important;
-	width: 76%;
-	margin-left: 4%;
+
+.white-line {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    width: 76%;
+    margin-left: 4%;
 }
+
 .highcharts-button {
-	fill-rule: initial !important;
-	fill-opacity: 0 !important;
+    fill-rule: initial !important;
+    fill-opacity: 0 !important;
 }
+
 .indicators.row {
-	margin-top: 50px;
+    margin-top: 50px;
+}
+
+.sdg-main-description {
+    text-transform: none;
+    padding: 50px;
+}
+.article-inner{
+    margin-top:0px;
+}
+.article-content {
+    padding: 20px !important;
+}
+.article-inner{
+    padding-top:0px;
+}
+.sidebar{
+
 }

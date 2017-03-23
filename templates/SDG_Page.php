@@ -10,51 +10,47 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/style.css' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/responsive.css' ?>>
+<script>
+    $(document).ready(function () {
+        // Custom template javascript
+//        if ($('.agencies').width() > 100) {
+//            $('div#primary').width("75%");
+//            $(window).resize(function () {
+//                if ($(window).width() < 991) {
+//                    $('div#primary').width("100%");
+//                } else {
+//                    $('div#primary').width("75%");
+//                }
+//            });
+//        }
 
-    <div id="main-content" class="main-content">
+    });
 
-        <?php
-        if (is_front_page() && twentyfourteen_has_featured_posts()) {
-            // Include the featured content template.
-            get_template_part('featured-content');
-        }
-        ?>
-        <script>
-            $(document).ready(function () {
-                // Custom template javascript
-                if ($('.agencies').width() > 100) {
-                    $('div#primary').width("75%");
-                    $(window).resize(function () {
-                        console.log($('.agencies').width());
-                        if ($(window).width() < 991) {
-                            $('div#primary').width("100%");
-                        } else {
-                            $('div#primary').width("75%");
+</script>
+<div class="content content-article">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="article-wrapper">
+                <div class="article-inner">
+                    <div class="article-sidebar">
+                    </div>
+                    <div class="article-content">
+                        <?php
+                        if (isset($_GET)) {
+                            if ($_GET['goal']) {
+                                include('SDG_Goal_Template.php');
+                            } else {
+                                include('SDG_Goals.php');
+                            }
                         }
-                    });
-                }
+                        ?>
+                    </div>
+                </div>
+                <?php get_sidebar(); ?>
 
-            });
-
-        </script>
-        <div id="primary" class="content-area">
-            <div id="content" class="site-content" role="main">
-                <?php
-                if (isset($_GET)) {
-                    if ($_GET['goal']) {
-                        include('SDG_Goal_Template.php');
-                    } else {
-                        include('SDG_Goals.php');
-                    }
-                }
-                ?>
-
-            </div><!-- #content -->
-
-        </div><!-- #primary -->
-        <?php get_sidebar(); ?>
-
-    </div><!-- #main-content -->
-
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php get_footer(); ?>

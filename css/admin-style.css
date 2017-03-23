@@ -24,3 +24,12 @@ div.row{
     font-weight: normal;
      color: #428bca !important;
 }
+#wpbody-content {
+    background-color: white;
+}
+a.edit-modal-measurement {
+    padding: 10px;
+}
+.edit-targets{
+    padding: 10px;
+}

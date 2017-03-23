@@ -33,20 +33,20 @@ class Unkt
 
 
         if (is_admin()) {
-            add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator'));
-            add_action('wp_ajax_edit_indicator', array('Unkt', 'edit_indicator'));
-            add_action('wp_ajax_remove_indicator_measurements', array('Unkt', 'remove_indicator_measurements'));
-            add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
+            add_action('wp_ajax_add_targets', array('Unkt', 'add_targets'));
+            add_action('wp_ajax_edit_targets', array('Unkt', 'edit_targets'));
+            add_action('wp_ajax_remove_targets_measurements', array('Unkt', 'remove_targets_measurements'));
+            add_action('wp_ajax_remove_targets', array('Unkt', 'remove_targets'));
             add_action('wp_ajax_get_measurement_data', array('Unkt', 'get_measurement_data'));
             add_action('wp_ajax_edit_measurement', array('Unkt', 'edit_measurement'));
             add_action('wp_ajax_load_measurement_selected', array('Unkt', 'load_measurement_selected'));
             add_action('wp_ajax_add_measurement', array('Unkt', 'add_measurement'));
             add_action('wp_ajax_check_size_of_measurement', array('Unkt', 'check_size_of_measurement'));
             add_action('wp_ajax_remove_measurement', array('Unkt', 'remove_measurement'));
-            add_action('wp_ajax_remove_last_measurement_indicator', array('Unkt', 'remove_last_measurement_indicator'));
-            add_action('wp_ajax_get_indicator_measurement', array('Unkt', 'get_indicator_measurement'));
-            add_action('wp_ajax_check_indicator_is_empty', array('Unkt', 'check_indicator_is_empty'));
-            add_action('wp_ajax_get_indicator', array('Unkt', 'get_indicator'));
+            add_action('wp_ajax_remove_last_measurement_targets', array('Unkt', 'remove_last_measurement_targets'));
+            add_action('wp_ajax_get_targets_measurement', array('Unkt', 'get_targets_measurement'));
+            add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
+            add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
         }
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
@@ -107,8 +107,8 @@ class Unkt
     public static function SDGPluginMenu()
     {
         add_menu_page(
-            'SDGs & Indicators',
-            'SDGs & Indicators',
+            'SDGs & targets',
+            'SDGs & targets',
             'manage_options',
             __FILE__,
             array('Unkt', 'RenderPage'),
@@ -119,11 +119,11 @@ class Unkt
     public static function RenderPage()
     {
         global $wpdb;
-        $query_indicators = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.sid,wp_indicator.unit, wp_indicator.id,wp_sdg.s_number 
-          From wp_indicator 
+        $query_targets = $wpdb->get_results("
+          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.sid,wp_targets.unit,wp_targets.target_value, wp_targets.id,wp_sdg.s_number 
+          From wp_targets 
           INNER JOIN  wp_sdg 
-          ON  wp_indicator.sid=wp_sdg.s_number");
+          ON  wp_targets.sid=wp_sdg.s_number");
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
 
@@ -133,30 +133,30 @@ class Unkt
     {
         $sid = sprintf("%0d", $_GET['goal']);
         global $wpdb;
-        $query_indicators = array();
-        $query_indicators = $wpdb->get_results("
+        $query_targets = array();
+        $query_targets = $wpdb->get_results("
       SELECT wp_sdg.s_text, 
       wp_sdg.long_name,
       wp_sdg.short_name, 
-      wp_indicator.name,
-      wp_indicator.description,
-      wp_indicator.unit, 
-      wp_indicator.sid,
-      wp_indicator.id, 
+      wp_targets.name,
+      wp_targets.description,
+      wp_targets.unit, 
+      wp_targets.sid,
+      wp_targets.id, 
       wp_sdg.s_number, 
       wp_measurement.date, 
       wp_measurement.value, 
       wp_measurement.target_value, 
       wp_measurement.notes
-      From wp_indicator
+      From wp_targets
       INNER JOIN  wp_sdg 
-      ON  wp_indicator.sid=wp_sdg.s_number
+      ON  wp_targets.sid=wp_sdg.s_number
       INNER JOIN  wp_measurement 
-      ON  wp_indicator.id=wp_measurement.iid
-      WHERE wp_indicator.sid = $sid
+      ON  wp_targets.id=wp_measurement.iid
+      WHERE wp_targets.sid = $sid
       ");
 
-        return json_encode($query_indicators, JSON_PRETTY_PRINT);
+        return json_encode($query_targets, JSON_PRETTY_PRINT);
 
     }
 
@@ -192,54 +192,54 @@ class Unkt
         wp_enqueue_style('prefix_datatables');
     }
 
-    public static function add_indicator()
+    public static function add_targets()
     {
 
         global $wpdb;
 
-        $name = htmlspecialchars($_POST["indicator"]);
+        $name = htmlspecialchars($_POST["targets"]);
         $description = htmlspecialchars($_POST['description']);
         $sid = intval(htmlspecialchars($_POST['sdg']));
         $unit = htmlspecialchars($_POST['unit']);
-
+        $target_value = htmlspecialchars($_POST['target_value']);
         $insert = "
-        INSERT INTO `{$wpdb->prefix}indicator`( sid, name, description, unit )
-        VALUES('$sid','$name','$description','$unit'); ";
+        INSERT INTO `{$wpdb->prefix}targets`( sid, name, description, unit, target_value )
+        VALUES('$sid','$name','$description','$unit', '$target_value'); ";
         $wpdb->query($insert);
         echo self::get_data();
         die();
     }
 
-    public static function edit_indicator()
+    public static function edit_targets()
     {
 
         global $wpdb;
-        $id = htmlspecialchars($_POST["indicator_id"]);
-        $name = htmlspecialchars($_POST["indicator"]);
+        $id = htmlspecialchars($_POST["targets_id"]);
+        $name = htmlspecialchars($_POST["targets"]);
         $description = htmlspecialchars($_POST['description']);
         $sid = intval(htmlspecialchars($_POST['sdg']));
         $unit = htmlspecialchars($_POST['unit']);
-
+        $target_value = htmlspecialchars($_POST['target_value']);
         $update = "
-        UPDATE wp_indicator 
-        SET name='$name', description='$description', sid=$sid, unit='$unit' 
+        UPDATE wp_targets
+        SET name='$name', description='$description', sid=$sid, unit='$unit', target_value = '$target_value'
         WHERE id='$id'";
         $wpdb->query($update);
         echo self::get_data();
         die();
     }
 
-    public static function get_indicator()
+    public static function get_targets()
     {
 
         global $wpdb;
-        $indicator_id = $_POST['id'];
-        $query_indicators = $wpdb->get_results(" SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number From wp_indicator INNER JOIN  wp_sdg ON  wp_indicator.sid=wp_sdg.s_number and wp_indicator.id=$indicator_id");
-        echo json_encode($query_indicators);
+        $targets_id = $_POST['id'];
+        $query_targets = $wpdb->get_results(" SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value, wp_targets.sid,wp_targets.id,wp_sdg.s_number From wp_targets INNER JOIN  wp_sdg ON  wp_targets.sid=wp_sdg.s_number and wp_targets.id=$targets_id");
+        echo json_encode($query_targets);
         die();
     }
 
-    public static function remove_indicator_measurements()
+    public static function remove_targets_measurements()
     {
 
         global $wpdb;
@@ -251,7 +251,7 @@ class Unkt
             WHERE iid=$id;
         ");
         $wpdb->query("
-            DELETE FROM `{$wpdb->prefix}indicator`
+            DELETE FROM `{$wpdb->prefix}targets`
     
             WHERE id=$id;
         ");
@@ -259,21 +259,21 @@ class Unkt
         die();
     }
 
-    public static function remove_indicator()
+    public static function remove_targets()
     {
 
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
-        $query_indicators = $wpdb->get_results("
+        $query_targets = $wpdb->get_results("
         SELECT iid From wp_measurement WHERE iid='$id'");
-        $count = sizeof($query_indicators);
+        $count = sizeof($query_targets);
         if ($count > 0) {
             $arr = array('a' => 1);
             echo json_encode($arr);
         }
         $wpdb->query("
-            DELETE FROM `{$wpdb->prefix}indicator`
+            DELETE FROM `{$wpdb->prefix}targets`
     
             WHERE id=$id;
         ");
@@ -286,10 +286,10 @@ class Unkt
 
         global $wpdb;
 
-        $indicator_id = htmlspecialchars($_POST['indicator_id']);
-        $query_indicators = $wpdb->get_results("
-        SELECT * From wp_measurement WHERE iid='$indicator_id'");
-        echo json_encode($query_indicators);
+        $targets_id = htmlspecialchars($_POST['targets_id']);
+        $query_targets = $wpdb->get_results("
+        SELECT * From wp_measurement WHERE iid='$targets_id'");
+        echo json_encode($query_targets);
         die();
     }
 
@@ -300,7 +300,6 @@ class Unkt
         $meausrement_id = htmlspecialchars($_POST["meausrement_id"]);
         $date = htmlspecialchars($_POST["date-m"]);
         $value_m = htmlspecialchars($_POST['value-m']);
-        $target_value_measurement = htmlspecialchars($_POST['target-value-measurement']);
         $notes = htmlspecialchars($_POST['notes']);
         $source_m = htmlspecialchars($_POST['source-m']);
 
@@ -308,15 +307,15 @@ class Unkt
             SET date='$date', value='$value_m', target_value='$target_value_measurement',source_url='$source_m',notes='$notes' 
             WHERE id='$meausrement_id'";
         $wpdb->query($update);
-        $query_indicators = array();
-        $query_indicators = $wpdb->get_results("
+        $query_targets = array();
+        $query_targets = $wpdb->get_results("
           SELECT * From wp_measurement WHERE id='$meausrement_id'");
-        $json = json_encode($query_indicators[0]);
+        $json = json_encode($query_targets[0]);
         $obj = json_decode($json);
         $iid = $obj->iid;
-        $query_indicators1 = $wpdb->get_results("
+        $query_targets1 = $wpdb->get_results("
           SELECT * From wp_measurement WHERE iid='$iid'");
-        echo json_encode($query_indicators1);
+        echo json_encode($query_targets1);
         die();
 
     }
@@ -326,9 +325,9 @@ class Unkt
         global $wpdb;
 
         $measurement_id = htmlspecialchars($_POST['id']);
-        $query_indicators = $wpdb->get_results("
+        $query_targets = $wpdb->get_results("
           SELECT * From wp_measurement WHERE id='$measurement_id'");
-        echo json_encode($query_indicators);
+        echo json_encode($query_targets);
         die();
     }
 
@@ -336,10 +335,9 @@ class Unkt
     {
         global $wpdb;
 
-        $indicator_id = htmlspecialchars($_POST['indicator_id']);
+        $targets_id = htmlspecialchars($_POST['targets_id']);
         $date_m = htmlspecialchars($_POST['date-m']);
         $value_m = htmlspecialchars($_POST['value-m']);
-        $value_taget_m = htmlspecialchars($_POST['target-value-measurement']);
         $notes = htmlspecialchars($_POST['notes']);
         $source_m = htmlspecialchars($_POST['source-m']);
         $sdg_text = htmlspecialchars($_POST['m-sdg']);
@@ -347,23 +345,23 @@ class Unkt
             $sdg_id = htmlspecialchars($_POST['m-sdg']);
         } else {
             /* find sdg-id by short-name */
-            $query_indicators = array();
-            $query_indicators = $wpdb->get_results("
+            $query_targets = array();
+            $query_targets = $wpdb->get_results("
         SELECT short_name,id From wp_sdg WHERE short_name='$sdg_text'");
-            $json = json_encode($query_indicators[0]);
+            $json = json_encode($query_targets[0]);
             $obj = json_decode($json);
             $sdg_id = $obj->id;
         }
 
         /* found the id */
         $insert = " 
-        INSERT INTO `{$wpdb->prefix}measurement`(sid,iid,date,value,target_value,source_url,notes)
-        VALUES('$sdg_id','$indicator_id','$date_m','$value_m','$value_taget_m','$source_m','$notes'); ";
+        INSERT INTO `{$wpdb->prefix}measurement`(sid,iid,date,value,source_url,notes)
+        VALUES('$sdg_id','$targets_id','$date_m','$value_m','$source_m','$notes'); ";
         $wpdb->query($insert);
 
-        $query_indicators = $wpdb->get_results("
-            SELECT * From wp_measurement WHERE iid='$indicator_id'");
-        echo json_encode($query_indicators);
+        $query_targets = $wpdb->get_results("
+            SELECT * From wp_measurement WHERE iid='$targets_id'");
+        echo json_encode($query_targets);
         die();
     }
 
@@ -373,15 +371,15 @@ class Unkt
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
-        $query_indicators = array();
-        $query_indicators = $wpdb->get_results("
+        $query_targets = array();
+        $query_targets = $wpdb->get_results("
           SELECT * From wp_measurement WHERE id='$id'");
-        $json = json_encode($query_indicators[0]);
+        $json = json_encode($query_targets[0]);
         $obj = json_decode($json);
         $iid = $obj->iid;
-        $query_indicators1 = $wpdb->get_results("
+        $query_targets1 = $wpdb->get_results("
         SELECT * From wp_measurement WHERE iid='$iid'");
-        if (sizeof($query_indicators1) > 1) {
+        if (sizeof($query_targets1) > 1) {
             $arr = array('a' => 1);
             echo json_encode($arr);
         } else {
@@ -396,22 +394,22 @@ class Unkt
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
-        $query_indicators = $wpdb->get_results("
+        $query_targets = $wpdb->get_results("
           SELECT * From wp_measurement WHERE id='$id'");
-        $json = json_encode($query_indicators[0]);
+        $json = json_encode($query_targets[0]);
         $obj = json_decode($json);
         $iid = $obj->iid;
         $wpdb->query("
             DELETE FROM `{$wpdb->prefix}measurement`
             WHERE id=$id;
         ");
-        $query_indicators1 = $wpdb->get_results("
+        $query_targets1 = $wpdb->get_results("
         SELECT * From wp_measurement WHERE iid='$iid'");
-        echo json_encode($query_indicators1);
+        echo json_encode($query_targets1);
 
     }
 
-    public static function remove_last_measurement_indicator()
+    public static function remove_last_measurement_targets()
     {
         global $wpdb;
 
@@ -424,26 +422,26 @@ class Unkt
         die();
     }
 
-    public static function get_indicator_measurement()
+    public static function get_targets_measurement()
     {
         global $wpdb;
-        $indicator_id = htmlspecialchars($_POST['id']);
-        $query_indicators = $wpdb->get_results("
-            SELECT * From wp_measurement WHERE iid='$indicator_id'");
-        echo json_encode($query_indicators);
+        $targets_id = htmlspecialchars($_POST['id']);
+        $query_targets = $wpdb->get_results("
+            SELECT * From wp_measurement WHERE iid='$targets_id'");
+        echo json_encode($query_targets);
         die();
     }
 
-    public static function check_indicator_is_empty()
+    public static function check_targets_is_empty()
     {
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
-        $query_indicators = $wpdb->get_results("
+        $query_targets = $wpdb->get_results("
             SELECT iid 
             From wp_measurement 
             WHERE iid='$id'");
-        $count = sizeof($query_indicators);
+        $count = sizeof($query_targets);
         if ($count > 0) {
             $arr = array('a' => 1);
             echo json_encode($arr);
@@ -457,12 +455,12 @@ class Unkt
     public static function get_data()
     {
         global $wpdb;
-        $query_indicators = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_indicator.name,wp_indicator.description,wp_indicator.unit, wp_indicator.sid,wp_indicator.id,wp_sdg.s_number 
-          From wp_indicator 
+        $query_targets = $wpdb->get_results("
+          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value, wp_targets.sid,wp_targets.id,wp_sdg.s_number 
+          From wp_targets 
           INNER JOIN  wp_sdg 
-          ON  wp_indicator.sid=wp_sdg.s_number");
-        return json_encode($query_indicators);
+          ON  wp_targets.sid=wp_sdg.s_number");
+        return json_encode($query_targets);
 
     }
 

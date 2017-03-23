@@ -3,12 +3,12 @@ require_once(SDGS__PLUGIN_DIR . 'templates/functions.php');
 if (isset($_GET)) {
     $data = get_data(sprintf("%0d", $_GET['goal']));
 
-    $indicatorData = json_decode($data, true);
+    $targetsData = json_decode($data, true);
 
     $sdg_raw_data = get_sdg_data(sprintf("%0d", $_GET['goal']));
     $sdgJsonData = json_decode($sdg_raw_data);
     $out = [];
-    foreach ($indicatorData as $element) {
+    foreach ($targetsData as $element) {
         $out[$element['name']][] = ['date' => $element['date'], 'date' => $element['date'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
     }
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -214,7 +214,7 @@ if (isset($_GET)) {
                      src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
             </div>
 
-            <div class="col-md-7 col-xs-12 sdg-description">
+            <div class="col-md-7 col-md-offset-0 col-xs-10 col-xs-offset-1 sdg-description">
                 <span></span>
             </div>
         </div>
@@ -223,4 +223,12 @@ if (isset($_GET)) {
 
     </div>
 </div>
-</div>
+<style>
+    .article-content {
+        padding: 0 !important;
+    }
+    .sidebar {
+        margin-left: 16px !important;
+        width: 26%;
+    }
+</style>
