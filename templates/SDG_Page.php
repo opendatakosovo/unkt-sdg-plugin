@@ -10,23 +10,7 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/style.css' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/responsive.css' ?>>
-<script>
-    $(document).ready(function () {
-        // Custom template javascript
-//        if ($('.agencies').width() > 100) {
-//            $('div#primary').width("75%");
-//            $(window).resize(function () {
-//                if ($(window).width() < 991) {
-//                    $('div#primary').width("100%");
-//                } else {
-//                    $('div#primary').width("75%");
-//                }
-//            });
-//        }
 
-    });
-
-</script>
 <div class="content content-article">
     <div class="container-fluid">
         <div class="row">

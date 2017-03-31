@@ -8,9 +8,9 @@ if (isset($_GET)) {
     $sdgJsonData = json_decode($sdg_raw_data);
     $out = [];
     foreach ($targetsData as $element) {
-        $out[$element['name']][] = ['date' => $element['date'], 'date' => $element['date'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
+        $out[$element['name']][] = ['date' => $element['date'], 'target_date' => $element['target_date'], 'source' => $element['source_url'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
     }
-    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
 ?>
 
@@ -34,16 +34,16 @@ if (isset($_GET)) {
             generateChart(id, data[index], index);
         }
         $('.sdg-title').text(sdg_title);
-        $('.sdg-description').append(sdg_text);
+        $('.sdg-description').append('<span>');
+        $('.sdg-description').append(sdgData[0]['s_text']);
+        $('.sdg-description').append('</span>');
 
         $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
     function generateChart(id, data, title) {
-        console.log(data);
         $('.indicators').append("\
-        <div class='row'>\
             <div class='row'>\
-                <div class='col-md-9 col-xs-7 col-sm-9 indicator-title-div'>\
+                <div class='col-md-9 col-xs-7 col-sm-8 indicator-title-div'>\
                         <span class='indicator-title'>" + title + "</span>\
                 </div>\
                 <div class='col-md-3 col-xs-3 col-sm-3'>\
@@ -51,15 +51,15 @@ if (isset($_GET)) {
                 </div>\
             </div>\
             <div class='row'>\
-                <div class='row'>\
-                    <div class='col-md-11 col-xs-10 col-sm-10 indicator-description-div' id='" + id + "-description' >\
-                    </div>\
+                <div class='col-md-11 col-xs-10 col-sm-10 indicator-description-div' id='" + id + "-description' >\
                 </div>\
             </div>\
-            <div class='row'>\
-                <div id='" + id + "' class='col-md-10 col-xs-11 col-sm-11' style='display:none; width:100% !important; height: 300px'></div><hr class='white-line'>\
+            <div style='display:none;' class='row indicator-title-div'>\
+                <span class='source-url'>SOURCE: " + data[0]['source_url'] + "</span>\
             </div>\
-        </div>");
+            <div class='row'>\
+                <div id='" + id + "' class='col-md-10 col-xs-11 col-sm-11' style='display:none; margin-top:20px; margin-bottom:20px; width:92% !important; height: 300px'></div><hr class='white-line'>\
+            </div>");
         $('#' + id + '-chart').click(function (e) {
             var displayStatus = $('#' + id).css('display');
             if (displayStatus == 'none') {
@@ -78,181 +78,185 @@ if (isset($_GET)) {
             });
         });
         $('#' + id + '-description').append("\
-		<span class='indicator-description'>" + data[0]['description'] + "</span>\
-	");
+            <span class='indicator-description'>" + data[0]['description'] + "</span>\
+        ");
         var chartCategories = [];
         var chartSeries = [];
         var chartTargetSeries = [];
         for (var index in data) {
             chartCategories.push(data[index]['date']);
-            chartSeries.push(parseInt(data[index]['value']))
-            if(index == 0){
-                chartTargetSeries.push(parseInt(data[0]['value']));
+            chartSeries.push({'name':'Value','y':parseInt(data[index]['value']), 'source': data[index]['source']});
+            if (index == 0) {
+                chartTargetSeries.push({'name':'Starting target value:','y':parseInt(data[0]['value']), 'source': ''});
             }
-            if(index == data.length-1){
-                chartTargetSeries.push(parseInt(data[0]['target_value']));
-            }else{
+            if (index == data.length - 1) {
+                chartTargetSeries.push({'name':'Target value','y':parseInt(data[0]['target_value']), 'source': ''});
+
+                chartCategories.push(data[index]['target_date'])
+            } else {
                 chartTargetSeries.push(null);
             }
         }
-        console.log(data);
-
         var chartOptions = {
-            chart: {
-                renderTo: id,
-                backgroundColor: null,
-                width: $('.indicators').width()-30,
-
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: chartCategories,
-                lineWidth: 0,
-                minorGridLineWidth: 1,
-                lineColor: 'white',
-                labels: {
-                    enabled: false
-                },
-                tickLength: 0,
-                title: {
-                    enabled: false
-                }
-            },
-            yAxis: {
-                gridLineColor: 'transparent',
-                labels: {
-                    enabled: false
+                chart: {
+                    renderTo: id,
+                    backgroundColor: null,
+                    width: $('.indicators').width() - 30
                 },
                 title: {
-                    enabled: false
-                }
-            },
-            exporting: {
-                filename: convertToSlug(title),
-                buttons: {
-                    contextButton: {
-                        symbol: "url(<?php echo SDGS__PLUGIN_URL .'img/download-2-xxl.png' ?>)"
+                    text: ''
+                },
+                xAxis: {
+                    categories: chartCategories,
+                    lineWidth: 0,
+                    minorGridLineWidth: 1,
+                    lineColor: 'white',
+                    labels: {
+                        enabled: true,
+                        style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+                    },
+                    tickLength: 0,
+                    title: {
+                        enabled: false
                     }
                 },
-                chartOptions: {
-                    plotOptions: {
-                        series: {
-                            dataLabels: {
+                yAxis: {
+                    gridLineColor: 'transparent',
+                    labels: {
+                        enabled: true,
+                        style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+                    },
+                    title: {
+                        enabled: false
+                    }
+                },
+                exporting: {
+                    filename: convertToSlug(title),
+                    buttons: {
+                        contextButton: {
+                            symbol: "url(<?php echo SDGS__PLUGIN_URL . 'img/download-2-xxl.png' ?>)"
+                        }
+                    },
+                    chartOptions: {
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        xAxis: {
+                            lineWidth: 1,
+                            minorGridLineWidth: 1,
+                            lineColor: 'white',
+                            labels: {
+                                style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+                            },
+                            tickLength: 1,
+                            title: {
                                 enabled: true
                             }
-                        }
-                    },
-                    xAxis: {
-                        lineWidth: 1,
-                        minorGridLineWidth: 1,
-                        lineColor: 'gray',
-                        labels: {
-                            enabled: true
                         },
-                        tickLength: 1,
-                        title: {
-                            enabled: true
-                        }
-                    },
-                    yAxis: {
-                        gridLineColor: 'gray',
-                        labels: {
-                            enabled: true
+                        yAxis: {
+                            gridLineColor: 'white',
+                            labels: {
+                                style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+                            },
+                            title: {
+                                enabled: true
+                            }
                         },
-                        title: {
-                            enabled: true
+                        chart: {
+                            backgroundColor: 'lightblue',
                         }
-                    },
-                    chart:{
-                        backgroundColor: 'lightblue',
-                    }
 
-                }
-            },
-            series: [{
-                    data:chartSeries ,
-                    name: 'value',
-                    color: 'white',
-                    dashStyle: 'solid',
-                tooltip:{
-                    formatter:function  (){
-                        return 'Date: <b>' + this.x +
-                            '</b> Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
                     }
-                }
                 },
-                {
-                    data: chartTargetSeries,
-                    name: 'target value',
-                    color: 'white',
-                    dashStyle: 'dash',
-                    tooltip:{
-                        formatter:function  (){
-                            return 'Date: <b>' + this.x +
-                                '</b>Target Value: <b>' + this.y + ' '+ data[0]['unit']+ '';
-                        }
+                navigation: {
+                    buttonOptions: {
+                        verticalAlign: 'right',
+                        x:-15
                     }
-                }],
-            legend: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-            tooltip: {
-                enabled: true,
-                shared : false
-            },
-            plotOptions: {
-                series: {
-                    connectNulls: true
+                },
+                series: [{
+                    data: chartSeries,
+                    name: 'Value',
+                    color: 'white',
+                    dashStyle: 'solid'
+                },
+                    {
+                        data: chartTargetSeries,
+                        name: 'Target value',
+                        color: 'white',
+                        dashStyle: 'dash'
+                    }],
+                legend: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    formatter: function () {
+                        var s = '<b>Date:' + this.x + '</b>';
+
+                        $.each(this.points, function () {
+                            s += '<br/>' + this.series.name + ': ' +
+                                this.y + ' ' +data[0]['unit'];
+                            if(this.point.source != ''){
+                                s += '<br/>Source: ' + this.point.source;
+                            }
+
+                        });
+
+                        return s;
+                    },
+                    shared: true
+                },
+                plotOptions: {
+                    series: {
+                        connectNulls: true
+                    }
                 }
-            },
+                ,
 
 
-        };
+            }
+            ;
         new Highcharts.Chart(chartOptions);
     }
-    function convertToSlug(Text)
-    {
+    function convertToSlug(Text) {
         return Text
             .toLowerCase()
-            .replace(/[^\w ]+/g,'')
-            .replace(/ +/g,'-')
+            .replace(/[^\w ]+/g, '')
+            .replace(/ +/g, '-')
             ;
     }
 </script>
-<div class="row">
-    <div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="sdg-title">
-                </div>
-            </div>
+<div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
+    <div class="col-md-11 col-sm-12 col-xs-12">
+        <div class="sdg-title">
         </div>
-        <div class="row">
-            <div class="col-md-4 col-xs-12">
-                <img class="single-goal-image img-responsive" alt="Sustainable Developement Goals"
-                     src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
-            </div>
+    </div>
+    <div class="col-md-4 col-xs-11">
+        <img class="single-goal-image img-responsive" alt="Sustainable Developement Goals"
+             src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
+    </div>
 
-            <div class="col-md-7 col-md-offset-0 col-xs-10 col-xs-offset-1 sdg-description">
-                <span></span>
-            </div>
-        </div>
-        <div class="row indicators">
-        </div>
+    <div class="col-md-8 col-md-offset-0 col-xs-11 col-xs-offset-1 sdg-description">
 
     </div>
+    <div class="indicators">
+    </div>
+
 </div>
 <style>
     .article-content {
         padding: 0 !important;
     }
+
     .sidebar {
-        margin-left: 16px !important;
+        /*margin-left: 16px !important;*/
         width: 26%;
     }
 </style>

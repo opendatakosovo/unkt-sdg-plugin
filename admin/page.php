@@ -50,7 +50,7 @@
 </div>
 
 
-<div class="container" style="margin-top:60px;height:auto;min-height:2000px;">
+<div class="container wrap" style="margin-top:60px;height:auto;min-height:2000px;">
     <table id="exampleTable" class="stripe">
         <thead>
         <tr>
@@ -59,6 +59,7 @@
             <th>SDG</th>
             <th>Unit</th>
             <th>Target value</th>
+            <th>Target date</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -244,6 +245,14 @@
                                 <input type="text" name="edit-target-value" class="form-control number-values" id="edit-target-value"
                                        placeholder="Unit"/>
                             </div>
+                            <label for="edit-target-date">Date:</label>
+                            <div class="input-group ">
+                                <input name="date" type="date"
+                                       class="col-md-12 col-sm-12 col-xs-12" id="edit-target-date"
+                                       placeholder="Date">
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                             onkeydown="return false"></span></span>
+                            </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea name="description" class="form-control" id="edit-sdg-description"
@@ -335,6 +344,14 @@
                                 <label for="add_target_value">Target value:</label>
                                 <input type="text" name="add_target_value" class="form-control" id="target_value" placeholder="Target value"/>
                             </div>
+                            <label for="add_target_date">Date:</label>
+                            <div class="input-group ">
+                                <input name="add_target_date" type="date"
+                                       class="col-md-12 col-sm-12 col-xs-12" id="target_date"
+                                       placeholder="Date">
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                             onkeydown="return false"></span></span>
+                            </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea name="description" class="form-control" id="sdg-description"
@@ -399,6 +416,7 @@
                         'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
                         'unit': $("#edit-unit").val(),
                         'target_value': $("#edit-target-value").val(),
+                        'target_date': $("#edit-target-date").val(),
                         'action': 'edit_targets'
                     },
                     success: function (data) {
@@ -539,6 +557,7 @@
                     {"mDataProp": "short_name"},
                     {"mDataProp": "unit"},
                     {"mDataProp": "target_value"},
+                    {"mDataProp": "target_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                 ],
@@ -589,6 +608,7 @@
                     'targets': $('#targets').val(),
                     'unit': $('#unit').val(),
                     'target_value': $('#target_value').val(),
+                    'target_date': $('#target_date').val(),
                     'sdg': $("#sdg-type").children(":selected").attr("id"),
                     'action': 'add_targets'
                 },
@@ -942,6 +962,7 @@
                     $('#edit_targets').val(data[0].name);
                     $('#edit-unit').val(data[0].unit);
                     $('#edit-target-value').val(data[0].target_value);
+                    $('#edit-target-date').val(data[0].target_date);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
                     $('#edit-sdg-description').val(data[0].description);
                 },

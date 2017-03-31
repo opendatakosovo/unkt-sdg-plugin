@@ -12,11 +12,13 @@ function get_data($sid)
       wp_targets.description,
       wp_targets.unit, 
       wp_targets.sid,
-      wp_targets.id, 
+      wp_targets.id,
       wp_targets.target_value, 
+      wp_targets.target_date,
       wp_sdg.s_number, 
       wp_measurement.date, 
       wp_measurement.value, 
+      wp_measurement.source_url,
       wp_measurement.notes
       From wp_targets
       INNER JOIN  wp_sdg 
