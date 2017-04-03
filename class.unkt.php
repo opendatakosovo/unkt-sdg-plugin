@@ -67,8 +67,8 @@ class Unkt
     public static function remove_meta_generators($html)
     {
         $sdgJsonData = json_decode(self::get_goal_data());
-        $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-
+        $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+        echo $url;
         $pattern_title = '/<meta property(.*)=(.*)"og:title"(.*)>/i';
         $html = preg_replace($pattern_title, '<meta property="og:title" content="' . $sdgJsonData[0]->long_name . '" />', $html);
 
