@@ -31,7 +31,6 @@ class Unkt
         self::$initiated = true;
 
 
-
         if (is_admin()) {
             add_action('wp_ajax_add_targets', array('Unkt', 'add_targets'));
             add_action('wp_ajax_edit_targets', array('Unkt', 'edit_targets'));
@@ -100,7 +99,10 @@ class Unkt
 
     public static function clean_meta_generators($html)
     {
-        ob_start(array('UNKT', 'remove_meta_generators'));
+        $template = get_post_meta(get_the_ID(), '_wp_page_template');
+        if ($template[0] == 'templates/SDG_Page.php') {
+            ob_start(array('UNKT', 'remove_meta_generators'));
+        }
     }
 
 
@@ -131,33 +133,32 @@ class Unkt
 
     public static function get_goal_data()
     {
+
         $sid = sprintf("%0d", $_GET['goal']);
+
         global $wpdb;
         $query_targets = array();
         $query_targets = $wpdb->get_results("
-      SELECT wp_sdg.s_text, 
-      wp_sdg.long_name,
-      wp_sdg.short_name, 
-      wp_targets.name,
-      wp_targets.description,
-      wp_targets.unit, 
-      wp_targets.sid,
-      wp_targets.id, 
-      wp_targets.updated_date,
-      wp_sdg.s_number, 
-      wp_measurement.date, 
-      wp_measurement.value, 
-      wp_measurement.source_url, 
-      wp_measurement.target_value, 
-      wp_measurement.notes,
-      From wp_targets
-      INNER JOIN  wp_sdg 
-      ON  wp_targets.sid=wp_sdg.s_number
-      INNER JOIN  wp_measurement 
-      ON  wp_targets.id=wp_measurement.iid
-      WHERE wp_targets.sid = $sid
-      ");
-
+            SELECT wp_sdg.s_text, 
+            wp_sdg.long_name,
+            wp_sdg.short_name, 
+            wp_targets.name,
+            wp_targets.description,
+            wp_targets.unit, 
+            wp_targets.sid,
+            wp_targets.id, 
+            wp_sdg.s_number, 
+            wp_measurement.date, 
+            wp_measurement.value, 
+            wp_measurement.source_url,
+            wp_measurement.notes
+            FROM wp_targets
+            INNER JOIN wp_sdg
+            ON wp_targets.sid = wp_sdg.s_number
+            INNER JOIN  wp_measurement
+            ON  wp_targets.id=wp_measurement.iid
+            WHERE wp_targets.sid = $sid
+          ");
         return json_encode($query_targets, JSON_PRETTY_PRINT);
 
     }

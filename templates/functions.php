@@ -1,5 +1,4 @@
 <?php
-
 function get_data($sid)
 {
     global $wpdb;
