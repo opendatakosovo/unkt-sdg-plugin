@@ -66,9 +66,9 @@ class Unkt
     //Remove All Meta Generators
     public static function remove_meta_generators($html)
     {
-        $sdgJsonData = json_decode(self::get_goal_data());
+        $sdgJsonData = json_decode(self::get_sdg_goal_data());
         $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-        echo $url;
+
         $pattern_title = '/<meta property(.*)=(.*)"og:title"(.*)>/i';
         $html = preg_replace($pattern_title, '<meta property="og:title" content="' . $sdgJsonData[0]->long_name . '" />', $html);
 
@@ -163,6 +163,20 @@ class Unkt
 
     }
 
+    public static function get_sdg_goal_data(){
+        $sid = sprintf("%0d", $_GET['goal']);
+
+        global $wpdb;
+        $query_targets = $wpdb->get_results("
+            SELECT wp_sdg.s_text, 
+            wp_sdg.long_name,
+            wp_sdg.short_name, 
+            wp_sdg.s_number
+            FROM wp_sdg
+            WHERE wp_sdg.s_number = $sid
+          ");
+        return json_encode($query_targets, JSON_PRETTY_PRINT);
+    }
     public static function get_sdg_data($sid)
     {
         global $wpdb;
