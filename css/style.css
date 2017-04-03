@@ -8,8 +8,9 @@
 
 .sdg-goal-page {
     padding-top: 50px;
-    min-height: 1600px;
-    height: auto;
+    min-height: 1200px;
+    height: 100%;
+    overflow: auto;
 }
 
 .sdg-goal-page-01 {
