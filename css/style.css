@@ -165,6 +165,7 @@
 .indicator-title-div {
     padding-left: 0px !important;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .show-chart {
@@ -180,6 +181,7 @@
     height: 30px;
     margin-bottom: 10px;
     margin-left: -20px;
+    margin-top: 20px;
 }
 
 .sidebar {

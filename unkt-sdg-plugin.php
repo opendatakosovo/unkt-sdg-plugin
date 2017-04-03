@@ -51,6 +51,7 @@ function activate()
               unit text NOT NULL,
               target_value text NOT NULL,
               target_date text NOT NULL,
+              updated_date text NOT NULL,
               PRIMARY KEY  (`id`),
               CONSTRAINT fk_sdg FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number)   
               ON DELETE CASCADE

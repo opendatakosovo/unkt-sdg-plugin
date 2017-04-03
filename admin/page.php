@@ -60,6 +60,7 @@
             <th>Unit</th>
             <th>Target value</th>
             <th>Target date</th>
+            <th>Updated date</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -108,7 +109,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="value-measurement">Value:</label>
-                                <input name="value_measurement" type="text" class="form-control number-values"
+                                <input name="value_measurement" type="text" class="form-control"
                                        id="edit-value-measurement" placeholder="Value">
                             </div>
                             <div class="form-group">
@@ -157,7 +158,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="value-measurement">Value:</label>
-                                <input name="value_measurement" type="text" class="form-control number-values"
+                                <input name="value_measurement" type="text" class="form-control"
                                        id="value-measurement" placeholder="Value">
                             </div>
                             <div class="form-group">
@@ -346,7 +347,7 @@
                             </div>
                             <label for="add_target_date">Date:</label>
                             <div class="input-group ">
-                                <input name="add_target_date" type="date"
+                                <input name="add_target_date" type="text"
                                        class="col-md-12 col-sm-12 col-xs-12" id="target_date"
                                        placeholder="Date">
                                 <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
@@ -382,6 +383,8 @@
     }
 
     var newRowData = <?php echo json_encode($query_targets); ?>;
+
+    console.log(newRowData);
     var iTableCounter = 1;
     var oTable;
     var oInnerTable;
@@ -389,7 +392,7 @@
     var oTable;
     //Run On HTML Build
     $(document).ready(function () {
-
+        $('#target_date').datepicker({dateFormat: "mm/dd/yy"});
         $('#edit-targets-form').validate({
             rules: {
                 edit_targets: {
@@ -558,6 +561,7 @@
                     {"mDataProp": "unit"},
                     {"mDataProp": "target_value"},
                     {"mDataProp": "target_date"},
+                    {"mDataProp": "updated_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                 ],
@@ -591,7 +595,7 @@
                         }
                     }
                 ],
-                "aaSorting": [[1, 'asc']]
+                "aaSorting": [[7, 'desc']]
             });
 
         }
@@ -645,6 +649,7 @@
             });
         });
         $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
+
         $('body').on('click', '.add-measurment', function (e) {
 
             // Get clicked targets ID

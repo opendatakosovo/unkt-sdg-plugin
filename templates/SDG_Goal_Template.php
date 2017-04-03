@@ -8,7 +8,7 @@ if (isset($_GET)) {
     $sdgJsonData = json_decode($sdg_raw_data);
     $out = [];
     foreach ($targetsData as $element) {
-        $out[$element['name']][] = ['date' => $element['date'], 'target_date' => $element['target_date'], 'source' => $element['source_url'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
+        $out[$element['name']][] = ['date' => $element['date'], 'target_date' => $element['target_date'], 'updated_date' => $element['updated_date'], 'source' => $element['source_url'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']];
     }
     $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
@@ -21,9 +21,11 @@ if (isset($_GET)) {
 <script>
     $(document).ready(function () {
 
-
+        console.log(<?php json_decode($data, true)?>);
         var data = <?php echo json_encode($out, true); ?>;
+
         var sdgData = <?php echo json_encode($sdgJsonData, true); ?>;
+
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
 
@@ -198,7 +200,7 @@ if (isset($_GET)) {
                 },
                 tooltip: {
                     formatter: function () {
-                        var s = '<b>Date:' + this.x + '</b>';
+                        var s = '<b>Date: ' + this.x + '</b>';
 
                         $.each(this.points, function () {
                             s += '<br/>' + this.series.name + ': ' +

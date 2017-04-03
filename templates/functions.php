@@ -3,7 +3,6 @@
 function get_data($sid)
 {
     global $wpdb;
-    $query_targets = array();
     $query_targets = $wpdb->get_results("
       SELECT wp_sdg.s_text, 
       wp_sdg.long_name,
@@ -15,6 +14,7 @@ function get_data($sid)
       wp_targets.id,
       wp_targets.target_value, 
       wp_targets.target_date,
+      TIMESTAMP (wp_targets.updated_date) AS updated_date,
       wp_sdg.s_number, 
       wp_measurement.date, 
       wp_measurement.value, 
@@ -26,6 +26,7 @@ function get_data($sid)
       INNER JOIN  wp_measurement 
       ON  wp_targets.id=wp_measurement.iid
       WHERE wp_targets.sid = $sid
+      ORDER BY updated_date DESC
       ");
 
     return json_encode($query_targets, JSON_PRETTY_PRINT);
