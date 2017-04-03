@@ -7,7 +7,9 @@
 }
 
 .sdg-goal-page {
-     padding-top: 50px;
+    padding-top: 50px;
+    min-height: 1600px;
+    height: auto;
 }
 
 .sdg-goal-page-01 {
@@ -129,9 +131,9 @@
     text-align: left;
     text-transform: none;
     color: white;
-    padding-top:10px;
-    padding-right:20px;
-    margin-bottom:50px;
+    padding-top: 10px;
+    padding-right: 20px;
+    margin-bottom: 50px;
 }
 
 .indicator-chart-container {
@@ -153,7 +155,7 @@
     font-size: 14pt !important;
     text-transform: none;
     color: white;
-    margin-bottom:50px !important;
+    margin-bottom: 50px !important;
 
 }
 
@@ -219,15 +221,19 @@ div#primary {
     text-transform: none;
     padding: 50px;
 }
-.article-inner{
-    margin-top:0px;
+
+.article-inner {
+    margin-top: 0px;
 }
+
 .article-content {
     padding: 20px !important;
 }
-.article-inner{
-    padding-top:0px;
+
+.article-inner {
+    padding-top: 0px;
 }
+
 span.source-url {
     color: white;
     font-family: Roboto;

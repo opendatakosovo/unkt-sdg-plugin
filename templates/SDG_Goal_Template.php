@@ -44,6 +44,7 @@ if (isset($_GET)) {
     });
     function generateChart(id, data, title) {
         $('.indicators').append("\
+         <div class='col-lg-12 col-md-12 col-xs-12 col-sm-12'>\
             <div class='row'>\
                 <div class='col-md-9 col-xs-7 col-sm-8 indicator-title-div'>\
                         <span class='indicator-title'>" + title + "</span>\
@@ -53,7 +54,7 @@ if (isset($_GET)) {
                 </div>\
             </div>\
             <div class='row'>\
-                <div class='col-md-11 col-xs-10 col-sm-10 indicator-description-div' id='" + id + "-description' >\
+                <div class='col-md-11 col-xs-12 col-sm-12 indicator-description-div' id='" + id + "-description' >\
                 </div>\
             </div>\
             <div style='display:none;' class='row indicator-title-div'>\
@@ -61,6 +62,7 @@ if (isset($_GET)) {
             </div>\
             <div class='row'>\
                 <div id='" + id + "' class='col-md-10 col-xs-11 col-sm-11' style='display:none; margin-top:20px; margin-bottom:20px; width:92% !important; height: 300px'></div><hr class='white-line'>\
+            </div>\
             </div>");
         $('#' + id + '-chart').click(function (e) {
             var displayStatus = $('#' + id).css('display');

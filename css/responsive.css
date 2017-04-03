@@ -302,9 +302,15 @@ and (max-device-width: 800px) {
     }
     .indicators {
         height: auto;
-        padding-left: 25px !important;
-        min-height: 844px !important;
-        margin-right: 15px;
+        padding-left: 10px !important;
+        margin-right: 0px;
+    }
+
+    .white-line {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+        width: 70%;
+        margin-left: 0%;
     }
 
 
