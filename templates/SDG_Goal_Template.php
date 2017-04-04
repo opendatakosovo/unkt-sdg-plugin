@@ -21,7 +21,6 @@ if (isset($_GET)) {
 <script>
     $(document).ready(function () {
 
-        console.log(<?php json_decode($data, true)?>);
         var data = <?php echo json_encode($out, true); ?>;
 
         var sdgData = <?php echo json_encode($sdgJsonData, true); ?>;

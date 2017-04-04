@@ -238,7 +238,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="edit-unit">Unit:</label>
-                                <input type="text" name="add_unit" class="form-control number-values" id="edit-unit"
+                                <input type="text" name="add_unit" class="form-control" id="edit-unit"
                                        placeholder="Unit"/>
                             </div>
                             <div class="form-group">
