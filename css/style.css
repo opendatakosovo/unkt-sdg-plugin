@@ -207,6 +207,7 @@ div#primary {
     padding-right: 40px !important;
     width: 77%;
     margin-left: 0%;
+    float: left;
 }
 
 .highcharts-button {
