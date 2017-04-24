@@ -45,7 +45,7 @@ if (isset($_GET)) {
         $('.indicators').append("\
          <div class='col-lg-12 col-md-12 col-xs-12 col-sm-12'>\
             <div class='row'>\
-                <div class='col-md-9 col-xs-7 col-sm-8 indicator-title-div'>\
+                <div class='col-md-9 col-xs-9 col-sm-8 indicator-title-div'>\
                         <span class='indicator-title'>" + title + "</span>\
                 </div>\
                 <div class='col-md-3 col-xs-3 col-sm-3'>\
