@@ -122,9 +122,9 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.sid,wp_targets.unit,wp_targets.target_value,wp_targets.target_date, wp_targets.updated_date ,wp_targets.id,wp_sdg.s_number 
-          From wp_targets 
-          INNER JOIN  wp_sdg 
+          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.sid,wp_targets.unit,wp_targets.target_value,wp_targets.target_date, wp_targets.updated_date ,wp_targets.id,wp_sdg.s_number
+          From wp_targets
+          INNER JOIN  wp_sdg
           ON  wp_targets.sid=wp_sdg.s_number");
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
@@ -139,17 +139,17 @@ class Unkt
         global $wpdb;
         $query_targets = array();
         $query_targets = $wpdb->get_results("
-            SELECT wp_sdg.s_text, 
+            SELECT wp_sdg.s_text,
             wp_sdg.long_name,
-            wp_sdg.short_name, 
+            wp_sdg.short_name,
             wp_targets.name,
             wp_targets.description,
-            wp_targets.unit, 
+            wp_targets.unit,
             wp_targets.sid,
-            wp_targets.id, 
-            wp_sdg.s_number, 
-            wp_measurement.date, 
-            wp_measurement.value, 
+            wp_targets.id,
+            wp_sdg.s_number,
+            wp_measurement.date,
+            wp_measurement.value,
             wp_measurement.source_url,
             wp_measurement.notes
             FROM wp_targets
@@ -168,9 +168,9 @@ class Unkt
 
         global $wpdb;
         $query_targets = $wpdb->get_results("
-            SELECT wp_sdg.s_text, 
+            SELECT wp_sdg.s_text,
             wp_sdg.long_name,
-            wp_sdg.short_name, 
+            wp_sdg.short_name,
             wp_sdg.s_number
             FROM wp_sdg
             WHERE wp_sdg.s_number = $sid
@@ -266,12 +266,12 @@ class Unkt
         $id = intval(htmlspecialchars($_POST['id']));
         $wpdb->query("
             DELETE FROM `{$wpdb->prefix}measurement`
-    
+
             WHERE iid=$id;
         ");
         $wpdb->query("
             DELETE FROM `{$wpdb->prefix}targets`
-    
+
             WHERE id=$id;
         ");
         echo self::get_data();
@@ -293,7 +293,7 @@ class Unkt
         }
         $wpdb->query("
             DELETE FROM `{$wpdb->prefix}targets`
-    
+
             WHERE id=$id;
         ");
         echo self::get_data();
@@ -322,8 +322,8 @@ class Unkt
         $notes = htmlspecialchars($_POST['notes']);
         $source_m = htmlspecialchars($_POST['source-m']);
 
-        $update = "UPDATE wp_measurement 
-            SET date='$date', value='$value_m', source_url='$source_m',notes='$notes' 
+        $update = "UPDATE wp_measurement
+            SET date='$date', value='$value_m', source_url='$source_m',notes='$notes'
             WHERE id='$meausrement_id'";
         $wpdb->query($update);
         $query_targets = array();
@@ -373,7 +373,7 @@ class Unkt
         }
 
         /* found the id */
-        $insert = " 
+        $insert = "
         INSERT INTO `{$wpdb->prefix}measurement`(sid,iid,date,value,source_url,notes)
         VALUES('$sdg_id','$targets_id','$date_m','$value_m','$source_m','$notes'); ";
         $wpdb->query($insert);
@@ -444,7 +444,7 @@ class Unkt
     public static function get_targets_measurement()
     {
         global $wpdb;
-        $targets_id = htmlspecialchars($_POST['id']);
+        $targets_id = htmlspecialchars($_GET['id']);
         $query_targets = $wpdb->get_results("
             SELECT * From wp_measurement WHERE iid='$targets_id'");
         echo json_encode($query_targets);
@@ -457,8 +457,8 @@ class Unkt
 
         $id = intval(htmlspecialchars($_POST['id']));
         $query_targets = $wpdb->get_results("
-            SELECT iid 
-            From wp_measurement 
+            SELECT iid
+            From wp_measurement
             WHERE iid='$id'");
         $count = sizeof($query_targets);
         if ($count > 0) {
@@ -475,9 +475,9 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value,wp_targets.target_date,wp_targets.updated_date, wp_targets.sid,wp_targets.id,wp_sdg.s_number 
-          From wp_targets 
-          INNER JOIN  wp_sdg 
+          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value,wp_targets.target_date,wp_targets.updated_date, wp_targets.sid,wp_targets.id,wp_sdg.s_number
+          From wp_targets
+          INNER JOIN  wp_sdg
           ON  wp_targets.sid=wp_sdg.s_number");
         return json_encode($query_targets);
 

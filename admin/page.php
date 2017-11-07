@@ -1,5 +1,4 @@
-<script type="text/javascript"
-        src="//cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -8,7 +7,6 @@
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
-
 
 <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"/>
@@ -21,37 +19,38 @@
 
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
-<script type="text/javascript"
-        src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Header admin page -->
 <div class="row">
     <?php
-    $args = [
-        'post_type' => 'page',
-        'meta_key' => '_wp_page_template',
-        'meta_value' => 'templates/SDG_Page.php'
-    ];
-    $pages = get_posts($args);
+       $args = [
+           'post_type' => 'page',
+           'meta_key' => '_wp_page_template',
+           'meta_value' => 'templates/SDG_Page.php'
+       ];
+       $pages = get_posts($args);
     ?>
+
     <div class="col-md-12">
         <h3>Welcome, you can view your SDG Goals page/s below:</h3><br/>
     </div>
-    <div class="col-md-11 col-md-offset-1">
+    <!-- <div class="col-md-11 col-md-offset-1">
         <ol>
-        <?php
-        foreach ($pages as $page)
-            echo '<li><a target="_blank" href="' . get_page_link($page->ID) . '" >' . get_the_title($page->ID) . '</a></li>';
-        ?>
+           <?php
+              //foreach ($pages as $page)
+                  //echo '<li><a target="_blank" href="' . get_page_link($page->ID) . '" >' . get_the_title($page->ID) . '</a></li>';
+           ?>
         </ol>
-
-    </div>
+    </div> -->
 </div>
 
-
 <div class="container wrap" style="margin-top:60px;height:auto;min-height:2000px;">
-    <table id="exampleTable" class="stripe">
+
+   <!-- Target Table -->
+   <table id="exampleTable" class="stripe">
         <thead>
         <tr>
             <th>ID</th>
@@ -66,9 +65,10 @@
         </tr>
         </thead>
         <tbody></tbody>
-    </table>
+   </table>
 
-    <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
+   <!-- Indicator Table -->
+   <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
         <table id="detailsTable">
             <thead>
             <tr>
@@ -82,10 +82,61 @@
             </thead>
             <tbody></tbody>
         </table>
-    </div>
-    <div id="" class="col-md-12">
-        <!-- load edit measurement -->
-        <div id="edit-measurement-modal" class="modal fade" tabindex="-1">
+   </div>
+
+      <div class="col-md-12">
+         <!-- Add Indicator Modal -->
+         <div id="add-measurement-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add Measurement</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-measurement-form" name="add-measurement">
+                            <input type="hidden" id="measurement_targets_id"/>
+                            <input type="hidden" id="measurement_sdg"/>
+                            <div class="form-group">
+                                <label for="date">Date:</label>
+                                <div class="input-group ">
+                                    <input name="date" type="text"
+                                           class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="date-measurement"
+                                           placeholder="Date">
+                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                                 onkeydown="return false"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="value-measurement">Value:</label>
+                                <input name="value_measurement" type="text" class="form-control"
+                                       id="value-measurement" placeholder="Value">
+                            </div>
+                            <div class="form-group">
+                                <label for="notes-measurement">Notes:</label>
+                                <textarea name="notes_measurement" type="text" class="form-control"
+                                          id="notes-measurement" placeholder="Notes"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="source-measurement">Source:</label>
+                                <input name="source_measurement" type="text" class="form-control"
+                                       id="source-measurement" placeholder="Source">
+                            </div>
+                            <div class="modal-footer">
+
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                                       id="add-measuremnt-button">
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- end of measurement modal -->
+         </div>
+         <!-- Edit Indicator Modal -->
+         <div id="edit-measurement-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -134,58 +185,103 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
             <!-- end of load edit measurement modal -->
-        </div>
-        <div id="add-measurement-modal" class="modal fade" tabindex="-1">
+         </div>
+
+         <!-- Add Target Button -->
+         <div class="col-md-12" style="margin-top:20px">
+            <div class="col-md-2">
+                <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
+                   style="width:100%;">+ Add targets</a>
+            </div>
+         </div>
+
+         <!-- Add Target Modal -->
+         <div id="add-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add Measurement</h4>
+                        <h4 class="modal-title">Add targets</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="add-measurement-form" name="add-measurement">
-                            <input type="hidden" id="measurement_targets_id"/>
-                            <input type="hidden" id="measurement_sdg"/>
+                        <form id="add-targets-form" name="add_targets" method="POST">
                             <div class="form-group">
-                                <label for="date">Date:</label>
-                                <div class="input-group ">
-                                    <input name="date" type="text"
-                                           class=" col-md-12 col-sm-12 col-xs-12 date-measurement" id="date-measurement"
-                                           placeholder="Date">
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
-                                                                                 onkeydown="return false"></span></span>
-                                </div>
+                                <label for="targets">Targets:</label>
+                                <input name="targets" type="text" class="form-control" id="targets"
+                                       placeholder="Target Title">
                             </div>
                             <div class="form-group">
-                                <label for="value-measurement">Value:</label>
-                                <input name="value_measurement" type="text" class="form-control"
-                                       id="value-measurement" placeholder="Value">
+                                <label for='sdg'>SDG:</label>
+                                <select id="sdg-type" name="add_sdg" class="form-control" title="SDG is required">
+                                    <option value="">Select SDG</option>
+                                    <option id="1" value="poverty">1-Poverty</option>
+                                    <option id="2" value="zero-hunger">2-Zero hunger</option>
+                                    <option id="3" value="good-health-and-well-being">3-Good health and well being
+                                    </option>
+                                    <option id="4" value="quality-education">4-Quality education</option>
+                                    <option id="5" value="gender-equality">5-Gender equality</option>
+                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
+                                    </option>
+                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
+                                    </option>
+                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
+                                        growth
+                                    </option>
+                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
+                                        and infrastructure
+                                    </option>
+                                    <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
+                                        communities
+                                    </option>
+                                    <option id="12" value="responsible-consumption-and-production">12-Responsible
+                                        consumption and production
+                                    </option>
+                                    <option id="13" value="climate-action">13-Climate action</option>
+                                    <option id="14" value="life-below-water">14-Life below water</option>
+                                    <option id="15" value="life-on-land">15-Life on land</option>
+                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
+                                        strong institutions
+                                    </option>
+                                    <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
+                                    </option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="notes-measurement">Notes:</label>
-                                <textarea name="notes_measurement" type="text" class="form-control"
-                                          id="notes-measurement" placeholder="Notes"></textarea>
+                                <label for="unit">Unit:</label>
+                                <input type="text" name="add_unit" class="form-control" id="unit" placeholder="Unit"/>
                             </div>
                             <div class="form-group">
-                                <label for="source-measurement">Source:</label>
-                                <input name="source_measurement" type="text" class="form-control"
-                                       id="source-measurement" placeholder="Source">
+                                <label for="add_target_value">Target value:</label>
+                                <input type="text" name="add_target_value" class="form-control" id="target_value" placeholder="Target value"/>
+                            </div>
+                            <label for="add_target_date">Date:</label>
+                            <div class="input-group ">
+                                <input name="add_target_date" type="text"
+                                       class="col-md-12 col-sm-12 col-xs-12" id="target_date"
+                                       placeholder="Date">
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
+                                                                             onkeydown="return false"></span></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea name="description" class="form-control" id="sdg-description"
+                                          placeholder="Description"></textarea>
                             </div>
                             <div class="modal-footer">
-
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
-                                       id="add-measuremnt-button">
+                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
+                                       id="add-targets-button">
 
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of measurement modal -->
-        </div>
-        <!-- end of modal measuremtn -->
-        <div id="edit-targets-modal" class="modal fade" tabindex="-1">
+                            </div>
+                    </div><!-- /.modal-content -->
+                    </form>
+                </div>
+
+            </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
+         <!-- Edit Target Modal -->
+         <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -273,126 +369,60 @@
 
             <!-- end of edit modal -->
         </div>
-
-
-        <div class="col-md-12" style="margin-top:20px">
-            <div class="col-md-2">
-                <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
-                   style="width:100%;">+ Add targets</a>
-            </div>
-
-        </div>
-
-
-        <!-- Button trigger modal -->
-
-        <div id="add-targets-modal" class="modal fade" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add targets</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="add-targets-form" name="add_targets" method="POST">
-                            <div class="form-group">
-                                <label for="targets">Targets:</label>
-                                <input name="targets" type="text" class="form-control" id="targets"
-                                       placeholder="targets">
-                            </div>
-                            <div class="form-group">
-                                <label for='sdg'>SDG:</label>
-                                <select id="sdg-type" name="add_sdg" class="form-control" title="SDG is required">
-                                    <option value="">Select SDG</option>
-                                    <option id="1" value="poverty">1-Poverty</option>
-                                    <option id="2" value="zero-hunger">2-Zero hunger</option>
-                                    <option id="3" value="good-health-and-well-being">3-Good health and well being
-                                    </option>
-                                    <option id="4" value="quality-education">4-Quality education</option>
-                                    <option id="5" value="gender-equality">5-Gender equality</option>
-                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
-                                    </option>
-                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
-                                    </option>
-                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
-                                        growth
-                                    </option>
-                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
-                                        and infrastructure
-                                    </option>
-                                    <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
-                                        communities
-                                    </option>
-                                    <option id="12" value="responsible-consumption-and-production">12-Responsible
-                                        consumption and production
-                                    </option>
-                                    <option id="13" value="climate-action">13-Climate action</option>
-                                    <option id="14" value="life-below-water">14-Life below water</option>
-                                    <option id="15" value="life-on-land">15-Life on land</option>
-                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
-                                        strong institutions
-                                    </option>
-                                    <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="unit">Unit:</label>
-                                <input type="text" name="add_unit" class="form-control" id="unit" placeholder="Unit"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="add_target_value">Target value:</label>
-                                <input type="text" name="add_target_value" class="form-control" id="target_value" placeholder="Target value"/>
-                            </div>
-                            <label for="add_target_date">Date:</label>
-                            <div class="input-group ">
-                                <input name="add_target_date" type="text"
-                                       class="col-md-12 col-sm-12 col-xs-12" id="target_date"
-                                       placeholder="Date">
-                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
-                                                                             onkeydown="return false"></span></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea name="description" class="form-control" id="sdg-description"
-                                          placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
-                                       id="add-targets-button">
-
-                            </div>
-                    </div><!-- /.modal-content -->
-                    </form>
-                </div>
-
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-    </div>
+      </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
-    function fnFormatDetails(table_id, html) {
-        var sOut = "<table id=\"exampleTable_" + table_id + "\">";
-        sOut += html;
-        sOut += "</table>";
-        return sOut;
-    }
+   function fnFormatDetails(table_id, html) {
+      var sOut = "<table id=\"exampleTable_" + table_id + "\">";
+      sOut += html;
+      sOut += "</table>";
+      return sOut;
+   }
 
     var newRowData = <?php echo json_encode($query_targets); ?>;
 
-    console.log(newRowData);
+   //  console.log(newRowData);
+
     var iTableCounter = 1;
     var oTable;
     var oInnerTable;
     var detailsTableHtml;
-    var oTable;
+
     //Run On HTML Build
     $(document).ready(function () {
+
+        // Target date with datepicker
         $('#target_date').datepicker({dateFormat: "mm/dd/yy"});
+
+        // Adding new target from modal
+        $('#add-targets-form').on('submit', function (e) {
+            $.ajax({
+                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                type: 'POST', //or POST,
+                dataType: 'json',
+                data: {
+                    'description': $('#sdg-description').val(),
+                    'targets': $('#targets').val(),
+                    'unit': $('#unit').val(),
+                    'target_value': $('#target_value').val(),
+                    'target_date': $('#target_date').val(),
+                    'sdg': $("#sdg-type").children(":selected").attr("id"),
+                    'action': 'add_targets'
+                },
+                success: function (data) {
+                    // Setting the new target id in hidden field
+                    var targets_id = $('#targets').val();
+                    oTable.fnClearTable(0);
+                    oTable.fnAddData(data);
+                    oTable.fnDraw();
+                    $('.form-control').val('');
+                    $('#add-targets-modal').modal('hide');
+                }
+            });
+            e.preventDefault();
+        });
+        // Edit existing target from modal
         $('#edit-targets-form').validate({
             rules: {
                 edit_targets: {
@@ -400,11 +430,9 @@
                 },
                 edit_add_sdg: {
                     required: true,
-
                 },
                 edit_add_unit: {
                     required: true,
-
                 },
             },
             submitHandler: function (form) {
@@ -431,59 +459,81 @@
                     }
                 });
             }
-
         });
 
-        // you would probably be using templates here
+        // Get the Indicator table example for indicator table
         detailsTableHtml = $("#detailsTable").html();
+
         //Insert a 'details' column to the table
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
+
+        // Making table data as "+" sign
         nCloneTd.innerHTML = '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px"/>';
         nCloneTd.className = "center";
-        $('#exampleTable thead tr').each(function () {
+
+        // Adding an empty column table head for "+" and "-"
+        $('#exampleTable thead tr').each(function() {
             this.insertBefore(nCloneTh, this.childNodes[0]);
         });
-        $('#exampleTable tbody tr').each(function () {
+
+        // This will add "+" sign for each row in first data column
+        $('#exampleTable tbody tr').each(function() {
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
+        // Initialize the sub table if the plus is clicked
         function init_sub_table() {
             $('body').on('click', '.show-sub-table', function (e) {
                 e.preventDefault();
+
+                // Getting the ID of clicked target's "+"
                 var targets_id = $($(this).parent().parent().children()[1]).text();
 
+                // Getting the ID of clicked SDG's "+"
                 var s_id = $($(this).parent().parent().children()[3]).text();
-                var nTr = $(this).parents('tr')[0];
-                var nTds = this;
-                if (oTable.fnIsOpen(nTr)) {
 
+                // Getting the row of target
+                var nTr = $(this).parents('tr')[0];
+
+                // Getting the "+" sign of target
+                var nTds = this;
+
+                // Checking the table if it's opened or closed for "+" and "-"
+                if (oTable.fnIsOpen(nTr)) {
                     /* This row is already open - close it */
+                    // If the sub table is closed make the "-" to "+"
                     this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
                 }
                 else {
-
+                    // If the sub table is opened make the "+" to "-"
                     this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
                 }
+
+                // GET Request for rendering indicator table
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                    type: 'POST', //or POST
+                    type: 'GET',
                     dataType: 'json',
                     data: {'id': targets_id, 'action': 'get_targets_measurement'},
                     success: function (data) {
 
+                        // Checking if table is closed or opened
                         if (oTable.fnIsOpen(nTr)) {
-
                             /* This row is already open - close it */
                             this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
                             this.id = targets_id;
                             oTable.fnClose(nTr);
-
                         }
+                        // Opened
                         else {
-
+                            // Changing the plus to minus
                             this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
+
+                            // Adding new row below the target row for inner table
                             oTable.fnOpen(nTr, fnFormatDetails(targets_id, detailsTableHtml), 'details');
+
+                            // Rendering the indicator data in inner table
                             oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                                 "bJQueryUI": true,
                                 "bFilter": true,
@@ -530,18 +580,19 @@
                                     }
                                 ],
                             });
-                            $(this).attr('id', targets_id)
+
+                            $(this).attr('id', targets_id);
+
+                            // Updating the info of datatable with the button to create new indicator
                             $('tr.details .dataTables_info').html('');
                             $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-measurement-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
-
                         }
-
                     }
                 });
-
             });
         }
 
+        // Initialize the main datatable
         function init_table(newRowData) {
             oTable = $('#exampleTable').dataTable({
 
@@ -600,37 +651,12 @@
 
         }
 
+        // Invoking the initialize function for main datatable, passing the JSON with all targets from query
         init_table(newRowData);
+
+        // Invoking the sub_table function when plus is clicked
         init_sub_table();
-        $('#add-targets-form').on('submit', function (e) {
-            $.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                type: 'POST', //or POST,
-                dataType: 'json',
-                data: {
-                    'description': $('#sdg-description').val(),
-                    'targets': $('#targets').val(),
-                    'unit': $('#unit').val(),
-                    'target_value': $('#target_value').val(),
-                    'target_date': $('#target_date').val(),
-                    'sdg': $("#sdg-type").children(":selected").attr("id"),
-                    'action': 'add_targets'
-                },
-                success: function (data) {
-                    var targets_id = $('#targets').val();
-                    oTable.fnClearTable(0);
-                    oTable.fnAddData(data);
-                    oTable.fnDraw();
-                    $('.form-control').val('');
-                    $('#add-targets-modal').modal('hide');
 
-                }
-
-            });
-            e.preventDefault();
-
-
-        });
         $('body').on('click', '.edit-modal-measurement', function (e) {
             e.preventDefault();
             var measurement_id = $($(this).parent().parent().children()[0]).text();
@@ -1192,14 +1218,10 @@
             });
         });
 
-
         var targets_array = <?php echo json_encode($query_targets); ?>;
-        console.log(targets_array);
+      //   console.log(targets_array);
     });
-
-
 </script>
-
 
 <style>
     #exampleTable_wrapper .col-sm-6 {
@@ -1277,4 +1299,3 @@
     })
 
 </script>
-

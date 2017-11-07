@@ -1,5 +1,6 @@
 <?php
 require_once(SDGS__PLUGIN_DIR . 'templates/functions.php');
+
 if (isset($_GET)) {
     $data = get_data(sprintf("%0d", $_GET['goal']));
 
@@ -41,6 +42,7 @@ if (isset($_GET)) {
 
         $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
+
     function generateChart(id, data, title) {
         $('.indicators').append("\
          <div class='col-lg-12 col-md-12 col-xs-12 col-sm-12'>\
