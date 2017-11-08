@@ -37,13 +37,13 @@ class Unkt
             add_action('wp_ajax_remove_targets_measurements', array('Unkt', 'remove_targets_measurements'));
             add_action('wp_ajax_remove_targets', array('Unkt', 'remove_targets'));
             add_action('wp_ajax_get_measurement_data', array('Unkt', 'get_measurement_data'));
-            add_action('wp_ajax_edit_measurement', array('Unkt', 'edit_measurement'));
-            add_action('wp_ajax_load_measurement_selected', array('Unkt', 'load_measurement_selected'));
-            add_action('wp_ajax_add_measurement', array('Unkt', 'add_measurement'));
+            add_action('wp_ajax_edit_indicator', array('Unkt', 'edit_indicator')); //edit indicator
+            add_action('wp_ajax_load_indicator_selected', array('Unkt', 'load_indicator_selected')); //edit indicator
+            add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator')); //add indicator
             add_action('wp_ajax_check_size_of_measurement', array('Unkt', 'check_size_of_measurement'));
             add_action('wp_ajax_remove_measurement', array('Unkt', 'remove_measurement'));
             add_action('wp_ajax_remove_last_measurement_targets', array('Unkt', 'remove_last_measurement_targets'));
-            add_action('wp_ajax_get_targets_measurement', array('Unkt', 'get_targets_measurement'));
+            add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
         }
@@ -304,56 +304,54 @@ class Unkt
         die();
     }
 
-    public static function edit_measurement()
+    public static function edit_indicator()
     {
         global $wpdb;
 
-        $meausrement_id = htmlspecialchars($_POST["meausrement_id"]);
-        $date = htmlspecialchars($_POST["date-m"]);
-        $value_m = htmlspecialchars($_POST['value-m']);
-        $notes = htmlspecialchars($_POST['notes']);
-        $source_m = htmlspecialchars($_POST['source-m']);
+        $indicator_id= htmlspecialchars($_POST["indicator_id"]);
+        $name = htmlspecialchars($_POST["name"]);
+        $source = htmlspecialchars($_POST['source']);
+        $description = htmlspecialchars($_POST['description']);
 
-        $update = "UPDATE wp_measurement
-            SET date='$date', value='$value_m', source_url='$source_m',notes='$notes'
-            WHERE id='$meausrement_id'";
+        $update = "UPDATE wp_indicators
+            SET name='$name', source='$source', description='$description'
+            WHERE id='$indicator_id'";
         $wpdb->query($update);
         $query_targets = array();
         $query_targets = $wpdb->get_results("
-          SELECT * From wp_measurement WHERE id='$meausrement_id'");
+          SELECT * From wp_indicators WHERE id='$indicator_id'");
         $json = json_encode($query_targets[0]);
         $obj = json_decode($json);
-        $iid = $obj->iid;
+        $target_id = $obj->target_id;
         $query_targets1 = $wpdb->get_results("
-          SELECT * From wp_measurement WHERE iid='$iid'");
+          SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets1);
-        die();
+        die(); 
 
     }
 
-    public static function load_measurement_selected()
+    // Edit Indicator: Get the selected indicator's data
+    public static function load_indicator_selected() //load_measurement_selected
     {
         global $wpdb;
 
-        $measurement_id = htmlspecialchars($_POST['id']);
+        $indicator_id = htmlspecialchars($_POST['id']);
         $query_targets = $wpdb->get_results("
-          SELECT * From wp_measurement WHERE id='$measurement_id'");
+          SELECT * FROM wp_indicators WHERE id='$indicator_id'");
         echo json_encode($query_targets);
         die();
     }
-
-    public static function add_measurement()
+    // Add Indicator: Get the selected indicator's data
+    public static function add_indicator()
     {
         global $wpdb;
-
-        $targets_id = htmlspecialchars($_POST['targets_id']);
-        $date_m = htmlspecialchars($_POST['date-m']);
-        $value_m = htmlspecialchars($_POST['value-m']);
-        $notes = htmlspecialchars($_POST['notes']);
-        $source_m = htmlspecialchars($_POST['source-m']);
-        $sdg_text = htmlspecialchars($_POST['m-sdg']);
+        $name = htmlspecialchars($_POST['name']);
+        $source = htmlspecialchars($_POST['source']);
+        $description = htmlspecialchars($_POST['description']);
+        $sdg_text = htmlspecialchars($_POST['sdg_id']);
+        $target_id = htmlspecialchars($_POST['target_id']);
         if (is_numeric($sdg_text)) {
-            $sdg_id = htmlspecialchars($_POST['m-sdg']);
+            $sdg_id = htmlspecialchars($_POST['sdg_id']);
         } else {
             /* find sdg-id by short-name */
             $query_targets = array();
@@ -366,12 +364,13 @@ class Unkt
 
         /* found the id */
         $insert = "
-        INSERT INTO `{$wpdb->prefix}measurement`(sid,iid,date,value,source_url,notes)
-        VALUES('$sdg_id','$targets_id','$date_m','$value_m','$source_m','$notes'); ";
+        INSERT INTO `{$wpdb->prefix}indicators`(sdg_id,target_id,name,source,description)
+        VALUES('$sdg_id','$target_id','$name','$source','$description'); ";
         $wpdb->query($insert);
 
+        // TODO: query_targets
         $query_targets = $wpdb->get_results("
-            SELECT * From wp_measurement WHERE iid='$targets_id'");
+            SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets);
         die();
     }
@@ -432,13 +431,13 @@ class Unkt
         echo self::get_data();
         die();
     }
-
-    public static function get_targets_measurement()
+    // GET indicator's data based on selected target id 
+    public static function get_targets_indicators()
     {
         global $wpdb;
-        $targets_id = htmlspecialchars($_GET['id']);
+        $target_id = htmlspecialchars($_GET['id']);
         $query_targets = $wpdb->get_results("
-            SELECT * From wp_measurement WHERE iid='$targets_id'");
+            SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets);
         die();
     }

@@ -28,8 +28,6 @@ if (isset($_GET)) {
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
 
-        console.log(data);
-
         var counter = 0;
         for (var index in data) {
             var id = "indicator-chart-" + counter;
