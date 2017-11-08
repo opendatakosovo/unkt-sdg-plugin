@@ -45,37 +45,54 @@ function activate()
     $create_targets_table_query = "
             CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}targets` (
               id bigint(20)  NOT NULL AUTO_INCREMENT,
-              sid bigint(20)  NOT NULL,
+              sdg_id bigint(20)  NOT NULL,
               name text NOT NULL,
               description text NOT NULL,
-              unit text NOT NULL,
-              target_value text NOT NULL,
-              target_date text NOT NULL,
               updated_date text NOT NULL,
-              PRIMARY KEY  (`id`),
-              CONSTRAINT fk_sdg FOREIGN KEY (sid) REFERENCES {$wpdb->prefix}sdg(s_number)   
+              PRIMARY KEY (`id`),
+              CONSTRAINT fk_sdg FOREIGN KEY (sdg_id) REFERENCES {$wpdb->prefix}sdg(s_number)   
               ON DELETE CASCADE
               ON UPDATE CASCADE
             ) ENGINE=INNODB CHARSET=utf8;
         ";
-
     dbDelta($create_targets_table_query);
 
-    $create_measurement_table_query = "
-           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}measurement` (
+    $create_indicators_table_query = "
+           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}indicators` (
             id bigint(20) NOT NULL AUTO_INCREMENT, 
-            sid bigint(20) NOT NULL, 
-            iid bigint(20) NOT NULL, 
-            date text NOT NULL, 
-            value text NOT NULL, 
-            source_url text NOT NULL, 
-            notes text NOT NULL, 
+            sdg_id bigint(20) NOT NULL, 
+            target_id bigint(20) NOT NULL,
+            name text NOT NULL, 
+            description text NOT NULL, 
+            source text NOT NULL, 
             PRIMARY KEY (id),
-            CONSTRAINT fk_sdg_number FOREIGN KEY (sid) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE, 
-            CONSTRAINT fk_targets_number FOREIGN KEY (iid) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE
+            CONSTRAINT fk_sdg_number FOREIGN KEY (sdg_id) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE, 
+            CONSTRAINT fk_targets_number FOREIGN KEY (target_id) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE
         ) ENGINE = INNODB CHARSET = utf8;
         ";
-    dbDelta($create_measurement_table_query);
+    dbDelta($create_indicators_table_query);
+
+    $create_charts_table_query = "
+           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}charts` (
+            id bigint(20) NOT NULL AUTO_INCREMENT, 
+            sdg_id bigint(20) NOT NULL, 
+            target_id bigint(20) NOT NULL,
+            indicator_id bigint(20) NOT NULL,
+            name text NOT NULL,
+            unit text NOT NULL,
+            target_date text NOT NULL, 
+            target_value text NOT NULL,
+            chart_data text NOT NULL,
+            disaggregated_by text NOT NULL,  
+            description text NOT NULL, 
+            PRIMARY KEY (id),
+            CONSTRAINT fk_sdg_number FOREIGN KEY (sdg_id) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE, 
+            CONSTRAINT fk_targets_number FOREIGN KEY (target_id) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            CONSTRAINT fk_indicators_number FOREIGN KEY (indicator_id) REFERENCES {$wpdb -> prefix}indicators(id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE = INNODB CHARSET = utf8;
+        ";
+            
+    dbDelta($create_charts_table_query);
     // Insert SDG's
     $insert_sdgs = "
             INSERT INTO `{$wpdb->prefix}sdg`( s_number, short_name, long_name, s_text )
@@ -105,7 +122,8 @@ function deactivate()
 {
     global $wpdb;
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}measurement`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}charts`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}indicators`");
     dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}targets`");
     dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}sdg`");
 
