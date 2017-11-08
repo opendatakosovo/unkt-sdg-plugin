@@ -18,7 +18,6 @@ if (isset($_GET)) {
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
 
-
 <script>
     $(document).ready(function () {
 
@@ -28,6 +27,8 @@ if (isset($_GET)) {
 
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
+
+        console.log(data);
 
         var counter = 0;
         for (var index in data) {
@@ -44,27 +45,6 @@ if (isset($_GET)) {
     });
 
     function generateChart(id, data, title) {
-        $('.indicators').append("\
-         <div class='col-lg-12 col-md-12 col-xs-12 col-sm-12'>\
-            <div class='row'>\
-                <div class='col-md-9 col-xs-9 col-sm-8 indicator-title-div'>\
-                        <span class='indicator-title'>" + title + "</span>\
-                </div>\
-                <div class='col-md-3 col-xs-3 col-sm-3'>\
-                    <button id='" + id + "-chart' class='show-chart' >SHOW DATA</button>\
-                </div>\
-            </div>\
-            <div class='row'>\
-                <div class='col-md-11 col-xs-12 col-sm-12 indicator-description-div' id='" + id + "-description' >\
-                </div>\
-            </div>\
-            <div style='display:none;' class='row indicator-title-div'>\
-                <span class='source-url'>SOURCE: " + data[0]['source_url'] + "</span>\
-            </div>\
-            <div class='row'>\
-                <div id='" + id + "' class='col-md-10 col-xs-11 col-sm-11' style='display:none; margin-top:20px; margin-bottom:20px; width:92% !important; height: 300px'></div><hr class='white-line'>\
-            </div>\
-            </div>");
         $('#' + id + '-chart').click(function (e) {
             var displayStatus = $('#' + id).css('display');
             if (displayStatus == 'none') {
@@ -211,7 +191,6 @@ if (isset($_GET)) {
                             if(this.point.source != ''){
                                 s += '<br/>Source: ' + this.point.source;
                             }
-
                         });
 
                         return s;
@@ -238,23 +217,66 @@ if (isset($_GET)) {
             ;
     }
 </script>
+
 <div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
     <div class="col-md-11 col-sm-12 col-xs-12">
         <div class="sdg-title">
         </div>
     </div>
     <div class="col-md-4 col-xs-11">
-        <img class="single-goal-image img-responsive" alt="Sustainable Developement Goals"
-             src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
+        <img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
     </div>
 
     <div class="col-md-8 col-md-offset-0 col-xs-11 col-xs-offset-1 sdg-description">
-
     </div>
     <div class="indicators">
     </div>
-
+    <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+        Collapsible Group 1</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.</div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        Collapsible Group 2</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.</div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+        Collapsible Group 3</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.</div>
+    </div>
+  </div>
 </div>
+</div>
+
 <style>
     .article-content {
         padding: 0 !important;

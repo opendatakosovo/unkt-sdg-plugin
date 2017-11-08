@@ -33,7 +33,7 @@ class Unkt
 
         if (is_admin()) {
             add_action('wp_ajax_add_targets', array('Unkt', 'add_targets'));
-            add_action('wp_ajax_edit_targets', array('Unkt', 'edit_targets'));
+            add_action('wp_ajax_update_target', array('Unkt', 'update_target'));
             add_action('wp_ajax_remove_targets_measurements', array('Unkt', 'remove_targets_measurements'));
             add_action('wp_ajax_remove_targets', array('Unkt', 'remove_targets'));
             add_action('wp_ajax_get_measurement_data', array('Unkt', 'get_measurement_data'));
@@ -122,9 +122,9 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.sid,wp_targets.unit,wp_targets.target_value,wp_targets.target_date, wp_targets.updated_date ,wp_targets.id,wp_sdg.s_number
+          SELECT wp_sdg.short_name, wp_targets.name, wp_targets.description,wp_targets.sid, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
           From wp_targets
-          INNER JOIN  wp_sdg
+          INNER JOIN wp_sdg
           ON  wp_targets.sid=wp_sdg.s_number");
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
@@ -209,40 +209,32 @@ class Unkt
         wp_enqueue_style('prefix_datatables');
     }
 
-    public static function add_targets()
-    {
-
+    public static function add_targets() {
         global $wpdb;
 
         $name = htmlspecialchars($_POST["targets"]);
         $description = htmlspecialchars($_POST['description']);
         $sid = intval(htmlspecialchars($_POST['sdg']));
-        $unit = htmlspecialchars($_POST['unit']);
-        $target_value = htmlspecialchars($_POST['target_value']);
-        $target_date = htmlspecialchars($_POST['target_date']);
         $insert = "
-        INSERT INTO `{$wpdb->prefix}targets`( sid, name, description, unit, target_value, target_date, updated_date )
-        VALUES('$sid','$name','$description','$unit', '$target_value', '$target_date', NOW()); ";
+        INSERT INTO `{$wpdb->prefix}targets`( sid, name, description, updated_date )
+        VALUES('$sid', '$name', '$description', NOW()); ";
         $wpdb->query($insert);
         echo self::get_data();
         die();
     }
 
-    public static function edit_targets()
-    {
+    public static function update_target() {
 
         global $wpdb;
         $id = htmlspecialchars($_POST["targets_id"]);
         $name = htmlspecialchars($_POST["targets"]);
         $description = htmlspecialchars($_POST['description']);
         $sid = intval(htmlspecialchars($_POST['sdg']));
-        $unit = htmlspecialchars($_POST['unit']);
-        $target_value = htmlspecialchars($_POST['target_value']);
-        $target_date = htmlspecialchars($_POST['target_date']);
+
         $update = "
-        UPDATE wp_targets
-        SET name='$name', description='$description', sid=$sid, unit='$unit', target_value = '$target_value', target_date = '$target_date', updated_date=NOW()
-        WHERE id='$id'";
+           UPDATE wp_targets
+           SET name = '$name', description = '$description', sid = $sid, updated_date = NOW()
+           WHERE id='$id'";
         $wpdb->query($update);
         echo self::get_data();
         die();

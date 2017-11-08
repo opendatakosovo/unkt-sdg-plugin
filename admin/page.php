@@ -47,29 +47,27 @@
     </div> -->
 </div>
 
-<div class="container wrap" style="margin-top:60px;height:auto;min-height:2000px;">
+<!-- Main Container -->
+<div class="container wrap" style="margin-top:60px; height:auto; min-height:2000px;">
 
    <!-- Target Table -->
-   <table id="exampleTable" class="stripe">
+   <table id="exampleTable" class="table-bordered">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Target</th>
-            <th>SDG</th>
-            <th>Unit</th>
-            <th>Target value</th>
-            <th>Target date</th>
-            <th>Updated date</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
+           <tr>
+               <th>ID</th>
+               <th>Target Title</th>
+               <th>SDG</th>
+               <th>Updated date</th>
+               <th>Description</th>
+               <th>Actions</th>
+           </tr>
         </thead>
         <tbody></tbody>
    </table>
 
    <!-- Indicator Table -->
    <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
-        <table id="detailsTable">
+        <table id="detailsTable" class="table-bordered">
             <thead>
             <tr>
                 <th>ID</th>
@@ -199,94 +197,77 @@
          <div id="add-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add targets</h4>
-                    </div>
-                    <div class="modal-body">
+                        <h4 class="modal-title">Add New Target</h4>
+                     </div>
+                     <div class="modal-body">
                         <form id="add-targets-form" name="add_targets" method="POST">
-                            <div class="form-group">
-                                <label for="targets">Targets:</label>
-                                <input name="targets" type="text" class="form-control" id="targets"
-                                       placeholder="Target Title">
-                            </div>
-                            <div class="form-group">
-                                <label for='sdg'>SDG:</label>
-                                <select id="sdg-type" name="add_sdg" class="form-control" title="SDG is required">
-                                    <option value="">Select SDG</option>
-                                    <option id="1" value="poverty">1-Poverty</option>
-                                    <option id="2" value="zero-hunger">2-Zero hunger</option>
-                                    <option id="3" value="good-health-and-well-being">3-Good health and well being
-                                    </option>
-                                    <option id="4" value="quality-education">4-Quality education</option>
-                                    <option id="5" value="gender-equality">5-Gender equality</option>
-                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
-                                    </option>
-                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
-                                    </option>
-                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
-                                        growth
-                                    </option>
-                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
-                                        and infrastructure
-                                    </option>
-                                    <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
-                                        communities
-                                    </option>
-                                    <option id="12" value="responsible-consumption-and-production">12-Responsible
-                                        consumption and production
-                                    </option>
-                                    <option id="13" value="climate-action">13-Climate action</option>
-                                    <option id="14" value="life-below-water">14-Life below water</option>
-                                    <option id="15" value="life-on-land">15-Life on land</option>
-                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
-                                        strong institutions
-                                    </option>
-                                    <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="unit">Unit:</label>
-                                <input type="text" name="add_unit" class="form-control" id="unit" placeholder="Unit"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="add_target_value">Target value:</label>
-                                <input type="text" name="add_target_value" class="form-control" id="target_value" placeholder="Target value"/>
-                            </div>
-                            <label for="add_target_date">Date:</label>
-                            <div class="input-group ">
-                                <input name="add_target_date" type="text"
-                                       class="col-md-12 col-sm-12 col-xs-12" id="target_date"
-                                       placeholder="Date">
-                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
-                                                                             onkeydown="return false"></span></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea name="description" class="form-control" id="sdg-description"
-                                          placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
-                                       id="add-targets-button">
+                           <div class="form-group">
+                              <label for="targets">Target Title:</label>
+                              <input name="targets" type="text" class="form-control" id="targets" placeholder="Target Title">
+                           </div>
 
-                            </div>
-                    </div><!-- /.modal-content -->
-                    </form>
+                           <div class="form-group">
+                              <label for='sdg'>SDG:</label>
+                              <select id="sdg-type" name="add_sdg" class="form-control" title="SDG is required">
+                              <option value="">Select SDG</option>
+                              <option id="1" value="poverty">1-Poverty</option>
+                              <option id="2" value="zero-hunger">2-Zero hunger</option>
+                              <option id="3" value="good-health-and-well-being">3-Good health and well being
+                              </option>
+                              <option id="4" value="quality-education">4-Quality education</option>
+                              <option id="5" value="gender-equality">5-Gender equality</option>
+                              <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
+                              </option>
+                              <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
+                              </option>
+                              <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
+                                  growth
+                              </option>
+                              <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
+                                  and infrastructure
+                              </option>
+                              <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+                              <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
+                                  communities
+                              </option>
+                              <option id="12" value="responsible-consumption-and-production">12-Responsible
+                                  consumption and production
+                              </option>
+                              <option id="13" value="climate-action">13-Climate action</option>
+                              <option id="14" value="life-below-water">14-Life below water</option>
+                              <option id="15" value="life-on-land">15-Life on land</option>
+                              <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
+                                  strong institutions
+                              </option>
+                              <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
+                              </option>
+                           </select>
+                           </div>
+
+                           <div class="form-group">
+                              <label for="description">Description:</label>
+                              <textarea name="description" class="form-control" id="sdg-description" placeholder="Description"></textarea>
+                           </div>
+
+                           <div class="modal-footer">
+                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-targets-button">
+                           </div>
+                        </form>
+                     </div>
                 </div>
+            </div>
+         </div>
 
-            </div><!-- /.modal-dialog -->
-         </div><!-- /.modal -->
          <!-- Edit Target Modal -->
          <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Edit targets</h4>
+                        <h4 class="modal-title">Edit target</h4>
                     </div>
                     <div class="modal-body">
                         <form id="edit-targets-form" name="edit_targets_form">
@@ -332,34 +313,16 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="edit-unit">Unit:</label>
-                                <input type="text" name="add_unit" class="form-control" id="edit-unit"
-                                       placeholder="Unit"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="edit-target-value">Target value:</label>
-                                <input type="text" name="edit-target-value" class="form-control number-values" id="edit-target-value"
-                                       placeholder="Unit"/>
-                            </div>
-                            <label for="edit-target-date">Date:</label>
-                            <div class="input-group ">
-                                <input name="date" type="date"
-                                       class="col-md-12 col-sm-12 col-xs-12" id="edit-target-date"
-                                       placeholder="Date">
-                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"
-                                                                             onkeydown="return false"></span></span>
-                            </div>
+
                             <div class="form-group">
                                 <label for="description">Description:</label>
-                                <textarea name="description" class="form-control" id="edit-sdg-description"
-                                          placeholder="Description"></textarea>
+                                <textarea name="description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
                             </div>
-                            <div class="modal-footer">
 
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
-                                       id="edit-targets-button">
+                            <div class="modal-footer">
+                             <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                             <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
+                                    id="edit-targets-button">
 
                             </div><!-- /.modal-content -->
                         </form>
@@ -373,6 +336,8 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+
+
    function fnFormatDetails(table_id, html) {
       var sOut = "<table id=\"exampleTable_" + table_id + "\">";
       sOut += html;
@@ -381,7 +346,6 @@
    }
 
     var newRowData = <?php echo json_encode($query_targets); ?>;
-
    //  console.log(newRowData);
 
     var iTableCounter = 1;
@@ -391,7 +355,6 @@
 
     //Run On HTML Build
     $(document).ready(function () {
-
         // Target date with datepicker
         $('#target_date').datepicker({dateFormat: "mm/dd/yy"});
 
@@ -399,14 +362,11 @@
         $('#add-targets-form').on('submit', function (e) {
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                type: 'POST', //or POST,
+                type: 'POST',
                 dataType: 'json',
                 data: {
+                   'targets': $('#targets').val(),
                     'description': $('#sdg-description').val(),
-                    'targets': $('#targets').val(),
-                    'unit': $('#unit').val(),
-                    'target_value': $('#target_value').val(),
-                    'target_date': $('#target_date').val(),
                     'sdg': $("#sdg-type").children(":selected").attr("id"),
                     'action': 'add_targets'
                 },
@@ -422,6 +382,7 @@
             });
             e.preventDefault();
         });
+
         // Edit existing target from modal
         $('#edit-targets-form').validate({
             rules: {
@@ -445,10 +406,7 @@
                         'description': $('#edit-sdg-description').val(),
                         'targets': $('#edit_targets').val(),
                         'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
-                        'unit': $("#edit-unit").val(),
-                        'target_value': $("#edit-target-value").val(),
-                        'target_date': $("#edit-target-date").val(),
-                        'action': 'edit_targets'
+                        'action': 'update_target'
                     },
                     success: function (data) {
                         var targets_id = $('#edit_targets_id').val();
@@ -470,7 +428,7 @@
 
         // Making table data as "+" sign
         nCloneTd.innerHTML = '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px"/>';
-        nCloneTd.className = "center";
+        nCloneTd.className = "text-center";
 
         // Adding an empty column table head for "+" and "-"
         $('#exampleTable thead tr').each(function() {
@@ -478,7 +436,8 @@
         });
 
         // This will add "+" sign for each row in first data column
-        $('#exampleTable tbody tr').each(function() {
+        $('#exampleTable tbody tr').each(function(index, element) {
+           console.log(element);
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
@@ -599,19 +558,16 @@
                 "bJQueryUI": true,
                 "aaData": newRowData,
                 "bPaginate": true,
-
+                "order": [1, 'asc'],
                 "aoColumns": [
                     {
                         "mDataProp": null,
-                        "sClass": "control center",
-                        "sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
+                        "sClass": "control text-center",
+                        "sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
                     },
                     {"mDataProp": "id"},
                     {"mDataProp": "name"},
                     {"mDataProp": "short_name"},
-                    {"mDataProp": "unit"},
-                    {"mDataProp": "target_value"},
-                    {"mDataProp": "target_date"},
                     {"mDataProp": "updated_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
@@ -657,25 +613,9 @@
         // Invoking the sub_table function when plus is clicked
         init_sub_table();
 
-        $('body').on('click', '.edit-modal-measurement', function (e) {
-            e.preventDefault();
-            var measurement_id = $($(this).parent().parent().children()[0]).text();
-            $.ajax({
-                type: "POST",
-                data: {'id': +measurement_id, 'action': 'load_measurement_selected'},
-                dataType: 'json',
-                url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                success: function (data) {
-                    $('#edit-date-measurement').val(data[0].date);
-                    $('#edit-value-measurement').val(data[0].value);
-                    $('#edit-notes-measurement').val(data[0].notes);
-                    $('#edit-source-measurement').val(data[0].source_url);
-                    $('#edit-measurement_id').val(data[0].id);
-                }
-            });
-        });
         $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
 
+        // Add New Indicator
         $('body').on('click', '.add-measurment', function (e) {
 
             // Get clicked targets ID
@@ -730,6 +670,27 @@
 
             e.preventDefault();
         });
+
+        // Getting the data to edit
+        $('body').on('click', '.edit-modal-measurement', function (e) {
+            e.preventDefault();
+
+            var measurement_id = $($(this).parent().parent().children()[0]).text();
+            $.ajax({
+               type: "POST",
+               data: {'id': +measurement_id, 'action': 'load_measurement_selected'},
+               dataType: 'json',
+               url: "<?php echo admin_url('admin-ajax.php'); ?>",
+               success: function (data) {
+                  $('#edit-date-measurement').val(data[0].date);
+                  $('#edit-value-measurement').val(data[0].value);
+                  $('#edit-notes-measurement').val(data[0].notes);
+                  $('#edit-source-measurement').val(data[0].source_url);
+                  $('#edit-measurement_id').val(data[0].id);
+               }
+            });
+        });
+        // Fixing data to edit
         $('body').on('click', '.edit-modal-measurement', function (e) {
             // Get clicked targets ID
             var targets_id = $(this).attr('id');
@@ -793,6 +754,8 @@
 
             e.preventDefault();
         });
+
+        // Adding new Indicator
         $('#add-measurement-form').validate({
             rules: {
                 date: {
@@ -811,7 +774,7 @@
             },
             submitHandler: function (form) {
 
-                var targets_id = $('#measurement_targets_id').val();
+               var targets_id = $('#measurement_targets_id').val();
 
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -882,13 +845,11 @@
                         $('#add-measurement-form')[0].reset();
 
                     }
-
                 });
-
-
             }
         });
 
+        // Posting the edited Data
         $('#edit-measurement-form').validate({
             rules: {
                 date: {
@@ -920,7 +881,6 @@
                         'action': 'edit_measurement'
                     },
                     success: function (data) {
-
                         var targets_id = data[0].iid;
                         var s_id = data[0].sid;
                         $('#exampleTable_' + targets_id).dataTable().fnDestroy();
@@ -974,12 +934,11 @@
                         $('#edit-measurement-modal').modal('hide');
                         $('.form-control').val('');
                     }
-
-
                 });
-
             }
         });
+
+        // Getting the target data to edit
         $('body').on('click', '.edit-modal-targets', function (e) {
             var targets_id = $($(this).parent().parent().children()[1]).text();
 
@@ -1003,6 +962,8 @@
             });
             e.preventDefault();
         })
+
+        // Removing
         $('body').on('click', '.remove-targets', function (e) {
             e.preventDefault();
             var targets_id = $($(this).parent().parent().children()[1]).text();
@@ -1244,35 +1205,33 @@
         margin-left: 56px;
     }
 
-    .show-hidden {
-
-    }
-
     .blue-back {
-        background: #00a0d2;
-
+     background: #00a0d2;
     }
 
     .btn {
         border-radius: 0px;
     }
 
-    table.dataTable.no-footer {
-        border-bottom: 1px solid #00a0d2;
-    }
-
-    table.dataTable.no-footer {
-        border-top: 1px solid #00a0d2;
-    }
-
-    table.dataTable thead th, table.dataTable thead td {
-        border-bottom: #00a0d2;
+    table.dataTable {
+      border-color: #fff;
     }
 
     #exampleTable thead tr {
         background: #00a0d2;
-        color: white;
     }
+
+    #exampleTable thead tr th {
+        color: #fff;
+    }
+
+    table.dataTable.no-footer {
+      border: none;
+   }
+
+    table.dataTable thead th, table.dataTable thead td {
+      border-color: #ddd!important;
+   }
 
     .modal-open .modal {
         margin-top: 20px;
