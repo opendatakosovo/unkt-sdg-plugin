@@ -7,9 +7,10 @@ global $wpdb;
 $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 ?>
 
-<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/style.css' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'css/responsive.css' ?>>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="content content-article">
     <div class="container-fluid">
@@ -31,7 +32,6 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
                     </div>
                 </div>
                 <?php get_sidebar(); ?>
-
             </div>
         </div>
     </div>
