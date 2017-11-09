@@ -71,7 +71,7 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Indicator Title</th>
                 <th>Source</th>
                 <th>Description</th>
                 <th>Actions</th>
@@ -95,9 +95,9 @@
                             <input type="hidden" id="indicator-target-id"/> <!-- measurement_targets_id -->
                             <input type="hidden" id="indicator-sdg"/><!-- measurement_sdg  -->
                             <div class="form-group">
-                                <label for="name-indicator">Name:</label>
-                                <input name="name-indicator" type="text" class="form-control"
-                                          id="name-indicator" placeholder="Name"></input>
+                                <label for="title-indicator">Title:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                          id="title-indicator" placeholder="Title"></input>
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source:</label>
@@ -134,9 +134,9 @@
                             <input type="hidden" id="edit-indicator-id"/> <!-- old: measurement_targets_id -->
                             <input type="hidden" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
                             <div class="form-group">
-                                <label for="name-indicator">Name:</label>
-                                <input name="name-indicator" type="text" class="form-control"
-                                          id="edit-name-indicator" placeholder="Name"></input>
+                                <label for="title-indicator">Name:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                          id="edit-title-indicator" placeholder="Name"></input>
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source:</label>
@@ -165,7 +165,7 @@
          <div class="col-md-12" style="margin-top:20px">
             <div class="col-md-2">
                 <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
-                   style="width:100%;">+ Add targets</a>
+                   style="width:100%;">+ Add target</a>
             </div>
          </div>
 
@@ -181,12 +181,12 @@
                         <form id="add-targets-form" name="add_targets" method="POST">
                            <div class="form-group">
                               <label for="targets">Target Title:</label>
-                              <input name="targets" type="text" class="form-control" id="targets" placeholder="Target Title">
+                              <input name="target" type="text" class="form-control" id="target" placeholder="Target Title">
                            </div>
 
                            <div class="form-group">
-                              <label for='sdg'>SDG:</label>
-                              <select id="sdg-type" name="add_sdg" class="form-control" title="SDG is required">
+                              <label for='sdg-type'>SDG:</label>
+                              <select id="sdg-type" name="sdg-type" class="form-control" title="SDG is required">
                               <option value="">Select SDG</option>
                               <option id="1" value="poverty">1-Poverty</option>
                               <option id="2" value="zero-hunger">2-Zero hunger</option>
@@ -341,14 +341,14 @@
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                   'targets': $('#targets').val(),
+                    'target': $('#target').val(),
                     'description': $('#sdg-description').val(),
                     'sdg': $("#sdg-type").children(":selected").attr("id"),
                     'action': 'add_targets'
                 },
                 success: function (data) {
                     // Setting the new target id in hidden field
-                    var targets_id = $('#targets').val();
+                    var targets_id = $('#target').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
                     oTable.fnDraw();
@@ -655,7 +655,7 @@
                dataType: 'json',
                url: "<?php echo admin_url('admin-ajax.php'); ?>",
                success: function (data) {
-                  $('#edit-name-indicator').val(data[0].name);
+                  $('#edit-title-indicator').val(data[0].title);
                   $('#edit-source-indicator').val(data[0].source);
                   $('#edit-description-indicator').val(data[0].description);
                   $('#edit-indicator-id').val(data[0].id);
@@ -748,7 +748,7 @@
                     data: {
                         'sdg_id': $('#indicator-sdg').val(),
                         'target_id': $('#indicator-target-id').val(),
-                        'name': $('#name-indicator').val(),
+                        'title': $('#title-indicator').val(),
                         'source': $("#source-indicator").val(),
                         'description': $("#description-indicator").val(),
                         'action': 'add_indicator' //add_measurement
@@ -828,7 +828,7 @@
                     dataType: 'json',
                     data: {
                         'indicator_id': indicator_id,
-                        'name': $('#edit-name-indicator').val(),
+                        'title': $('#edit-title-indicator').val(),
                         'description': $('#edit-description-indicator').val(),
                         'source': $("#edit-source-indicator").val(),
                         'action': 'edit_indicator'
@@ -843,7 +843,7 @@
                             "bSort": true, // disables sorting
                             "aoColumns": [
                                 {"mDataProp": "id"},
-                                {"mDataProp": "name"},
+                                {"mDataProp": "title"},
                                 {"mDataProp": "source"},
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
