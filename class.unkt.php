@@ -438,8 +438,8 @@ class Unkt
       global $wpdb;
       $indicator_id = htmlspecialchars($_GET['id']);
       $target_id = htmlspecialchars($_GET['target_id']);
-      $query_target_indicator_charts = $wpdb->get_charts("
-          SELECT * From wp_indicators WHERE id='$indicator_id' AND target_id='$target_id'");
+      $query_target_indicator_charts = $wpdb->get_results("
+          SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
       echo json_encode($query_target_indicator_charts);
       die();
     }

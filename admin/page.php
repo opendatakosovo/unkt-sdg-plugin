@@ -471,6 +471,7 @@
                 this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
             }
             // GET Request for rendering indicator table
+
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'GET',
