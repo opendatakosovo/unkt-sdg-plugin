@@ -227,7 +227,7 @@ class Unkt
 
         global $wpdb;
         $id = htmlspecialchars($_POST["target_id"]);
-        $title = htmlspecialchars($_POST["targets"]);
+        $title = htmlspecialchars($_POST["title"]);
         $description = htmlspecialchars($_POST['description']);
         $sdg_id = intval(htmlspecialchars($_POST['sdg_id']));
 
@@ -244,7 +244,7 @@ class Unkt
     {
         global $wpdb;
         $targets_id = $_POST['id'];
-        $query_targets = $wpdb->get_results(" SELECT wp_sdg.short_name,wp_targets.id,wp_targets.title,wp_targets.description,wp_targets.updated_date,wp_targets.sdg_id,wp_sdg.s_number FROM wp_targets INNER JOIN wp_sdg ON wp_targets.sdg_id = wp_sdg.s_number AND wp_targets.id = $targets_id");
+        $query_targets = $wpdb->get_results(" SELECT wp_sdg.short_name,wp_targets.id,wp_targets.title ,wp_targets.description,wp_targets.updated_date,wp_targets.sdg_id,wp_sdg.s_number FROM wp_targets INNER JOIN wp_sdg ON wp_targets.sdg_id = wp_sdg.s_number AND wp_targets.id = $targets_id");
         echo json_encode($query_targets);
         die();
     }
