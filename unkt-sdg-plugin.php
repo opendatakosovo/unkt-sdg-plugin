@@ -77,6 +77,7 @@ function activate()
             id bigint(20) NOT NULL AUTO_INCREMENT,
             sdg_id bigint(20) NOT NULL,
             target_id bigint(20) NOT NULL,
+            indicator_id BIGINT(20) NOT NULL,
             title text NOT NULL,
             unit text NOT NULL,
             target_date text NOT NULL,

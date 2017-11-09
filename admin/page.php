@@ -65,11 +65,31 @@
         <tbody></tbody>
    </table>
 
+   <!-- Chart Table -->
+   <div style="display:none" id="div-sub-sub-table" style="background:#337ab7;height:auto;">
+        <table id="chartsTable" class="table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Unit</th>
+                <th>Target Date</th>
+                <th>Target Value</th>
+                <th>Data</th>
+                <th>Disaggregated by</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+   </div>
+
    <!-- Indicator Table -->
    <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
         <table id="detailsTable" class="table-bordered">
             <thead>
             <tr>
+                <th></th>
                 <th>ID</th>
                 <th>Indicator Title</th>
                 <th>Source</th>
@@ -121,6 +141,7 @@
             </div><!-- /.modal -->
             <!-- end of measurement modal -->
          </div>
+
          <!-- Edit Indicator Modal -->
          <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
             <div class="modal-dialog">
@@ -322,11 +343,12 @@
    }
 
     var newRowData = <?php echo json_encode($query_targets); ?>;
-    console.log(newRowData);
+    //console.log(newRowData);
 
     var iTableCounter = 1;
     var oTable;
     var oInnerTable;
+    var oInnerInnerTable;
     var detailsTableHtml;
 
     //Run On HTML Build
@@ -398,6 +420,9 @@
         // Get the Indicator table example for indicator table
         detailsTableHtml = $("#detailsTable").html();
 
+        // Get the Charts table example for indicator table
+        oInnerInnerTableHtml = $("#chartsTable").html();
+
         //Insert a 'details' column to the table
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
@@ -416,6 +441,126 @@
            console.log(element);
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
+
+        // Initialize the sub sub table for charts
+        function init_sub_sub_table(){
+          $('body').on('click', '.show-sub-sub-table', function (e) {
+
+            e.preventDefault();
+
+            // Getting the ID of clicked target's "+"
+            var indicator_id = $($(this).parent().parent().children()[1]).text();
+
+            // // Getting the ID of clicked SDG's "+"
+            var target_id = $($(this).parent().parent().children()[6]).text();
+
+            // Getting the row of target
+            var nTr = $(this).parents('tr')[0];
+
+            // Getting the "+" sign of target
+            var nTds = this;
+
+            // Checking the table if it's opened or closed for "+" and "-"
+            if (oInnerTable.fnIsOpen(nTr)) {
+                /* This row is already open - close it */
+                // If the sub table is closed make the "-" to "+"
+                this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
+            }
+            else {
+                // If the sub table is opened make the "+" to "-"
+                this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
+            }
+            // GET Request for rendering indicator table
+            $.ajax({
+                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                type: 'GET',
+                dataType: 'json',
+                data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
+                success: function (data) {
+                    // Checking if table is closed or opened
+                    if (oInnerTable.fnIsOpen(nTr)) {
+                        /* This row is already open - close it */
+                        this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
+                        this.id = indicator_id;
+                        oInnerTable.fnClose(nTr);
+                    }
+                    // Opened
+                    else {
+                        // Changing the plus to minus
+                        this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
+
+                        // Adding new row below the indicator row for inner table
+                        oInnerTable.fnOpen(nTr, fnFormatDetails(indicator_id, oInnerInnerTableHtml), 'chart-details');
+
+                        // Rendering the chart data in inner table of selected indicator
+                        oInnerInnerTable = $("#chartTable_" + indicator_id).dataTable({
+                            "bJQueryUI": true,
+                            "bFilter": true,
+                            "aaData": data,
+                            "bSort": true, // disables sorting
+                            "info": true,
+                            "aoColumns": [
+                                {"mDataProp": "id"},
+                                {"mDataProp": "title"},
+                                {"mDataProp": "unit"},
+                                {"mDataProp": "target_date"},
+                                {"mDataProp": "target_value"},
+                                {"mDataProp": "chart_data"},
+                                {"mDataProp": "description"},
+                                {"mDataProp": "disaggregated_by"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": target_id},
+                            ],
+                            "bPaginate": true,
+                            "oLanguage": {
+                                "sInfo": "_TOTAL_ entries"
+                            },
+                            "dom": 'Bfrtip',
+                            "buttons": [
+                                {
+                                    "extend": 'copyHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'excelHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'pdfHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                },
+                                {
+                                    "extend": 'csvHtml5',
+                                    "exportOptions": {
+                                        "columns": [1, 2, 3, 4, 5]
+                                    }
+                                }
+                            ],
+                            "columnDefs": [
+                                    {
+                                        "targets": [ 6 ],
+                                        className: 'hidden'
+                                    }
+                                ],
+                        });
+
+                        $(this).attr('id', indicator_id);
+                        // Updating the info of datatable with the button to create new indicator
+                        $('tr.details .dataTables_info').html('');
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
+                    }
+                }
+            });
+        });
+
+
+        }
 
         // Initialize the sub table if the plus is clicked
         function init_sub_table() {
@@ -475,11 +620,13 @@
                                 "bSort": true, // disables sorting
                                 "info": true,
                                 "aoColumns": [
+                                    {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
                                     {"mDataProp": "id"},
                                     {"mDataProp": "title"},
                                     {"mDataProp": "source"},
                                     {"mDataProp": "description"},
                                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                    {"sDefaultContent": targets_id},
                                 ],
                                 "bPaginate": true,
                                 "oLanguage": {
@@ -512,6 +659,12 @@
                                         }
                                     }
                                 ],
+                                "columnDefs": [
+                                        {
+                                            "targets": [ 6 ],
+                                            className: 'hidden'
+                                        }
+                                    ],
                             });
 
                             $(this).attr('id', targets_id);
@@ -579,7 +732,7 @@
             });
 
         }
-
+        init_sub_sub_table();
         // Invoking the initialize function for main datatable, passing the JSON with all targets from query
         init_table(newRowData);
 
@@ -648,7 +801,7 @@
         $('body').on('click', '.edit-modal-indicator', function (e) {
             e.preventDefault();
 
-            var indicator_id = $($(this).parent().parent().children()[0]).text();
+            var indicator_id = $($(this).parent().parent().children()[1]).text();
             $.ajax({
                type: "POST",
                data: {'id': + indicator_id, 'action': 'load_indicator_selected'},
@@ -764,6 +917,7 @@
                                 {"mDataProp": "source"},
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": targets_id},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -796,6 +950,12 @@
                                     }
                                 }
                             ],
+                            "columnDefs": [
+                                    {
+                                        "targets": [ 6 ],
+                                        className: 'hidden'
+                                    }
+                                ],
 
                         });
                         $('tr.details .dataTables_info').html('');
@@ -838,11 +998,13 @@
                             "aaData": data,
                             "bSort": true, // disables sorting
                             "aoColumns": [
+                                {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
                                 {"mDataProp": "source"},
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": target_id},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -875,6 +1037,12 @@
                                     }
                                 }
                             ],
+                            "columnDefs": [
+                                    {
+                                        "targets": [ 6 ],
+                                        className: 'hidden'
+                                    }
+                                ],
 
                         });
                         $('tr.details .dataTables_info').html('');
@@ -995,7 +1163,7 @@
         $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
             var row = $($(this).parent().parent());
-            var indicator_id = $($(this).parent().parent().children()[0]).text();
+            var indicator_id = $($(this).parent().parent().children()[1]).text();
 
             BootstrapDialog.show({
                 message: 'Are you sure you want to delete the indicator?',
@@ -1041,7 +1209,7 @@
         padding-top: 10px;
     }
 
-    .show-sub-table {
+    .show-sub-table, .show-sub-sub-table {
         cursor: pointer;
     }
 

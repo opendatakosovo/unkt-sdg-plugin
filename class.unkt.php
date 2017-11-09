@@ -46,6 +46,7 @@ class Unkt
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
+            add_action('wp_ajax_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
         }
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
@@ -330,7 +331,6 @@ class Unkt
     public static function load_indicator_selected() //load_measurement_selected
     {
         global $wpdb;
-
         $indicator_id = htmlspecialchars($_POST['id']);
         $query_targets = $wpdb->get_results("
           SELECT * FROM wp_indicators WHERE id='$indicator_id'");
@@ -431,6 +431,17 @@ class Unkt
             SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets);
         die();
+    }
+
+    public function get_target_indicator_charts()
+    {
+      global $wpdb;
+      $indicator_id = htmlspecialchars($_GET['id']);
+      $target_id = htmlspecialchars($_GET['target_id']);
+      $query_target_indicator_charts = $wpdb->get_charts("
+          SELECT * From wp_indicators WHERE id='$indicator_id' AND target_id='$target_id'");
+      echo json_encode($query_target_indicator_charts);
+      die();
     }
 
     public static function check_targets_is_empty()
