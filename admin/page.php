@@ -92,8 +92,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
-                            <input type="hidden" id="indicator-target-id"/> <!-- measurement_targets_id -->
-                            <input type="hidden" id="indicator-sdg"/><!-- measurement_sdg  -->
+                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
+                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
                             <div class="form-group">
                                 <label for="title-indicator">Title:</label>
                                 <input name="title-indicator" type="text" class="form-control"
@@ -131,8 +131,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="edit-indicator-form" name="edit-indicator">
-                            <input type="hidden" id="edit-indicator-id"/> <!-- old: measurement_targets_id -->
-                            <input type="hidden" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
+                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
+                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
                             <div class="form-group">
                                 <label for="title-indicator">Name:</label>
                                 <input name="title-indicator" type="text" class="form-control"
@@ -476,10 +476,10 @@
                                 "info": true,
                                 "aoColumns": [
                                     {"mDataProp": "id"},
-                                    {"mDataProp": "name"},
+                                    {"mDataProp": "title"},
                                     {"mDataProp": "source"},
                                     {"mDataProp": "description"},
-                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 ],
                                 "bPaginate": true,
                                 "oLanguage": {
@@ -540,7 +540,11 @@
                     },
                     {"mDataProp": "id"},
                     {"mDataProp": "title"},
+<<<<<<< HEAD
                     {"mDataProp": "sdg_id"},
+=======
+                    {"mDataProp": "short_name"},
+>>>>>>> f8e6284e3ddde0b1b949e467f36068081e5daf6e
                     {"mDataProp": "updated_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
@@ -733,13 +737,12 @@
             rules: {
                 name: {
                     required: true,
-
                 }
-
             },
             submitHandler: function (form) {
 
                var targets_id = $('#indicator-target-id').val();
+               console.log($('#indicator-sdg').val());
 
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -763,10 +766,10 @@
                             "bSort": true, // disables sorting
                             "aoColumns": [
                                 {"mDataProp": "id"},
-                                {"mDataProp": "name"},
+                                {"mDataProp": "title"},
                                 {"mDataProp": "source"},
                                 {"mDataProp": "description"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -846,7 +849,7 @@
                                 {"mDataProp": "title"},
                                 {"mDataProp": "source"},
                                 {"mDataProp": "description"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -912,7 +915,7 @@
             e.preventDefault();
         })
 
-        // Removing
+        // Remov
         $('body').on('click', '.remove-targets', function (e) {
             e.preventDefault();
             var targets_id = $($(this).parent().parent().children()[1]).text();
@@ -993,140 +996,96 @@
 
 
         });
-        $('body').on('click', '.remove-measurement', function (e) {
+
+        $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
-            var measurement_id = $($(this).parent().parent().children()[0]).text();
-            var check_if_is_empty;
-            $.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                type: 'POST', //or POST
-                dataType: 'json',
-                data: {'id': measurement_id, 'action': 'check_size_of_measurement'},
-                success: function (data) {
-                    check_if_is_empty = data['a'];
-                    if (check_if_is_empty == 1) {
-                        BootstrapDialog.show({
-                            message: 'Are you sure you want to delete the measurement?',
-                            buttons: [{
-                                icon: 'glyphicon glyphicon-send',
-                                label: 'OK',
-                                cssClass: 'btn-primary',
-                                autospin: false,
-                                action: function (dialogRef) {
-                                    $.ajax({
-                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                                        type: 'POST', //or POST
-                                        dataType: 'json',
-                                        data: {
-                                            'id': measurement_id,
-                                            'action': 'remove_measurement'
+            var indicator_id = $($(this).parent().parent().children()[0]).text();
+
+            BootstrapDialog.show({
+                message: 'Are you sure you want to delete the indicator?',
+                buttons: [{
+                    icon: 'glyphicon glyphicon-send',
+                    label: 'OK',
+                    cssClass: 'btn-primary',
+                    autospin: false,
+                    action: function (dialogRef) {
+                        $.ajax({
+                            url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                            type: 'POST', //or POST
+                            dataType: 'json',
+                            data: {
+                                'id': indicator_id,
+                                'action': 'remove_indicator'
+                            },
+                            success: function(data) {
+                               console.log(data);
+                                var targets_id = data[0].target_id;
+                                var sdg_id = data[0].sdg_id;
+                                $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+
+                                oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+                                    "bJQueryUI": true,
+                                    "aaData": data,
+                                    "bSort": true, // disables sorting
+                                    "aoColumns": [
+                                       {"mDataProp": "id"},
+                                       {"mDataProp": "title"},
+                                       {"mDataProp": "source"},
+                                       {"mDataProp": "description"},
+                                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                    ],
+                                    "bPaginate": true,
+
+                                    "oLanguage": {
+                                        "sInfo": "_TOTAL_ entries"
+                                    },
+                                    "dom": 'Bfrtip',
+                                    "buttons": [
+                                        {
+                                            "extend": 'copyHtml5',
+                                            "exportOptions": {
+                                                "columns": [1, 2, 3, 4, 5]
+                                            }
                                         },
-                                        success: function (data) {
-                                            var targets_id = data[0].iid;
-                                            var s_id = data[0].sid;
-                                            $('#exampleTable_' + targets_id).dataTable().fnDestroy();
-
-                                            oInnerTable = $("#exampleTable_" + targets_id).dataTable({
-                                                "bJQueryUI": true,
-                                                "aaData": data,
-                                                "bSort": true, // disables sorting
-                                                "aoColumns": [
-                                                    {"mDataProp": "id"},
-                                                    {"mDataProp": "date"},
-                                                    {"mDataProp": "value"},
-                                                    {"mDataProp": "source_url"},
-                                                    {"mDataProp": "notes"},
-                                                    {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-measurement'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-                                                ],
-                                                "bPaginate": true,
-
-                                                "oLanguage": {
-                                                    "sInfo": "_TOTAL_ entries"
-                                                },
-                                                "dom": 'Bfrtip',
-                                                "buttons": [
-                                                    {
-                                                        "extend": 'copyHtml5',
-                                                        "exportOptions": {
-                                                            "columns": [1, 2, 3, 4, 5]
-                                                        }
-                                                    },
-                                                    {
-                                                        "extend": 'excelHtml5',
-                                                        "exportOptions": {
-                                                            "columns": [1, 2, 3, 4, 5]
-                                                        }
-                                                    },
-                                                    {
-                                                        "extend": 'pdfHtml5',
-                                                        "exportOptions": {
-                                                            "columns": [1, 2, 3, 4, 5]
-                                                        }
-                                                    },
-                                                    {
-                                                        "extend": 'csvHtml5',
-                                                        "exportOptions": {
-                                                            "columns": [1, 2, 3, 4, 5]
-                                                        }
-                                                    }
-                                                ]
-                                            });
-                                            $('tr.details .dataTables_info').html('');
-                                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
-                                            $('#edit-indicator-modal').modal('hide');
-                                            $('.form-control').val('');
-                                        }
-
-                                    });
-                                    setTimeout(function () {
-                                        dialogRef.close();
-                                    }, 100);
-                                }
-                            }, {
-                                label: 'Close',
-                                action: function (dialogRef) {
-                                    dialogRef.close();
-                                }
-                            }]
-                        });
-                    } else {
-                        BootstrapDialog.show({
-                            message: 'Are you sure you want to delete the targets?',
-                            buttons: [{
-                                icon: 'glyphicon glyphicon-send',
-                                label: 'OK',
-                                cssClass: 'btn-primary',
-                                autospin: false,
-                                action: function (dialogRef) {
-                                    $.ajax({
-                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                                        type: 'POST', //or POST
-                                        dataType: 'json',
-                                        data: {
-                                            'id': measurement_id,
-                                            'action': 'remove_last_measurement_targets'
+                                        {
+                                            "extend": 'excelHtml5',
+                                            "exportOptions": {
+                                                "columns": [1, 2, 3, 4, 5]
+                                            }
                                         },
-                                        success: function (data) {
-                                            init_sub_table();
-                                            $('#exampleTable').dataTable().fnDestroy();
-                                            init_table(data);
+                                        {
+                                            "extend": 'pdfHtml5',
+                                            "exportOptions": {
+                                                "columns": [1, 2, 3, 4, 5]
+                                            }
+                                        },
+                                        {
+                                            "extend": 'csvHtml5',
+                                            "exportOptions": {
+                                                "columns": [1, 2, 3, 4, 5]
+                                            }
                                         }
-                                    });
-                                    setTimeout(function () {
-                                        dialogRef.close();
-                                    }, 100);
-                                }
-                            }, {
-                                label: 'Close',
-                                action: function (dialogRef) {
-                                    dialogRef.close();
-                                }
-                            }]
+                                    ]
+                                });
+                                $('tr.details .dataTables_info').html('');
+                                $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add indicator</a>");
+                                $('#edit-indicator-modal').modal('hide');
+                                $('.form-control').val('');
+                            }
+
                         });
+                        setTimeout(function () {
+                            dialogRef.close();
+                        }, 100);
                     }
-                }
+                }, {
+                    label: 'Close',
+                    action: function (dialogRef) {
+                        dialogRef.close();
+                    }
+                }]
             });
-        });
+         });
 
         var targets_array = <?php echo json_encode($query_targets); ?>;
       //   console.log(targets_array);
