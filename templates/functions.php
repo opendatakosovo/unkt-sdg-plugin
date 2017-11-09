@@ -34,6 +34,14 @@ function get_targets($sdg_id) {
 //     return json_encode($query_targets, JSON_PRETTY_PRINT);
 // }
 
+function get_indicators($target_id) {
+   global $wpdb;
+   $query_indicators = $wpdb->get_results("
+      SELECT * FROM wp_indicators WHERE wp_indicators.target_id = $target_id;
+   ");
+   return json_encode($query_indicators, JSON_PRETTY_PRINT);
+}
+
 function get_sdg_data($sid){
     global $wpdb;
     $query_sdg = array();

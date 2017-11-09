@@ -62,12 +62,12 @@ if (isset($_GET)) {
          $('#accordion').append("<div class='panel'>\
             <div class='panel-heading'>\
                <h4 class='panel-title'>\
-                 <a data-toggle='collapse' id='panel-title' data-parent='#accordion' href='#panel-"+counter+"'>\
+                 <a data-toggle='collapse' id='panel-title' data-parent='#accordion' data-target-id='" + data[i].id +"' href='#panel-"+counter+"'>\
                   " + data[i].title + "</a>\
                </h4>\
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
-               <div class='panel-body row'>\
+               <div class='panel-body row' data-body-id='"+ data[i].id +"'>\
                " + data[i].description + "</div>\
             </div>\
          </div>\
@@ -75,7 +75,23 @@ if (isset($_GET)) {
          counter++;
       }
 
+      $('.panel-heading h4').on('click', (e) => {
+         $target = $(e.target);
+         var target_id = $target.attr('data-target-id');
+         console.log(target_id);
 
+         $.ajax({
+            type: 'GET',
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            dataType: 'json',
+            data: {'id': target_id, 'action': 'get_targets_indicators'},
+            success: function (data) {
+               console.log(data);
+            }
+         });
+      });
+
+      // Styling the borders of panels
       $('.panel').last().css('border-bottom', '1px solid #fff');
       $('.panel-collapse').last().css('border-bottom', '1px solid #fff');
 
@@ -83,8 +99,6 @@ if (isset($_GET)) {
          $('.panel-heading').last().css('border-bottom', 'none');
          $('.panel-collapse').last().css('border-bottom', 'none');
       });
-
-
       $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
 
@@ -314,6 +328,7 @@ if (isset($_GET)) {
    .tabs {
       clear: both;
       padding: 20px;
+      margin-bottom: 100px;
    }
 
    .panel-title {
