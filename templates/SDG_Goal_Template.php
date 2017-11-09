@@ -3,18 +3,22 @@ require_once(SDGS__PLUGIN_DIR . 'templates/functions.php');
 
 if (isset($_GET)) {
 
-   $data = get_data(sprintf("%0d", $_GET['goal']));
+   $data = get_targets(sprintf("%0d", $_GET['goal']));
    $targetsData = json_decode($data, true);
 
    $sdg_raw_data = get_sdg_data(sprintf("%0d", $_GET['goal']));
    $sdgJsonData = json_decode($sdg_raw_data);
 
-   $out = [];
-   foreach ($targetsData as $element) {
-   $out[$element['name']][] = ['date' => $element['date'],
-      'target_date' => $element['target_date'], 'updated_date' => $element['updated_date'], 'source' => $element['source_url'], 'value' => $element['value'], 'target_value' => $element['target_value'], 'description' => $element['description'], 's_text' => $element['s_text'], 'long_name' => $element['long_name'], 'unit' => $element['unit']
-      ];
-   }
+   // $formatted_data = [];
+   // foreach($targetsData as $element) {
+   //    $formatted_data[
+   //       $element['title']][] = [
+   //          'description'  => $element['description'],
+   //          'target_id' => $element['id'],
+   //          'sdg_id' => $element['sdg_id'],
+   //          'updated_date' => $element['updated_date']
+   //       ];
+   // }
    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
 ?>
@@ -25,19 +29,13 @@ if (isset($_GET)) {
 <script>
     $(document).ready(function () {
 
-        var data = <?php echo json_encode($out, true); ?>;
+        var data = <?php echo json_encode($targetsData, true); ?>;
 
         var sdgData = <?php echo json_encode($sdgJsonData, true); ?>;
 
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
 
-        var counter = 0;
-        for (var index in data) {
-            var id = "indicator-chart-" + counter;
-            counter++;
-            generateChart(id, data[index], index);
-        }
         $('.sdg-title').text(sdg_title);
         $('.sdg-description').append('<span>');
         $('.sdg-description').append(sdgData[0]['s_text']);
@@ -52,9 +50,10 @@ if (isset($_GET)) {
       $('.sdg-description').append(sdgData[0]['s_text']);
       $('.sdg-description').append('</span>');
 
+
       var counter = 0;
       // Going through each indicator
-      Object.keys(data).forEach(function(key) {
+      for(var i = 0; i < data.length; i++) {
          var openPanel = '';
          if(counter == 0){
             openPanel = 'in';
@@ -63,19 +62,43 @@ if (isset($_GET)) {
          $('#accordion').append("<div class='panel'>\
             <div class='panel-heading'>\
                <h4 class='panel-title'>\
-                 <a data-toggle='collapse' id='panel-title' data-parent='#accordion' href='#panel-"+counter+"'>\
-                  "+key+"</a>\
+                 <a data-toggle='collapse' id='panel-title' data-parent='#accordion' data-target-id='" + data[i].id +"' href='#panel-"+counter+"'>\
+                  " + data[i].title + "</a>\
                </h4>\
             </div>\
-            <div id='panel-"+counter+"' class='panel-collapse container collapse "+ openPanel +"'>\
-               <div class='panel-body row'>\
-               "+key+"</div>\
+            <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
+               <div class='panel-body row' data-body-id='"+ data[i].id +"'>\
+               " + data[i].description + "</div>\
             </div>\
          </div>\
          ");
          counter++;
+      }
+
+      $('.panel-heading h4').on('click', (e) => {
+         $target = $(e.target);
+         var target_id = $target.attr('data-target-id');
+         console.log(target_id);
+
+         $.ajax({
+            type: 'GET',
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            dataType: 'json',
+            data: {'id': target_id, 'action': 'get_targets_indicators'},
+            success: function (data) {
+               console.log(data);
+            }
+         });
       });
 
+      // Styling the borders of panels
+      $('.panel').last().css('border-bottom', '1px solid #fff');
+      $('.panel-collapse').last().css('border-bottom', '1px solid #fff');
+
+      $('.panel-heading h4').last().click(() => {
+         $('.panel-heading').last().css('border-bottom', 'none');
+         $('.panel-collapse').last().css('border-bottom', 'none');
+      });
       $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
 
@@ -282,7 +305,6 @@ if (isset($_GET)) {
    }
 
    .panel-heading {
-      border-radius: 10px;
       padding: 10px;
       border-top: 1px solid #fff;
       border-right: 1px solid #fff;
@@ -290,7 +312,13 @@ if (isset($_GET)) {
    }
 
    .panel-body {
-      padding: 15px;
+      padding: 15px 30px;
+      color: #fff;
+   }
+
+   .panel-collapse {
+      border-right: 1px solid #fff;
+      border-left: 1px solid #fff;
    }
 
    .panel-title {
@@ -300,6 +328,7 @@ if (isset($_GET)) {
    .tabs {
       clear: both;
       padding: 20px;
+      margin-bottom: 100px;
    }
 
    .panel-title {
