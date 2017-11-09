@@ -817,7 +817,6 @@
                 }
             },
             submitHandler: function (form) {
-
                 var indicator_id = $('#edit-indicator-id').val();
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
