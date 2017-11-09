@@ -119,10 +119,10 @@ function activate()
 
 function deactivate()
 {
-   //  global $wpdb;
-   //  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-   //  dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}charts`");
-   //  dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}indicators`");
-   //  dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}targets`");
-   //  dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}sdg`");
+    global $wpdb;
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}charts`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}indicators`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}targets`");
+    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}sdg`");
 }
