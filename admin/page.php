@@ -70,12 +70,13 @@
         <table id="chartsTable" class="table-bordered">
             <thead>
             <tr>
-                <th></th>
                 <th>ID</th>
+                <th>Title</th>
                 <th>Unit</th>
                 <th>Target Date</th>
                 <th>Target Value</th>
                 <th>Data</th>
+                <th>Description</th>
                 <th>Disaggregated by</th>
                 <th>Actions</th>
             </tr>
@@ -336,12 +337,19 @@
 
 
    function fnFormatDetails(table_id, html) {
-      var sOut = "<table id=\"exampleTable_" + table_id + "\">";
+      var sOut = "<table id='exampleTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info'>";
       sOut += html;
       sOut += "</table>";
       return sOut;
    }
 
+
+  function fnFormatCharts(table_id, html) {
+     var sOut = "<table id='chartTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info'>";
+     sOut += html;
+     sOut += "</table>";
+     return sOut;
+  }
     var newRowData = <?php echo json_encode($query_targets); ?>;
     //console.log(newRowData);
 
@@ -350,6 +358,7 @@
     var oInnerTable;
     var oInnerInnerTable;
     var detailsTableHtml;
+    var oInnerInnerTableHtml;
 
     //Run On HTML Build
     $(document).ready(function () {
@@ -491,10 +500,10 @@
                         this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
                         // Adding new row below the indicator row for inner table
-                        oInnerTable.fnOpen(nTr, fnFormatDetails(indicator_id, oInnerInnerTableHtml), 'chart-details');
+                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, oInnerInnerTableHtml), 'chart-details');
 
                         // Rendering the chart data in inner table of selected indicator
-                        oInnerInnerTable = $("#chartTable_" + indicator_id).dataTable({
+                        oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
                             "bJQueryUI": true,
                             "bFilter": true,
                             "aaData": data,
@@ -511,6 +520,7 @@
                                 {"mDataProp": "disaggregated_by"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
+                                {"sDefaultContent": indicator_id},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -545,7 +555,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6 ],
+                                        "targets": [ 9,10 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -553,14 +563,12 @@
 
                         $(this).attr('id', indicator_id);
                         // Updating the info of datatable with the button to create new indicator
-                        $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
+                        $('tr.chart-details .dataTables_info').html('');
+                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
                     }
                 }
             });
         });
-
-
         }
 
         // Initialize the sub table if the plus is clicked
@@ -680,6 +688,8 @@
 
         // Initialize the main datatable
         function init_table(newRowData) {
+
+
             oTable = $('#exampleTable').dataTable({
 
                 "bJQueryUI": true,
@@ -913,6 +923,7 @@
                             "aaData": data,
                             "bSort": true, // disables sorting
                             "aoColumns": [
+                                {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
                                 {"mDataProp": "source"},
