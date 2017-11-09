@@ -122,10 +122,10 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.name, wp_targets.description,wp_targets.sid, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
+          SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description,wp_targets.sdg_id, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
           From wp_targets
           INNER JOIN wp_sdg
-          ON  wp_targets.sid=wp_sdg.s_number");
+          ON  wp_targets.sdg_id=wp_sdg.s_number");
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
 
@@ -326,7 +326,7 @@ class Unkt
         $query_targets1 = $wpdb->get_results("
           SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets1);
-        die(); 
+        die();
 
     }
 
@@ -431,7 +431,7 @@ class Unkt
         echo self::get_data();
         die();
     }
-    // GET indicator's data based on selected target id 
+    // GET indicator's data based on selected target id
     public static function get_targets_indicators()
     {
         global $wpdb;
