@@ -540,11 +540,8 @@
                     },
                     {"mDataProp": "id"},
                     {"mDataProp": "title"},
-<<<<<<< HEAD
                     {"mDataProp": "sdg_id"},
-=======
                     {"mDataProp": "short_name"},
->>>>>>> f8e6284e3ddde0b1b949e467f36068081e5daf6e
                     {"mDataProp": "updated_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
