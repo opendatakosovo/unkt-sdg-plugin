@@ -742,8 +742,6 @@
             submitHandler: function (form) {
 
                var targets_id = $('#indicator-target-id').val();
-               console.log($('#indicator-sdg').val());
-
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
@@ -915,7 +913,7 @@
             e.preventDefault();
         })
 
-        // Remov
+        // Remove target
         $('body').on('click', '.remove-targets', function (e) {
             e.preventDefault();
             var targets_id = $($(this).parent().parent().children()[1]).text();
@@ -997,8 +995,10 @@
 
         });
 
+        // Remove indicator
         $('body').on('click', '.remove-indicator', function (e) {
             e.preventDefault();
+            var row = $($(this).parent().parent());
             var indicator_id = $($(this).parent().parent().children()[0]).text();
 
             BootstrapDialog.show({
@@ -1018,64 +1018,11 @@
                                 'action': 'remove_indicator'
                             },
                             success: function(data) {
-                               console.log(data);
-                                var targets_id = data[0].target_id;
-                                var sdg_id = data[0].sdg_id;
-                                $('#exampleTable_' + targets_id).dataTable().fnDestroy();
-
-                                oInnerTable = $("#exampleTable_" + targets_id).dataTable({
-                                    "bJQueryUI": true,
-                                    "aaData": data,
-                                    "bSort": true, // disables sorting
-                                    "aoColumns": [
-                                       {"mDataProp": "id"},
-                                       {"mDataProp": "title"},
-                                       {"mDataProp": "source"},
-                                       {"mDataProp": "description"},
-                                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-                                    ],
-                                    "bPaginate": true,
-
-                                    "oLanguage": {
-                                        "sInfo": "_TOTAL_ entries"
-                                    },
-                                    "dom": 'Bfrtip',
-                                    "buttons": [
-                                        {
-                                            "extend": 'copyHtml5',
-                                            "exportOptions": {
-                                                "columns": [1, 2, 3, 4, 5]
-                                            }
-                                        },
-                                        {
-                                            "extend": 'excelHtml5',
-                                            "exportOptions": {
-                                                "columns": [1, 2, 3, 4, 5]
-                                            }
-                                        },
-                                        {
-                                            "extend": 'pdfHtml5',
-                                            "exportOptions": {
-                                                "columns": [1, 2, 3, 4, 5]
-                                            }
-                                        },
-                                        {
-                                            "extend": 'csvHtml5',
-                                            "exportOptions": {
-                                                "columns": [1, 2, 3, 4, 5]
-                                            }
-                                        }
-                                    ]
-                                });
-                                $('tr.details .dataTables_info').html('');
-                                $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add indicator</a>");
-                                $('#edit-indicator-modal').modal('hide');
-                                $('.form-control').val('');
                             }
-
                         });
                         setTimeout(function () {
                             dialogRef.close();
+                            row.fadeOut().remove();
                         }, 100);
                     }
                 }, {
