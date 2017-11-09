@@ -412,8 +412,7 @@ class Unkt
         echo json_encode($query_targets1);
     }
 
-    public static function remove_last_indicator_targets()
-    {
+    public static function remove_last_indicator_targets() {
         global $wpdb;
 
         $id = intval(htmlspecialchars($_POST['id']));
