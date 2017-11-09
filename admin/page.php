@@ -252,7 +252,7 @@
                                 <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
                                        placeholder="Target">
                             </div>
-                            <input  id="edit-targets-id"/>
+                            <input  id="edit-target-id"/>
                             <div class="form-group">
                                 <label for='edit-sdg-type'>SDG:</label>
                                 <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
@@ -348,7 +348,7 @@
                 },
                 success: function (data) {
                     // Setting the new target id in hidden field
-                    var targets_id = $('#edit-targets-id').val();
+                    var targets_id = $('#edit-target-id').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
                     oTable.fnDraw();
@@ -378,14 +378,14 @@
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
-                        'target_id': $('#edit-targets-id').val(),
+                        'target_id': $('#edit-target-id').val(),
                         'description': $('#edit-sdg-description').val(),
                         'title': $('#edit-target-title').val(),
                         'sdg_id': $("#edit-sdg-type").children(":selected").attr("id"),
                         'action': 'update_target'
                     },
                     success: function (data) {
-                        var targets_id = $('#edit-targets-id').val();
+                        var targets_id = $('#edit-target-id').val();
                         oTable.fnClearTable(0);
                         oTable.fnAddData(data);
                         oTable.fnDraw();
