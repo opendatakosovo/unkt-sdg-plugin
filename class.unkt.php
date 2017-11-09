@@ -122,7 +122,7 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description,wp_targets.sdg_id, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
+          SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description, wp_targets.sdg_id, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
           From wp_targets
           INNER JOIN wp_sdg
           ON  wp_targets.sdg_id=wp_sdg.s_number");
@@ -212,12 +212,12 @@ class Unkt
     public static function add_targets() {
         global $wpdb;
 
-        $name = htmlspecialchars($_POST["targets"]);
+        $title = htmlspecialchars($_POST["title"]);
         $description = htmlspecialchars($_POST['description']);
-        $sid = intval(htmlspecialchars($_POST['sdg']));
+        $sdg_id = intval(htmlspecialchars($_POST['sdg_id']));
         $insert = "
-        INSERT INTO `{$wpdb->prefix}targets`( sid, name, description, updated_date )
-        VALUES('$sid', '$name', '$description', NOW()); ";
+        INSERT INTO `{$wpdb->prefix}targets`( sdg_id, title, description, updated_date )
+        VALUES('$sdg_id', '$title', '$description', NOW()); ";
         $wpdb->query($insert);
         echo self::get_data();
         die();
@@ -226,14 +226,14 @@ class Unkt
     public static function update_target() {
 
         global $wpdb;
-        $id = htmlspecialchars($_POST["targets_id"]);
-        $name = htmlspecialchars($_POST["targets"]);
+        $id = htmlspecialchars($_POST["target_id"]);
+        $title = htmlspecialchars($_POST["targets"]);
         $description = htmlspecialchars($_POST['description']);
-        $sid = intval(htmlspecialchars($_POST['sdg']));
+        $sdg_id = intval(htmlspecialchars($_POST['sdg_id']));
 
         $update = "
            UPDATE wp_targets
-           SET name = '$name', description = '$description', sid = $sid, updated_date = NOW()
+           SET title = '$title', description = '$description', sdg_id = $sdg_id, updated_date = NOW()
            WHERE id='$id'";
         $wpdb->query($update);
         echo self::get_data();
@@ -242,10 +242,9 @@ class Unkt
 
     public static function get_targets()
     {
-
         global $wpdb;
         $targets_id = $_POST['id'];
-        $query_targets = $wpdb->get_results(" SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value, wp_targets.target_date, wp_targets.updated_date, wp_targets.sid,wp_targets.id,wp_sdg.s_number From wp_targets INNER JOIN  wp_sdg ON  wp_targets.sid=wp_sdg.s_number and wp_targets.id=$targets_id");
+        $query_targets = $wpdb->get_results(" SELECT wp_sdg.short_name,wp_targets.id,wp_targets.title,wp_targets.description,wp_targets.updated_date,wp_targets.sdg_id,wp_sdg.s_number FROM wp_targets INNER JOIN wp_sdg ON wp_targets.sdg_id = wp_sdg.s_number AND wp_targets.id = $targets_id");
         echo json_encode($query_targets);
         die();
     }
@@ -458,10 +457,10 @@ class Unkt
     {
         global $wpdb;
         $query_targets = $wpdb->get_results("
-          SELECT wp_sdg.short_name, wp_targets.name,wp_targets.description,wp_targets.unit, wp_targets.target_value,wp_targets.target_date,wp_targets.updated_date, wp_targets.sid,wp_targets.id,wp_sdg.s_number
+          SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description, wp_targets.updated_date, wp_targets.sdg_id,wp_targets.id,wp_sdg.s_number
           From wp_targets
           INNER JOIN  wp_sdg
-          ON  wp_targets.sid=wp_sdg.s_number");
+          ON  wp_targets.sdg_id=wp_sdg.s_number");
         return json_encode($query_targets);
 
     }

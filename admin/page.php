@@ -180,8 +180,8 @@
                      <div class="modal-body">
                         <form id="add-targets-form" name="add_targets" method="POST">
                            <div class="form-group">
-                              <label for="targets">Target Title:</label>
-                              <input name="target" type="text" class="form-control" id="target" placeholder="Target Title">
+                              <label for="target-title">Target Title:</label>
+                              <input name="target-title" type="text" class="form-control" id="target-title" placeholder="Target Title">
                            </div>
 
                            <div class="form-group">
@@ -224,7 +224,7 @@
 
                            <div class="form-group">
                               <label for="description">Description:</label>
-                              <textarea name="description" class="form-control" id="sdg-description" placeholder="Description"></textarea>
+                              <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
                            </div>
 
                            <div class="modal-footer">
@@ -248,14 +248,14 @@
                     <div class="modal-body">
                         <form id="edit-targets-form" name="edit_targets_form">
                             <div class="form-group">
-                                <label for="targets">Targets:</label>
-                                <input name="targets" type="text" class="form-control" id="edit_targets"
-                                       placeholder="targets">
+                                <label for="edit-target-title">Targets:</label>
+                                <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
+                                       placeholder="Target">
                             </div>
-                            <input type="hidden" id="edit_targets_id"/>
+                            <input  id="edit-targets-id"/>
                             <div class="form-group">
-                                <label for='sdg'>SDG:</label>
-                                <select id="edit-sdg-type" name="add_sdg" class="form-control" title="SDG is required">
+                                <label for='edit-sdg-type'>SDG:</label>
+                                <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
                                     <option id="1" value="poverty">1-Poverty</option>
                                     <option id="2" value="zero-hunger">2-Zero hunger</option>
                                     <option id="3" value="good-health-and-well-being">3-Good health and well being
@@ -291,8 +291,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea name="description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
+                                <label for="edit-sdg-description">Description:</label>
+                                <textarea name="edit-sdg-description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
                             </div>
 
                             <div class="modal-footer">
@@ -322,7 +322,7 @@
    }
 
     var newRowData = <?php echo json_encode($query_targets); ?>;
-   //  console.log(newRowData);
+    console.log(newRowData);
 
     var iTableCounter = 1;
     var oTable;
@@ -341,14 +341,14 @@
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    'target': $('#target').val(),
-                    'description': $('#sdg-description').val(),
-                    'sdg': $("#sdg-type").children(":selected").attr("id"),
+                    'title': $('#target-title').val(),
+                    'description': $('#description').val(),
+                    'sdg_id': $("#sdg-type").children(":selected").attr("id"),
                     'action': 'add_targets'
                 },
                 success: function (data) {
                     // Setting the new target id in hidden field
-                    var targets_id = $('#target').val();
+                    var targets_id = $('#edit-targets-id').val();
                     oTable.fnClearTable(0);
                     oTable.fnAddData(data);
                     oTable.fnDraw();
@@ -362,15 +362,15 @@
         // Edit existing target from modal
         $('#edit-targets-form').validate({
             rules: {
-                edit_targets: {
-                    required: true,
-                },
-                edit_add_sdg: {
-                    required: true,
-                },
-                edit_add_unit: {
-                    required: true,
-                },
+                // edit-target-title: {
+                //     required: true,
+                // },
+                // edit_add_sdg: {
+                //     required: true,
+                // },
+                // edit_add_unit: {
+                //     required: true,
+                // },
             },
             submitHandler: function (form) {
                 $.ajax({
@@ -378,14 +378,14 @@
                     type: 'POST', //or POST
                     dataType: 'json',
                     data: {
-                        'targets_id': $('#edit_targets_id').val(),
+                        'target_id': $('#edit-targets-id').val(),
                         'description': $('#edit-sdg-description').val(),
-                        'targets': $('#edit_targets').val(),
-                        'sdg': $("#edit-sdg-type").children(":selected").attr("id"),
+                        'title': $('#edit-target-title').val(),
+                        'sdg_id': $("#edit-sdg-type").children(":selected").attr("id"),
                         'action': 'update_target'
                     },
                     success: function (data) {
-                        var targets_id = $('#edit_targets_id').val();
+                        var targets_id = $('#edit-targets-id').val();
                         oTable.fnClearTable(0);
                         oTable.fnAddData(data);
                         oTable.fnDraw();
@@ -540,7 +540,11 @@
                     },
                     {"mDataProp": "id"},
                     {"mDataProp": "title"},
+<<<<<<< HEAD
+                    {"mDataProp": "sdg_id"},
+=======
                     {"mDataProp": "short_name"},
+>>>>>>> f8e6284e3ddde0b1b949e467f36068081e5daf6e
                     {"mDataProp": "updated_date"},
                     {"mDataProp": "description"},
                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
@@ -896,11 +900,8 @@
                 dataType: 'json',
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
-                    $('#edit_targets_id').val(data[0].id);
-                    $('#edit_targets').val(data[0].name);
-                    $('#edit-unit').val(data[0].unit);
-                    $('#edit-target-value').val(data[0].target_value);
-                    $('#edit-target-date').val(data[0].target_date);
+                    $('#edit-target-id').val(data[0].id);
+                    $('#edit-target-title').val(data[0].title);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
                     $('#edit-sdg-description').val(data[0].description);
                 },
