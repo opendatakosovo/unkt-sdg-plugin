@@ -341,15 +341,15 @@
                    </div>
                    <div class="modal-body">
                        <form id="add-chart-form" name="add-chart">
-                           <input id="chart-target-id"/>
-                           <input id="chart-indicator-id"/>
-                           <input id="chart-sdg-id"/>
+                           <input id="chart-target-id"/ type="hidden">
+                           <input id="chart-indicator-id"/ type="hidden">
+                           <input id="chart-sdg-id"/ type="hidden">
                            <div class="form-group">
                                <label for="title-chart">Title:</label>
                                <input name="title-chart" type="text" class="form-control"
                                          id="title-chart" placeholder="Title"></input>
                            </div>
-                           <!-- Target data -->
+                           <!-- Target data panel -->
                            <div class="form-group">
                              <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -360,26 +360,115 @@
                                       <label for="date">Target Date:</label>
                                       <div class="input-group ">
                                           <input name="date" type="text"
-                                                 class="col-md-12 col-sm-12 col-xs-12 date-chart" id="date-chart"
+                                                 class="col-md-12 col-sm-12 col-xs-12 date-chart" id="target-date-chart"
                                                  placeholder="Date">
                                           <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
                                       </div>
                                   </div>
                                   <div class="form-group">
                                      <label for='chart-target-unit'>Unit:</label>
-                                     <select id="chart-target-unit-select" name="chart-target-unit" class="form-control" title="SDG is required">
-                                       <option value="">Select SDG</option>
-                                       <option id="target-number" value="number"> Number</option>
-                                       <option id="target-percentage" value=""> Percentage </option>
-                                       <option id="target-boolean" value="good-health-and-well-being"> Boolean </option>
-                                       <option id="target-comperative" value="quality-education">Comperative Value</option>
-                                       <option id="target-ratio" value="gender-equality">Ratio</option>
-                                       <option id="target-" value="clean-water-and-sanitation">I/D ??</option>
-                                     </select>
+                                     <select id="chart-target-unit-select" name="chart-target-unit" class="form-control">
+                                        <option value="">Select Unit</option>
+                                        <option id="target-number" value="number" data-show="number"> Number</option>
+                                        <option id="target-percentage" value="ercentage"  data-show="percentage"> Percentage </option>
+                                        <option id="target-boolean" value="boolean"  data-show="boolean"> Boolean </option>
+                                        <option id="target-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
+                                        <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                        <option id="target-" value="">I/D ??</option>
+                                      </select>
                                   </div>
+
+                                  <div class="form-group target-unit-select tu-number">
+                                    <label for="number-value">Number Value:</label>
+                                    <input name="number-value" type="number" class="form-control" id="number-value" placeholder="Number"/>
+                                  </div>
+                                  <div class="form-group target-unit-select tu-percentage">
+                                    <label for="percentage-value">Percentage Value:</label>
+                                    <input name="percentage-value" type="number" class="form-control" id="percentage-value" placeholder="Percentage"/>
+                                  </div>
+                                  <div class="form-group form-inline target-unit-select tu-ratio">
+                                    <label for="ratio-value">Ratio Values:</label>
+                                    <input name="ratio-value-a" type="number" class="form-control" id="ratio-value-a" placeholder="A"/> :
+                                    <input name="ratio-value-b" type="number" class="form-control" id="ratio-value-b" placeholder="B"/>
+                                  </div>
+                                  <div class="form-group form-inline target-unit-select tu-boolean">
+                                    <label class="radio-inline">
+                                      <input type="radio" name="boolean-true" value="true">True
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="boolean-true" value="false"> False
+                                    </label>
+                                  </div>
+                                  <div class="form-group form-inline target-unit-select tu-comperative">
+                                    <label for="comperative-value">Comperative Values:</label>
+                                    <input name="comperative-value-a" type="number" class="form-control" id="comperative-value-a" placeholder="A"/> :
+                                    <input name="comperative-value-b" type="number" class="form-control" id="comperative-value-b" placeholder="B"/>
+                                  </div>
+
                                 </div>
                               </div>
-                          </div>
+                           </div>
+                           <!-- End of Target data panel  -->
+                           <!-- Chart data panel -->
+                           <div class="form-group">
+                             <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title chart-target-panel">Chart data</h3>
+                                </div>
+                                <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="date"> Date:</label>
+                                      <div class="input-group ">
+                                          <input name="date" type="text"
+                                                 class="col-md-12 col-sm-12 col-xs-12 date-chart" id="date-chart"
+                                                 placeholder="Date">
+                                          <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                     <label for='chart-data-unit'>Unit:</label>
+                                     <select id="chart-data-unit-select" name="chart-data-unit" class="form-control">
+                                        <option value="">Select Unit</option>
+                                        <option id="chart-data-number" value="number" data-show="number"> Number</option>
+                                        <option id="chart-data-percentage" value="ercentage"  data-show="percentage"> Percentage </option>
+                                        <option id="chart-data-boolean" value="boolean"  data-show="boolean"> Boolean </option>
+                                        <option id="chart-data-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
+                                        <option id="chart-data-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                        <option id="chart-data-" value=""> Increasing/Decreasing </option>
+                                      </select>
+                                  </div>
+
+                                  <div class="form-group chart-unit-select chu-number">
+                                    <label for="number-value">Number:</label>
+                                    <input name="number-value" type="number" class="form-control" id="number-value" placeholder="Number"/>
+                                  </div>
+                                  <div class="form-group chart-unit-select chu-percentage">
+                                    <label for="chart-data-value">Percentage:</label>
+                                    <input name="chart-data-value" type="number" class="form-control" id="ch-percentage-value" placeholder="Percentage"/>
+                                  </div>
+                                  <div class="form-group form-inline chart-unit-select chu-ratio">
+                                    <label for="ratio-value">Ratio:</label>
+                                    <input name="ratio-value-a" type="number" class="form-control" id="chu-ratio-value-a" placeholder="A"/> :
+                                    <input name="ratio-value-b" type="number" class="form-control" id="chu-ratio-value-b" placeholder="B"/>
+                                  </div>
+                                  <div class="form-group form-inline chart-unit-select chu-boolean">
+                                    <label class="radio-inline">
+                                      <input type="radio" name="boolean-true" id="chu-coolean-true" value="true">True
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="boolean-true" id="chu-coolean-true" value="false"> False
+                                    </label>
+                                  </div>
+                                  <div class="form-group form-inline chart-unit-select chu-comperative">
+                                    <label for="comperative-value">Comperative Values:</label>
+                                    <input name="comperative-value-a" type="number" class="form-control" id="chu-comperative-value-a" placeholder="A"/> :
+                                    <input name="comperative-value-b" type="number" class="form-control" id="chu-comperative-value-b" placeholder="B"/>
+                                  </div>
+
+                                </div>
+                              </div>
+                           </div>
+                           <!-- End of Chart data panel  -->
                            <div class="form-group">
                                <label for="description-indicator">Description:</label>
                                <textarea name="description-indicator" type="text" class="form-control"
@@ -387,7 +476,7 @@
                            </div>
                            <div class="modal-footer">
                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                               <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                               <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary"
                                       id="add-chart-button">
 
                            </div><!-- /.modal-content -->
@@ -430,6 +519,17 @@
 
     //Run On HTML Build
     $(document).ready(function () {
+      $('.target-unit-select').hide();
+      $('#chart-target-unit-select').change(function() {
+         $('.target-unit-select').hide();
+         $('.tu-' + $('option:selected', this).data('show')).show();
+      });
+      $('.chart-unit-select').hide();
+      $('#chart-data-unit-select').change(function() {
+         $('.chart-unit-select').hide();
+         $('.chu-' + $('option:selected', this).data('show')).show();
+      });
+
         // Target date with datepicker
         $('#target_date').datepicker({dateFormat: "mm/dd/yy"});
 
@@ -1350,6 +1450,9 @@
 
     .wp-admin select {
         height: 34px;
+    }
+    .inline {
+        display:inline-block;
     }
 </style>
 <script>
