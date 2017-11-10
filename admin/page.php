@@ -140,7 +140,7 @@
                     </div>
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            <!-- end of measurement modal -->
+            <!-- end of indicator modal -->
          </div>
 
          <!-- Edit Indicator Modal -->
@@ -330,6 +330,47 @@
 
             <!-- end of edit modal -->
         </div>
+
+        <!-- Add Indicator Modal -->
+        <div id="add-chart-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button class="close" type="button" data-dismiss="modal">x</button>
+                       <h4 class="modal-title">Add Indicator</h4>
+                   </div>
+                   <div class="modal-body">
+                       <form id="add-chart-form" name="add-chart"> <!-- add-measurement-form -->
+                           <input id="chart-target-id"/> <!-- measurement_targets_id -->
+                           <input id="chart-sdg"/><!-- measurement_sdg  -->
+                           <div class="form-group">
+                               <label for="title-indicator">Title:</label>
+                               <input name="title-indicator" type="text" class="form-control"
+                                         id="title-chart" placeholder="Title"></input>
+                           </div>
+                           <div class="form-group">
+                               <label for="source-indicator">Source:</label>
+                               <input name="source-indicator" type="text" class="form-control"
+                                      id="source-chart" placeholder="Source">
+                           </div>
+                           <div class="form-group">
+                               <label for="description-indicator">Description:</label>
+                               <textarea name="description-indicator" type="text" class="form-control"
+                                         id="description-chart" placeholder="Description"></textarea>
+                           </div>
+                           <div class="modal-footer">
+                               <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                               <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                                      id="add-chart-button">
+
+                           </div><!-- /.modal-content -->
+                       </form>
+                   </div>
+               </div><!-- /.modal-dialog -->
+           </div><!-- /.modal -->
+           <!-- end of indicator modal -->
+        </div>
+
       </div>
 </div>
 
@@ -358,7 +399,7 @@
     var oInnerTable;
     var oInnerInnerTable;
     var detailsTableHtml;
-    var oInnerInnerTableHtml;
+    var chartTableHtml;
 
     //Run On HTML Build
     $(document).ready(function () {
@@ -430,7 +471,7 @@
         detailsTableHtml = $("#detailsTable").html();
 
         // Get the Charts table example for indicator table
-        oInnerInnerTableHtml = $("#chartsTable").html();
+        chartTableHtml = $("#chartsTable").html();
 
         //Insert a 'details' column to the table
         var nCloneTh = document.createElement('th');
@@ -500,7 +541,7 @@
                         this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
                         // Adding new row below the indicator row for inner table
-                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, oInnerInnerTableHtml), 'chart-details');
+                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details');
 
                         // Rendering the chart data in inner table of selected indicator
                         oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
