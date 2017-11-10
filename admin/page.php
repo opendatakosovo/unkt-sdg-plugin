@@ -426,6 +426,10 @@
                                       </div>
                                   </div>
                                   <div class="form-group">
+                                    <label for="chart-disaggregated-by">Disaggregated by:</label>
+                                    <input name="chart-disaggregated-by" type="text" class="form-control" id="chart-disaggregated-by" placeholder=""/>
+                                  </div>
+                                  <div class="form-group">
                                      <label for='chart-data-unit'>Unit:</label>
                                      <select id="chart-data-unit-select" name="chart-data-unit" class="form-control">
                                         <option value="">Select Unit</option>
@@ -519,11 +523,14 @@
 
     //Run On HTML Build
     $(document).ready(function () {
+
+      // Hide all taget unit fields and show them based on selected unit
       $('.target-unit-select').hide();
       $('#chart-target-unit-select').change(function() {
          $('.target-unit-select').hide();
          $('.tu-' + $('option:selected', this).data('show')).show();
       });
+      // Hide all chart unit fields and show them based on selected unit
       $('.chart-unit-select').hide();
       $('#chart-data-unit-select').change(function() {
          $('.chart-unit-select').hide();
