@@ -341,9 +341,9 @@
                    </div>
                    <div class="modal-body">
                        <form id="add-chart-form" name="add-chart">
-                           <input id="chart-target-id"/ type="hidden">
-                           <input id="chart-indicator-id"/ type="hidden">
-                           <input id="chart-sdg-id"/ type="hidden">
+                           <input id="chart-target-id" >
+                           <input id="chart-indicator-id">
+                           <input id="chart-sdg-id">
                            <div class="form-group">
                                <label for="title-chart">Title:</label>
                                <input name="title-chart" type="text" class="form-control"
@@ -353,15 +353,13 @@
                            <div class="form-group">
                              <div class="panel panel-default">
                                 <div class="panel-heading">
-                                  <h3 class="panel-title chart-target-panel">Target data</h3>
+                                  <h3 class="panel-title chart-target-panel">Target Data</h3>
                                 </div>
                                 <div class="panel-body">
                                   <div class="form-group">
                                       <label for="date">Target Date:</label>
                                       <div class="input-group ">
-                                          <input name="date" type="text"
-                                                 class="col-md-12 col-sm-12 col-xs-12 date-chart" id="target-date-chart"
-                                                 placeholder="Date">
+                                          <input name="date" type="text" class="col-md-12 col-sm-12 col-xs-12 date-chart" id="target-date-chart" placeholder="Date">
                                           <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
                                       </div>
                                   </div>
@@ -371,10 +369,9 @@
                                         <option value="">Select Unit</option>
                                         <option id="target-number" value="number" data-show="number"> Number</option>
                                         <option id="target-percentage" value="ercentage"  data-show="percentage"> Percentage </option>
-                                        <option id="target-boolean" value="boolean"  data-show="boolean"> Boolean </option>
+                                        <option id="target-boolean" value="boolean"  data-show="boolean"> Yes/No </option>
                                         <option id="target-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
                                         <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
-                                        <option id="target-" value="">I/D ??</option>
                                       </select>
                                   </div>
 
@@ -401,8 +398,8 @@
                                   </div>
                                   <div class="form-group form-inline target-unit-select tu-comperative">
                                     <label for="comperative-value">Comperative Values:</label>
-                                    <input name="comperative-value-a" type="number" class="form-control" id="comperative-value-a" placeholder="A"/> :
-                                    <input name="comperative-value-b" type="number" class="form-control" id="comperative-value-b" placeholder="B"/>
+                                    <input name="comperative-value-a" type="number" class="form-control" id="comperative-value-a" placeholder="Current Value"/>
+                                    <input name="comperative-value-b" type="number" class="form-control" id="comperative-value-b" placeholder="Maximum Value"/>
                                   </div>
 
                                 </div>
@@ -413,7 +410,7 @@
                            <div class="form-group">
                              <div class="panel panel-default">
                                 <div class="panel-heading">
-                                  <h3 class="panel-title chart-target-panel">Chart data</h3>
+                                  <h3 class="panel-title chart-target-panel">Chart Data</h3>
                                 </div>
                                 <div class="panel-body">
                                   <div class="form-group">
@@ -438,7 +435,7 @@
                                         <option id="chart-data-boolean" value="boolean"  data-show="boolean"> Boolean </option>
                                         <option id="chart-data-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
                                         <option id="chart-data-ratio" value="ratio"  data-show="ratio">Ratio</option>
-                                        <option id="chart-data-" value=""> Increasing/Decreasing </option>
+                                        <option id="chart-data-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
                                       </select>
                                   </div>
 
@@ -465,8 +462,13 @@
                                   </div>
                                   <div class="form-group form-inline chart-unit-select chu-comperative">
                                     <label for="comperative-value">Comperative Values:</label>
-                                    <input name="comperative-value-a" type="number" class="form-control" id="chu-comperative-value-a" placeholder="A"/> :
-                                    <input name="comperative-value-b" type="number" class="form-control" id="chu-comperative-value-b" placeholder="B"/>
+                                    <input name="comperative-value-a" type="number" class="form-control" id="chu-comperative-value-a" placeholder="Current Value"/>
+                                    <input name="comperative-value-b" type="number" class="form-control" id="chu-comperative-value-b" placeholder="Maximum Value"/>
+                                  </div>
+                                  <div class="form-group form-inline chart-unit-select chu-increasing-decreasing">
+                                    <label for="increasing-decreasing-value">Increasing / Decreasing:</label>
+                                    <input name="increasing-decreasing-value-a" type="number" class="form-control" id="chu-increasing-value" placeholder="Increasing"/> :
+                                    <input name="increasing-decreasing-value-b" type="number" class="form-control" id="chu-decreasing-value" placeholder="Decreasing"/>
                                   </div>
 
                                 </div>
@@ -854,7 +856,7 @@
                             $(this).attr('id', targets_id);
                             // Updating the info of datatable with the button to create new indicator
                             $('tr.details .dataTables_info').html('');
-                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add Indicator</a>");
+                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add Indicator</a>");
                         }
                     }
                 });
@@ -931,7 +933,7 @@
         $('.date-chart').datepicker({dateFormat: "mm/dd/yy"});
 
         // Add New Indicator
-        $('body').on('click', '.add-measurment', function (e) {
+        $('body').on('click', '.add-indicator', function (e) {
 
             // Get clicked targets ID
             var targets_id = $(this).attr('id');
@@ -1069,6 +1071,98 @@
 
             e.preventDefault();
         });
+
+        // Adding new chartTable_
+        // $("#add-chart-modal").validate({
+        //   rules: {
+        //       name: {
+        //           required: true,
+        //       }
+        //   },
+        //   submitHandler: function (form) {
+        //
+        //      var indicator_id = $('#indicator-target-id').val();
+        //      var target_id = $('#indicator-target-id').val();
+        //      var sdg_id = $('#sdg-id').val();
+        //       $.ajax({
+        //           url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+        //           type: 'POST', //or POST
+        //           dataType: 'json',
+        //           data: {
+        //               'sdg_id': $('#indicator-sdg').val(),
+        //               'target_id': $('#indicator-target-id').val(),
+        //               'indicator_id': $('#indicator-target-id').val(),
+        //               'title': $('#title-indicator').val(),
+        //               'source': $("#source-indicator").val(),
+        //               'description': $("#description-indicator").val(),
+        //               'action': 'add_chart'
+        //           },
+        //           success: function (data) {
+        //               var target_id = data[0].target_id;
+        //               var s_id = data[0].sdg_id;
+        //               $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+        //               oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+        //                   "bFilter": true,
+        //                   "aaData": data,
+        //                   "bSort": true, // disables sorting
+        //                   "aoColumns": [
+        //                       {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+        //                       {"mDataProp": "id"},
+        //                       {"mDataProp": "title"},
+        //                       {"mDataProp": "source"},
+        //                       {"mDataProp": "description"},
+        //                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+        //                       {"sDefaultContent": targets_id},
+        //                   ],
+        //                   "bPaginate": true,
+        //                   "oLanguage": {
+        //                       "sInfo": "_TOTAL_ entries"
+        //                   },
+        //                   "dom": 'Bfrtip',
+        //                   "buttons": [
+        //                       {
+        //                           "extend": 'copyHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'excelHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'pdfHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'csvHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       }
+        //                   ],
+        //                   "columnDefs": [
+        //                           {
+        //                               "targets": [ 6 ],
+        //                               className: 'hidden'
+        //                           }
+        //                       ],
+        //
+        //               });
+        //               $('tr.details1 .dataTables_info').html('');
+        //               $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+        //               $('#add-chart-modal').modal('hide');
+        //               $('#add-chart-form')[0].reset();
+        //
+        //           }
+        //       });
+        //   }
+        // });
+
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1236,7 +1330,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + target_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add indicator</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + target_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#edit-indicator-modal').modal('hide');
                         $('.form-control').val('');
                     }
