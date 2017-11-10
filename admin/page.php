@@ -331,28 +331,55 @@
             <!-- end of edit modal -->
         </div>
 
-        <!-- Add Indicator Modal -->
-        <div id="add-chart-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
+        <!-- Add Chart Modal -->
+        <div id="add-chart-modal" class="modal fade" tabindex="-1">
            <div class="modal-dialog">
                <div class="modal-content">
                    <div class="modal-header">
                        <button class="close" type="button" data-dismiss="modal">x</button>
-                       <h4 class="modal-title">Add Indicator</h4>
+                       <h4 class="modal-title">Add Chart</h4>
                    </div>
                    <div class="modal-body">
-                       <form id="add-chart-form" name="add-chart"> <!-- add-measurement-form -->
-                           <input id="chart-target-id"/> <!-- measurement_targets_id -->
-                           <input id="chart-sdg"/><!-- measurement_sdg  -->
+                       <form id="add-chart-form" name="add-chart">
+                           <input id="chart-target-id"/>
+                           <input id="chart-indicator-id"/>
+                           <input id="chart-sdg-id"/>
                            <div class="form-group">
-                               <label for="title-indicator">Title:</label>
-                               <input name="title-indicator" type="text" class="form-control"
+                               <label for="title-chart">Title:</label>
+                               <input name="title-chart" type="text" class="form-control"
                                          id="title-chart" placeholder="Title"></input>
                            </div>
+                           <!-- Target data -->
                            <div class="form-group">
-                               <label for="source-indicator">Source:</label>
-                               <input name="source-indicator" type="text" class="form-control"
-                                      id="source-chart" placeholder="Source">
-                           </div>
+                             <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h3 class="panel-title chart-target-panel">Target data</h3>
+                                </div>
+                                <div class="panel-body">
+                                  <div class="form-group">
+                                      <label for="date">Target Date:</label>
+                                      <div class="input-group ">
+                                          <input name="date" type="text"
+                                                 class="col-md-12 col-sm-12 col-xs-12 date-chart" id="date-chart"
+                                                 placeholder="Date">
+                                          <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar" onkeydown="return false"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                     <label for='chart-target-unit'>Unit:</label>
+                                     <select id="chart-target-unit-select" name="chart-target-unit" class="form-control" title="SDG is required">
+                                       <option value="">Select SDG</option>
+                                       <option id="target-number" value="number"> Number</option>
+                                       <option id="target-percentage" value=""> Percentage </option>
+                                       <option id="target-boolean" value="good-health-and-well-being"> Boolean </option>
+                                       <option id="target-comperative" value="quality-education">Comperative Value</option>
+                                       <option id="target-ratio" value="gender-equality">Ratio</option>
+                                       <option id="target-" value="clean-water-and-sanitation">I/D ??</option>
+                                     </select>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
                            <div class="form-group">
                                <label for="description-indicator">Description:</label>
                                <textarea name="description-indicator" type="text" class="form-control"
@@ -520,7 +547,7 @@
                 // If the sub table is opened make the "+" to "-"
                 this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
             }
-            // GET Request for rendering indicator table
+            // GET Request for rendering chart table
 
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -559,7 +586,7 @@
                                 {"mDataProp": "chart_data"},
                                 {"mDataProp": "description"},
                                 {"mDataProp": "disaggregated_by"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
                                 {"sDefaultContent": indicator_id},
                             ],
@@ -604,8 +631,8 @@
 
                         $(this).attr('id', indicator_id);
                         // Updating the info of datatable with the button to create new indicator
-                        $('tr.chart-details .dataTables_info').html('');
-                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
+                        $('tr.chart-details .dataTables_info').html(''); //data-indicator='" + indicator_id + "' data-target='" + target_id  + "'
+                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' class='add-chart btn btn-primary'> + Add Chart </a>");
                     }
                 }
             });
@@ -784,14 +811,17 @@
             });
 
         }
-        init_sub_sub_table();
+
         // Invoking the initialize function for main datatable, passing the JSON with all targets from query
         init_table(newRowData);
+
+        // Invoking the sub_sub_table function when plus is clicked
+        init_sub_sub_table();
 
         // Invoking the sub_table function when plus is clicked
         init_sub_table();
 
-        $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
+        $('.date-chart').datepicker({dateFormat: "mm/dd/yy"});
 
         // Add New Indicator
         $('body').on('click', '.add-measurment', function (e) {
@@ -815,7 +845,7 @@
             var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
 
             // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', get_unavailable_dates);
+            $('.date-chart').datepicker('option', 'beforeShowDay', get_unavailable_dates);
 
             // Unavailable dates generation
             function get_unavailable_dates(date) {
@@ -886,7 +916,7 @@
             var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
 
             // Put current date value on the date input
-            $('.edit-date-measurement').val(currentDate);
+            $('.edit-date-chart').val(currentDate);
 
             // Get the measurements table id
             var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
@@ -895,7 +925,7 @@
             var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
 
             // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', unavailable_dates);
+            $('.date-chart').datepicker('option', 'beforeShowDay', unavailable_dates);
 
             // Unavailable dates generation
             function unavailable_dates(date) {
@@ -1012,7 +1042,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#add-indicator-modal').modal('hide');
                         $('#add-indicator-form')[0].reset();
 
@@ -1266,7 +1296,7 @@
         cursor: pointer;
     }
 
-    #date-measurement-error, #edit-date-measurement-error {
+    #date-chart-error, #edit-date-chart-error {
         display: block;
         clear: both;
         position: relative;
