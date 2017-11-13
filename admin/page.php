@@ -490,7 +490,7 @@
                    </div>
                </div><!-- /.modal-dialog -->
            </div><!-- /.modal -->
-           <!-- end of indicator modal -->
+           <!-- end of charts modal -->
         </div>
 
       </div>
@@ -624,7 +624,6 @@
 
         // This will add "+" sign for each row in first data column
         $('#exampleTable tbody tr').each(function(index, element) {
-           console.log(element);
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
@@ -664,6 +663,7 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
+                    var sdg_id = data[0].sdg_id;
                     // Checking if table is closed or opened
                     if (oInnerTable.fnIsOpen(nTr)) {
                         /* This row is already open - close it */
@@ -698,6 +698,7 @@
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
                                 {"sDefaultContent": indicator_id},
+                                {"sDefaultContent": sdg_id},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -732,7 +733,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 9,10 ],
+                                        "targets": [ 9,10,11 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -741,7 +742,7 @@
                         $(this).attr('id', indicator_id);
                         // Updating the info of datatable with the button to create new indicator
                         $('tr.chart-details .dataTables_info').html(''); //data-indicator='" + indicator_id + "' data-target='" + target_id  + "'
-                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' class='add-chart btn btn-primary'> + Add Chart </a>");
+                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator='" + indicator_id + "' data-target='" + target_id  + "' class='add-chart btn btn-primary'> + Add Chart </a>");
                     }
                 }
             });
@@ -931,6 +932,74 @@
         init_sub_table();
 
         $('.date-chart').datepicker({dateFormat: "mm/dd/yy"});
+
+
+        // Add New Chart
+        $('body').on('click', '.add-chart', function (e) {
+
+          // <input id="chart-target-id" >
+          // <input id="chart-indicator-id">
+          // <input id="chart-sdg-id">
+
+            // Get clicked targets ID
+            var target_id = $(this).data("target")
+
+            // Get clicked Indicator ID
+            var indicator_id = $(this).data("indicator")
+
+            // Get clicked Indicator ID
+            var sdg_id = $(this).data("sdg")
+
+            // Set target ID
+            $('#chart-target-id').val(target_id);
+
+            // Set indicator ID
+            $('#chart-indicator-id').val(indicator_id);
+
+            // Set chart sdg ID
+            $('#chart-sdg-id').val(sdg_id);
+
+            // Get the measurements table id
+            var table_id = $(this).parent()[0].id.replace('_info', '');
+
+            // Get unavailable dates by getting the dates column array of the measurements dates
+            var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
+
+            // Add unavailable dates option on the calendar view
+            $('.date-chart').datepicker('option', 'beforeShowDay', get_unavailable_dates);
+
+            // Unavailable dates generation
+            // function get_unavailable_dates(date) {
+            //     // Get month
+            //     var month = date.getMonth() + 1;
+            //
+            //     // Get day
+            //     var day = date.getDate();
+            //
+            //     // Modify month value by adding a 0 before if it's from 1-9
+            //     if (month < 10) {
+            //         month = '0' + month;
+            //     }
+            //
+            //     // Modify day value by adding a 0 before if it's from 1-9
+            //     if (day < 10) {
+            //         day = '0' + day;
+            //     }
+            //
+            //     // Generate the date
+            //     var dmy = month + "/" + day + "/" + date.getFullYear();
+            //
+            //     // Check if date is in unavailable arrays and disable or enable otherwise
+            //     if ($.inArray(dmy, unavailableDates) < 0) {
+            //         return [true, "", "Choose date"];
+            //     } else {
+            //         return [false, "", "There is a measurement with the same date."];
+            //     }
+            // }
+            e.preventDefault();
+        });
+
+
 
         // Add New Indicator
         $('body').on('click', '.add-indicator', function (e) {
@@ -1348,7 +1417,6 @@
                 dataType: 'json',
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
-                  console.log("D", data);
                     $('#edit-target-id').val(data[0].id);
                     $('#edit-target-title').val(data[0].title);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
