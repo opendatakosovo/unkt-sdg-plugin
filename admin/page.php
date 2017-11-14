@@ -475,17 +475,19 @@
                                  <button type="button" class="btn btn-default addButton" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
                                </div>
                              </div>
+
+                             <div class="div-chart-unit-number">
                              <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-number"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-number" data-slug="baseline"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-number-value">Number Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/>
+                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="number_value">
                                  </div>
                                </div>
                                <div class="form-group">
@@ -495,17 +497,20 @@
                                </div>
                                <hr class="separator">
                              </div>
+                           </div>
+
+                           <div class="div-chart-unit-percentage">
                              <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage"/>
+                                     <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage" data-slug="baseline"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value"/>
+                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="percentage_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -515,23 +520,25 @@
                                </div>
                                <hr class="separator">
                              </div>
+                           </div>
+                           <div class="div-chart-unit-ratio">
                              <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio" data-slug="baseline" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a"/>
+                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="ratio_value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b"/>
+                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="ratio_value_b"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -541,23 +548,26 @@
                                </div>
                                <hr class="separator">
                              </div>
+                           </div>
+
+                           <div class="div-chart-unit-comperative">
                              <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative" data-slug="baseline" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a"/>
+                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="comperative_current_value" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b"/>
+                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="comperative_max_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -567,6 +577,9 @@
                                </div>
                                <hr class="separator">
                              </div>
+                           </div>
+
+                             <div class="div-chart-unit-yes-no">
                              <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
@@ -578,10 +591,10 @@
                                  <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes" value="yes">Yes
+                                   <input type="radio" name="chart-yes-no" value="yes">Yes
                                    </label>
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-no" value="no">No
+                                   <input type="radio" name="chart-yes-no" value="no">No
                                    </label>
                                  </div>
                                </div>
@@ -593,6 +606,7 @@
                                <hr class="separator">
                              </div>
                            </div>
+                         </div>
                          </div>
                        </div>
                        <!-- End of Chart Data Panel -->
@@ -649,11 +663,10 @@
 
     //Run On HTML Build
     $(document).ready(function () {
-      // Initialize the date picker for the original due date field
+
+
           var addChartIndex = 0;
-          // $('.chart-unit-select').hide();
           $('.plus-div').hide();
-          //$('.removeButton').hide();
 
           $('#add-chart-form')
            // Add button click handler
@@ -668,12 +681,11 @@
           });
 
           $('#chart-unit-select').change(function() {
-             $('.addedItem').remove();
              addChartIndex = 0;
+             $('.addedItem').remove();
              $('.plus-div').show();
-             var conceptName = $('#chart-unit-select').find(":selected").data('show');
-             var name = '#chart-unit-' + conceptName;
-              manageUnits.addButton(name);
+             var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
+              manageUnits.addButton(selectedUnit);
           });
 
       var manageUnits = {
@@ -704,12 +716,62 @@
             jElem.attr('data-generated', unit);
         });
       },
-      targetUnits: function(){
-        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio', 'increasing-decreasing' ]
-      },
       chartUnits: function(){
-        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ]
+        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ];
+      },
+      targetValue: function(targetUnit){
+          var targetValue = {};
+          $('.target-unit-' + targetUnit + " :input").each(function(e){
+
+          var slug = $(this).data("slug");
+          var value = $(this).val();
+          targetValue[slug] = value;
+
+          if (targetUnit == 'yes-no'){
+            slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
+            value = $('input[type=radio][name=target-yes-no]:checked').val();
+            targetValue[slug] = value;
+            return false;
+          }
+          });
+          return JSON.stringify(targetValue);
+      },
+      chartData: function(chartUnit){
+        var chartData = [];
+        var selectedDivCls = '.div-chart-unit-' + chartUnit;
+
+
+        $('.left > .uu').each(function(){
+            console.log($.trim($(this).text()));
+        });
+
+
+
+
+        $(selectedDivCls).each(function(ea){
+            var chartElement = {};
+            console.log(ea);
+
+            $('.target-unit-' + chartUnit + " :input").each(function(e){
+              var slug = $(this).data("slug");
+              var value = $(this).val();
+              chartElement[slug] = value;
+
+              if (chartUnit == 'yes-no'){
+                slug = $('input[type=radio][name=chart-yes-no]:checked').data("slug");
+                value = $('input[type=radio][name=chart-yes-no]:checked').val();
+                chartElement[slug] = value;
+                return false;
+              }
+              console.log(chartElement);
+            });
+            chartElement.push(chartData);
+          });
+            console.log(chartData);
+          return JSON.stringify(chartData);
+
       }
+
       };
 
       // Hide all taget unit fields and show them based on selected unit
@@ -1214,28 +1276,11 @@
           var indicator_id = $('#chart-indicator-id').val();
           var target_id = $('#chart-target-id').val();
           var sdg_short_name = $('#chart-sdg-short-name').val();
-
           var targetUnit = $("#target-unit-select option:selected").val();
-
-
-          var target_value = {};
-          $('.target-unit-' + targetUnit + " :input").each(function(e){
-
-            var slug = $(this).data("slug");
-            var value = $(this).val();
-            target_value[slug] = value;
-
-            if (targetUnit == 'yes-no'){
-              slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
-              value = $('input[type=radio][name=target-yes-no]:checked').val();
-              target_value[slug] = value;
-              return false;
-            }
-          });
-
+          var chartUnit = $("#chart-unit-select option:selected").val();
 
            $.ajax({
-               url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+               url: "< ?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                type: 'POST', //or POST
                dataType: 'json',
                data: {
@@ -1245,9 +1290,9 @@
                    'title': $('#title-chart').val(),
                    'target_year': $("#target-year").val(),
                    'target_unit': targetUnit,
-                   'target_value': JSON.stringify(target_value),
-                   'chart_unit': $("#chart-unit-select option:selected").val(),
-                   'chart_data': "TODO chart_data",
+                   'target_value': manageUnits.targetValue(targetUnit),
+                   'chart_unit': chartUnit,
+                   'chart_data': manageUnits.chartData(chartUnit),
                    'description': $("#chart-description").val(),
                    'disaggregated_by': $("#aggregated-by-chart").val(),
                    'action': 'add_chart'
