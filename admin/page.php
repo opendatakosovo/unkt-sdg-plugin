@@ -672,6 +672,7 @@
              // $('.chart-unit-select').hide();
              // var selectedUnit = $('option:selected', this).data('show');
              $('.addedItem').remove();
+             addChartIndex = 0;
              $('.plus-div').show();
              var conceptName = $('#chart-unit-select').find(":selected").data('show');
              var name = '#chart-unit-' +conceptName;
