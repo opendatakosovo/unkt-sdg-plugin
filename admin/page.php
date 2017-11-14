@@ -85,6 +85,9 @@
                 <th>Description</th>
                 <th>Disaggregated by</th>
                 <th>Actions</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -102,6 +105,8 @@
                 <th>Source</th>
                 <th>Description</th>
                 <th>Actions</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -463,7 +468,7 @@
                                  <button type="button" class="btn btn-default addButton" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
                                </div>
                              </div>
-                             <div class="chart-unit-select chart-unit-number" id="chart-unit-number">
+                             <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline</label>
                                  <div class="col-xs-9">
@@ -483,7 +488,7 @@
                                </div>
                                <hr class="separator">
                              </div>
-                             <div class="chart-unit-select chart-unit-percentage" id="chart-unit-percentage">
+                             <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
@@ -503,7 +508,7 @@
                                </div>
                                <hr class="separator">
                              </div>
-                             <div class="chart-unit-select chart-unit-ratio" id="chart-unit-ratio">
+                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
@@ -529,7 +534,7 @@
                                </div>
                                <hr class="separator">
                              </div>
-                             <div class="chart-unit-select chart-unit-comperative" id="chart-unit-comperative">
+                             <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
@@ -555,7 +560,7 @@
                                </div>
                                <hr class="separator">
                              </div>
-                             <div class="chart-unit-select chart-unit-boolean" id="chart-unit-boolean">
+                             <div class="chart-unit-select hide chart-unit-boolean" id="chart-unit-boolean">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
@@ -639,47 +644,59 @@
     $(document).ready(function () {
       // Initialize the date picker for the original due date field
           var addChartIndex = 0;
+          // $('.chart-unit-select').hide();
+          $('.plus-div').hide();
+          $('.removeButton').hide();
+
           $('#add-chart-form')
-              // Add button click handler
-              .on('click', '.addButton', function() {
-                  addChartIndex ++;
-                  var conceptName = $('#chart-unit-select').find(":selected").data('show');
-                  var name = '#chart-unit-' +conceptName;
-                  var $template = $(name),
-                      $clone    = $template
-                                      .clone()
-                                      .removeAttr('id')
-                                      .insertBefore($template);
-                  // Update the name attributes
-                  $clone.attr("id", name + addChartIndex);
-                  // get all the inputs inside the clone
-                  var inputs = $clone.find('input');
-                  // for each input change its name/id appending the index value
-                  $.each(inputs, function(index, elem){
-                      var jElem = $(elem); // jQuery element
-                      var name = jElem.prop('name');
-                      // change id and name
-                      jElem.prop('id', name + addChartIndex);
-                      jElem.prop('name', name + addChartIndex);
-                  });
-              })
+           // Add button click handler
+          .on('click', '.addButton', function() {
+              addChartIndex ++;
+              var conceptName = $('#chart-unit-select').find(":selected").data('show');
+              var name = '#chart-unit-' +conceptName;
+              manageUnits.addButton(name);
+          })
+          // Remove button click handler
+          .on('click', '.removeButton', function() {
+            // $(this).parent().parent().parent().remove();
+          });
+
+          $('#chart-unit-select').change(function() {
+             // $('.chart-unit-select').hide();
+             // var selectedUnit = $('option:selected', this).data('show');
+             $('.addedItem').remove();
+             $('.plus-div').show();
+             var conceptName = $('#chart-unit-select').find(":selected").data('show');
+             var name = '#chart-unit-' +conceptName;
+              manageUnits.addButton(name);
+          });
+
+      var manageUnits = {
+        addButton: function(name){
+        var $template = $(name),
+            $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .addClass('addedItem')
+                            .removeAttr('id')
+                            .insertAfter($template);
+        // Update the name attributes
+        $clone.attr("id", name + '-' + addChartIndex);
+        // get all the inputs inside the clone
+        var inputs = $clone.find('input');
+        // for each input change its name/id appending the index value
+        $.each(inputs, function(index, elem){
+            var jElem = $(elem);
+            var name = jElem.prop('name');
+            // change id and name
+            jElem.prop('id', name + '-' +  addChartIndex);
+            jElem.prop('name', name + '-' +  addChartIndex);
+        });
+        }
+      };
 
 
-              // Remove button click handler
-              .on('click', '.removeButton', function() {
-                // $(this).parent().parent().parent().remove();
-              });
 
-
-      $('.chart-unit-select').hide();
-      $('.plus-div').hide();
-      $('.removeButton').hide();
-      $('#chart-unit-select').change(function() {
-         $('.chart-unit-select').hide();
-         // var selectedUnit = $('option:selected', this).data('show');
-         $('.plus-div').show();
-          $('#chart-unit-' + $('option:selected', this).data('show')).show();
-      });
 
 
       // Hide all taget unit fields and show them based on selected unit
