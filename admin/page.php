@@ -1204,6 +1204,9 @@
           var indicator_id = $('#chart-indicator-id').val();
           var target_id = $('#chart-target-id').val();
           var sdg_short_name = $('#chart-sdg-short-name').val();
+
+
+
            $.ajax({
                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                type: 'POST', //or POST
@@ -1302,99 +1305,6 @@
           event.preventDefault();
         });
 
-
-
-
-
-        // TODO Adding new chartTable_
-
-        // $("#add-chart-modal11").validate({
-        //   submitHandler: function (form) {
-        //
-        //      var indicator_id = $('#indicator-target-id').val();
-        //      var target_id = $('#indicator-target-id').val();
-        //      var sdg_id = $('#sdg-id').val();
-        //       $.ajax({
-        //           url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-        //           type: 'POST', //or POST
-        //           dataType: 'json',
-        //           data: {
-        //               'sdg_id': $('#indicator-sdg').val(),
-        //               'target_id': $('#indicator-target-id').val(),
-        //               'indicator_id': $('#indicator-target-id').val(),
-        //               'title': $('#title-indicator').val(),
-        //               'source': $("#source-indicator").val(),
-        //               'description': $("#description-indicator").val(),
-        //               'action': 'add_chart'
-        //           },
-        //           success: function (data) {
-        //               var indicator_id = data[0].indicator_id;
-        //               var target_id = data[0].target_id;
-        //               var s_id = data[0].sdg_id;
-        //               $('#exampleTable_' + targets_id + '_' + indicator_id).dataTable().fnDestroy();
-        //               oInnerTable = $("#exampleTable_" + targets_id).dataTable({
-        //                   "bFilter": true,
-        //                   "aaData": data,
-        //                   "bSort": true, // disables sorting
-        //                   "aoColumns": [
-        //                       {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
-        //                       {"mDataProp": "id"},
-        //                       {"mDataProp": "title"},
-        //                       {"mDataProp": "source"},
-        //                       {"mDataProp": "description"},
-        //                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-        //                       {"sDefaultContent": targets_id},
-        //                       {"sDefaultContent": s_id},
-        //                   ],
-        //                   "bPaginate": true,
-        //                   "oLanguage": {
-        //                       "sInfo": "_TOTAL_ entries"
-        //                   },
-        //                   "dom": 'Bfrtip',
-        //                   "buttons": [
-        //                       {
-        //                           "extend": 'copyHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'excelHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'pdfHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'csvHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       }
-        //                   ],
-        //                   "columnDefs": [
-        //                           {
-        //                               "targets": [ 6 ],
-        //                               className: 'hidden'
-        //                           }
-        //                       ],
-        //
-        //               });
-        //               $('tr.details1 .dataTables_info').html('');
-        //               $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
-        //               $('#add-chart-modal').modal('hide');
-        //               $('#add-chart-form')[0].reset();
-        //
-        //           }
-        //       });
-        //   }
-        // });
-        //
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
