@@ -383,7 +383,7 @@
                                    <option id="target-number" value="number" data-show="number"> Number</option>
                                    <option id="target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
                                    <option id="target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                   <option id="target-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
+                                   <option id="target-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
                                    <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
                                    <option id="target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
                                  </select>
@@ -392,26 +392,26 @@
                              <div class="form-group target-unit-select target-unit-number">
                                <label class="col-xs-3 control-label" for="target-number-value">Number Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value"/>
+                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="number_value"/>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-percentage">
                                <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value"/>
+                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="percentage_value" />
                                </div>
                              </div>
                              <div class="target-unit-select target-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a"/>
+                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="ratio_value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b"/>
+                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="ratio_value_b"/>
                                  </div>
                                </div>
                              </div>
@@ -419,13 +419,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-value-a" type="number" class="form-control" id="target-comperative-value-a"/>
+                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="comperative_current_value"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-value-b" type="number" class="form-control" id="target-comperative-value-b"/>
+                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="comperative_max_value"/>
                                  </div>
                                </div>
                              </div>
@@ -433,10 +433,10 @@
                                <label class="col-xs-3 control-label" for="target-yes-no-value">Values:</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
-                                 <input type="radio" name="target-yes" value="yes">Yes
+                                 <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
                                  </label>
                                  <label class="radio-inline">
-                                 <input type="radio" name="target-no" value="no">No
+                                 <input type="radio" name="target-yes-no" value="no" data-slug="value">No
                                  </label>
                                </div>
                              </div>
@@ -659,9 +659,8 @@
            // Add button click handler
           .on('click', '.addButton', function() {
               addChartIndex ++;
-              var conceptName = $('#chart-unit-select').find(":selected").data('show');
-              var name = '#chart-unit-' +conceptName;
-              manageUnits.addButton(name);
+              var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
+              manageUnits.addButton(selectedUnit);
           })
           // Remove button click handler
           .on('click', '.removeButton', function() {
@@ -669,38 +668,48 @@
           });
 
           $('#chart-unit-select').change(function() {
-             // $('.chart-unit-select').hide();
-             // var selectedUnit = $('option:selected', this).data('show');
              $('.addedItem').remove();
              addChartIndex = 0;
              $('.plus-div').show();
              var conceptName = $('#chart-unit-select').find(":selected").data('show');
-             var name = '#chart-unit-' +conceptName;
+             var name = '#chart-unit-' + conceptName;
               manageUnits.addButton(name);
           });
 
       var manageUnits = {
-        addButton: function(name){
-        var $template = $(name),
+        addButton: function(unit){
+        var divId = '#chart-unit-' + unit;
+        // clone the div based on id
+        var $template = $(divId),
             $clone    = $template
                             .clone()
                             .removeClass('hide')
                             .addClass('addedItem')
                             .removeAttr('id')
                             .insertAfter($template);
-        // Update the name attributes
-        $clone.attr("id", name + '-' + addChartIndex);
+        // Update the id
+        $clone.attr("id", divId + '-' + addChartIndex);
+
         // get all the inputs inside the clone
         var inputs = $clone.find('input');
+
         // for each input change its name/id appending the index value
         $.each(inputs, function(index, elem){
             var jElem = $(elem);
             var name = jElem.prop('name');
-            // change id and name
+            // Change id and name of input
             jElem.prop('id', name + '-' +  addChartIndex);
             jElem.prop('name', name + '-' +  addChartIndex);
+            // Add generated attr
+            jElem.attr('data-generated', unit);
         });
-        }
+      },
+      targetUnits: function(){
+        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio', 'increasing-decreasing' ]
+      },
+      chartUnits: function(){
+        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ]
+      }
       };
 
       // Hide all taget unit fields and show them based on selected unit
@@ -1206,6 +1215,23 @@
           var target_id = $('#chart-target-id').val();
           var sdg_short_name = $('#chart-sdg-short-name').val();
 
+          var targetUnit = $("#target-unit-select option:selected").val();
+
+
+          var target_value = {};
+          $('.target-unit-' + targetUnit + " :input").each(function(e){
+
+            var slug = $(this).data("slug");
+            var value = $(this).val();
+            target_value[slug] = value;
+
+            if (targetUnit == 'yes-no'){
+              slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
+              value = $('input[type=radio][name=target-yes-no]:checked').val();
+              target_value[slug] = value;
+              return false;
+            }
+          });
 
 
            $.ajax({
@@ -1218,8 +1244,8 @@
                    'indicator_id': indicator_id,
                    'title': $('#title-chart').val(),
                    'target_year': $("#target-year").val(),
-                   'target_unit': $("#target-unit-select option:selected").val(),
-                   'target_value': " TODO target_value",
+                   'target_unit': targetUnit,
+                   'target_value': JSON.stringify(target_value),
                    'chart_unit': $("#chart-unit-select option:selected").val(),
                    'chart_data': "TODO chart_data",
                    'description': $("#chart-description").val(),
