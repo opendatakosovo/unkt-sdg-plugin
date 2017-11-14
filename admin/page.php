@@ -381,8 +381,8 @@
                                  <select id="target-unit-select" name="target-unit" class="form-control">
                                    <option value="">Select Unit</option>
                                    <option id="target-number" value="number" data-show="number"> Number</option>
-                                   <option id="target-percentage" value="ercentage"  data-show="percentage"> Percentage </option>
-                                   <option id="target-boolean" value="boolean"  data-show="boolean"> Yes/No </option>
+                                   <option id="target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                   <option id="target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
                                    <option id="target-comperative" value="omperative"  data-show="comperative">Comperative Value</option>
                                    <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
                                    <option id="target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
@@ -429,14 +429,14 @@
                                  </div>
                                </div>
                              </div>
-                             <div class="form-group target-unit-select target-unit-boolean">
-                               <label class="col-xs-3 control-label" for="target-boolean-value">Values:</label>
+                             <div class="form-group target-unit-select target-unit-yes-no">
+                               <label class="col-xs-3 control-label" for="target-yes-no-value">Values:</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
-                                 <input type="radio" name="target-boolean-yes" value="yes">Yes
+                                 <input type="radio" name="target-yes" value="yes">Yes
                                  </label>
                                  <label class="radio-inline">
-                                 <input type="radio" name="target-boolean-no" value="no">No
+                                 <input type="radio" name="target-no" value="no">No
                                  </label>
                                </div>
                              </div>
@@ -463,8 +463,8 @@
                                  <select id="chart-unit-select" name="chart-unit" class="form-control">
                                    <option value="">Select Unit</option>
                                    <option id="chart-number" value="number" data-show="number"> Number</option>
-                                   <option id="chart-percentage" value="ercentage"  data-show="percentage"> Percentage </option>
-                                   <option id="chart-boolean" value="boolean"  data-show="boolean"> Yes/No </option>
+                                   <option id="chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                   <option id="chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
                                    <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
                                    <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option>
                                  </select>
@@ -567,21 +567,21 @@
                                </div>
                                <hr class="separator">
                              </div>
-                             <div class="chart-unit-select hide chart-unit-boolean" id="chart-unit-boolean">
+                             <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-boolean"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no"/>
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-boolean-value">Values:</label>
+                                 <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-boolean-yes" value="yes">Yes
+                                   <input type="radio" name="chart-yes" value="yes">Yes
                                    </label>
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-boolean-no" value="no">No
+                                   <input type="radio" name="chart-no" value="no">No
                                    </label>
                                  </div>
                                </div>
@@ -1214,9 +1214,9 @@
                    'indicator_id': indicator_id,
                    'title': $('#title-chart').val(),
                    'target_year': $("#target-year").val(),
-                   'target_unit': $("#target-unit").val(),
+                   'target_unit': $("#target-unit-select option:selected").val(),
                    'target_value': " TODO target_value",
-                   'chart_unit': $("#target-unit").val(),
+                   'chart_unit': $("#chart-unit-select option:selected").val(),
                    'chart_data': "TODO chart_data",
                    'description': $("#chart-description").val(),
                    'disaggregated_by': $("#aggregated-by-chart").val(),

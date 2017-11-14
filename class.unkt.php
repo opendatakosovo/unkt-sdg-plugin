@@ -445,7 +445,7 @@ class Unkt
         $target_value = htmlspecialchars($_POST["target_value"]);
         $chart_unit = htmlspecialchars($_POST["chart_unit"]);
         $chart_data = htmlspecialchars($_POST["chart_data"]);
-        $disaggregated_by = htmlspecialchars($_POST["disaggregated_by"])
+        $disaggregated_by = htmlspecialchars($_POST["disaggregated_by"]);
         $description = htmlspecialchars($_POST["description"]);
 
         if (is_numeric($sdg_text)) {
@@ -462,9 +462,9 @@ class Unkt
 
         $insert = "
         INSERT INTO `{$wpdb->prefix}charts`( sdg_id, target_id, indicator_id, title, target_year, target_unit, target_value, chart_unit, chart_data, description,disaggregated_by, updated_date )
-        VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data'  '$description','$disaggregated_by', NOW()); ";
+        VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data', '$description','$disaggregated_by', NOW()); ";
         $wpdb->query($insert);
-        echo "<script>console.log('$insert');</script>";
+
         $query_charts = $wpdb->get_results("
               SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
         echo json_encode($query_charts);
