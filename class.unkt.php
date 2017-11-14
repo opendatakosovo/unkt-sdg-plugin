@@ -47,6 +47,7 @@ class Unkt
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
             add_action('wp_ajax_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
+            add_action('wp_ajax_add_chart', array('Unkt', 'add_chart'));
         }
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
@@ -430,6 +431,43 @@ class Unkt
         $query_targets = $wpdb->get_results("
             SELECT * From wp_indicators WHERE target_id='$target_id'");
         echo json_encode($query_targets);
+        die();
+    }
+    public static function add_chart() {
+        global $wpdb;
+
+        $sdg_text = htmlspecialchars($_POST["sdg_id"]);
+        $target_id = htmlspecialchars($_POST["target_id"]);
+        $indicator_id = htmlspecialchars($_POST["indicator_id"]);
+        $title = htmlspecialchars($_POST["title"]);
+        $target_year = htmlspecialchars($_POST["target_year"]);
+        $target_unit = htmlspecialchars($_POST["target_unit"]);
+        $target_value = htmlspecialchars($_POST["target_value"]);
+        $chart_unit = htmlspecialchars($_POST["chart_unit"]);
+        $chart_data = htmlspecialchars($_POST["chart_data"]);
+        $disaggregated_by = htmlspecialchars($_POST["disaggregated_by"])
+        $description = htmlspecialchars($_POST["description"]);
+
+        if (is_numeric($sdg_text)) {
+            $sdg_id = $sdg_text;
+        } else {
+            /* find sdg-id by short-name */
+            $query_targets = array();
+            $query_targets = $wpdb->get_results("
+               SELECT short_name,id From wp_sdg WHERE short_name='$sdg_text'");
+            $json = json_encode($query_targets[0]);
+            $obj = json_decode($json);
+            $sdg_id = $obj->id;
+        }
+
+        $insert = "
+        INSERT INTO `{$wpdb->prefix}charts`( sdg_id, target_id, indicator_id, title, target_year, target_unit, target_value, chart_unit, chart_data, description,disaggregated_by, updated_date )
+        VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data'  '$description','$disaggregated_by', NOW()); ";
+        $wpdb->query($insert);
+        echo "<script>console.log('$insert');</script>";
+        $query_charts = $wpdb->get_results("
+              SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
+        echo json_encode($query_charts);
         die();
     }
 

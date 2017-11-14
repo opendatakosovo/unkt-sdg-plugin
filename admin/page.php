@@ -352,7 +352,7 @@
                        <h4 class="modal-title">Add Chart</h4>
                    </div>
                    <div class="modal-body">
-                     <form id="add-chart-form" class="form-horizontal">
+                     <form id="add-chart-form" class="form-horizontal" method="POST">
                         <input id="chart-target-id" >
                         <input id="chart-indicator-id">
                         <input id="chart-sdg-short-name">
@@ -497,7 +497,7 @@
                              </div>
                              <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Date</label>
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
                                      <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage"/>
                                  </div>
@@ -517,7 +517,7 @@
                              </div>
                              <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Date</label>
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
                                      <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio"/>
                                  </div>
@@ -543,7 +543,7 @@
                              </div>
                              <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Date</label>
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
                                      <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative"/>
                                  </div>
@@ -569,7 +569,7 @@
                              </div>
                              <div class="chart-unit-select hide chart-unit-boolean" id="chart-unit-boolean">
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Date</label>
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
                                      <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-boolean"/>
                                  </div>
@@ -1199,42 +1199,55 @@
             e.preventDefault();
         });
 
+        $('#add-chart-form').on('submit', function (e) {
 
-        $( "#add-chart-form" ).submit(function( event ) {
-          alert( "Handler for .submit() called." );
-          var indicator_id = $('#indicator-target-id').val();
-          var target_id = $('#indicator-target-id').val();
-          var sdg_id = $('#sdg-id').val();
+          var indicator_id = $('#chart-indicator-id').val();
+          var target_id = $('#chart-target-id').val();
+          var sdg_short_name = $('#chart-sdg-short-name').val();
            $.ajax({
                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                type: 'POST', //or POST
                dataType: 'json',
                data: {
-                   'sdg_id': $('#indicator-sdg').val(),
-                   'target_id': $('#indicator-target-id').val(),
-                   'indicator_id': $('#indicator-target-id').val(),
+                   'sdg_id': sdg_short_name,
+                   'target_id': target_id,
+                   'indicator_id': indicator_id,
                    'title': $('#title-chart').val(),
-                   'target-year': $("#target-year").val(),
-                   'description': $("#description-indicator").val(),
+                   'target_year': $("#target-year").val(),
+                   'target_unit': $("#target-unit").val(),
+                   'target_value': " TODO target_value",
+                   'chart_unit': $("#target-unit").val(),
+                   'chart_data': "TODO chart_data",
+                   'description': $("#chart-description").val(),
+                   'disaggregated_by': $("#aggregated-by-chart").val(),
                    'action': 'add_chart'
                },
                success: function (data) {
+                   var indicator_id  = data[0].indicator_id;
                    var target_id = data[0].target_id;
                    var s_id = data[0].sdg_id;
-                   $('#exampleTable_' + targets_id).dataTable().fnDestroy();
-                   oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+                   $("#chartTable_" + indicator_id + '_' + target_id).dataTable().fnDestroy();
+
+                   oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
+                       "bJQueryUI": true,
                        "bFilter": true,
                        "aaData": data,
                        "bSort": true, // disables sorting
+                       "info": true,
                        "aoColumns": [
-                           {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
                            {"mDataProp": "id"},
                            {"mDataProp": "title"},
-                           {"mDataProp": "source"},
+                           {"mDataProp": "target_unit"},
+                           {"mDataProp": "target_year"},
+                           {"mDataProp": "target_value"},
+                           {"mDataProp": "chart_unit"},
+                           {"mDataProp": "chart_data"},
                            {"mDataProp": "description"},
-                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-                           {"sDefaultContent": targets_id},
-                           {"sDefaultContent": s_id},
+                           {"mDataProp": "disaggregated_by"},
+                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                           {"sDefaultContent": target_id},
+                           {"sDefaultContent": indicator_id},
+                           {"sDefaultContent": sdg_short_name},
                        ],
                        "bPaginate": true,
                        "oLanguage": {
@@ -1269,14 +1282,17 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 6 ],
+                                   "targets": [ 10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
-
                    });
-                   $('tr.details1 .dataTables_info').html('');
-                   $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+
+                   $(this).attr('id', indicator_id);
+                   // Updating the info of datatable with the button to create new indicator
+                   $('tr.chart-details .dataTables_info').html('');
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+
                    $('#add-chart-modal').modal('hide');
                    $('#add-chart-form')[0].reset();
 
@@ -1292,92 +1308,93 @@
 
         // TODO Adding new chartTable_
 
-        $("#add-chart-modal11").validate({
-          submitHandler: function (form) {
-
-             var indicator_id = $('#indicator-target-id').val();
-             var target_id = $('#indicator-target-id').val();
-             var sdg_id = $('#sdg-id').val();
-              $.ajax({
-                  url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                  type: 'POST', //or POST
-                  dataType: 'json',
-                  data: {
-                      'sdg_id': $('#indicator-sdg').val(),
-                      'target_id': $('#indicator-target-id').val(),
-                      'indicator_id': $('#indicator-target-id').val(),
-                      'title': $('#title-indicator').val(),
-                      'source': $("#source-indicator").val(),
-                      'description': $("#description-indicator").val(),
-                      'action': 'add_chart'
-                  },
-                  success: function (data) {
-                      var target_id = data[0].target_id;
-                      var s_id = data[0].sdg_id;
-                      $('#exampleTable_' + targets_id).dataTable().fnDestroy();
-                      oInnerTable = $("#exampleTable_" + targets_id).dataTable({
-                          "bFilter": true,
-                          "aaData": data,
-                          "bSort": true, // disables sorting
-                          "aoColumns": [
-                              {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
-                              {"mDataProp": "id"},
-                              {"mDataProp": "title"},
-                              {"mDataProp": "source"},
-                              {"mDataProp": "description"},
-                              {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-                              {"sDefaultContent": targets_id},
-                              {"sDefaultContent": s_id},
-                          ],
-                          "bPaginate": true,
-                          "oLanguage": {
-                              "sInfo": "_TOTAL_ entries"
-                          },
-                          "dom": 'Bfrtip',
-                          "buttons": [
-                              {
-                                  "extend": 'copyHtml5',
-                                  "exportOptions": {
-                                      "columns": [1, 2, 3, 4, 5]
-                                  }
-                              },
-                              {
-                                  "extend": 'excelHtml5',
-                                  "exportOptions": {
-                                      "columns": [1, 2, 3, 4, 5]
-                                  }
-                              },
-                              {
-                                  "extend": 'pdfHtml5',
-                                  "exportOptions": {
-                                      "columns": [1, 2, 3, 4, 5]
-                                  }
-                              },
-                              {
-                                  "extend": 'csvHtml5',
-                                  "exportOptions": {
-                                      "columns": [1, 2, 3, 4, 5]
-                                  }
-                              }
-                          ],
-                          "columnDefs": [
-                                  {
-                                      "targets": [ 6 ],
-                                      className: 'hidden'
-                                  }
-                              ],
-
-                      });
-                      $('tr.details1 .dataTables_info').html('');
-                      $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
-                      $('#add-chart-modal').modal('hide');
-                      $('#add-chart-form')[0].reset();
-
-                  }
-              });
-          }
-        });
-
+        // $("#add-chart-modal11").validate({
+        //   submitHandler: function (form) {
+        //
+        //      var indicator_id = $('#indicator-target-id').val();
+        //      var target_id = $('#indicator-target-id').val();
+        //      var sdg_id = $('#sdg-id').val();
+        //       $.ajax({
+        //           url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+        //           type: 'POST', //or POST
+        //           dataType: 'json',
+        //           data: {
+        //               'sdg_id': $('#indicator-sdg').val(),
+        //               'target_id': $('#indicator-target-id').val(),
+        //               'indicator_id': $('#indicator-target-id').val(),
+        //               'title': $('#title-indicator').val(),
+        //               'source': $("#source-indicator").val(),
+        //               'description': $("#description-indicator").val(),
+        //               'action': 'add_chart'
+        //           },
+        //           success: function (data) {
+        //               var indicator_id = data[0].indicator_id;
+        //               var target_id = data[0].target_id;
+        //               var s_id = data[0].sdg_id;
+        //               $('#exampleTable_' + targets_id + '_' + indicator_id).dataTable().fnDestroy();
+        //               oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+        //                   "bFilter": true,
+        //                   "aaData": data,
+        //                   "bSort": true, // disables sorting
+        //                   "aoColumns": [
+        //                       {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+        //                       {"mDataProp": "id"},
+        //                       {"mDataProp": "title"},
+        //                       {"mDataProp": "source"},
+        //                       {"mDataProp": "description"},
+        //                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+        //                       {"sDefaultContent": targets_id},
+        //                       {"sDefaultContent": s_id},
+        //                   ],
+        //                   "bPaginate": true,
+        //                   "oLanguage": {
+        //                       "sInfo": "_TOTAL_ entries"
+        //                   },
+        //                   "dom": 'Bfrtip',
+        //                   "buttons": [
+        //                       {
+        //                           "extend": 'copyHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'excelHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'pdfHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       },
+        //                       {
+        //                           "extend": 'csvHtml5',
+        //                           "exportOptions": {
+        //                               "columns": [1, 2, 3, 4, 5]
+        //                           }
+        //                       }
+        //                   ],
+        //                   "columnDefs": [
+        //                           {
+        //                               "targets": [ 6 ],
+        //                               className: 'hidden'
+        //                           }
+        //                       ],
+        //
+        //               });
+        //               $('tr.details1 .dataTables_info').html('');
+        //               $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+        //               $('#add-chart-modal').modal('hide');
+        //               $('#add-chart-form')[0].reset();
+        //
+        //           }
+        //       });
+        //   }
+        // });
+        //
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
