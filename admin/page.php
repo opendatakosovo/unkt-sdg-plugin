@@ -78,10 +78,11 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Unit</th>
-                <th>Target Date</th>
+                <th>Target Unit</th>
+                <th>Target Year</th>
                 <th>Target Value</th>
-                <th>Data</th>
+                <th>Chart Unit</th>
+                <th>Chart Data</th>
                 <th>Description</th>
                 <th>Disaggregated by</th>
                 <th>Actions</th>
@@ -371,7 +372,7 @@
                              <div class="form-group">
                                <label class="col-xs-3 control-label">Target Year</label>
                                <div class="col-xs-9">
-                                   <input name="target-year" type="number" class="form-control" id="target-year" required/>
+                                   <input name="target-year" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" id="target-year" required/>
                                </div>
                              </div>
                              <div class="form-group">
@@ -451,6 +452,12 @@
                            </div>
                            <div class="panel-body">
                              <div class="form-group">
+                               <label class="col-xs-3 control-label"> Aggregated by</label>
+                               <div class="col-xs-9">
+                                 <input type="text" class="form-control" name="aggregated-by-chart" id="aggregated-by-chart"/>
+                               </div>
+                             </div>
+                             <div class="form-group">
                                <label for="chart-data-unit" class="col-xs-3 control-label">Unit:</label>
                                <div class="col-xs-9">
                                  <select id="chart-unit-select" name="chart-unit" class="form-control">
@@ -472,7 +479,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" name="chart-baseline-number"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-number"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -482,7 +489,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-10 col-xs-1">
+                                 <div class="col-xs-12">
                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                  </div>
                                </div>
@@ -492,7 +499,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" name="chart-baseline-percentage"/>
+                                     <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -502,7 +509,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-10 col-xs-1 ">
+                                 <div class="col-xs-12">
                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                  </div>
                                </div>
@@ -512,7 +519,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" name="chart-baseline-ratio"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -524,11 +531,11 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b[]"/>
+                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b"/>
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-10 col-xs-1">
+                                 <div class="col-xs-12">
                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                  </div>
                                </div>
@@ -538,7 +545,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" name="chart-baseline-comperative"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -554,7 +561,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-10 col-xs-1">
+                                 <div class="col-xs-12">
                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                  </div>
                                </div>
@@ -564,7 +571,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Date</label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" name="chart-baseline-boolean"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-boolean"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -579,7 +586,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-10 col-xs-1">
+                                 <div class="col-xs-12">
                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                  </div>
                                </div>
@@ -646,7 +653,7 @@
           var addChartIndex = 0;
           // $('.chart-unit-select').hide();
           $('.plus-div').hide();
-          $('.removeButton').hide();
+          //$('.removeButton').hide();
 
           $('#add-chart-form')
            // Add button click handler
@@ -658,7 +665,7 @@
           })
           // Remove button click handler
           .on('click', '.removeButton', function() {
-            // $(this).parent().parent().parent().remove();
+             $(this).parent().parent().parent().remove();
           });
 
           $('#chart-unit-select').change(function() {
@@ -694,10 +701,6 @@
         });
         }
       };
-
-
-
-
 
       // Hide all taget unit fields and show them based on selected unit
       $('.target-unit-select').hide();
@@ -845,7 +848,6 @@
 
                         // Adding new row below the indicator row for inner table
                         oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details');
-
                         // Rendering the chart data in inner table of selected indicator
                         oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
                             "bJQueryUI": true,
@@ -856,9 +858,10 @@
                             "aoColumns": [
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
-                                {"mDataProp": "unit"},
-                                {"mDataProp": "target_date"},
+                                {"mDataProp": "target_unit"},
+                                {"mDataProp": "target_year"},
                                 {"mDataProp": "target_value"},
+                                {"mDataProp": "chart_unit"},
                                 {"mDataProp": "chart_data"},
                                 {"mDataProp": "description"},
                                 {"mDataProp": "disaggregated_by"},
@@ -900,7 +903,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 9,10,11 ],
+                                        "targets": [ 10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1196,95 +1199,185 @@
             e.preventDefault();
         });
 
-        // Adding new chartTable_ TODO
-        // $("#add-chart-modal").validate({
-        //   rules: {
-        //
-        //   },
-        //   submitHandler: function (form) {
-        //
-        //      var indicator_id = $('#indicator-target-id').val();
-        //      var target_id = $('#indicator-target-id').val();
-        //      var sdg_id = $('#sdg-id').val();
-        //       $.ajax({
-        //           url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-        //           type: 'POST', //or POST
-        //           dataType: 'json',
-        //           data: {
-        //               'sdg_id': $('#indicator-sdg').val(),
-        //               'target_id': $('#indicator-target-id').val(),
-        //               'indicator_id': $('#indicator-target-id').val(),
-        //               'title': $('#title-indicator').val(),
-        //               'source': $("#source-indicator").val(),
-        //               'description': $("#description-indicator").val(),
-        //               'action': 'add_chart'
-        //           },
-        //           success: function (data) {
-        //               var target_id = data[0].target_id;
-        //               var s_id = data[0].sdg_id;
-        //               $('#exampleTable_' + targets_id).dataTable().fnDestroy();
-        //               oInnerTable = $("#exampleTable_" + targets_id).dataTable({
-        //                   "bFilter": true,
-        //                   "aaData": data,
-        //                   "bSort": true, // disables sorting
-        //                   "aoColumns": [
-        //                       {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
-        //                       {"mDataProp": "id"},
-        //                       {"mDataProp": "title"},
-        //                       {"mDataProp": "source"},
-        //                       {"mDataProp": "description"},
-        //                       {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
-        //                       {"sDefaultContent": targets_id},
-        //                       {"sDefaultContent": s_id},
-        //                   ],
-        //                   "bPaginate": true,
-        //                   "oLanguage": {
-        //                       "sInfo": "_TOTAL_ entries"
-        //                   },
-        //                   "dom": 'Bfrtip',
-        //                   "buttons": [
-        //                       {
-        //                           "extend": 'copyHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'excelHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'pdfHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       },
-        //                       {
-        //                           "extend": 'csvHtml5',
-        //                           "exportOptions": {
-        //                               "columns": [1, 2, 3, 4, 5]
-        //                           }
-        //                       }
-        //                   ],
-        //                   "columnDefs": [
-        //                           {
-        //                               "targets": [ 6 ],
-        //                               className: 'hidden'
-        //                           }
-        //                       ],
-        //
-        //               });
-        //               $('tr.details1 .dataTables_info').html('');
-        //               $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
-        //               $('#add-chart-modal').modal('hide');
-        //               $('#add-chart-form')[0].reset();
-        //
-        //           }
-        //       });
-        //   }
-        // });
+
+        $( "#add-chart-form" ).submit(function( event ) {
+          alert( "Handler for .submit() called." );
+          var indicator_id = $('#indicator-target-id').val();
+          var target_id = $('#indicator-target-id').val();
+          var sdg_id = $('#sdg-id').val();
+           $.ajax({
+               url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+               type: 'POST', //or POST
+               dataType: 'json',
+               data: {
+                   'sdg_id': $('#indicator-sdg').val(),
+                   'target_id': $('#indicator-target-id').val(),
+                   'indicator_id': $('#indicator-target-id').val(),
+                   'title': $('#title-chart').val(),
+                   'target-year': $("#target-year").val(),
+                   'description': $("#description-indicator").val(),
+                   'action': 'add_chart'
+               },
+               success: function (data) {
+                   var target_id = data[0].target_id;
+                   var s_id = data[0].sdg_id;
+                   $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+                   oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+                       "bFilter": true,
+                       "aaData": data,
+                       "bSort": true, // disables sorting
+                       "aoColumns": [
+                           {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                           {"mDataProp": "id"},
+                           {"mDataProp": "title"},
+                           {"mDataProp": "source"},
+                           {"mDataProp": "description"},
+                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                           {"sDefaultContent": targets_id},
+                           {"sDefaultContent": s_id},
+                       ],
+                       "bPaginate": true,
+                       "oLanguage": {
+                           "sInfo": "_TOTAL_ entries"
+                       },
+                       "dom": 'Bfrtip',
+                       "buttons": [
+                           {
+                               "extend": 'copyHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'excelHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'pdfHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'csvHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           }
+                       ],
+                       "columnDefs": [
+                               {
+                                   "targets": [ 6 ],
+                                   className: 'hidden'
+                               }
+                           ],
+
+                   });
+                   $('tr.details1 .dataTables_info').html('');
+                   $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+                   $('#add-chart-modal').modal('hide');
+                   $('#add-chart-form')[0].reset();
+
+               }
+           });
+
+          event.preventDefault();
+        });
+
+
+
+
+
+        // TODO Adding new chartTable_
+
+        $("#add-chart-modal11").validate({
+          submitHandler: function (form) {
+
+             var indicator_id = $('#indicator-target-id').val();
+             var target_id = $('#indicator-target-id').val();
+             var sdg_id = $('#sdg-id').val();
+              $.ajax({
+                  url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                  type: 'POST', //or POST
+                  dataType: 'json',
+                  data: {
+                      'sdg_id': $('#indicator-sdg').val(),
+                      'target_id': $('#indicator-target-id').val(),
+                      'indicator_id': $('#indicator-target-id').val(),
+                      'title': $('#title-indicator').val(),
+                      'source': $("#source-indicator").val(),
+                      'description': $("#description-indicator").val(),
+                      'action': 'add_chart'
+                  },
+                  success: function (data) {
+                      var target_id = data[0].target_id;
+                      var s_id = data[0].sdg_id;
+                      $('#exampleTable_' + targets_id).dataTable().fnDestroy();
+                      oInnerTable = $("#exampleTable_" + targets_id).dataTable({
+                          "bFilter": true,
+                          "aaData": data,
+                          "bSort": true, // disables sorting
+                          "aoColumns": [
+                              {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                              {"mDataProp": "id"},
+                              {"mDataProp": "title"},
+                              {"mDataProp": "source"},
+                              {"mDataProp": "description"},
+                              {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                              {"sDefaultContent": targets_id},
+                              {"sDefaultContent": s_id},
+                          ],
+                          "bPaginate": true,
+                          "oLanguage": {
+                              "sInfo": "_TOTAL_ entries"
+                          },
+                          "dom": 'Bfrtip',
+                          "buttons": [
+                              {
+                                  "extend": 'copyHtml5',
+                                  "exportOptions": {
+                                      "columns": [1, 2, 3, 4, 5]
+                                  }
+                              },
+                              {
+                                  "extend": 'excelHtml5',
+                                  "exportOptions": {
+                                      "columns": [1, 2, 3, 4, 5]
+                                  }
+                              },
+                              {
+                                  "extend": 'pdfHtml5',
+                                  "exportOptions": {
+                                      "columns": [1, 2, 3, 4, 5]
+                                  }
+                              },
+                              {
+                                  "extend": 'csvHtml5',
+                                  "exportOptions": {
+                                      "columns": [1, 2, 3, 4, 5]
+                                  }
+                              }
+                          ],
+                          "columnDefs": [
+                                  {
+                                      "targets": [ 6 ],
+                                      className: 'hidden'
+                                  }
+                              ],
+
+                      });
+                      $('tr.details1 .dataTables_info').html('');
+                      $('tr.details1 .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+                      $('#add-chart-modal').modal('hide');
+                      $('#add-chart-form')[0].reset();
+
+                  }
+              });
+          }
+        });
+
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1609,6 +1702,9 @@
 </script>
 
 <style>
+    .removeButton{
+      float: right;
+    }
     #exampleTable_wrapper .col-sm-6 {
         padding-bottom: 10px;
         padding-top: 10px;
