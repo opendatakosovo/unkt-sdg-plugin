@@ -446,7 +446,7 @@ class Unkt
         $target_value = htmlspecialchars($_POST["target_value"]);
         $chart_unit = htmlspecialchars($_POST["chart_unit"]);
         $chart_data = htmlspecialchars($_POST["chart_data"]);
-        $dislabel = htmlspecialchars($_POST["label"]);
+        $label = htmlspecialchars($_POST["label"]);
         $description = htmlspecialchars($_POST["description"]);
 
         if (is_numeric($sdg_text)) {
@@ -462,8 +462,8 @@ class Unkt
         }
 
         $insert = "
-        INSERT INTO `{$wpdb->prefix}charts`( sdg_id, target_id, indicator_id, title, target_year, target_unit, target_value, chart_unit, chart_data, description,dislabel, updated_date )
-        VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data', '$description','$dislabel', NOW()); ";
+        INSERT INTO `{$wpdb->prefix}charts`( sdg_id, target_id, indicator_id, title, target_year, target_unit, target_value, chart_unit, chart_data, description,label, updated_date )
+        VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data', '$description','$label', NOW()); ";
         $wpdb->query($insert);
 
         $query_charts = $wpdb->get_results("
