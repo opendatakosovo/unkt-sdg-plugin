@@ -85,7 +85,7 @@ if (isset($_GET)) {
 
       const firstTargetId = $('.panel-heading h4 a').first().data('target-id');
       const firstIndicatorsId = $('.panel-heading h4 a').first().data('indicator-id');
-      
+
       // ES7 async request
       const getChart = async (targetId, indicatorsId) => {
          let datachart = await $.ajax({
@@ -96,7 +96,7 @@ if (isset($_GET)) {
                               });
          return datachart;
       }
-      
+
       const makeRequestforCharts = (firstTargetId, firstIndicatorsId) => {
          if(firstIndicatorsId.toString().indexOf(',') > -1) {
             var promises = [];
