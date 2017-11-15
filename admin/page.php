@@ -391,26 +391,26 @@
                              <div class="form-group target-unit-select target-unit-number">
                                <label class="col-xs-3 control-label" for="target-number-value">Number Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="number_value"/>
+                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="value"/>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-percentage">
                                <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="percentage_value" />
+                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="value" />
                                </div>
                              </div>
                              <div class="target-unit-select target-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="ratio_value_a"/>
+                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="ratio_value_b"/>
+                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                              </div>
@@ -418,18 +418,18 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="comperative_current_value"/>
+                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="comperative_max_value"/>
+                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
                                  </div>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-yes-no">
-                               <label class="col-xs-3 control-label" for="target-yes-no-value">Values:</label>
+                               <label class="col-xs-3 control-label" for="target-yes-no-value">Value:</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
                                  <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
@@ -439,6 +439,19 @@
                                  </label>
                                </div>
                              </div>
+
+                             <div class="form-group target-unit-select target-unit-increasing-decreasing">
+                               <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value:</label>
+                               <div class="col-xs-6">
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
+                                 </label>
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
+                                 </label>
+                               </div>
+                             </div>
+
                            </div>
                          </div>
                        </div>
@@ -486,7 +499,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-number-value">Number Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="number_value">
+                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="value">
                                  </div>
                                </div>
                                <div class="form-group">
@@ -509,7 +522,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="percentage_value" />
+                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -531,13 +544,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="ratio_value_a"/>
+                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="ratio_value_b"/>
+                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -560,13 +573,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="comperative_current_value" />
+                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="comperative_max_value" />
+                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="max_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -590,10 +603,10 @@
                                  <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="yes" data-slug="radio_value">Yes
+                                   <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
                                    </label>
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="no" data-slug="radio_value">No
+                                   <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
                                    </label>
                                  </div>
                                </div>
@@ -662,8 +675,6 @@
 
     //Run On HTML Build
     $(document).ready(function () {
-
-
           var addChartIndex = 0;
           $('.plus-div').hide();
 
@@ -776,6 +787,12 @@
       $('#target-unit-select').change(function() {
          $('.target-unit-select').hide();
          $('.target-unit-' + $('option:selected', this).data('show')).show();
+      });
+
+      $('#add-chart-modal').on('hidden.bs.modal', function () {
+        $('.addedItem').remove();
+        $('.target-unit-select').hide();
+        $('.plus-div').hide();
       });
 
         // Adding new target from modal
