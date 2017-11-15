@@ -583,17 +583,17 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no" data-slug="baseline"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="yes">Yes
+                                   <input type="radio" name="chart-yes-no" value="yes" data-slug="radio_value">Yes
                                    </label>
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="no">No
+                                   <input type="radio" name="chart-yes-no" value="no" data-slug="radio_value">No
                                    </label>
                                  </div>
                                </div>
@@ -645,7 +645,7 @@
 
 
   function fnFormatCharts(table_id, html) {
-     var sOut = "<table id='chartTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info'>";
+     var sOut = "<table id='chartTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info' w>";
      sOut += html;
      sOut += "</table>";
      return sOut;
@@ -715,9 +715,6 @@
             jElem.attr('data-generated', addChartIndex);
         });
       },
-      chartUnits: function(){
-        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ];
-      },
       targetValue: function(targetUnit){
           var targetValue = {};
           $('.target-unit-' + targetUnit + " :input").each(function(e){
@@ -742,20 +739,31 @@
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
             var previewIndex;
+
             datas.each(
                 function(i, e)
                 {   var currentIndex = parseInt(e.getAttribute('data-generated'));
+                    var slug, value, insert;
 
                     if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
                         allChartArray.push(chartElement);
                         chartElement = {};
                     }
-                    if (chartUnit == 'yes-no'){
+                    slug = e.getAttribute('data-slug');
+                    value = parseInt(e.value);
+                    insert = true;
 
+                    if (chartUnit === 'yes-no' && slug != 'baseline'){
+                      value = e.value;
+                      if ( e.checked === false){
+                        insert = false;
+                      }
                     }
-                    var slug = e.getAttribute('data-slug');
-                    var value = parseInt(e.value);
-                    chartElement[slug] = value;
+
+                    if (insert === true){
+                      chartElement[slug] = value;
+                    }
+
                     previewIndex = currentIndex;
                 });
               allChartArray.push(chartElement);
@@ -973,6 +981,7 @@
                         });
 
                         $(this).attr('id', indicator_id);
+                        $(this).attr('colspan',7);
                         // Updating the info of datatable with the button to create new indicator
                         $('tr.chart-details .dataTables_info').html('');
                         $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
