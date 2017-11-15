@@ -7,7 +7,6 @@
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
-
 <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css"/>
@@ -16,20 +15,14 @@
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff2' ?>>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
-
-
-
 <!-- Header admin page -->
-<div class="row">
+<div class="">
     <?php
        $args = [
            'post_type' => 'page',
@@ -39,7 +32,7 @@
        $pages = get_posts($args);
     ?>
 
-    <div class="col-md-12">
+    <div class="col-xs-10">
         <h3>Welcome, you can view your SDG Goals page/s below:</h3><br/>
     </div>
     <!-- <div class="col-md-11 col-md-offset-1">
@@ -54,7 +47,8 @@
 
 
 <!-- Main Container -->
-<div class="container wrap" style="margin-top:60px; height:auto; min-height:2000px;">
+
+<div class="wrap" style="margin-top:60px; height:auto; min-height:1000px;">
 
    <!-- Target Table -->
    <table id="exampleTable" class="table-bordered">
@@ -645,6 +639,7 @@
 
       </div>
 </div>
+
 
 <script type="text/javascript" charset="utf-8">
 
