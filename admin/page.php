@@ -103,86 +103,6 @@
    </div>
 
       <div class="col-md-12">
-         <!-- Add Indicator Modal -->
-         <div id="add-indicator-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add Indicator</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
-                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
-                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
-                            <div class="form-group">
-                                <label for="title-indicator">Title:</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                          id="title-indicator" placeholder="Title"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="source-indicator">Source:</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                       id="source-indicator" placeholder="Source">
-                            </div>
-                            <div class="form-group">
-                                <label for="description-indicator">Description:</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                          id="description-indicator" placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
-                                       id="add-measuremnt-button">
-
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of measurement modal -->
-         </div>
-
-         <!-- Edit Indicator Modal -->
-         <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Edit Indicator</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="edit-indicator-form" name="edit-indicator">
-                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
-                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
-                            <div class="form-group">
-                                <label for="title-indicator">Name:</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                          id="edit-title-indicator" placeholder="Name"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="source-indicator">Source:</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                       id="edit-source-indicator" placeholder="Source">
-                            </div>
-                            <div class="form-group">
-                                <label for="description-indicator">Description:</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                          id="edit-description-indicator" placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="edit-indicator"
-                                       class="btn btn-primary" id="edit-indicator-button">
-
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of load edit indicator modal -->
-         </div>
-
          <!-- Add Target Button -->
          <div class="col-md-12" style="margin-top:20px">
             <div class="col-md-2">
@@ -258,7 +178,6 @@
                 </div>
             </div>
          </div>
-
          <!-- Edit Target Modal -->
          <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
@@ -330,6 +249,134 @@
 
             <!-- end of edit modal -->
         </div>
+
+        <!-- Add Indicator Modal -->
+        <div id="add-indicator-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add Indicator</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
+                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
+                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
+                            <div class="form-group">
+                                <label for="title-indicator">Title:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                        id="title-indicator" placeholder="Title"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="source-indicator">Source:</label>
+                                <input name="source-indicator" type="text" class="form-control"
+                                    id="source-indicator" placeholder="Source">
+                            </div>
+                            <div class="form-group">
+                                <label for="description-indicator">Description:</label>
+                                <textarea name="description-indicator" type="text" class="form-control"
+                                        id="description-indicator" placeholder="Description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                                    id="add-measuremnt-button">
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- end of measurement modal -->
+        </div>
+
+        <!-- Edit Indicator Modal -->
+        <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Edit Indicator</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-indicator-form" name="edit-indicator">
+                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
+                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
+                            <div class="form-group">
+                                <label for="title-indicator">Name:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                        id="edit-title-indicator" placeholder="Name"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="source-indicator">Source:</label>
+                                <input name="source-indicator" type="text" class="form-control"
+                                    id="edit-source-indicator" placeholder="Source">
+                            </div>
+                            <div class="form-group">
+                                <label for="description-indicator">Description:</label>
+                                <textarea name="description-indicator" type="text" class="form-control"
+                                        id="edit-description-indicator" placeholder="Description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="edit-indicator"
+                                    class="btn btn-primary" id="edit-indicator-button">
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- end of load edit indicator modal -->
+        </div>
+
+
+       <!-- Add Target Modal -->
+       <div id="add-chart-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                     <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add New Chart</h4>
+                     </div>
+                     <div class="modal-body">   
+                        <form id="add-targets-form" name="add_chart" method="POST">
+                            <!-- Add Chart -->
+                            <div class="panel panel-default">
+                                <div style="padding: 10px 15px; background-color: #2268a2;" class="panel-heading"><h4 style="margin: 0px; color: #fff;">Target Info</h4></div>
+                                <div style="background-color: #f9f9f9;" class="panel-body">
+                                    <div class="form-group">
+                                        <label for="target-title">Target Unit:</label>
+                                        <select>
+                                            <option value="">Select target unit</option>
+                                            <option value="number">Number</option>
+                                            <option value="percentage">Percentage</option>
+                                            <option value="boolan">Yes/No</option>
+                                            <option value="ratio">Ratio</option>
+                                            <option value="increasing-decreasing">Increasing/Decreasing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div style="padding: 10px 15px; background-color: #2268a2;" class="panel-heading"><h4 style="margin: 0px; color: #fff;">Data Entry</h4></div>
+                                <div style="background-color: #f9f9f9;" class="panel-body">
+
+                                </div>
+                            </div>
+                            
+                           <div class="modal-footer">
+                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-targets-button">
+                           </div>
+                        </form>
+                     </div>
+                </div>
+            </div>
+         </div>
+       
+
       </div>
 </div>
 
@@ -447,7 +494,7 @@
 
         // This will add "+" sign for each row in first data column
         $('#exampleTable tbody tr').each(function(index, element) {
-           console.log(element);
+        //    console.log(element);
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
@@ -564,7 +611,7 @@
                         $(this).attr('id', indicator_id);
                         // Updating the info of datatable with the button to create new indicator
                         $('tr.chart-details .dataTables_info').html('');
-                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
+                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target-id='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
                     }
                 }
             });

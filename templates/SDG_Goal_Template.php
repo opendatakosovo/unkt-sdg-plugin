@@ -5,20 +5,22 @@ if (isset($_GET)) {
 
    $data = get_targets(sprintf("%0d", $_GET['goal']));
    $targetsData = json_decode($data, true);
-
    $sdg_raw_data = get_sdg_data(sprintf("%0d", $_GET['goal']));
    $sdgJsonData = json_decode($sdg_raw_data);
 
-   // $formatted_data = [];
-   // foreach($targetsData as $element) {
-   //    $formatted_data[
-   //       $element['title']][] = [
-   //          'description'  => $element['description'],
-   //          'target_id' => $element['id'],
-   //          'sdg_id' => $element['sdg_id'],
-   //          'updated_date' => $element['updated_date']
-   //       ];
-   // }
+   $targets_indicators = [];
+   foreach($targetsData as $target) {
+      $targets_indicators[
+         $target['target_title']][] = [
+            'indicator_id' => $target['indicator_id'],
+            'indicator_tile' => $target['indicator_title'],
+            'indicator_description' => $target['indicator_description'],
+            'indicator_source' => $target['indicator_source'],
+            'target_id' => $target['target_id'],
+            'target_description' => $target['target_description']
+         ];
+   }
+
    $url = "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 }
 ?>
@@ -29,10 +31,9 @@ if (isset($_GET)) {
 <script>
     $(document).ready(function () {
 
-        var data = <?php echo json_encode($targetsData, true); ?>;
-
+        var data = <?php echo json_encode($targets_indicators, true); ?>;
         var sdgData = <?php echo json_encode($sdgJsonData, true); ?>;
-
+         // console.log(data);
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
 
@@ -52,8 +53,15 @@ if (isset($_GET)) {
 
 
       var counter = 0;
-      // Going through each indicator
-      for(var i = 0; i < data.length; i++) {
+      Object.keys(data).forEach(key => {
+         // console.log(key);          // the name of the current key.
+         // console.log(data[key]);   // the value of the current key.
+
+         const indicator_id = [];
+         for(var i = 0; i < data[key].length; i++) {
+            indicator_id.push(data[key][i].indicator_id);
+         }
+
          var openPanel = '';
          if(counter == 0){
             openPanel = 'in';
@@ -62,34 +70,76 @@ if (isset($_GET)) {
          $('#accordion').append("<div class='panel'>\
             <div class='panel-heading'>\
                <h4 class='panel-title'>\
-                 <a data-toggle='collapse' id='panel-title' data-parent='#accordion' data-target-id='" + data[i].id +"' href='#panel-"+counter+"'>\
-                  " + data[i].title + "</a>\
+                 <a data-toggle='collapse' id='panel-title' data-target-id='" + data[key][0].target_id + "' data-indicator-id='"+ indicator_id +"'  data-parent='#accordion' href='#panel-"+counter+"'>\
+                  " + key + "</a>\
                </h4>\
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
-               <div class='panel-body row' data-body-id='"+ data[i].id +"'>\
-               " + data[i].description + "</div>\
+               <div class='panel-body row'>\
+               " + data[key][0].target_description + "</div>\
             </div>\
          </div>\
          ");
          counter++;
-      }
+      });
 
+      const firstTargetId = $('.panel-heading h4 a').first().data('target-id');
+      const firstIndicatorsId = $('.panel-heading h4 a').first().data('indicator-id');
+      
+      // ES7 async request
+      const getChart = async (targetId, indicatorsId) => {
+         let datachart = await $.ajax({
+                                 type: 'GET',
+                                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                                 dataType: 'json',
+                                 data: {'target_id': targetId, 'id': indicatorsId, 'action': 'get_target_indicator_charts'}
+                              });
+         return datachart;
+      }
+      
+      const makeRequestforCharts = (firstTargetId, firstIndicatorsId) => {
+         if(firstIndicatorsId.toString().indexOf(',') > -1) {
+            var promises = [];
+            const indicatorsIdArray = firstIndicatorsId.split(',');
+            let count = 0;
+            for(var i = 0; i < indicatorsIdArray.length; i++) {
+               let request = getChart(firstTargetId, indicatorsIdArray[i]);
+               promises.push(request);
+            }
+            Promise.all(promises).then(responseList => {
+               generateChart(responseList);
+            });
+         } else {
+            getChart(firstTargetId, firstIndicatorsId).then(result => {
+               generateChart(result);
+            });
+         }
+      };
+
+      // Immediately call
+      makeRequestforCharts(firstTargetId, firstIndicatorsId);
+
+      // Call on click
       $('.panel-heading h4').on('click', (e) => {
          $target = $(e.target);
          var target_id = $target.attr('data-target-id');
-         console.log(target_id);
-
-         $.ajax({
-            type: 'GET',
-            url: "<?php echo admin_url('admin-ajax.php'); ?>",
-            dataType: 'json',
-            data: {'id': target_id, 'action': 'get_targets_indicators'},
-            success: function (data) {
-               console.log(data);
-            }
-         });
+         var indicator_id = $target.attr('data-indicator-id');
+         makeRequestforCharts(target_id, indicator_id);
       });
+
+      const generateChart = (data) => {
+         if (data.length >= 2) {
+            console.log(data);
+            data.map((entry, index) => {
+               let stringDataChart = entry[0].chart_data;
+               let JSONDataChart = JSON.parse(stringDataChart);
+            });
+         } else {
+            let stringDataChart = data[0].chart_data;
+            let JSONDataChart = JSON.parse(stringDataChart);
+            console.log(jsonChart);
+         }
+      }
 
       // Styling the borders of panels
       $('.panel').last().css('border-bottom', '1px solid #fff');
@@ -259,10 +309,7 @@ if (isset($_GET)) {
    //                  series: {
    //                      connectNulls: true
    //                  }
-   //              }
-   //              ,
-    //
-    //
+   //              },
    //          }
    //          ;
    //      new Highcharts.Chart(chartOptions);
