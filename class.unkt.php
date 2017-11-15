@@ -446,7 +446,7 @@ class Unkt
         $target_value = htmlspecialchars($_POST["target_value"]);
         $chart_unit = htmlspecialchars($_POST["chart_unit"]);
         $chart_data = htmlspecialchars($_POST["chart_data"]);
-        $dislabel = htmlspecialchars($_POST["dislabel"]);
+        $dislabel = htmlspecialchars($_POST["label"]);
         $description = htmlspecialchars($_POST["description"]);
 
         if (is_numeric($sdg_text)) {
