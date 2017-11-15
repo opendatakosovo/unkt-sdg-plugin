@@ -51,12 +51,8 @@ if (isset($_GET)) {
       $('.sdg-description').append(sdgData[0]['s_text']);
       $('.sdg-description').append('</span>');
 
-
       var counter = 0;
       Object.keys(data).forEach(key => {
-         // console.log(key);          // the name of the current key.
-         // console.log(data[key]);   // the value of the current key.
-
          const indicator_id = [];
          for(var i = 0; i < data[key].length; i++) {
             indicator_id.push(data[key][i].indicator_id);
@@ -70,12 +66,12 @@ if (isset($_GET)) {
          $('#accordion').append("<div class='panel'>\
             <div class='panel-heading'>\
                <h4 class='panel-title'>\
-                 <a data-toggle='collapse' id='panel-title' data-target-id='" + data[key][0].target_id + "' data-indicator-id='"+ indicator_id +"'  data-parent='#accordion' href='#panel-"+counter+"'>\
+                 <a data-toggle='collapse' data-clicked='' id='panel-title' data-target-id='" + data[key][0].target_id + "' data-indicator-id='"+ indicator_id +"'  data-parent='#accordion' href='#panel-"+counter+"'>\
                   " + key + "</a>\
                </h4>\
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
-               <div class='panel-body row'>\
+               <div data-target-id='" + data[key][0].target_id + "' class='panel-cont panel-body row'>\
                " + data[key][0].target_description + "</div>\
             </div>\
          </div>\
@@ -97,7 +93,7 @@ if (isset($_GET)) {
          return datachart;
       }
 
-      const makeRequestforCharts = (firstTargetId, firstIndicatorsId) => {
+      const dataChartRequest = (firstTargetId, firstIndicatorsId) => {
          if(firstIndicatorsId.toString().indexOf(',') > -1) {
             var promises = [];
             const indicatorsIdArray = firstIndicatorsId.split(',');
@@ -106,39 +102,79 @@ if (isset($_GET)) {
                let request = getChart(firstTargetId, indicatorsIdArray[i]);
                promises.push(request);
             }
-            Promise.all(promises).then(responseList => {
-               generateChart(responseList);
+            // Handling all promises values
+            Promise.all(promises).then(promisesResponses => {
+               prepareDataChart(promisesResponses);
             });
          } else {
             getChart(firstTargetId, firstIndicatorsId).then(result => {
-               generateChart(result);
+               prepareDataChart(result);
             });
          }
       };
 
       // Immediately call
-      makeRequestforCharts(firstTargetId, firstIndicatorsId);
+      dataChartRequest(firstTargetId, firstIndicatorsId);
+      $('.panel-heading h4 a').first().attr('data-clicked', 'clicked');
 
       // Call on click
       $('.panel-heading h4').on('click', (e) => {
          $target = $(e.target);
-         var target_id = $target.attr('data-target-id');
-         var indicator_id = $target.attr('data-indicator-id');
-         makeRequestforCharts(target_id, indicator_id);
+         let target_id = $target.attr('data-target-id'),
+             indicator_id = $target.attr('data-indicator-id'),
+             isClicked = $target.attr('data-clicked');
+         if (isClicked == '') {
+            dataChartRequest(target_id, indicator_id);
+            $target.attr('data-clicked', 'clicked');
+         }
       });
 
-      const generateChart = (data) => {
+      const JSONifyString = (entryString) => {
+         // Decode HTML entity and JSON parse the decoded string
+         return JSON.parse(entryString.replace(/&quot;/g, '\"'));
+      }
+
+      const buildFinalChartData = (currentObj) => {
+         let JSONTargetValue = JSONifyString(currentObj.target_value),
+             JSONDataChart = JSONifyString(currentObj.chart_data),
+
+            finalChartObj = {
+               title: currentObj.title,
+               description: currentObj.description,
+               sdg_id: currentObj.sdg_id,
+               indicator_id: currentObj.indicator_id,
+               target_id: currentObj.target_id,
+               target_unit: currentObj.target_unit,
+               target_value: JSONTargetValue,
+               id: currentObj.id,
+               disaggregated_by: currentObj.disaggregated_by,
+               chart_unit: currentObj.chart_unit,
+               chart_data: JSONDataChart
+            };
+         return finalChartObj;
+      }
+
+      const prepareDataChart = (data) => {
          if (data.length >= 2) {
-            console.log(data);
-            data.map((entry, index) => {
-               let stringDataChart = entry[0].chart_data;
-               let JSONDataChart = JSON.parse(stringDataChart);
+            data.map(entry => {
+               if(entry != '') {
+                  let finalChartObj = buildFinalChartData(entry[0]);
+                  generateChart(finalChartObj);
+               }
             });
          } else {
-            let stringDataChart = data[0].chart_data;
-            let JSONDataChart = JSON.parse(stringDataChart);
-            console.log(jsonChart);
+            if(data != '') {
+               let finalChartObj = buildFinalChartData(data[0]);
+               generateChart(finalChartObj);
+            }
          }
+      }
+
+      const generateChart = (dataChart) => {
+         $('.panel-collapse').find("[data-target-id='" + dataChart.target_id + "']").append("<div>\
+            <h1>" + dataChart.title + "<h1>\
+         </div>");
+         console.log(dataChart);
       }
 
       // Styling the borders of panels

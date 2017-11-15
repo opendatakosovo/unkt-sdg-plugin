@@ -14,7 +14,7 @@ function get_targets($sdg_id) {
       INNER JOIN wp_indicators
       ON wp_targets.id = wp_indicators.target_id
       WHERE wp_targets.sdg_id = $sdg_id
-      ORDER BY wp_targets.updated_date DESC;
+      ORDER BY wp_targets.id ASC;
       ");
     return json_encode($query_targets, JSON_PRETTY_PRINT);
 }
