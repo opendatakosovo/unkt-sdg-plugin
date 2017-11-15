@@ -84,7 +84,7 @@ function activate()
             target_value text NOT NULL,
             chart_unit text NOT NULL,
             chart_data text NOT NULL,
-            disaggregated_by text NOT NULL,
+            label text NOT NULL,
             description text NOT NULL,
             updated_date text NOT NULL,
             PRIMARY KEY (id),

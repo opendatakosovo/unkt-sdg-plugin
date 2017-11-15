@@ -149,7 +149,7 @@ if (isset($_GET)) {
                target_unit: currentObj.target_unit,
                target_value: JSONTargetValue,
                id: currentObj.id,
-               disaggregated_by: currentObj.disaggregated_by,
+               dislabel: currentObj.label,
                chart_unit: currentObj.chart_unit,
                chart_data: JSONDataChart
             };
@@ -182,7 +182,7 @@ if (isset($_GET)) {
             <p>" + dataChart.description + "</p>\
             <p>Chart here</p>\
          </div>");
-         // console.log(dataChart);
+         console.log(dataChart);
       }
 
       // Styling the borders of panels

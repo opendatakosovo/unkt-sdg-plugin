@@ -78,7 +78,7 @@
                 <th>Chart Unit</th>
                 <th>Chart Data</th>
                 <th>Description</th>
-                <th>Disaggregated by</th>
+                <th>Label</th>
                 <th>Actions</th>
                 <th></th>
                 <th></th>
@@ -459,9 +459,9 @@
                            </div>
                            <div class="panel-body">
                              <div class="form-group">
-                               <label class="col-xs-3 control-label"> Aggregated by</label>
+                               <label class="col-xs-3 control-label"> Label </label>
                                <div class="col-xs-9">
-                                 <input type="text" class="form-control" name="aggregated-by-chart" id="aggregated-by-chart"/>
+                                 <input type="text" class="form-control" name="label-chart" id="label-chart"/>
                                </div>
                              </div>
                              <div class="form-group">
@@ -972,7 +972,7 @@
                                 {"mDataProp": "chart_unit"},
                                 {"mDataProp": "chart_data"},
                                 {"mDataProp": "description"},
-                                {"mDataProp": "disaggregated_by"},
+                                {"mDataProp": "label"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
                                 {"sDefaultContent": indicator_id},
@@ -1324,7 +1324,7 @@
                    'chart_unit': chartUnit,
                    'chart_data': manageUnits.chartData(chartUnit),
                    'description': $("#chart-description").val(),
-                   'disaggregated_by': $("#aggregated-by-chart").val(),
+                   'label': $("#label-chart").val(),
                    'action': 'add_chart'
                },
                success: function (data) {
@@ -1348,7 +1348,7 @@
                            {"mDataProp": "chart_unit"},
                            {"mDataProp": "chart_data"},
                            {"mDataProp": "description"},
-                           {"mDataProp": "disaggregated_by"},
+                           {"mDataProp": "label"},
                            {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                            {"sDefaultContent": target_id},
                            {"sDefaultContent": indicator_id},
