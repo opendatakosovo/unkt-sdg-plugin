@@ -23,6 +23,11 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
+
+
+
 <!-- Header admin page -->
 <div class="row">
     <?php
@@ -46,6 +51,7 @@
         </ol>
     </div> -->
 </div>
+
 
 <!-- Main Container -->
 <div class="container wrap" style="margin-top:60px; height:auto; min-height:2000px;">
@@ -72,13 +78,17 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Unit</th>
-                <th>Target Date</th>
+                <th>Target Unit</th>
+                <th>Target Year</th>
                 <th>Target Value</th>
-                <th>Data</th>
+                <th>Chart Unit</th>
+                <th>Chart Data</th>
                 <th>Description</th>
                 <th>Disaggregated by</th>
                 <th>Actions</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -96,6 +106,8 @@
                 <th>Source</th>
                 <th>Description</th>
                 <th>Actions</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -103,6 +115,86 @@
    </div>
 
       <div class="col-md-12">
+         <!-- Add Indicator Modal -->
+         <div id="add-indicator-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add Indicator</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
+                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
+                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
+                            <div class="form-group">
+                                <label for="title-indicator">Title:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                          id="title-indicator" placeholder="Title"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="source-indicator">Source:</label>
+                                <input name="source-indicator" type="text" class="form-control"
+                                       id="source-indicator" placeholder="Source">
+                            </div>
+                            <div class="form-group">
+                                <label for="description-indicator">Description:</label>
+                                <textarea name="description-indicator" type="text" class="form-control"
+                                          id="description-indicator" placeholder="Description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                                       id="add-measuremnt-button">
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- end of indicator modal -->
+         </div>
+
+         <!-- Edit Indicator Modal -->
+         <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Edit Indicator</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-indicator-form" name="edit-indicator">
+                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
+                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
+                            <div class="form-group">
+                                <label for="title-indicator">Name:</label>
+                                <input name="title-indicator" type="text" class="form-control"
+                                          id="edit-title-indicator" placeholder="Name"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="source-indicator">Source:</label>
+                                <input name="source-indicator" type="text" class="form-control"
+                                       id="edit-source-indicator" placeholder="Source">
+                            </div>
+                            <div class="form-group">
+                                <label for="description-indicator">Description:</label>
+                                <textarea name="description-indicator" type="text" class="form-control"
+                                          id="edit-description-indicator" placeholder="Description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="edit-indicator"
+                                       class="btn btn-primary" id="edit-indicator-button">
+
+                            </div><!-- /.modal-content -->
+                        </form>
+                    </div>
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!-- end of load edit indicator modal -->
+         </div>
+
          <!-- Add Target Button -->
          <div class="col-md-12" style="margin-top:20px">
             <div class="col-md-2">
@@ -250,132 +342,293 @@
             <!-- end of edit modal -->
         </div>
 
-        <!-- Add Indicator Modal -->
-        <div id="add-indicator-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add Indicator</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
-                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
-                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
-                            <div class="form-group">
-                                <label for="title-indicator">Title:</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                        id="title-indicator" placeholder="Title"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="source-indicator">Source:</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                    id="source-indicator" placeholder="Source">
-                            </div>
-                            <div class="form-group">
-                                <label for="description-indicator">Description:</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                        id="description-indicator" placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
-                                    id="add-measuremnt-button">
-
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of measurement modal -->
-        </div>
-
-        <!-- Edit Indicator Modal -->
-        <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Edit Indicator</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="edit-indicator-form" name="edit-indicator">
-                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
-                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
-                            <div class="form-group">
-                                <label for="title-indicator">Name:</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                        id="edit-title-indicator" placeholder="Name"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="source-indicator">Source:</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                    id="edit-source-indicator" placeholder="Source">
-                            </div>
-                            <div class="form-group">
-                                <label for="description-indicator">Description:</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                        id="edit-description-indicator" placeholder="Description"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="edit-indicator"
-                                    class="btn btn-primary" id="edit-indicator-button">
-
-                            </div><!-- /.modal-content -->
-                        </form>
-                    </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of load edit indicator modal -->
-        </div>
-
-
-       <!-- Add Target Modal -->
-       <div id="add-chart-modal" class="modal fade" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add New Chart</h4>
-                     </div>
-                     <div class="modal-body">   
-                        <form id="add-targets-form" name="add_chart" method="POST">
-                            <!-- Add Chart -->
-                            <div class="panel panel-default">
-                                <div style="padding: 10px 15px; background-color: #2268a2;" class="panel-heading"><h4 style="margin: 0px; color: #fff;">Target Info</h4></div>
-                                <div style="background-color: #f9f9f9;" class="panel-body">
-                                    <div class="form-group">
-                                        <label for="target-title">Target Unit:</label>
-                                        <select>
-                                            <option value="">Select target unit</option>
-                                            <option value="number">Number</option>
-                                            <option value="percentage">Percentage</option>
-                                            <option value="boolan">Yes/No</option>
-                                            <option value="ratio">Ratio</option>
-                                            <option value="increasing-decreasing">Increasing/Decreasing</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                                <div style="padding: 10px 15px; background-color: #2268a2;" class="panel-heading"><h4 style="margin: 0px; color: #fff;">Data Entry</h4></div>
-                                <div style="background-color: #f9f9f9;" class="panel-body">
-
-                                </div>
-                            </div>
-                            
-                           <div class="modal-footer">
-                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-targets-button">
+        <!-- Add Chart Modal -->
+        <div id="add-chart-modal" class="modal fade" tabindex="-1">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button class="close" type="button" data-dismiss="modal">x</button>
+                       <h4 class="modal-title">Add Chart</h4>
+                   </div>
+                   <div class="modal-body">
+                     <form id="add-chart-form" class="form-horizontal" method="POST">
+                        <input id="chart-target-id" >
+                        <input id="chart-indicator-id">
+                        <input id="chart-sdg-short-name">
+                       <div class="form-group">
+                         <label class="col-xs-3 control-label left">Title</label>
+                         <div class="col-xs-9">
+                           <input type="text" class="form-control" name="title-chart" id="title-chart" required/>
+                         </div>
+                       </div>
+                       <!-- Target Data Panel-->
+                       <div class="panel-group">
+                         <div class="panel panel-default">
+                           <div class="panel-heading">
+                             <h3 class="panel-title chart-target-panel">Target Data</h3>
                            </div>
-                        </form>
-                     </div>
-                </div>
-            </div>
-         </div>
-       
+                           <div class="panel-body">
+                             <div class="form-group">
+                               <label class="col-xs-3 control-label">Target Year</label>
+                               <div class="col-xs-9">
+                                   <input name="target-year" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" id="target-year" required/>
+                               </div>
+                             </div>
+                             <div class="form-group">
+                               <label for="target-unit" class="col-xs-3 control-label">Unit:</label>
+                               <div class="col-xs-9">
+                                 <select id="target-unit-select" name="target-unit" class="form-control">
+                                   <option value="">Select Unit</option>
+                                   <option id="target-number" value="number" data-show="number"> Number</option>
+                                   <option id="target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                   <option id="target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
+                                   <option id="target-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                   <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                   <option id="target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
+                                 </select>
+                               </div>
+                             </div>
+                             <div class="form-group target-unit-select target-unit-number">
+                               <label class="col-xs-3 control-label" for="target-number-value">Number Value:</label>
+                               <div class="col-xs-9">
+                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="number_value"/>
+                               </div>
+                             </div>
+                             <div class="form-group target-unit-select target-unit-percentage">
+                               <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value:</label>
+                               <div class="col-xs-9">
+                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="percentage_value" />
+                               </div>
+                             </div>
+                             <div class="target-unit-select target-unit-ratio">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
+                                 <div class="col-xs-9">
+                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="ratio_value_a"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
+                                 <div class="col-xs-9">
+                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="ratio_value_b"/>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="target-unit-select target-unit-comperative">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="comperative_current_value"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="comperative_max_value"/>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="form-group target-unit-select target-unit-yes-no">
+                               <label class="col-xs-3 control-label" for="target-yes-no-value">Values:</label>
+                               <div class="col-xs-6">
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
+                                 </label>
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-yes-no" value="no" data-slug="value">No
+                                 </label>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                       <!-- End of Target Data Panel -->
+                       <!-- Chart Data Panel-->
+                       <div class="panel-group">
+                         <div class="panel panel-default">
+                           <div class="panel-heading">
+                             <h3 class="panel-title chart-target-panel">Chart Data</h3>
+                           </div>
+                           <div class="panel-body">
+                             <div class="form-group">
+                               <label class="col-xs-3 control-label"> Aggregated by</label>
+                               <div class="col-xs-9">
+                                 <input type="text" class="form-control" name="aggregated-by-chart" id="aggregated-by-chart"/>
+                               </div>
+                             </div>
+                             <div class="form-group">
+                               <label for="chart-data-unit" class="col-xs-3 control-label">Unit:</label>
+                               <div class="col-xs-9">
+                                 <select id="chart-unit-select" name="chart-unit" class="form-control">
+                                   <option value="">Select Unit</option>
+                                   <option id="chart-number" value="number" data-show="number"> Number</option>
+                                   <option id="chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                   <option id="chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
+                                   <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                   <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                 </select>
+                               </div>
+                             </div>
+                             <div class="form-group">
+                               <div class="col-xs-offset-12 plus-div" style="float:right;">
+                                 <button type="button" class="btn btn-default addButton" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
+                               </div>
+                             </div>
+
+                             <div class="div-chart-unit-number">
+                             <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label left"> Baseline</label>
+                                 <div class="col-xs-9">
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-number" data-slug="baseline"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-number-value">Number Value:</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="number_value">
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-12">
+                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                 </div>
+                               </div>
+                               <hr class="separator">
+                             </div>
+                           </div>
+
+                           <div class="div-chart-unit-percentage">
+                             <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
+                                 <div class="col-xs-9">
+                                     <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage" data-slug="baseline"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value:</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="percentage_value" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-12">
+                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                 </div>
+                               </div>
+                               <hr class="separator">
+                             </div>
+                           </div>
+                           <div class="div-chart-unit-ratio">
+                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
+                                 <div class="col-xs-9">
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio" data-slug="baseline" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="ratio_value_a"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="ratio_value_b"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-12">
+                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                 </div>
+                               </div>
+                               <hr class="separator">
+                             </div>
+                           </div>
+
+                           <div class="div-chart-unit-comperative">
+                             <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
+                                 <div class="col-xs-9">
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative" data-slug="baseline" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="comperative_current_value" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="comperative_max_value" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-12">
+                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                 </div>
+                               </div>
+                               <hr class="separator">
+                             </div>
+                           </div>
+
+                             <div class="div-chart-unit-yes-no">
+                             <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label left"> Baseline </label>
+                                 <div class="col-xs-9">
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
+                                 <div class="col-xs-6">
+                                   <label class="radio-inline">
+                                   <input type="radio" name="chart-yes-no" value="yes">Yes
+                                   </label>
+                                   <label class="radio-inline">
+                                   <input type="radio" name="chart-yes-no" value="no">No
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-12">
+                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                 </div>
+                               </div>
+                               <hr class="separator">
+                             </div>
+                           </div>
+                         </div>
+                         </div>
+                       </div>
+                       <!-- End of Chart Data Panel -->
+                       <div class="form-group">
+                              <label  class="col-xs-3 control-label" for="chart-description">Description:</label>
+                               <div class="col-xs-9">
+                                  <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                              <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary"
+                                     id="add-chart-button">
+
+                          </div><!-- /.modal-content -->
+                     </form>
+
+                   </div>
+               </div><!-- /.modal-dialog -->
+           </div><!-- /.modal -->
+           <!-- end of charts modal -->
+        </div>
+
 
       </div>
 </div>
@@ -405,12 +658,116 @@
     var oInnerTable;
     var oInnerInnerTable;
     var detailsTableHtml;
-    var oInnerInnerTableHtml;
+    var chartTableHtml;
 
     //Run On HTML Build
     $(document).ready(function () {
-        // Target date with datepicker
-        $('#target_date').datepicker({dateFormat: "mm/dd/yy"});
+
+
+          var addChartIndex = 0;
+          $('.plus-div').hide();
+
+          $('#add-chart-form')
+           // Add button click handler
+          .on('click', '.addButton', function() {
+              addChartIndex ++;
+              var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
+              manageUnits.addButton(selectedUnit);
+          })
+          // Remove button click handler
+          .on('click', '.removeButton', function() {
+             $(this).parent().parent().parent().remove();
+          });
+
+          $('#chart-unit-select').change(function() {
+             addChartIndex = 0;
+             $('.addedItem').remove();
+             $('.plus-div').show();
+             var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
+              manageUnits.addButton(selectedUnit);
+          });
+
+      var manageUnits = {
+        addButton: function(unit){
+        var divId = '#chart-unit-' + unit;
+        // clone the div based on id
+        var $template = $(divId),
+            $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .addClass('addedItem')
+                            .removeAttr('id')
+                            .insertAfter($template);
+        // Update the id
+        $clone.attr("id", divId + '-' + addChartIndex);
+
+        // get all the inputs inside the clone
+        var inputs = $clone.find('input');
+
+        // for each input change its name/id appending the index value
+        $.each(inputs, function(index, elem){
+            var jElem = $(elem);
+            var name = jElem.prop('name');
+            // Change id and name of input
+            jElem.prop('id', name + '-' +  addChartIndex);
+            jElem.prop('name', name + '-' +  addChartIndex);
+            // Add generated attr
+            jElem.attr('data-generated', addChartIndex);
+        });
+      },
+      chartUnits: function(){
+        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ];
+      },
+      targetValue: function(targetUnit){
+          var targetValue = {};
+          $('.target-unit-' + targetUnit + " :input").each(function(e){
+
+          var slug = $(this).data("slug");
+          var value = $(this).val();
+          targetValue[slug] = value;
+
+          if (targetUnit == 'yes-no'){
+            slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
+            value = $('input[type=radio][name=target-yes-no]:checked').val();
+            targetValue[slug] = value;
+            return false;
+          }
+          });
+          return JSON.stringify(targetValue);
+      },
+      chartData: function(chartUnit){
+
+            var allChartArray = [];
+            var chartElement = {};
+            var textInputs = $(':input');
+            var datas = textInputs.filter('[data-generated]');
+
+              var previewIndex;
+              datas.each(
+                  function(i, e)
+                  {   var currentIndex = parseInt(e.getAttribute('data-generated'));
+
+                      if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
+                          allChartArray.push(chartElement);
+                          chartElement = {};
+                      }
+
+                      var slug = e.getAttribute('data-slug');
+                      var value = parseInt(e.value);
+                      chartElement[slug] = value;
+                      previewIndex = currentIndex;
+                  });
+              allChartArray.push(chartElement);
+              return JSON.stringify(allChartArray);
+          }
+        };
+
+      // Hide all taget unit fields and show them based on selected unit
+      $('.target-unit-select').hide();
+      $('#target-unit-select').change(function() {
+         $('.target-unit-select').hide();
+         $('.target-unit-' + $('option:selected', this).data('show')).show();
+      });
 
         // Adding new target from modal
         $('#add-targets-form').on('submit', function (e) {
@@ -477,7 +834,7 @@
         detailsTableHtml = $("#detailsTable").html();
 
         // Get the Charts table example for indicator table
-        oInnerInnerTableHtml = $("#chartsTable").html();
+        chartTableHtml = $("#chartsTable").html();
 
         //Insert a 'details' column to the table
         var nCloneTh = document.createElement('th');
@@ -494,7 +851,6 @@
 
         // This will add "+" sign for each row in first data column
         $('#exampleTable tbody tr').each(function(index, element) {
-        //    console.log(element);
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
@@ -509,6 +865,9 @@
 
             // // Getting the ID of clicked SDG's "+"
             var target_id = $($(this).parent().parent().children()[6]).text();
+
+            // // Getting the ID of clicked SDG's "+"
+            var sdg_short_name = $($(this).parent().parent().children()[7]).text();
 
             // Getting the row of target
             var nTr = $(this).parents('tr')[0];
@@ -526,7 +885,7 @@
                 // If the sub table is opened make the "+" to "-"
                 this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
             }
-            // GET Request for rendering indicator table
+            // GET Request for rendering chart table
 
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -534,6 +893,7 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
+                    var sdg_id = data[0].sdg_id;
                     // Checking if table is closed or opened
                     if (oInnerTable.fnIsOpen(nTr)) {
                         /* This row is already open - close it */
@@ -547,8 +907,7 @@
                         this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
                         // Adding new row below the indicator row for inner table
-                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, oInnerInnerTableHtml), 'chart-details');
-
+                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details');
                         // Rendering the chart data in inner table of selected indicator
                         oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
                             "bJQueryUI": true,
@@ -559,15 +918,17 @@
                             "aoColumns": [
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
-                                {"mDataProp": "unit"},
-                                {"mDataProp": "target_date"},
+                                {"mDataProp": "target_unit"},
+                                {"mDataProp": "target_year"},
                                 {"mDataProp": "target_value"},
+                                {"mDataProp": "chart_unit"},
                                 {"mDataProp": "chart_data"},
                                 {"mDataProp": "description"},
                                 {"mDataProp": "disaggregated_by"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
                                 {"sDefaultContent": indicator_id},
+                                {"sDefaultContent": sdg_short_name},
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -602,7 +963,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 9,10 ],
+                                        "targets": [ 10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -611,7 +972,7 @@
                         $(this).attr('id', indicator_id);
                         // Updating the info of datatable with the button to create new indicator
                         $('tr.chart-details .dataTables_info').html('');
-                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' id='" + indicator_id + "' data-target-id='" + target_id  + "' href='#add-chart-modal' class='add-chart btn btn-primary'>+ Add Chart</a>");
+                        $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
                     }
                 }
             });
@@ -683,6 +1044,7 @@
                                     {"mDataProp": "description"},
                                     {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                     {"sDefaultContent": targets_id},
+                                    {"sDefaultContent": s_id},
                                 ],
                                 "bPaginate": true,
                                 "oLanguage": {
@@ -717,7 +1079,7 @@
                                 ],
                                 "columnDefs": [
                                         {
-                                            "targets": [ 6 ],
+                                            "targets": [ 6,7 ],
                                             className: 'hidden'
                                         }
                                     ],
@@ -726,7 +1088,7 @@
                             $(this).attr('id', targets_id);
                             // Updating the info of datatable with the button to create new indicator
                             $('tr.details .dataTables_info').html('');
-                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add Indicator</a>");
+                            $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add Indicator</a>");
                         }
                     }
                 });
@@ -790,17 +1152,49 @@
             });
 
         }
-        init_sub_sub_table();
+
         // Invoking the initialize function for main datatable, passing the JSON with all targets from query
         init_table(newRowData);
+
+        // Invoking the sub_sub_table function when plus is clicked
+        init_sub_sub_table();
 
         // Invoking the sub_table function when plus is clicked
         init_sub_table();
 
-        $('.date-measurement').datepicker({dateFormat: "mm/dd/yy"});
+        // Add New Chart
+        $('body').on('click', '.add-chart', function (e) {
+
+          // <input id="chart-target-id" >
+          // <input id="chart-indicator-id">
+          // <input id="chart-sdg-id">
+
+            // Get clicked targets ID
+            var target_id = $(this).data("target-id")
+
+            // Get clicked Indicator ID
+            var indicator_id = $(this).data("indicator-id")
+
+            // Get clicked Indicator ID
+            var sdg_short_name = $(this).data("sdg-short-name")
+
+            // Set target ID
+            $('#chart-target-id').val(target_id);
+
+            // Set indicator ID
+            $('#chart-indicator-id').val(indicator_id);
+
+            // Set chart sdg ID
+            $('#chart-sdg-short-name').val(sdg_short_name);
+
+            // Get the measurements table id
+            var table_id = $(this).parent()[0].id.replace('_info', '');
+
+            e.preventDefault();
+        });
 
         // Add New Indicator
-        $('body').on('click', '.add-measurment', function (e) {
+        $('body').on('click', '.add-indicator', function (e) {
 
             // Get clicked targets ID
             var targets_id = $(this).attr('id');
@@ -816,41 +1210,6 @@
 
             // Get the measurements table id
             var table_id = $(this).parent()[0].id.replace('_info', '');
-
-            // Get unavailable dates by getting the dates column array of the measurements dates
-            var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
-
-            // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', get_unavailable_dates);
-
-            // Unavailable dates generation
-            function get_unavailable_dates(date) {
-                // Get month
-                var month = date.getMonth() + 1;
-
-                // Get day
-                var day = date.getDate();
-
-                // Modify month value by adding a 0 before if it's from 1-9
-                if (month < 10) {
-                    month = '0' + month;
-                }
-
-                // Modify day value by adding a 0 before if it's from 1-9
-                if (day < 10) {
-                    day = '0' + day;
-                }
-
-                // Generate the date
-                var dmy = month + "/" + day + "/" + date.getFullYear();
-
-                // Check if date is in unavailable arrays and disable or enable otherwise
-                if ($.inArray(dmy, unavailableDates) < 0) {
-                    return [true, "", "Choose date"];
-                } else {
-                    return [false, "", "There is a measurement with the same date."];
-                }
-            }
 
             e.preventDefault();
         });
@@ -874,6 +1233,7 @@
                }
             });
         });
+
         // Fixing data to edit
         $('body').on('click', '.edit-modal-indicator', function (e) {
             // Get clicked targets ID
@@ -892,52 +1252,119 @@
             var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
 
             // Put current date value on the date input
-            $('.edit-date-measurement').val(currentDate);
+            $('.edit-date-chart').val(currentDate);
 
             // Get the measurements table id
             var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
-
-            // Get unavailable dates by getting the dates column array of the measurements dates
-            var unavailableDates = $('#' + table_id).DataTable().columns(1).data()[0];
-
-            // Add unavailable dates option on the calendar view.
-            $('.date-measurement').datepicker('option', 'beforeShowDay', unavailable_dates);
-
-            // Unavailable dates generation
-            function unavailable_dates(date) {
-                // Get month
-                var month = date.getMonth() + 1;
-
-                // Get day
-                var day = date.getDate();
-
-                // Modify month value by adding a 0 before if it's from 1-9
-                if (month < 10) {
-                    month = '0' + month;
-                }
-
-                // Modify day value by adding a 0 before if it's from 1-9
-                if (day < 10) {
-                    day = '0' + day;
-                }
-
-                // Generate the date
-                var dmy = month + "/" + day + "/" + date.getFullYear();
-
-                // Check if date is in unavailable arrays and disable or enable otherwise
-                if ($.inArray(dmy, unavailableDates) < 0) {
-                    return [true, "", "Choose date"];
-                } else {
-                    if (dmy == currentDate) {
-                        return [true, "", "Choose date"];
-                    } else {
-                        return [false, "", "There is a measurement with the same date."];
-                    }
-                }
-            }
-
             e.preventDefault();
         });
+
+        $('#add-chart-form').on('submit', function (e) {
+
+          var indicator_id = $('#chart-indicator-id').val();
+          var target_id = $('#chart-target-id').val();
+          var sdg_short_name = $('#chart-sdg-short-name').val();
+          var targetUnit = $("#target-unit-select").val();
+          var chartUnit = $("#chart-unit-select").val();
+
+           $.ajax({
+               url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+               type: 'POST', //or POST
+               dataType: 'json',
+               data: {
+                   'sdg_id': sdg_short_name,
+                   'target_id': target_id,
+                   'indicator_id': indicator_id,
+                   'title': $('#title-chart').val(),
+                   'target_year': $("#target-year").val(),
+                   'target_unit': targetUnit,
+                   'target_value': manageUnits.targetValue(targetUnit),
+                   'chart_unit': chartUnit,
+                   'chart_data': manageUnits.chartData(chartUnit),
+                   'description': $("#chart-description").val(),
+                   'disaggregated_by': $("#aggregated-by-chart").val(),
+                   'action': 'add_chart'
+               },
+               success: function (data) {
+                   var indicator_id  = data[0].indicator_id;
+                   var target_id = data[0].target_id;
+                   var s_id = data[0].sdg_id;
+                   $("#chartTable_" + indicator_id + '_' + target_id).dataTable().fnDestroy();
+
+                   oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
+                       "bJQueryUI": true,
+                       "bFilter": true,
+                       "aaData": data,
+                       "bSort": true, // disables sorting
+                       "info": true,
+                       "aoColumns": [
+                           {"mDataProp": "id"},
+                           {"mDataProp": "title"},
+                           {"mDataProp": "target_unit"},
+                           {"mDataProp": "target_year"},
+                           {"mDataProp": "target_value"},
+                           {"mDataProp": "chart_unit"},
+                           {"mDataProp": "chart_data"},
+                           {"mDataProp": "description"},
+                           {"mDataProp": "disaggregated_by"},
+                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                           {"sDefaultContent": target_id},
+                           {"sDefaultContent": indicator_id},
+                           {"sDefaultContent": sdg_short_name},
+                       ],
+                       "bPaginate": true,
+                       "oLanguage": {
+                           "sInfo": "_TOTAL_ entries"
+                       },
+                       "dom": 'Bfrtip',
+                       "buttons": [
+                           {
+                               "extend": 'copyHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'excelHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'pdfHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'csvHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           }
+                       ],
+                       "columnDefs": [
+                               {
+                                   "targets": [ 10,11,12 ],
+                                   className: 'hidden'
+                               }
+                           ],
+                   });
+
+                   $(this).attr('id', indicator_id);
+                   // Updating the info of datatable with the button to create new indicator
+                   $('tr.chart-details .dataTables_info').html('');
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+
+                   $('#add-chart-modal').modal('hide');
+                   $('#add-chart-form')[0].reset();
+
+               }
+           });
+
+          event.preventDefault();
+        });
+
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1018,7 +1445,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add measurement</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#add-indicator-modal').modal('hide');
                         $('#add-indicator-form')[0].reset();
 
@@ -1105,7 +1532,7 @@
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + target_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-measurment btn btn-primary'>+ Add indicator</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + target_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#edit-indicator-modal').modal('hide');
                         $('.form-control').val('');
                     }
@@ -1123,7 +1550,6 @@
                 dataType: 'json',
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
                 success: function (data) {
-                  console.log("D", data);
                     $('#edit-target-id').val(data[0].id);
                     $('#edit-target-title').val(data[0].title);
                     $('#edit-sdg-type option[value="' + data[0].short_name + '"]').attr('selected', 'selected');
@@ -1214,8 +1640,6 @@
                     }
                 }
             });
-
-
         });
 
         // Remove indicator
@@ -1263,6 +1687,9 @@
 </script>
 
 <style>
+    .removeButton{
+      float: right;
+    }
     #exampleTable_wrapper .col-sm-6 {
         padding-bottom: 10px;
         padding-top: 10px;
@@ -1272,7 +1699,7 @@
         cursor: pointer;
     }
 
-    #date-measurement-error, #edit-date-measurement-error {
+    #date-chart-error, #edit-date-chart-error {
         display: block;
         clear: both;
         position: relative;
@@ -1326,6 +1753,9 @@
 
     .wp-admin select {
         height: 34px;
+    }
+    .inline {
+        display:inline-block;
     }
 </style>
 <script>
