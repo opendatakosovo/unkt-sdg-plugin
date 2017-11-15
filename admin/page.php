@@ -1710,6 +1710,50 @@
             });
          });
 
+         // Remove chart
+         $('body').on('click', '.remove-chart', function (e) {
+             e.preventDefault();
+             var row = $($(this).parent().parent());
+             var id = $($(this).parent().parent().children()[0]).text();
+             var target_id = $($(this).parent().parent().children()[10]).text();
+             var indicator_id = $($(this).parent().parent().children()[11]).text();
+             var sdg_short_name = $($(this).parent().parent().children()[12]).text();
+             BootstrapDialog.show({
+                 message: 'Are you sure you want to delete the chart?',
+                 buttons: [{
+                     icon: 'glyphicon glyphicon-send',
+                     label: 'OK',
+                     cssClass: 'btn-primary',
+                     autospin: false,
+                     action: function (dialogRef) {
+                         $.ajax({
+                             url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                             type: 'POST', //or POST
+                             dataType: 'json',
+                             data: {
+                                 'id':id,
+                                 'target_id':target_id,
+                                 'indicator_id': indicator_id,
+                                 'sdg_short_name':sdg_short_name,
+                                 'action': 'remove_chart'
+                             },
+                             success: function(data) {
+                             }
+                         });
+                         setTimeout(function () {
+                             dialogRef.close();
+                             row.fadeOut().remove();
+                         }, 100);
+                     }
+                 }, {
+                     label: 'Close',
+                     action: function (dialogRef) {
+                         dialogRef.close();
+                     }
+                 }]
+             });
+          });
+
         var targets_array = <?php echo json_encode($query_targets); ?>;
       //   console.log(targets_array);
     });
