@@ -751,7 +751,9 @@
                           allChartArray.push(chartElement);
                           chartElement = {};
                       }
+                      if (chartUnit == 'yes-no'){
 
+                      }
                       var slug = e.getAttribute('data-slug');
                       var value = parseInt(e.value);
                       chartElement[slug] = value;
@@ -893,7 +895,9 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
-                    var sdg_id = data[0].sdg_id;
+                    if ( !data){
+                      var sdg_id = data[0].sdg_id;
+                    }
                     // Checking if table is closed or opened
                     if (oInnerTable.fnIsOpen(nTr)) {
                         /* This row is already open - close it */
@@ -1690,7 +1694,7 @@
     .removeButton{
       float: right;
     }
-    #exampleTable_wrapper .col-sm-6 {
+    #exampleTable_wrapper .col-sm-6, .dataTables_wrapper .col-sm-6{
         padding-bottom: 10px;
         padding-top: 10px;
     }
