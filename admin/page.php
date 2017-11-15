@@ -741,24 +741,23 @@
             var chartElement = {};
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
+            var previewIndex;
+            datas.each(
+                function(i, e)
+                {   var currentIndex = parseInt(e.getAttribute('data-generated'));
 
-              var previewIndex;
-              datas.each(
-                  function(i, e)
-                  {   var currentIndex = parseInt(e.getAttribute('data-generated'));
+                    if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
+                        allChartArray.push(chartElement);
+                        chartElement = {};
+                    }
+                    if (chartUnit == 'yes-no'){
 
-                      if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
-                          allChartArray.push(chartElement);
-                          chartElement = {};
-                      }
-                      if (chartUnit == 'yes-no'){
-
-                      }
-                      var slug = e.getAttribute('data-slug');
-                      var value = parseInt(e.value);
-                      chartElement[slug] = value;
-                      previewIndex = currentIndex;
-                  });
+                    }
+                    var slug = e.getAttribute('data-slug');
+                    var value = parseInt(e.value);
+                    chartElement[slug] = value;
+                    previewIndex = currentIndex;
+                });
               allChartArray.push(chartElement);
               return JSON.stringify(allChartArray);
           }
@@ -895,7 +894,7 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
-                    if ( !data){
+                    if ( !data ){
                       var sdg_id = data[0].sdg_id;
                     }
                     // Checking if table is closed or opened

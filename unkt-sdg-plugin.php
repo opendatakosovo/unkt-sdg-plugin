@@ -86,6 +86,7 @@ function activate()
             chart_data text NOT NULL,
             disaggregated_by text NOT NULL,
             description text NOT NULL,
+            updated_date text NOT NULL,
             PRIMARY KEY (id),
             CONSTRAINT fk_sdg_number FOREIGN KEY (sdg_id) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE,
             CONSTRAINT fk_targets_number FOREIGN KEY (target_id) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE,
