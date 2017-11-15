@@ -264,6 +264,7 @@
                 </div>
             </div>
          </div>
+
          <!-- Edit Target Modal -->
          <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
@@ -637,6 +638,26 @@
         </div>
 
 
+        <!-- Edit Chart Modal -->
+        <div id="edit-chart-modal" class="modal fade" tabindex="-1">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button class="close" type="button" data-dismiss="modal">x</button>
+                       <h4 class="modal-title">Edit Chart</h4>
+                   </div>
+                   <div class="modal-body">
+                       <form id="edit-chart-form" name="edit_chart_form">
+
+                       </form>
+                   </div>
+               </div><!-- /.modal-dialog -->
+           </div><!-- /.modal -->
+
+           <!-- end of edit modal -->
+       </div>
+
+
       </div>
 </div>
 
@@ -684,7 +705,7 @@
           .on('click', '.removeButton', function() {
              $(this).parent().parent().parent().remove();
           });
-
+          // Chart unit select box on change
           $('#chart-unit-select').change(function() {
              addChartIndex = 0;
              $('.addedItem').remove();
@@ -780,18 +801,19 @@
           }
         };
 
-      // Hide all taget unit fields and show them based on selected unit
-      $('.target-unit-select').hide();
-      $('#target-unit-select').change(function() {
+        // Hide all taget unit fields and show them based on selected unit
+        $('.target-unit-select').hide();
+        $('#target-unit-select').change(function() {
          $('.target-unit-select').hide();
          $('.target-unit-' + $('option:selected', this).data('show')).show();
       });
 
-      $('#add-chart-modal').on('hidden.bs.modal', function () {
-        $('.addedItem').remove();
-        $('.target-unit-select').hide();
-        $('.plus-div').hide();
-      });
+        // when chart modal is closed remove all added fields and hide displayed divs
+        $('#add-chart-modal').on('hidden.bs.modal', function () {
+          $('.addedItem').remove();
+          $('.target-unit-select').hide();
+          $('.plus-div').hide();
+        });
 
         // Adding new target from modal
         $('#add-targets-form').on('submit', function (e) {
@@ -1125,7 +1147,6 @@
         // Initialize the main datatable
         function init_table(newRowData) {
 
-
             oTable = $('#exampleTable').dataTable({
 
                 "bJQueryUI": true,
@@ -1177,7 +1198,6 @@
                 ],
                 "aaSorting": [[7, 'desc']]
             });
-
         }
 
         // Invoking the initialize function for main datatable, passing the JSON with all targets from query
@@ -1275,17 +1295,12 @@
             // Set measurement targets ID
             $('#indicator-target-id').val(targets_id);
 
-            // Get the current date of the measurement
-            var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
-
-            // Put current date value on the date input
-            $('.edit-date-chart').val(currentDate);
-
             // Get the measurements table id
             var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
             e.preventDefault();
         });
 
+        // Adding new chart
         $('#add-chart-form').on('submit', function (e) {
 
           var indicator_id = $('#chart-indicator-id').val();
@@ -1391,7 +1406,6 @@
 
           event.preventDefault();
         });
-
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1567,6 +1581,12 @@
             }
         });
 
+        // Getting the chart data to edit
+        $('body').on('click', '.edit-modal-chart', function (e) {
+
+            var id = $($(this).parent().parent().children()[0]).text();
+        });
+
         // Getting the target data to edit
         $('body').on('click', '.edit-modal-targets', function (e) {
             var targets_id = $($(this).parent().parent().children()[1]).text();
@@ -1587,7 +1607,7 @@
                 }
             });
             e.preventDefault();
-        })
+        });
 
         // Remove target
         $('body').on('click', '.remove-targets', function (e) {
@@ -1753,7 +1773,6 @@
           });
 
         var targets_array = <?php echo json_encode($query_targets); ?>;
-      //   console.log(targets_array);
     });
 </script>
 
