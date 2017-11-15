@@ -100,13 +100,14 @@ if (isset($_GET)) {
             const indicatorsIdArray = firstIndicatorsId.split(',');
             let count = 0;
             for(var i = 0; i < indicatorsIdArray.length; i++) {
-               let request = getChart(firstTargetId, indicatorsIdArray[i]);
+               let request = getChart(firstTargetId, parseInt(indicatorsIdArray[i]));
                promises.push(request);
             }
             // Handling all promises values
             Promise.all(promises).then(promisesResponses => {
                prepareDataChart(promisesResponses);
             });
+
          } else {
             getChart(firstTargetId, firstIndicatorsId).then(result => {
                prepareDataChart(result);
@@ -159,8 +160,10 @@ if (isset($_GET)) {
          if (data.length >= 2) {
             data.map(entry => {
                if(entry != '') {
-                  let finalChartObj = buildFinalChartData(entry[0]);
-                  generateChart(finalChartObj);
+                  entry.map(chartData => {
+                     let finalChartObj = buildFinalChartData(chartData);
+                     generateChart(finalChartObj);
+                  });
                }
             });
          } else {
@@ -179,7 +182,7 @@ if (isset($_GET)) {
             <p>" + dataChart.description + "</p>\
             <p>Chart here</p>\
          </div>");
-         console.log(dataChart);
+         // console.log(dataChart);
       }
 
       // Styling the borders of panels
