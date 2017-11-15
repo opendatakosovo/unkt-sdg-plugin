@@ -73,6 +73,7 @@ if (isset($_GET)) {
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
                <div data-target-id='" + data[key][0].target_id + "' class='panel-cont panel-body row'>\
                " + data[key][0].target_description + "</div>\
+               <br/>\
             </div>\
          </div>\
          ");
@@ -171,8 +172,12 @@ if (isset($_GET)) {
       }
 
       const generateChart = (dataChart) => {
-         $('.panel-collapse').find("[data-target-id='" + dataChart.target_id + "']").append("<div>\
-            <h1>" + dataChart.title + "<h1>\
+         $('.panel-collapse').find("[data-target-id='" + dataChart.target_id + "']").append("\
+            <div style='border-bottom: 2px solid #fff'>\
+            <h3>" + dataChart.title + "<h3>\
+            <p>" + dataChart.chart_unit + "</p>\
+            <p>" + dataChart.description + "</p>\
+            <p>Chart here</p>\
          </div>");
          console.log(dataChart);
       }
