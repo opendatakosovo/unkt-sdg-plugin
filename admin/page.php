@@ -729,18 +729,21 @@
       targetValue: function(targetUnit){
           var targetValue = {};
           $('.target-unit-' + targetUnit + " :input").each(function(e){
+            var slug = $(this).data("slug");
+            var value = $(this).val();
+            if(parseInt(value,10).toString() === value) {
+              value = parseInt(value);
+            }
+            targetValue[slug] = parseInt(value);
 
-          var slug = $(this).data("slug");
-          var value = $(this).val();
-          targetValue[slug] = value;
-
-          if (targetUnit == 'yes-no'){
-            slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
-            value = $('input[type=radio][name=target-yes-no]:checked').val();
-            targetValue[slug] = value;
-            return false;
-          }
+            if (targetUnit == 'yes-no' || targetUnit == 'increasing-decreasing'){
+              slug = $('input[type=radio][name=target-' + targetUnit + ']:checked').data("slug");
+              value = $('input[type=radio][name=target-' + targetUnit + ']:checked').val();
+              targetValue[slug] = value;
+              return false;
+            }
           });
+
           return JSON.stringify(targetValue);
       },
       chartData: function(chartUnit){
