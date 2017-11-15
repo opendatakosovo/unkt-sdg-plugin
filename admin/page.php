@@ -738,9 +738,7 @@
       },
       chartData: function(chartUnit){
 
-        var allChartArray = [];
-        var selectedDivCls = '.div-chart-unit-' + chartUnit;
-
+            var allChartArray = [];
             var chartElement = {};
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
