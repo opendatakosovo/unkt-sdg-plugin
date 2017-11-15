@@ -7,7 +7,6 @@
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
-
 <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css"/>
@@ -16,20 +15,14 @@
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff' ?>>
 <link rel="stylesheet" href=<?php echo SDGS__PLUGIN_URL . 'fonts/fontawesome-webfont.woff2' ?>>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-
-
-
-
 <!-- Header admin page -->
-<div class="row">
+<div class="">
     <?php
        $args = [
            'post_type' => 'page',
@@ -39,7 +32,7 @@
        $pages = get_posts($args);
     ?>
 
-    <div class="col-md-12">
+    <div class="col-xs-10">
         <h3>Welcome, you can view your SDG Goals page/s below:</h3><br/>
     </div>
     <!-- <div class="col-md-11 col-md-offset-1">
@@ -54,7 +47,8 @@
 
 
 <!-- Main Container -->
-<div class="container wrap" style="margin-top:60px; height:auto; min-height:2000px;">
+
+<div class="wrap" style="margin-top:60px; height:auto; min-height:1000px;">
 
    <!-- Target Table -->
    <table id="exampleTable" class="table-bordered">
@@ -270,6 +264,7 @@
                 </div>
             </div>
          </div>
+
          <!-- Edit Target Modal -->
          <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
@@ -391,26 +386,26 @@
                              <div class="form-group target-unit-select target-unit-number">
                                <label class="col-xs-3 control-label" for="target-number-value">Number Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="number_value"/>
+                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="value"/>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-percentage">
                                <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value:</label>
                                <div class="col-xs-9">
-                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="percentage_value" />
+                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="value" />
                                </div>
                              </div>
                              <div class="target-unit-select target-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="ratio_value_a"/>
+                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="ratio_value_b"/>
+                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                              </div>
@@ -418,18 +413,18 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="comperative_current_value"/>
+                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="comperative_max_value"/>
+                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
                                  </div>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-yes-no">
-                               <label class="col-xs-3 control-label" for="target-yes-no-value">Values:</label>
+                               <label class="col-xs-3 control-label" for="target-yes-no-value">Value:</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
                                  <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
@@ -439,6 +434,19 @@
                                  </label>
                                </div>
                              </div>
+
+                             <div class="form-group target-unit-select target-unit-increasing-decreasing">
+                               <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value:</label>
+                               <div class="col-xs-6">
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
+                                 </label>
+                                 <label class="radio-inline">
+                                 <input type="radio" name="target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
+                                 </label>
+                               </div>
+                             </div>
+
                            </div>
                          </div>
                        </div>
@@ -486,7 +494,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-number-value">Number Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="number_value">
+                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="value">
                                  </div>
                                </div>
                                <div class="form-group">
@@ -509,7 +517,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value:</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="percentage_value" />
+                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -531,13 +539,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="ratio_value_a"/>
+                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="ratio_value_b"/>
+                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -560,13 +568,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="comperative_current_value" />
+                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="comperative_max_value" />
+                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="max_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -583,17 +591,17 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no"/>
+                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no" data-slug="baseline"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="yes">Yes
+                                   <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
                                    </label>
                                    <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="no">No
+                                   <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
                                    </label>
                                  </div>
                                </div>
@@ -630,8 +638,29 @@
         </div>
 
 
+        <!-- Edit Chart Modal -->
+        <div id="edit-chart-modal" class="modal fade" tabindex="-1">
+           <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button class="close" type="button" data-dismiss="modal">x</button>
+                       <h4 class="modal-title">Edit Chart</h4>
+                   </div>
+                   <div class="modal-body">
+                       <form id="edit-chart-form" name="edit_chart_form">
+
+                       </form>
+                   </div>
+               </div><!-- /.modal-dialog -->
+           </div><!-- /.modal -->
+
+           <!-- end of edit modal -->
+       </div>
+
+
       </div>
 </div>
+
 
 <script type="text/javascript" charset="utf-8">
 
@@ -645,7 +674,7 @@
 
 
   function fnFormatCharts(table_id, html) {
-     var sOut = "<table id='chartTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info'>";
+     var sOut = "<table id='chartTable_" + table_id + "'class='table-bordered dataTable no-footer' role='grid' aria-describedby='chartTable_info' w>";
      sOut += html;
      sOut += "</table>";
      return sOut;
@@ -662,8 +691,6 @@
 
     //Run On HTML Build
     $(document).ready(function () {
-
-
           var addChartIndex = 0;
           $('.plus-div').hide();
 
@@ -678,7 +705,7 @@
           .on('click', '.removeButton', function() {
              $(this).parent().parent().parent().remove();
           });
-
+          // Chart unit select box on change
           $('#chart-unit-select').change(function() {
              addChartIndex = 0;
              $('.addedItem').remove();
@@ -715,24 +742,24 @@
             jElem.attr('data-generated', addChartIndex);
         });
       },
-      chartUnits: function(){
-        var names = ['number', 'percentage', 'yes-no', 'comperative', 'ratio' ];
-      },
       targetValue: function(targetUnit){
           var targetValue = {};
           $('.target-unit-' + targetUnit + " :input").each(function(e){
+            var slug = $(this).data("slug");
+            var value = $(this).val();
+            if(parseInt(value,10).toString() === value) {
+              value = parseInt(value);
+            }
+            targetValue[slug] = parseInt(value);
 
-          var slug = $(this).data("slug");
-          var value = $(this).val();
-          targetValue[slug] = value;
-
-          if (targetUnit == 'yes-no'){
-            slug = $('input[type=radio][name=target-yes-no]:checked').data("slug");
-            value = $('input[type=radio][name=target-yes-no]:checked').val();
-            targetValue[slug] = value;
-            return false;
-          }
+            if (targetUnit == 'yes-no' || targetUnit == 'increasing-decreasing'){
+              slug = $('input[type=radio][name=target-' + targetUnit + ']:checked').data("slug");
+              value = $('input[type=radio][name=target-' + targetUnit + ']:checked').val();
+              targetValue[slug] = value;
+              return false;
+            }
           });
+
           return JSON.stringify(targetValue);
       },
       chartData: function(chartUnit){
@@ -741,35 +768,52 @@
             var chartElement = {};
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
+            var previewIndex;
 
-              var previewIndex;
-              datas.each(
-                  function(i, e)
-                  {   var currentIndex = parseInt(e.getAttribute('data-generated'));
+            datas.each(
+                function(i, e)
+                {   var currentIndex = parseInt(e.getAttribute('data-generated'));
+                    var slug, value, insert;
 
-                      if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
-                          allChartArray.push(chartElement);
-                          chartElement = {};
+                    if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
+                        allChartArray.push(chartElement);
+                        chartElement = {};
+                    }
+                    slug = e.getAttribute('data-slug');
+                    value = parseInt(e.value);
+                    insert = true;
+
+                    if (chartUnit === 'yes-no' && slug != 'baseline'){
+                      value = e.value;
+                      if ( e.checked === false){
+                        insert = false;
                       }
-                      if (chartUnit == 'yes-no'){
+                    }
 
-                      }
-                      var slug = e.getAttribute('data-slug');
-                      var value = parseInt(e.value);
+                    if (insert === true){
                       chartElement[slug] = value;
-                      previewIndex = currentIndex;
-                  });
+                    }
+
+                    previewIndex = currentIndex;
+                });
               allChartArray.push(chartElement);
               return JSON.stringify(allChartArray);
           }
         };
 
-      // Hide all taget unit fields and show them based on selected unit
-      $('.target-unit-select').hide();
-      $('#target-unit-select').change(function() {
+        // Hide all taget unit fields and show them based on selected unit
+        $('.target-unit-select').hide();
+        $('#target-unit-select').change(function() {
          $('.target-unit-select').hide();
          $('.target-unit-' + $('option:selected', this).data('show')).show();
       });
+
+        // when chart modal is closed remove all added fields and hide displayed divs
+        $('#add-chart-modal').on('hidden.bs.modal', function () {
+          $('.addedItem').remove();
+          $('.target-unit-select').hide();
+          $('.plus-div').hide();
+        });
 
         // Adding new target from modal
         $('#add-targets-form').on('submit', function (e) {
@@ -895,7 +939,7 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
-                    if ( !data){
+                    if ( !data ){
                       var sdg_id = data[0].sdg_id;
                     }
                     // Checking if table is closed or opened
@@ -974,6 +1018,7 @@
                         });
 
                         $(this).attr('id', indicator_id);
+                        $(this).attr('colspan',7);
                         // Updating the info of datatable with the button to create new indicator
                         $('tr.chart-details .dataTables_info').html('');
                         $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
@@ -1102,7 +1147,6 @@
         // Initialize the main datatable
         function init_table(newRowData) {
 
-
             oTable = $('#exampleTable').dataTable({
 
                 "bJQueryUI": true,
@@ -1154,7 +1198,6 @@
                 ],
                 "aaSorting": [[7, 'desc']]
             });
-
         }
 
         // Invoking the initialize function for main datatable, passing the JSON with all targets from query
@@ -1252,17 +1295,12 @@
             // Set measurement targets ID
             $('#indicator-target-id').val(targets_id);
 
-            // Get the current date of the measurement
-            var currentDate = $($($(this)[0]).parent().parent().children()[1]).text();
-
-            // Put current date value on the date input
-            $('.edit-date-chart').val(currentDate);
-
             // Get the measurements table id
             var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
             e.preventDefault();
         });
 
+        // Adding new chart
         $('#add-chart-form').on('submit', function (e) {
 
           var indicator_id = $('#chart-indicator-id').val();
@@ -1368,7 +1406,6 @@
 
           event.preventDefault();
         });
-
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1544,6 +1581,12 @@
             }
         });
 
+        // Getting the chart data to edit
+        $('body').on('click', '.edit-modal-chart', function (e) {
+
+            var id = $($(this).parent().parent().children()[0]).text();
+        });
+
         // Getting the target data to edit
         $('body').on('click', '.edit-modal-targets', function (e) {
             var targets_id = $($(this).parent().parent().children()[1]).text();
@@ -1564,7 +1607,7 @@
                 }
             });
             e.preventDefault();
-        })
+        });
 
         // Remove target
         $('body').on('click', '.remove-targets', function (e) {
@@ -1685,8 +1728,51 @@
             });
          });
 
+         // Remove chart
+         $('body').on('click', '.remove-chart', function (e) {
+             e.preventDefault();
+             var row = $($(this).parent().parent());
+             var id = $($(this).parent().parent().children()[0]).text();
+             var target_id = $($(this).parent().parent().children()[10]).text();
+             var indicator_id = $($(this).parent().parent().children()[11]).text();
+             var sdg_short_name = $($(this).parent().parent().children()[12]).text();
+             BootstrapDialog.show({
+                 message: 'Are you sure you want to delete the chart?',
+                 buttons: [{
+                     icon: 'glyphicon glyphicon-send',
+                     label: 'OK',
+                     cssClass: 'btn-primary',
+                     autospin: false,
+                     action: function (dialogRef) {
+                         $.ajax({
+                             url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                             type: 'POST', //or POST
+                             dataType: 'json',
+                             data: {
+                                 'id':id,
+                                 'target_id':target_id,
+                                 'indicator_id': indicator_id,
+                                 'sdg_short_name':sdg_short_name,
+                                 'action': 'remove_chart'
+                             },
+                             success: function(data) {
+                             }
+                         });
+                         setTimeout(function () {
+                             dialogRef.close();
+                             row.fadeOut().remove();
+                         }, 100);
+                     }
+                 }, {
+                     label: 'Close',
+                     action: function (dialogRef) {
+                         dialogRef.close();
+                     }
+                 }]
+             });
+          });
+
         var targets_array = <?php echo json_encode($query_targets); ?>;
-      //   console.log(targets_array);
     });
 </script>
 

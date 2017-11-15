@@ -42,6 +42,7 @@ class Unkt
             add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator')); //add indicator
             add_action('check_size_of_indicator', array('Unkt', 'check_size_of_indicator'));
             add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
+            add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart'));
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
@@ -468,6 +469,36 @@ class Unkt
         $query_charts = $wpdb->get_results("
               SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
         echo json_encode($query_charts);
+        die();
+    }
+
+    public static function remove_chart() {
+        global $wpdb;
+        $id = intval(htmlspecialchars($_POST['id']));
+        $sdg_text = htmlspecialchars($_POST["sdg_id"]);
+        $target_id = intval(htmlspecialchars($_POST["target_id"]));
+        $indicator_id = intval(htmlspecialchars($_POST["indicator_id"]));
+
+        if (is_numeric($sdg_text)) {
+            $sdg_id = $sdg_text;
+        } else {
+            /* find sdg-id by short-name */
+            $query_sdg_id = array();
+            $query_sdg_id = $wpdb->get_results("
+               SELECT id From wp_sdg WHERE short_name='$sdg_text'");
+            $json = json_encode($query_sdg_id[0]);
+            $obj = json_decode($json);
+            $sdg_id = $obj->id;
+        }
+
+        $wpdb->query("
+            DELETE FROM `{$wpdb->prefix}charts`
+            WHERE id=$id;
+        ");
+
+        $query_target_indicator_charts = $wpdb->get_results("
+            SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id' AND sdg_id='$sdg_id'");
+        echo json_encode($query_target_indicator_charts);
         die();
     }
 
