@@ -713,7 +713,7 @@
             jElem.prop('id', name + '-' +  addChartIndex);
             jElem.prop('name', name + '-' +  addChartIndex);
             // Add generated attr
-            jElem.attr('data-generated', unit);
+            jElem.attr('data-generated', addChartIndex);
         });
       },
       chartUnits: function(){
@@ -737,42 +737,33 @@
           return JSON.stringify(targetValue);
       },
       chartData: function(chartUnit){
-        var chartData = [];
+
+        var allChartArray = [];
         var selectedDivCls = '.div-chart-unit-' + chartUnit;
 
-
-        $('.left > .uu').each(function(){
-            console.log($.trim($(this).text()));
-        });
-
-
-
-
-        $(selectedDivCls).each(function(ea){
             var chartElement = {};
-            console.log(ea);
+            var textInputs = $(':input');
+            var datas = textInputs.filter('[data-generated]');
 
-            $('.target-unit-' + chartUnit + " :input").each(function(e){
-              var slug = $(this).data("slug");
-              var value = $(this).val();
-              chartElement[slug] = value;
+              var previewIndex;
+              datas.each(
+                  function(i, e)
+                  {   var currentIndex = parseInt(e.getAttribute('data-generated'));
 
-              if (chartUnit == 'yes-no'){
-                slug = $('input[type=radio][name=chart-yes-no]:checked').data("slug");
-                value = $('input[type=radio][name=chart-yes-no]:checked').val();
-                chartElement[slug] = value;
-                return false;
-              }
-              console.log(chartElement);
-            });
-            chartElement.push(chartData);
-          });
-            console.log(chartData);
-          return JSON.stringify(chartData);
+                      if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
+                          allChartArray.push(chartElement);
+                          chartElement = {};
+                      }
 
-      }
-
-      };
+                      var slug = e.getAttribute('data-slug');
+                      var value = parseInt(e.value);
+                      chartElement[slug] = value;
+                      previewIndex = currentIndex;
+                  });
+              allChartArray.push(chartElement);
+              return JSON.stringify(allChartArray);
+          }
+        };
 
       // Hide all taget unit fields and show them based on selected unit
       $('.target-unit-select').hide();
@@ -1276,11 +1267,11 @@
           var indicator_id = $('#chart-indicator-id').val();
           var target_id = $('#chart-target-id').val();
           var sdg_short_name = $('#chart-sdg-short-name').val();
-          var targetUnit = $("#target-unit-select option:selected").val();
-          var chartUnit = $("#chart-unit-select option:selected").val();
+          var targetUnit = $("#target-unit-select").val();
+          var chartUnit = $("#chart-unit-select").val();
 
            $.ajax({
-               url: "< ?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+               url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                type: 'POST', //or POST
                dataType: 'json',
                data: {
