@@ -521,7 +521,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label:</label>
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
                                  <div class="col-xs-9">
                                    <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
                                  </div>
