@@ -133,7 +133,8 @@ if (isset($_GET)) {
 
       const JSONifyString = (entryString) => {
          // Decode HTML entity and JSON parse the decoded string
-         return JSON.parse(entryString.replace(/&quot;/g, '\"'));
+         return JSON.parse(entryString);
+         //.replace(/&quot;/g, '\"')
       }
 
       const buildFinalChartData = (currentObj) => {
@@ -162,27 +163,91 @@ if (isset($_GET)) {
                if(entry != '') {
                   entry.map(chartData => {
                      let finalChartObj = buildFinalChartData(chartData);
-                     generateChart(finalChartObj);
+                     generateChartContainer(finalChartObj);
                   });
                }
             });
          } else {
             if(data != '') {
                let finalChartObj = buildFinalChartData(data[0]);
-               generateChart(finalChartObj);
+               generateChartContainer(finalChartObj);
             }
          }
       }
 
-      const generateChart = (dataChart) => {
-         $('.panel-collapse').find("[data-target-id='" + dataChart.target_id + "']").append("\
+      const generateChartContainer = (dataChartObj) => {
+         $('.panel-collapse').find("[data-target-id='" + dataChartObj.target_id + "']").append("\
             <div style='border-bottom: 2px solid #fff'>\
-            <h3>" + dataChart.title + "<h3>\
-            <p>" + dataChart.chart_unit + "</p>\
-            <p>" + dataChart.description + "</p>\
-            <p>Chart here</p>\
+            <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
          </div>");
-         console.log(dataChart);
+         prepareAndRenderChart(dataChartObj);
+      }
+
+      const prepareAndRenderChart = (dataChart) => {
+         // Main data
+         let chartTitle = dataChart.title,
+             chartId = dataChart.id,
+             chartDescription = dataChart.description;
+             // chartLabel = dataChart.label;
+
+         // Target data
+         let targetUnit = dataChart.target_unit,
+             targetValue = dataChart.target_value.value;
+
+         // Data Chart
+         let chart_data = dataChart.chart_data;
+
+         // Handling Chart Data in Baselines
+         Object.keys(chart_data).forEach(baseline => {
+            let dataInBaseline = chart_data[baseline];
+
+            dataInBaseline.map(columnData => {
+               console.log(columnData);
+            })
+
+         });
+
+         // Handling Data
+         // data.map(r)
+         Highcharts.chart('container-'+chartId, {
+             title: {
+                 text: 'Poverty'
+             },
+             xAxis: {
+                 categories: [2015, 2016, 2030]
+             },
+             labels: {
+                 items: [{
+                     html: '',
+                     style: {
+                         left: '50px',
+                         top: '18px',
+                         color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                     }
+                 }]
+             },
+             series: [{
+                 type: 'column',
+                 name: 'Total extreme urban',
+                 data: [4, 2]
+             }, {
+                 type: 'column',
+                 name: 'Total extreme rural',
+                 data: [3, 3]
+             }, {
+                 type: 'spline',
+                 name: 'Target',
+                 data: [4, 3, 0],
+                 marker: {
+                     lineWidth: 2,
+                     lineColor: Highcharts.getOptions().colors[3],
+                     fillColor: 'white'
+                 }
+             }]
+         });
+
+
+
       }
 
       // Styling the borders of panels
@@ -196,168 +261,172 @@ if (isset($_GET)) {
       $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
 
-   //  function generateChart(id, data, title) {
-   //      $('#' + id + '-chart').click(function (e) {
-   //          var displayStatus = $('#' + id).css('display');
-   //          if (displayStatus == 'none') {
-   //              $('#' + id).show();
-   //              $('#' + id + '-chart').text("Hide chart");
-   //          } else {
-   //              $('#' + id).hide();
-   //              $('#' + id + '-chart').text("Show chart");
-   //          }
-   //      });
-   //      $(window).resize(function (e) {
-   //          $(Highcharts.charts).each(function (i, chart) {
-   //              var height = chart.renderTo.clientHeight;
-   //              var width = chart.renderTo.clientWidth;
-   //              chart.setSize($('.indicators').width() - 40, height);
-   //          });
-   //      });
-   //      $('#' + id + '-description').append("\
-   //          <span class='indicator-description'>" + data[0]['description'] + "</span>\
-   //      ");
-   //      var chartCategories = [];
-   //      var chartSeries = [];
-   //      var chartTargetSeries = [];
-   //      for (var index in data) {
-   //          chartCategories.push(data[index]['date']);
-   //          chartSeries.push({'name':'Value','y':parseInt(data[index]['value']), 'source': data[index]['source']});
-   //          if (index == 0) {
-   //              chartTargetSeries.push({'name':'Starting target value:','y':parseInt(data[0]['value']), 'source': ''});
-   //          }
-   //          if (index == data.length - 1) {
-   //              chartTargetSeries.push({'name':'Target value','y':parseInt(data[0]['target_value']), 'source': ''});
+    // function generateChart(id, data, title) {
+    //     $('#' + id + '-chart').click(function (e) {
+    //         var displayStatus = $('#' + id).css('display');
+    //         if (displayStatus == 'none') {
+    //             $('#' + id).show();
+    //             $('#' + id + '-chart').text("Hide chart");
+    //         } else {
+    //             $('#' + id).hide();
+    //             $('#' + id + '-chart').text("Show chart");
+    //         }
+    //     });
+    //     $(window).resize(function (e) {
+    //         $(Highcharts.charts).each(function (i, chart) {
+    //             var height = chart.renderTo.clientHeight;
+    //             var width = chart.renderTo.clientWidth;
+    //             chart.setSize($('.indicators').width() - 40, height);
+    //         });
+    //     });
+    //     $('#' + id + '-description').append("\
+    //         <span class='indicator-description'>" + data[0]['description'] + "</span>\
+    //     ");
     //
-   //              chartCategories.push(data[index]['target_date'])
-   //          } else {
-   //              chartTargetSeries.push(null);
-   //          }
-   //      }
-   //      var chartOptions = {
-   //              chart: {
-   //                  renderTo: id,
-   //                  backgroundColor: null,
-   //                  width: $('.indicators').width() - 30
-   //              },
-   //              title: {
-   //                  text: ''
-   //              },
-   //              xAxis: {
-   //                  categories: chartCategories,
-   //                  lineWidth: 0,
-   //                  minorGridLineWidth: 1,
-   //                  lineColor: 'white',
-   //                  labels: {
-   //                      enabled: true,
-   //                      style: {"color": "white", "cursor": "default", "fontSize": "11px"}
-   //                  },
-   //                  tickLength: 0,
-   //                  title: {
-   //                      enabled: false
-   //                  }
-   //              },
-   //              yAxis: {
-   //                  gridLineColor: 'transparent',
-   //                  labels: {
-   //                      enabled: true,
-   //                      style: {"color": "white", "cursor": "default", "fontSize": "11px"}
-   //                  },
-   //                  title: {
-   //                      enabled: false
-   //                  }
-   //              },
-   //              exporting: {
-   //                  filename: convertToSlug(title),
-   //                  buttons: {
-   //                      contextButton: {
-   //                          symbol: "url(<?php echo SDGS__PLUGIN_URL . 'img/download-2-xxl.png' ?>)"
-   //                      }
-   //                  },
-   //                  chartOptions: {
-   //                      plotOptions: {
-   //                          series: {
-   //                              dataLabels: {
-   //                                  enabled: true
-   //                              }
-   //                          }
-   //                      },
-   //                      xAxis: {
-   //                          lineWidth: 1,
-   //                          minorGridLineWidth: 1,
-   //                          lineColor: 'white',
-   //                          labels: {
-   //                              style: {"color": "white", "cursor": "default", "fontSize": "11px"}
-   //                          },
-   //                          tickLength: 1,
-   //                          title: {
-   //                              enabled: true
-   //                          }
-   //                      },
-   //                      yAxis: {
-   //                          gridLineColor: 'white',
-   //                          labels: {
-   //                              style: {"color": "white", "cursor": "default", "fontSize": "11px"}
-   //                          },
-   //                          title: {
-   //                              enabled: true
-   //                          }
-   //                      },
-   //                      chart: {
-   //                          backgroundColor: 'lightblue',
-   //                      }
+    //     var chartCategories = [];
+    //     var chartSeries = [];
+    //     var chartTargetSeries = [];
     //
-   //                  }
-   //              },
-   //              navigation: {
-   //                  buttonOptions: {
-   //                      verticalAlign: 'right',
-   //                      x:-15
-   //                  }
-   //              },
-   //              series: [{
-   //                  data: chartSeries,
-   //                  name: 'Value',
-   //                  color: 'white',
-   //                  dashStyle: 'solid'
-   //              },
-   //                  {
-   //                      data: chartTargetSeries,
-   //                      name: 'Target value',
-   //                      color: 'white',
-   //                      dashStyle: 'dash'
-   //                  }],
-   //              legend: {
-   //                  enabled: false
-   //              },
-   //              credits: {
-   //                  enabled: false
-   //              },
-   //              tooltip: {
-   //                  formatter: function () {
-   //                      var s = '<b>Date: ' + this.x + '</b>';
+    //     for (var index in data) {
+    //         chartCategories.push(data[index]['date']);
+    //         chartSeries.push({'name':'Value','y':parseInt(data[index]['value']), 'source': data[index]['source']});
+    //         if (index == 0) {
+    //             chartTargetSeries.push({'name':'Starting target value:','y':parseInt(data[0]['value']), 'source': ''});
+    //         }
+    //         if (index == data.length - 1) {
+    //             chartTargetSeries.push({'name':'Target value','y':parseInt(data[0]['target_value']), 'source': ''});
     //
-   //                      $.each(this.points, function () {
-   //                          s += '<br/>' + this.series.name + ': ' +
-   //                              this.y + ' ' +data[0]['unit'];
-   //                          if(this.point.source != ''){
-   //                              s += '<br/>Source: ' + this.point.source;
-   //                          }
-   //                      });
+    //             chartCategories.push(data[index]['target_date'])
+    //         } else {
+    //             chartTargetSeries.push(null);
+    //         }
+    //     }
     //
-   //                      return s;
-   //                  },
-   //                  shared: true
-   //              },
-   //              plotOptions: {
-   //                  series: {
-   //                      connectNulls: true
-   //                  }
-   //              },
-   //          }
-   //          ;
-   //      new Highcharts.Chart(chartOptions);
-   //  }
+    //     var chartOptions = {
+    //             chart: {
+    //                 renderTo: id,
+    //                 backgroundColor: null,
+    //                 width: $('.indicators').width() - 30
+    //             },
+    //             title: {
+    //                 text: ''
+    //             },
+    //             xAxis: {
+    //                 categories: chartCategories,
+    //                 lineWidth: 0,
+    //                 minorGridLineWidth: 1,
+    //                 lineColor: 'white',
+    //                 labels: {
+    //                     enabled: true,
+    //                     style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+    //                 },
+    //                 tickLength: 0,
+    //                 title: {
+    //                     enabled: false
+    //                 }
+    //             },
+    //             yAxis: {
+    //                 gridLineColor: 'transparent',
+    //                 labels: {
+    //                     enabled: true,
+    //                     style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+    //                 },
+    //                 title: {
+    //                     enabled: false
+    //                 }
+    //             },
+    //             exporting: {
+    //                 filename: convertToSlug(title),
+    //                 buttons: {
+    //                     contextButton: {
+    //                         symbol: "url(<?php echo SDGS__PLUGIN_URL . 'img/download-2-xxl.png' ?>)"
+    //                     }
+    //                 },
+    //                 chartOptions: {
+    //                     plotOptions: {
+    //                         series: {
+    //                             dataLabels: {
+    //                                 enabled: true
+    //                             }
+    //                         }
+    //                     },
+    //                     xAxis: {
+    //                         lineWidth: 1,
+    //                         minorGridLineWidth: 1,
+    //                         lineColor: 'white',
+    //                         labels: {
+    //                             style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+    //                         },
+    //                         tickLength: 1,
+    //                         title: {
+    //                             enabled: true
+    //                         }
+    //                     },
+    //                     yAxis: {
+    //                         gridLineColor: 'white',
+    //                         labels: {
+    //                             style: {"color": "white", "cursor": "default", "fontSize": "11px"}
+    //                         },
+    //                         title: {
+    //                             enabled: true
+    //                         }
+    //                     },
+    //                     chart: {
+    //                         backgroundColor: 'lightblue',
+    //                     }
+    //
+    //                 }
+    //             },
+    //             navigation: {
+    //                 buttonOptions: {
+    //                     verticalAlign: 'right',
+    //                     x:-15
+    //                 }
+    //             },
+    //             series: [{
+    //                 data: chartSeries,
+    //                 name: 'Value',
+    //                 color: 'white',
+    //                 dashStyle: 'solid'
+    //             },
+    //                 {
+    //                     data: chartTargetSeries,
+    //                     name: 'Target value',
+    //                     color: 'white',
+    //                     dashStyle: 'dash'
+    //                 }],
+    //             legend: {
+    //                 enabled: false
+    //             },
+    //             credits: {
+    //                 enabled: false
+    //             },
+    //             tooltip: {
+    //                 formatter: function () {
+    //                     var s = '<b>Date: ' + this.x + '</b>';
+    //
+    //                     $.each(this.points, function () {
+    //                         s += '<br/>' + this.series.name + ': ' +
+    //                             this.y + ' ' +data[0]['unit'];
+    //                         if(this.point.source != ''){
+    //                             s += '<br/>Source: ' + this.point.source;
+    //                         }
+    //                     });
+    //
+    //                     return s;
+    //                 },
+    //                 shared: true
+    //             },
+    //             plotOptions: {
+    //                 series: {
+    //                     connectNulls: true
+    //                 }
+    //             },
+    //         }
+    //         ;
+    //     new Highcharts.Chart(chartOptions);
+    // }
+
     function convertToSlug(Text) {
         return Text
             .toLowerCase()
