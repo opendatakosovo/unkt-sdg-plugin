@@ -865,6 +865,8 @@
           $('.addedItem').remove();
           $('.target-unit-select').hide();
           $('.plus-div').hide();
+          $("#chart-unit-select").val("");
+          $("#target-unit-select").val("");
         });
 
         // Adding new target from modal
@@ -1264,10 +1266,6 @@
         // Add New Chart
         $('body').on('click', '.add-chart', function (e) {
 
-          // <input id="chart-target-id" >
-          // <input id="chart-indicator-id">
-          // <input id="chart-sdg-id">
-
             // Get clicked targets ID
             var target_id = $(this).data("target-id")
 
@@ -1341,10 +1339,10 @@
             // Get clicked SDG ID
             var sdg_id = $(this).attr('data-sdg');
 
-            // Set measuremend SDG ID
+            // Set indicator SDG ID
             $('#indicator-sdg').val(sdg_id);
 
-            // Set measurement targets ID
+            // Set target targets ID
             $('#indicator-target-id').val(targets_id);
 
             // Get the measurements table id
