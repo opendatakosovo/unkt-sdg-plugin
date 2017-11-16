@@ -150,7 +150,7 @@ if (isset($_GET)) {
                target_unit: currentObj.target_unit,
                target_value: JSONTargetValue,
                id: currentObj.id,
-               dislabel: currentObj.label,
+               label: currentObj.label,
                chart_unit: currentObj.chart_unit,
                chart_data: JSONDataChart
             };
@@ -426,7 +426,6 @@ if (isset($_GET)) {
     //         ;
     //     new Highcharts.Chart(chartOptions);
     // }
-
     function convertToSlug(Text) {
         return Text
             .toLowerCase()

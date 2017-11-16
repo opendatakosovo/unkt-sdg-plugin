@@ -386,26 +386,26 @@
                              <div class="form-group target-unit-select target-unit-number">
                                <label class="col-xs-3 control-label" for="target-number-value">Number Value</label>
                                <div class="col-xs-9">
-                                 <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="value"/>
+                                 <input name="target-number-value" type="number" step="any" class="form-control" id="target-number-value" data-slug="value"/>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-percentage">
                                <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value</label>
                                <div class="col-xs-9">
-                                 <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="value" />
+                                 <input name="target-percentage-value" type="number" step="any" class="form-control" id="target-percentage-value" data-slug="value" />
                                </div>
                              </div>
                              <div class="target-unit-select target-unit-ratio">
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-a" type="number" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
+                                   <input name="target-ratio-value-a" type="number" step="any" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="target-ratio-value-b" type="number" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
+                                   <input name="target-ratio-value-b" type="number" step="any" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                              </div>
@@ -413,13 +413,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-current-value" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
+                                   <input name="target-comperative-current-value" step="any" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="target-comperative-max-value" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
+                                   <input name="target-comperative-max-value" step="any" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
                                  </div>
                                </div>
                              </div>
@@ -500,7 +500,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="value">
+                                   <input name="chart-number-value" type="number" step="any" class="form-control" id="chart-number-value" data-slug="value"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -529,7 +529,7 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="value" />
+                                   <input name="chart-percentage-value" type="number" step="any" class="form-control" id="chart-percentage-value" data-slug="value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -557,13 +557,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-a" type="number" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
+                                   <input name="chart-ratio-value-a" type="number" step="any" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
+                                   <input name="chart-ratio-value-b" type="number" step="any" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
                                  </div>
                                </div>
                                <div class="form-group">
@@ -592,13 +592,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
+                                   <input name="chart-comperative-value-a" type="number" step="any" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" class="form-control" id="chart-comperative-value-b" data-slug="max_value" />
+                                   <input name="chart-comperative-value-b" type="number" step="any" class="form-control" id="chart-comperative-value-b" data-slug="max_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -794,40 +794,62 @@
       },
       chartData: function(chartUnit){
 
-            var allChartArray = [];
             var chartElement = {};
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
-            var previewIndex;
+            var previewIndex, inputYear;
 
+            var allData = {};
+            var years = [];
+            datas.each(
+                function(i, e){
+                  if(e.getAttribute('data-slug') === 'baseline'){
+                    if (years.indexOf(e.value) === -1) {
+                      years.push(e.value);
+                      allData[e.value] = [];
+                    }
+                  }
+                }
+              );
+            var length = datas.length;
             datas.each(
                 function(i, e)
                 {   var currentIndex = parseInt(e.getAttribute('data-generated'));
                     var slug, value, insert;
 
                     if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
-                        allChartArray.push(chartElement);
+                        allData[inputYear].push(chartElement);
                         chartElement = {};
                     }
                     slug = e.getAttribute('data-slug');
-                    value = parseInt(e.value);
-                    insert = true;
-
-                    if (chartUnit === 'yes-no' && slug != 'baseline'){
+                    if (slug === 'baseline'){
+                      inputYear = e.value;
+                    }else{
                       value = e.value;
-                      if ( e.checked === false){
-                        insert = false;
+                      if(parseInt(value,10).toString() === value) {
+                        value = parseInt(value);
+                      }
+                      insert = true;
+
+                      if (chartUnit === 'yes-no' && slug != 'baseline'){
+                        value = e.value;
+                        if ( e.checked === false){
+                          insert = false;
+                        }
+                      }
+
+                      if (insert === true){
+                        chartElement[slug] = value;
                       }
                     }
-
-                    if (insert === true){
-                      chartElement[slug] = value;
+                    //insert if it's last element
+                    if (i === (length - 1)) {
+                        allData[inputYear].push(chartElement);
                     }
-
                     previewIndex = currentIndex;
+
                 });
-              allChartArray.push(chartElement);
-              return JSON.stringify(allChartArray);
+              return JSON.stringify(allData);
           }
         };
 
