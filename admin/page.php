@@ -122,17 +122,17 @@
                             <input id="indicator-target-id"/> <!-- measurement_targets_id -->
                             <input id="indicator-sdg"/><!-- measurement_sdg  -->
                             <div class="form-group">
-                                <label for="title-indicator">Title:</label>
+                                <label for="title-indicator">Title</label>
                                 <input name="title-indicator" type="text" class="form-control"
                                           id="title-indicator" placeholder="Title"></input>
                             </div>
                             <div class="form-group">
-                                <label for="source-indicator">Source:</label>
+                                <label for="source-indicator">Source</label>
                                 <input name="source-indicator" type="text" class="form-control"
                                        id="source-indicator" placeholder="Source">
                             </div>
                             <div class="form-group">
-                                <label for="description-indicator">Description:</label>
+                                <label for="description-indicator">Description</label>
                                 <textarea name="description-indicator" type="text" class="form-control"
                                           id="description-indicator" placeholder="Description"></textarea>
                             </div>
@@ -162,17 +162,17 @@
                             <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
                             <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
                             <div class="form-group">
-                                <label for="title-indicator">Name:</label>
+                                <label for="title-indicator">Name</label>
                                 <input name="title-indicator" type="text" class="form-control"
                                           id="edit-title-indicator" placeholder="Name"></input>
                             </div>
                             <div class="form-group">
-                                <label for="source-indicator">Source:</label>
+                                <label for="source-indicator">Source</label>
                                 <input name="source-indicator" type="text" class="form-control"
                                        id="edit-source-indicator" placeholder="Source">
                             </div>
                             <div class="form-group">
-                                <label for="description-indicator">Description:</label>
+                                <label for="description-indicator">Description</label>
                                 <textarea name="description-indicator" type="text" class="form-control"
                                           id="edit-description-indicator" placeholder="Description"></textarea>
                             </div>
@@ -208,12 +208,12 @@
                      <div class="modal-body">
                         <form id="add-targets-form" name="add_targets" method="POST">
                            <div class="form-group">
-                              <label for="target-title">Target Title:</label>
+                              <label for="target-title">Target Title</label>
                               <input name="target-title" type="text" class="form-control" id="target-title" placeholder="Target Title">
                            </div>
 
                            <div class="form-group">
-                              <label for='sdg-type'>SDG:</label>
+                              <label for='sdg-type'>SDG</label>
                               <select id="sdg-type" name="sdg-type" class="form-control" title="SDG is required">
                               <option value="">Select SDG</option>
                               <option id="1" value="poverty">1-Poverty</option>
@@ -251,7 +251,7 @@
                            </div>
 
                            <div class="form-group">
-                              <label for="description">Description:</label>
+                              <label for="description">Description</label>
                               <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
                            </div>
 
@@ -276,13 +276,13 @@
                     <div class="modal-body">
                         <form id="edit-targets-form" name="edit_targets_form">
                             <div class="form-group">
-                                <label for="edit-target-title">Targets:</label>
+                                <label for="edit-target-title">Targets</label>
                                 <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
                                        placeholder="Target">
                             </div>
                             <input  id="edit-target-id"/>
                             <div class="form-group">
-                                <label for='edit-sdg-type'>SDG:</label>
+                                <label for='edit-sdg-type'>SDG</label>
                                 <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
                                     <option id="1" value="poverty">1-Poverty</option>
                                     <option id="2" value="zero-hunger">2-Zero hunger</option>
@@ -319,7 +319,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="edit-sdg-description">Description:</label>
+                                <label for="edit-sdg-description">Description</label>
                                 <textarea name="edit-sdg-description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
                             </div>
 
@@ -370,7 +370,7 @@
                                </div>
                              </div>
                              <div class="form-group">
-                               <label for="target-unit" class="col-xs-3 control-label">Unit:</label>
+                               <label for="target-unit" class="col-xs-3 control-label">Unit</label>
                                <div class="col-xs-9">
                                  <select id="target-unit-select" name="target-unit" class="form-control">
                                    <option value="">Select Unit</option>
@@ -384,13 +384,13 @@
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-number">
-                               <label class="col-xs-3 control-label" for="target-number-value">Number Value:</label>
+                               <label class="col-xs-3 control-label" for="target-number-value">Number Value</label>
                                <div class="col-xs-9">
                                  <input name="target-number-value" type="number" class="form-control" id="target-number-value" data-slug="value"/>
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-percentage">
-                               <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value:</label>
+                               <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value</label>
                                <div class="col-xs-9">
                                  <input name="target-percentage-value" type="number" class="form-control" id="target-percentage-value" data-slug="value" />
                                </div>
@@ -424,7 +424,7 @@
                                </div>
                              </div>
                              <div class="form-group target-unit-select target-unit-yes-no">
-                               <label class="col-xs-3 control-label" for="target-yes-no-value">Value:</label>
+                               <label class="col-xs-3 control-label" for="target-yes-no-value">Value</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
                                  <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
@@ -436,7 +436,7 @@
                              </div>
 
                              <div class="form-group target-unit-select target-unit-increasing-decreasing">
-                               <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value:</label>
+                               <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
                                <div class="col-xs-6">
                                  <label class="radio-inline">
                                  <input type="radio" name="target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
@@ -465,7 +465,7 @@
                                </div>
                              </div>
                              <div class="form-group">
-                               <label for="chart-data-unit" class="col-xs-3 control-label">Unit:</label>
+                               <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
                                <div class="col-xs-9">
                                  <select id="chart-unit-select" name="chart-unit" class="form-control">
                                    <option value="">Select Unit</option>
@@ -492,7 +492,13 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-number-value">Number Value:</label>
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
                                  <div class="col-xs-9">
                                    <input name="chart-number-value" type="number" class="form-control" id="chart-number-value"/ data-slug="value">
                                  </div>
@@ -515,7 +521,13 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value:</label>
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label:</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value</label>
                                  <div class="col-xs-9">
                                    <input name="chart-percentage-value" type="number" class="form-control" id="chart-percentage-value" data-slug="value" />
                                  </div>
@@ -534,6 +546,12 @@
                                  <label class="col-xs-3 control-label left"> Baseline </label>
                                  <div class="col-xs-9">
                                      <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio" data-slug="baseline" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -566,6 +584,12 @@
                                  </div>
                                </div>
                                <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
                                    <input name="chart-comperative-value-a" type="number" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
@@ -595,7 +619,13 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-yes-no-value">Values:</label>
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                 <div class="col-xs-9">
+                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
                                  <div class="col-xs-6">
                                    <label class="radio-inline">
                                    <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
@@ -618,7 +648,7 @@
                        </div>
                        <!-- End of Chart Data Panel -->
                        <div class="form-group">
-                              <label  class="col-xs-3 control-label" for="chart-description">Description:</label>
+                              <label  class="col-xs-3 control-label" for="chart-description">Description</label>
                                <div class="col-xs-9">
                                   <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
                               </div>
