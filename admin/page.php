@@ -794,43 +794,62 @@
       },
       chartData: function(chartUnit){
 
-            var allChartArray = [];
             var chartElement = {};
             var textInputs = $(':input');
             var datas = textInputs.filter('[data-generated]');
-            var previewIndex;
+            var previewIndex, inputYear;
 
+            var allData = {};
+            var years = [];
+            datas.each(
+                function(i, e){
+                  if(e.getAttribute('data-slug') === 'baseline'){
+                    if (years.indexOf(e.value) === -1) {
+                      years.push(e.value);
+                      allData[e.value] = [];
+                    }
+                  }
+                }
+              );
+            var length = datas.length;
             datas.each(
                 function(i, e)
                 {   var currentIndex = parseInt(e.getAttribute('data-generated'));
                     var slug, value, insert;
 
                     if(previewIndex != currentIndex &&  typeof previewIndex != 'undefined' ){
-                        allChartArray.push(chartElement);
+                        allData[inputYear].push(chartElement);
                         chartElement = {};
                     }
                     slug = e.getAttribute('data-slug');
-                    value = e.value;
-                    if(parseInt(value,10).toString() === value) {
-                      value = parseInt(value);
-                    }
-                    insert = true;
-
-                    if (chartUnit === 'yes-no' && slug != 'baseline'){
+                    if (slug === 'baseline'){
+                      inputYear = e.value;
+                    }else{
                       value = e.value;
-                      if ( e.checked === false){
-                        insert = false;
+                      if(parseInt(value,10).toString() === value) {
+                        value = parseInt(value);
+                      }
+                      insert = true;
+
+                      if (chartUnit === 'yes-no' && slug != 'baseline'){
+                        value = e.value;
+                        if ( e.checked === false){
+                          insert = false;
+                        }
+                      }
+
+                      if (insert === true){
+                        chartElement[slug] = value;
                       }
                     }
-
-                    if (insert === true){
-                      chartElement[slug] = value;
+                    //insert if it's last element
+                    if (i === (length - 1)) {
+                        allData[inputYear].push(chartElement);
                     }
-
                     previewIndex = currentIndex;
+
                 });
-              allChartArray.push(chartElement);
-              return JSON.stringify(allChartArray);
+              return JSON.stringify(allData);
           }
         };
 
