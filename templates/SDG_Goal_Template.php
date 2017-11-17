@@ -86,11 +86,11 @@ if (isset($_GET)) {
       // ES7 async request
       const getChart = async (targetId, indicatorsId) => {
          let datachart = await $.ajax({
-                                 type: 'GET',
-                                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                                 dataType: 'json',
-                                 data: {'target_id': targetId, 'id': indicatorsId, 'action': 'get_target_indicator_charts'}
-                              });
+            type: 'GET',
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            dataType: 'json',
+            data: {'target_id': targetId, 'id': indicatorsId, 'action': 'get_target_indicator_charts'}
+         });
          return datachart;
       }
 
@@ -147,6 +147,7 @@ if (isset($_GET)) {
                sdg_id: currentObj.sdg_id,
                indicator_id: currentObj.indicator_id,
                target_id: currentObj.target_id,
+               target_year: currentObj.target_year,
                target_unit: currentObj.target_unit,
                target_value: JSONTargetValue,
                id: currentObj.id,
@@ -183,6 +184,11 @@ if (isset($_GET)) {
          prepareAndRenderChart(dataChartObj);
       }
 
+      // Get max number from array, need for target values in earlier years
+      Array.prototype.max = function() {
+        return Math.max.apply(null, this);
+      };
+
       const prepareAndRenderChart = (dataChart) => {
          // Main data
          let chartTitle = dataChart.title,
@@ -192,29 +198,100 @@ if (isset($_GET)) {
 
          // Target data
          let targetUnit = dataChart.target_unit,
-             targetValue = dataChart.target_value.value;
+             targetValue = dataChart.target_value.value,
+             targetYear = dataChart.target_year;
+
+         // HANDLING DATA CHARTS //
 
          // Data Chart
          let chart_data = dataChart.chart_data;
 
-         // Handling Chart Data in Baselines
+         // Get first year
+         let firstObjectBaseline = Object.keys(chart_data)[0];
+         let series = [];
+         let baselines = [];
+         let labelArray = [];
+         let targetData = [];
+         let obj = {};
+         let targetBaselinesData = {};
+
+         // Take only first year and create an array with its labels, and
+         // create Object where keys are labels with empty arrays
          Object.keys(chart_data).forEach(baseline => {
-            let dataInBaseline = chart_data[baseline];
+            // Adding years in a object and set value to empty arrays
+            targetBaselinesData[baseline] = [];
 
-            dataInBaseline.map(columnData => {
-               console.log(columnData);
-            })
-
+            if(baseline == firstObjectBaseline) {
+               chart_data[firstObjectBaseline].map((item, i)=> {
+                  labelArray.push(chart_data[firstObjectBaseline][i].label);
+                  obj[chart_data[firstObjectBaseline][i].label] = [];
+               });
+            }
          });
 
-         // Handling Data
-         // data.map(r)
+         // For each year we push in created obj the values from same labels in their array
+         // Also we take the array of all years to pass in the categories of chart
+         Object.keys(chart_data).forEach(baseline => {
+            baselines.push(baseline);
+
+            // Grouping together values per each same labels for baselines in order
+            labelArray.map((item, i) => {
+               chart_data[baseline].map((element, j) => {
+                  if(chart_data[baseline][j].label == item){
+                     obj[chart_data[baseline][j].label].push(chart_data[baseline][j].value);
+                  }
+               });
+            });
+
+            // Grouping together values per each baseline
+            chart_data[baseline].map(columnData => {
+               targetBaselinesData[baseline].push(columnData.value);
+            });
+         });
+
+         // Foreach labels in obj create column for series, and push in targetData biggest values
+         Object.keys(obj).forEach(label => {
+            series.push({
+               type: 'column',
+               name: label,
+               data: obj[label]
+            });
+         });
+
+         // Getting the biggest values in years and pushing in target
+         Object.keys(targetBaselinesData).forEach(baseline => {
+            // Pushing biggest values from columns data in target data
+            targetData.push(targetBaselinesData[baseline].max());
+         });
+
+         // Pushing the target value in targetData
+         targetData.push(targetValue);
+
+         // Making the target line
+         let targetSpline = {
+            type: 'spline',
+            name: 'Target',
+            data: targetData,
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+         }
+
+         // Adding the target year to the baselines array
+         baselines.push(targetYear);
+
+         // Pushing the targetSpline into series
+         series.push(targetSpline);
+
+         // Render the chart
          Highcharts.chart('container-'+chartId, {
              title: {
                  text: 'Poverty'
              },
              xAxis: {
-                 categories: [2015, 2016, 2030]
+                 categories: baselines
              },
              labels: {
                  items: [{
@@ -226,28 +303,8 @@ if (isset($_GET)) {
                      }
                  }]
              },
-             series: [{
-                 type: 'column',
-                 name: 'Total extreme urban',
-                 data: [4, 2]
-             }, {
-                 type: 'column',
-                 name: 'Total extreme rural',
-                 data: [3, 3]
-             }, {
-                 type: 'spline',
-                 name: 'Target',
-                 data: [4, 3, 0],
-                 marker: {
-                     lineWidth: 2,
-                     lineColor: Highcharts.getOptions().colors[3],
-                     fillColor: 'white'
-                 }
-             }]
+             series: series
          });
-
-
-
       }
 
       // Styling the borders of panels
