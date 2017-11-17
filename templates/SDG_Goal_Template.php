@@ -133,8 +133,7 @@ if (isset($_GET)) {
 
       const JSONifyString = (entryString) => {
          // Decode HTML entity and JSON parse the decoded string
-         return JSON.parse(entryString);
-         //.replace(/&quot;/g, '\"')
+         return JSON.parse(entryString.replace(/&quot;/g, '\"'));
       }
 
       const buildFinalChartData = (currentObj) => {
@@ -274,7 +273,7 @@ if (isset($_GET)) {
             data: targetData,
             marker: {
                 lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[3],
+                lineColor: Highcharts.getOptions().colors[0],
                 fillColor: 'white'
             }
          }
@@ -299,7 +298,7 @@ if (isset($_GET)) {
                      style: {
                          left: '50px',
                          top: '18px',
-                         color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                         color: (Highcharts.theme && Highcharts.theme.textColor) || 'red'
                      }
                  }]
              },
@@ -318,7 +317,7 @@ if (isset($_GET)) {
       $('.indicators').css('min-height', $('.sidebar').height() - $('.sdg-goal-page').height());
     });
 
-    
+
     function convertToSlug(Text) {
         return Text
             .toLowerCase()
