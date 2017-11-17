@@ -237,14 +237,14 @@ if (isset($_GET)) {
             labelArray.map((item, i) => {
                chart_data[baseline].map((element, j) => {
                   if(chart_data[baseline][j].label == item){
-                     obj[chart_data[baseline][j].label].push(chart_data[baseline][j].value);
+                     obj[chart_data[baseline][j].label].push(parseInt(chart_data[baseline][j].value));
                   }
                });
             });
 
             // Grouping together values per each baseline
             chart_data[baseline].map(columnData => {
-               targetBaselinesData[baseline].push(columnData.value);
+               targetBaselinesData[baseline].push(parseInt(columnData.value));
             });
          });
 
