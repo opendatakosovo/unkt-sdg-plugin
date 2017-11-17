@@ -159,12 +159,10 @@ if (isset($_GET)) {
 
       const prepareDataChart = (data) => {
          if (data.length >= 2) {
-            data.map(entry => {
-               if(entry != '') {
-                  entry.map(chartData => {
-                     let finalChartObj = buildFinalChartData(chartData);
-                     generateChartContainer(finalChartObj);
-                  });
+            data.map(chartData => {
+               if(chartData != '') {
+                  let finalChartObj = buildFinalChartData(chartData);
+                  generateChartContainer(finalChartObj);
                }
             });
          } else {
