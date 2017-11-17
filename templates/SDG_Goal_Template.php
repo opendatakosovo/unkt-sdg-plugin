@@ -29,7 +29,7 @@ if (isset($_GET)) {
 <script src="http://github.highcharts.com/master/modules/exporting.src.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(() => {
 
         var data = <?php echo json_encode($targets_indicators, true); ?>;
         var sdgData = <?php echo json_encode($sdgJsonData, true); ?>;
@@ -84,9 +84,9 @@ if (isset($_GET)) {
 
          // Adding indicator divs foreach indicator-id
          for(var i = 0; i < data[key].length; i++) {
-            $('#indicators-container').append("<div style='margin-bottom: 10px;' data-indicator-id='"+ data[key][i].indicator_id +"' >\
-               <h3 style='margin-bottom: 5px;'>" + data[key][i].indicator_title + "</h3>\
-               <p>" + data[key][i].indicator_description + "</p>\
+            $('#indicators-container').append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
+               <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
+               <p style='font-size: 15px;'>" + data[key][i].indicator_description + "</p>\
             </div>");
          }
          counter++;
@@ -269,7 +269,8 @@ if (isset($_GET)) {
             series.push({
                type: 'column',
                name: label,
-               data: obj[label]
+               data: obj[label],
+               color: 'white'
             });
          });
 
@@ -302,14 +303,57 @@ if (isset($_GET)) {
 
          // Render the chart
          Highcharts.chart('container-'+chartId, {
+            chart: {
+               backgroundColor: null
+            },
+            legend: {
+               itemStyle: {
+                  color: 'white'
+               }
+            },
              title: {
-               text: chartTitle
+               text: chartTitle,
+               style: {
+                  color: 'white'
+               }
              },
              subtitle: {
-               text: chartDescription
+               text: chartDescription,
+               style: {
+                  color: 'white'
+               }
              },
+             yAxis: {
+                labels: {
+                   style: {
+                      color: 'white'
+                   }
+                },
+                title: {
+                   style: {
+                      color: 'white'
+                   }
+                }
+             },
+             exporting: {
+                  enabled: true,
+                  buttons: {
+                      contextButton: {
+                          symbolFill: '#fff',
+                          symbolStroke: '#fff'
+                      }
+                  }
+              },
              xAxis: {
-                 categories: baselines
+                 categories: baselines,
+                 labels: {
+                    style: {
+                       color: 'white'
+                    }
+                 }
+             },
+             credits: {
+                enabled: false
              },
              labels: {
                  items: [{
