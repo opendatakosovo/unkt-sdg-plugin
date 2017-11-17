@@ -13,7 +13,7 @@ if (isset($_GET)) {
       $targets_indicators[
          $target['target_title']][] = [
             'indicator_id' => $target['indicator_id'],
-            'indicator_tile' => $target['indicator_title'],
+            'indicator_title' => $target['indicator_title'],
             'indicator_description' => $target['indicator_description'],
             'indicator_source' => $target['indicator_source'],
             'target_id' => $target['target_id'],
@@ -51,11 +51,15 @@ if (isset($_GET)) {
       $('.sdg-description').append(sdgData[0]['s_text']);
       $('.sdg-description').append('</span>');
 
+
       var counter = 0;
       Object.keys(data).forEach(key => {
          const indicator_id = [];
          for(var i = 0; i < data[key].length; i++) {
             indicator_id.push(data[key][i].indicator_id);
+
+            var eachIndicatorContainer = "<div data-indicator-id='"+ data[key][i].indicator_id +"' ></div>"
+
          }
 
          var openPanel = '';
@@ -72,11 +76,19 @@ if (isset($_GET)) {
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
                <div data-target-id='" + data[key][0].target_id + "' class='panel-cont panel-body row'>\
-               " + data[key][0].target_description + "</div>\
+               " + data[key][0].target_description + " <div id='indicators-container' </div>\
                <br/>\
             </div>\
          </div>\
          ");
+
+         // Adding indicator divs foreach indicator-id
+         for(var i = 0; i < data[key].length; i++) {
+            $('#indicators-container').append("<div style='margin-bottom: 10px;' data-indicator-id='"+ data[key][i].indicator_id +"' >\
+               <h3 style='margin-bottom: 5px;'>" + data[key][i].indicator_title + "</h3>\
+               <p>" + data[key][i].indicator_description + "</p>\
+            </div>");
+         }
          counter++;
       });
 
@@ -106,11 +118,12 @@ if (isset($_GET)) {
             // Handling all promises values
             Promise.all(promises).then(promisesResponses => {
                prepareDataChart(promisesResponses);
+               // console.log(promisesResponses);
             });
-
          } else {
             getChart(firstTargetId, firstIndicatorsId).then(result => {
                prepareDataChart(result);
+               // console.log(result);
             });
          }
       };
@@ -137,7 +150,7 @@ if (isset($_GET)) {
       }
 
       const buildFinalChartData = (currentObj) => {
-         let JSONTargetValue = JSONifyString(currentObj.target_value),
+         let JSONTargetValue = JSONifyString(currentObj.target_value);
              JSONDataChart = JSONifyString(currentObj.chart_data),
 
             finalChartObj = {
@@ -158,26 +171,31 @@ if (isset($_GET)) {
       }
 
       const prepareDataChart = (data) => {
-         if (data.length >= 2) {
-            data.map(chartData => {
+         // Looping in the array of data
+         // it can be nested array when there are more indicators and one array when there is one indicators
+         data.map(chartData => {
+            // Checking if there are more indicators than one
+            if(Array.isArray(chartData)) {
+               // Handle data charts with more indicators
                if(chartData != '') {
-                  let finalChartObj = buildFinalChartData(chartData);
-                  generateChartContainer(finalChartObj);
+                  chartData.map(chartDataObj => {
+                     let finalChartObj = buildFinalChartData(chartDataObj);
+                     generateChartContainer(finalChartObj);
+                  });
                }
-            });
-         } else {
-            if(data != '') {
-               let finalChartObj = buildFinalChartData(data[0]);
+            } else {
+               let finalChartObj = buildFinalChartData(chartData);
                generateChartContainer(finalChartObj);
             }
-         }
+         });
       }
 
       const generateChartContainer = (dataChartObj) => {
-         $('.panel-collapse').find("[data-target-id='" + dataChartObj.target_id + "']").append("\
-            <div style='border-bottom: 2px solid #fff'>\
-            <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
-         </div>");
+         //[data-target-id='" + dataChartObj.target_id + "']
+         console.log(dataChartObj);
+         $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
+            <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
+            </div><br/><br/>");
          prepareAndRenderChart(dataChartObj);
       }
 
@@ -285,7 +303,10 @@ if (isset($_GET)) {
          // Render the chart
          Highcharts.chart('container-'+chartId, {
              title: {
-                 text: 'Poverty'
+               text: chartTitle
+             },
+             subtitle: {
+               text: chartDescription
              },
              xAxis: {
                  categories: baselines
