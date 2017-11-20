@@ -100,8 +100,8 @@
                 <th>Source</th>
                 <th>Description</th>
                 <th>Actions</th>
-                <th></th>
-                <th></th>
+                <th>Indicator Id</th>
+                <th>SDG</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -1467,6 +1467,7 @@
             submitHandler: function (form) {
 
                var targets_id = $('#indicator-target-id').val();
+               var sdg_id = $('#indicator-sdg').val();
                 $.ajax({
                     url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                     type: 'POST', //or POST
@@ -1495,6 +1496,7 @@
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": targets_id},
+                                {"sDefaultContent": sdg_id}
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -1529,14 +1531,14 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6 ],
+                                        "targets": [ 6,7 ],
                                         className: 'hidden'
                                     }
                                 ],
 
                         });
                         $('tr.details .dataTables_info').html('');
-                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + s_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
+                        $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#add-indicator-modal').modal('hide');
                         $('#add-indicator-form')[0].reset();
 
