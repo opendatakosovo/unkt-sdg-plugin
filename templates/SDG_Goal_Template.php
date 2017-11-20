@@ -76,7 +76,7 @@ if (isset($_GET)) {
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
                <div data-target-id='" + data[key][0].target_id + "' class='panel-cont panel-body row'>\
-               " + data[key][0].target_description + " <div id='indicators-container' </div>\
+               " + data[key][0].target_description + " <div data-targetId-indicators='" + data[key][0].target_id + "' id='indicators-container' </div>\
                <br/>\
             </div>\
          </div>\
@@ -84,7 +84,7 @@ if (isset($_GET)) {
 
          // Adding indicator divs foreach indicator-id
          for(var i = 0; i < data[key].length; i++) {
-            $('#indicators-container').append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
+            $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;'>" + data[key][i].indicator_description + "</p>\
             </div>");
@@ -192,7 +192,7 @@ if (isset($_GET)) {
 
       const generateChartContainer = (dataChartObj) => {
          //[data-target-id='" + dataChartObj.target_id + "']
-         console.log(dataChartObj);
+         // console.log(dataChartObj);
          $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
             <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
             </div><br/><br/>");
