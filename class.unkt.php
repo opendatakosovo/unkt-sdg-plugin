@@ -42,7 +42,8 @@ class Unkt
             add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator')); //add indicator
             add_action('check_size_of_indicator', array('Unkt', 'check_size_of_indicator'));
             add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
-            add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart'));
+            add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart')); //remove chart
+            add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected')); //edit chart
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
@@ -471,7 +472,16 @@ class Unkt
         echo json_encode($query_charts);
         die();
     }
-
+    // Edit Chart: Get the selected chart's data
+    public static function load_chart_selected()
+    {
+        global $wpdb;
+        $chart_id = htmlspecialchars($_POST['id']);
+        $query_chart = $wpdb->get_results("
+          SELECT * FROM wp_charts WHERE id='$chart_id'");
+        echo json_encode($query_chart);
+        die();
+    }
     public static function remove_chart() {
         global $wpdb;
         $id = intval(htmlspecialchars($_POST['id']));

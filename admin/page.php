@@ -459,7 +459,7 @@
                            </div>
                            <div class="panel-body">
                              <div class="form-group">
-                               <label class="col-xs-3 control-label"> Label </label>
+                               <label class="col-xs-3 control-label"> General Label </label>
                                <div class="col-xs-9">
                                  <input type="text" class="form-control" name="label-chart" id="label-chart"/>
                                </div>
@@ -473,13 +473,13 @@
                                    <option id="chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
                                    <option id="chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
                                    <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
-                                   <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                   <!-- <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
                                  </select>
                                </div>
                              </div>
                              <div class="form-group">
                                <div class="col-xs-offset-12 plus-div" style="float:right;">
-                                 <button type="button" class="btn btn-default addButton" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
+                                 <button type="button" class="btn btn-default addButton" data-action="add" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
                                </div>
                              </div>
 
@@ -521,7 +521,7 @@
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                 <label class="col-xs-3 control-label" for="chart-label-value"> Chart Label</label>
                                  <div class="col-xs-9">
                                    <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
                                  </div>
@@ -592,13 +592,13 @@
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" step="any" class="form-control" id="chart-comperative-value-a" data-slug="current_value" />
+                                   <input name="chart-comperative-value-a" type="number" step="any" class="form-control" id="chart-comperative-current-value" data-slug="current_value" />
                                  </div>
                                </div>
                                <div class="form-group">
                                  <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
                                  <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" step="any" class="form-control" id="chart-comperative-value-b" data-slug="max_value" />
+                                   <input name="chart-comperative-value-b" type="number" step="any" class="form-control" id="chart-comperative-value-max-value" data-slug="max_value" />
                                  </div>
                                </div>
                                <div class="form-group">
@@ -648,11 +648,11 @@
                        </div>
                        <!-- End of Chart Data Panel -->
                        <div class="form-group">
-                              <label  class="col-xs-3 control-label" for="chart-description">Description</label>
-                               <div class="col-xs-9">
-                                  <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
-                              </div>
+                          <label  class="col-xs-3 control-label" for="chart-description">Description</label>
+                           <div class="col-xs-9">
+                              <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
                           </div>
+                      </div>
                           <div class="modal-footer">
                               <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                               <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary"
@@ -667,7 +667,7 @@
            <!-- end of charts modal -->
         </div>
 
-
+<!-- TODO -->
         <!-- Edit Chart Modal -->
         <div id="edit-chart-modal" class="modal fade" tabindex="-1">
            <div class="modal-dialog">
@@ -677,7 +677,312 @@
                        <h4 class="modal-title">Edit Chart</h4>
                    </div>
                    <div class="modal-body">
-                       <form id="edit-chart-form" name="edit_chart_form">
+                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form">
+                         <input id="edit-chart-target-id">
+                         <input id="edit-chart-indicator-id">
+                         <input id="edit-chart-sdg-id">
+
+                         <div class="form-group">
+                           <label class="col-xs-3 control-label left">Title</label>
+                           <div class="col-xs-9">
+                             <input type="text" class="form-control" name="edit-title-chart" id="edit-title-chart" required/>
+                           </div>
+                         </div>
+                         <!-- Edit Target Data Panel-->
+                         <div class="panel-group">
+                           <div class="panel panel-default">
+                             <div class="panel-heading">
+                               <h3 class="panel-title chart-target-panel">Target Data</h3>
+                             </div>
+                             <div class="panel-body">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label">Target Year</label>
+                                 <div class="col-xs-9">
+                                     <input name="edit-target-year" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" id="edit-target-year" required/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label for="target-unit" class="col-xs-3 control-label">Unit</label>
+                                 <div class="col-xs-9">
+                                   <select id="edit-target-unit-select" name="edit-target-unit" class="form-control">
+                                     <option value="">Select Unit</option>
+                                     <option id="edit-target-number" value="number" data-show="number"> Number</option>
+                                     <option id="edit-target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                     <option id="edit-target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
+                                     <option id="edit-target-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                     <option id="edit-target-ratio" value="ratio"  data-show="ratio">Ratio</option>
+                                     <option id="edit-target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
+                                   </select>
+                                 </div>
+                               </div>
+                               <div class="form-group edit-target-unit-select edit-target-unit-number">
+                                 <label class="col-xs-3 control-label">Number Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="edit-target-number-value" type="number" step="any" class="form-control" id="edit-target-number-value" data-slug="value"/>
+                                 </div>
+                               </div>
+                               <div class="form-group edit-target-unit-select edit-target-unit-percentage">
+                                 <label class="col-xs-3 control-label">Percentage Value</label>
+                                 <div class="col-xs-9">
+                                   <input name="edit-target-percentage-value" type="number" step="any" class="form-control" id="edit-target-percentage-value" data-slug="value" />
+                                 </div>
+                               </div>
+                               <div class="edit-target-unit-select edit-target-unit-ratio">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Number</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-target-ratio-value-a" type="number" step="any" class="form-control" id="edit-target-ratio-value-a" data-slug="value_a"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Total</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-target-ratio-value-b" type="number" step="any" class="form-control" id="edit-target-ratio-value-b" data-slug="value_b"/>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="edit-target-unit-select edit-target-unit-comperative">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Current Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-target-comperative-current-value" step="any" type="number" class="form-control" id="edit-target-comperative-current-value" data-slug="current_value"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Maximum Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-target-comperative-max-value" step="any" type="number" class="form-control" id="edit-target-comperative-max-value" data-slug="max_value"/>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="form-group edit-target-unit-select edit-target-unit-yes-no">
+                                 <label class="col-xs-3 control-label">Value</label>
+                                 <div class="col-xs-6">
+                                   <label class="radio-inline">
+                                   <input type="radio" id="edit-target-yes" name="edit-target-yes-no" value="yes" data-slug="value">Yes
+                                   </label>
+                                   <label class="radio-inline">
+                                   <input type="radio" id="edit-target-no" name="edit-target-yes-no" value="no" data-slug="value">No
+                                   </label>
+                                 </div>
+                               </div>
+
+                               <div class="form-group edit-target-unit-select edit-target-unit-increasing-decreasing">
+                                 <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
+                                 <div class="col-xs-6">
+                                   <label class="radio-inline">
+                                   <input type="radio" id="edit-target-increasing" name="edit-target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
+                                   </label>
+                                   <label class="radio-inline">
+                                   <input type="radio" id="edit-target-decreasing" name="edit-target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
+                                   </label>
+                                 </div>
+                               </div>
+
+                             </div>
+                           </div>
+                         </div>
+                         <!-- End of Edit Target Data Panel -->
+
+                         <!-- Edit Chart Data Panel-->
+                         <div class="panel-group">
+                           <div class="panel panel-default">
+                             <div class="panel-heading">
+                               <h3 class="panel-title chart-target-panel">Chart Data</h3>
+                             </div>
+                             <div class="panel-body">
+                               <div class="form-group">
+                                 <label class="col-xs-3 control-label"> General Label </label>
+                                 <div class="col-xs-9">
+                                   <input type="text" class="form-control" name="edit-label-chart" id="edit-label-chart"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
+                                 <div class="col-xs-9">
+                                   <select id="edit-chart-unit-select" name="edit-chart-unit" class="form-control">
+                                     <option value="">Select Unit</option>
+                                     <option id="edit-chart-number" value="number" data-show="number"> Number</option>
+                                     <option id="edit-chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
+                                     <option id="edit-chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
+                                     <option id="edit-chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                     <!-- <option id="edit-chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
+                                   </select>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <div class="col-xs-offset-12 plus-div" style="float:right;">
+                                   <button type="button" class="btn btn-default addButton" data-action="edit" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
+                                 </div>
+                               </div>
+
+                               <div class="edit-div-chart-unit-number">
+                               <div class="chart-unit-select hide edit-chart-unit-number" id="edit-chart-unit-number">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label left"> Baseline</label>
+                                   <div class="col-xs-9">
+                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-number" data-slug="baseline"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-number-value" type="number" step="any" class="form-control" id="chart-number-value" data-slug="value"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <div class="col-xs-12">
+                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                   </div>
+                                 </div>
+                                 <hr class="separator">
+                               </div>
+                             </div>
+
+                             <div class="edit-div-chart-unit-percentage">
+                               <div class="chart-unit-select hide edit-chart-unit-percentage" id="edit-chart-unit-percentage">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label left"> Baseline </label>
+                                   <div class="col-xs-9">
+                                       <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="edit-chart-baseline-percentage" data-slug="baseline"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label"> Chart Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Percentage Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-percentage-value" type="number" step="any" class="form-control" id="edit-chart-percentage-value" data-slug="value" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <div class="col-xs-12">
+                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                   </div>
+                                 </div>
+                                 <hr class="separator">
+                               </div>
+                             </div>
+                             <div class="edit-div-chart-unit-ratio">
+                               <div class="edit-chart-unit-select hide edit-chart-unit-ratio" id="edit-chart-unit-ratio">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label"> Baseline </label>
+                                   <div class="col-xs-9">
+                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-ratio" data-slug="baseline" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label"> Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Number</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-ratio-value-a" type="number" step="any" class="form-control" id="edit-edit-chart-ratio-value-a" data-slug="value_a"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Total</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-ratio-value-b" type="number" step="any" class="form-control" id="edit-chart-ratio-value-b" data-slug="value_b"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <div class="col-xs-12">
+                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                   </div>
+                                 </div>
+                                 <hr class="separator">
+                               </div>
+                             </div>
+
+                             <div class="edit-div-chart-unit-comperative">
+                               <div class="edit-chart-unit-select hide edit-chart-unit-comperative" id="edit-chart-unit-comperative">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label"> Baseline </label>
+                                   <div class="col-xs-9">
+                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-comperative" data-slug="baseline" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label"> Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Current Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-comperative-current-value" type="number" step="any" class="form-control" id="edit-chart-comperative-current-value" data-slug="current_value" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label">Maximum Value</label>
+                                   <div class="col-xs-9">
+                                     <input name="edit-chart-comperative-max-value" type="number" step="any" class="form-control" id="edit-chart-comperative-max-value" data-slug="max_value" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <div class="col-xs-12">
+                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                   </div>
+                                 </div>
+                                 <hr class="separator">
+                               </div>
+                             </div>
+
+                               <div class="edit-div-chart-unit-yes-no">
+                               <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label left"> Baseline </label>
+                                   <div class="col-xs-9">
+                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-yes-no" data-slug="baseline"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label" for="edit-chart-yes-no-value">Values</label>
+                                   <div class="col-xs-6">
+                                     <label class="radio-inline">
+                                     <input type="radio" name="edit-chart-yes-no" value="yes" data-slug="value">Yes
+                                     </label>
+                                     <label class="radio-inline">
+                                     <input type="radio" name="edit-chart-yes-no" value="no" data-slug="value">No
+                                     </label>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <div class="col-xs-12">
+                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                   </div>
+                                 </div>
+                                 <hr class="separator">
+                               </div>
+                             </div>
+                           </div>
+                           </div>
+                         </div>
+                         <!-- End of Chart Data Panel -->
+
+
+
 
                        </form>
                    </div>
@@ -724,29 +1029,45 @@
           var addChartIndex = 0;
           $('.plus-div').hide();
 
-          $('#add-chart-form')
-           // Add button click handler
-          .on('click', '.addButton', function() {
-              addChartIndex ++;
-              var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
-              manageUnits.addButton(selectedUnit);
-          })
-          // Remove button click handler
-          .on('click', '.removeButton', function() {
-             $(this).parent().parent().parent().remove();
+          $( ".addButton" ).click(function() {
+            addChartIndex ++;
+            var action = '';
+            if ($(this).data("action") === 'edit'){
+              var action = 'edit-';
+            }
+            var selectId = '#' + action + 'chart-unit-select';
+            var selectedUnit = $(selectId).find(":selected").data('show');
+            var divId = '#' + action + 'chart-unit-' + selectedUnit;
+            // console.log("Divat:", selectId, divId);
+            manageUnits.addButton(selectedUnit, divId);
           });
+
+          $( ".removeButton" ).click(function() {
+            $(this).parent().parent().parent().remove();
+          });
+
           // Chart unit select box on change
           $('#chart-unit-select').change(function() {
              addChartIndex = 0;
              $('.addedItem').remove();
              $('.plus-div').show();
              var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
-              manageUnits.addButton(selectedUnit);
+             var divId = '#chart-unit-' + selectedUnit;
+             manageUnits.addButton(selectedUnit, divId);
+          });
+
+          // Chart unit select box on change
+          $('#edit-chart-unit-select').change(function() {
+             addChartIndex = 0;
+             $('.addedItem').remove();
+             $('.plus-div').show();
+             var selectedUnit = $('#edit-chart-unit-select').find(":selected").data('show');
+             var divId = '#edit-chart-unit-' + selectedUnit;
+             manageUnits.addButton(selectedUnit, divId);
           });
 
       var manageUnits = {
-        addButton: function(unit){
-        var divId = '#chart-unit-' + unit;
+        addButton: function(unit, divId){
         // clone the div based on id
         var $template = $(divId),
             $clone    = $template
@@ -862,12 +1183,17 @@
 
         // when chart modal is closed remove all added fields and hide displayed divs
         $('#add-chart-modal').on('hidden.bs.modal', function () {
+          $(this).find('form')[0].reset();
           $('.addedItem').remove();
           $('.target-unit-select').hide();
           $('.plus-div').hide();
           $("#chart-unit-select").val("");
           $("#target-unit-select").val("");
         });
+        $('#edit-chart-modal').on('hidden.bs.modal', function(){
+          $(this).find('form')[0].reset();
+          $('.edit-target-unit-select').hide();
+       });
 
         // Adding new target from modal
         $('#add-targets-form').on('submit', function (e) {
@@ -1027,7 +1353,7 @@
                                 {"mDataProp": "chart_data"},
                                 {"mDataProp": "description"},
                                 {"mDataProp": "label"},
-                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                                {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
                                 {"sDefaultContent": indicator_id},
                                 {"sDefaultContent": sdg_short_name},
@@ -1284,9 +1610,6 @@
             // Set chart sdg ID
             $('#chart-sdg-short-name').val(sdg_short_name);
 
-            // Get the measurements table id
-            var table_id = $(this).parent()[0].id.replace('_info', '');
-
             e.preventDefault();
         });
 
@@ -1311,10 +1634,10 @@
             e.preventDefault();
         });
 
-        // Getting the data to edit
+        // Getting the indicator data to edit
         $('body').on('click', '.edit-modal-indicator', function (e) {
             e.preventDefault();
-
+            // Get the id of indicator which we want to edit
             var indicator_id = $($(this).parent().parent().children()[1]).text();
             $.ajax({
                type: "POST",
@@ -1329,25 +1652,6 @@
                   $('#edit-indicator-sdg').val(data[0].sdg_id);
                }
             });
-        });
-
-        // Fixing data to edit
-        $('body').on('click', '.edit-modal-indicator', function (e) {
-            // Get clicked targets ID
-            var targets_id = $(this).attr('id');
-
-            // Get clicked SDG ID
-            var sdg_id = $(this).attr('data-sdg');
-
-            // Set indicator SDG ID
-            $('#indicator-sdg').val(sdg_id);
-
-            // Set target targets ID
-            $('#indicator-target-id').val(targets_id);
-
-            // Get the measurements table id
-            var table_id = $($(this)[0]).parent().parent().parent().parent()[0].id;
-            e.preventDefault();
         });
 
         // Adding new chart
@@ -1399,7 +1703,7 @@
                            {"mDataProp": "chart_data"},
                            {"mDataProp": "description"},
                            {"mDataProp": "label"},
-                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-chart-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                            {"sDefaultContent": target_id},
                            {"sDefaultContent": indicator_id},
                            {"sDefaultContent": sdg_short_name},
@@ -1633,10 +1937,62 @@
             }
         });
 
-        // Getting the chart data to edit
+        // Getting the chart data to edit TODO
         $('body').on('click', '.edit-modal-chart', function (e) {
+            e.preventDefault();
+            // Get the id of chart which we want to edit
+            var chart_id = $($(this).parent().parent().children()[0]).text();
+            $.ajax({
+               type: "POST",
+               data: {'id': + chart_id, 'action': 'load_chart_selected'},
+               dataType: 'json',
+               url: "<?php echo admin_url('admin-ajax.php'); ?>",
+               success: function (data) {
 
-            var id = $($(this).parent().parent().children()[0]).text();
+                  var targetUnit = data[0].target_unit;
+                  var targetValue = JSON.parse(data[0].target_value.replace(/&quot;/g,'"'));
+                  var chartData = JSON.parse(data[0].chart_data.replace(/&quot;/g,'"'));
+
+                  $('#edit-title-chart').val(data[0].title);
+                  $('#edit-target-year').val(data[0].target_year);
+                  $('#edit-target-unit-select').val(targetUnit);
+
+                  $.each(targetValue, function(key,value) {
+                      if(targetUnit === 'increasing-decreasing' || targetUnit === 'yes-no'){
+                        console.log('input[name=edit-target-' + targetUnit +'][value=' + value + ']');
+                        $('input[name=edit-target-' + targetUnit +'][value=' + value + ']').attr('checked', true);
+                      }else{
+                        key = key.replace('_','-');
+                        $('#edit-target-'+ targetUnit +'-'+key).val(value);
+                      }
+                      $('.edit-target-unit-' + targetUnit).show();
+                  });
+
+
+
+
+
+
+
+
+                  // $('#').val(data[0].);
+                  // $('#').val(data[0].);
+                  // $('#').val(data[0].);
+                  // $('#').val(data[0].);
+                  // $('#').val(data[0].);
+                  // $('#').val(data[0].);
+                  // $('#edit-source-indicator').val(data[0].source);
+                  // $('#edit-description-indicator').val(data[0].description);
+                  // $('#edit-indicator-id').val(data[0].id);
+                  // $('#edit-indicator-sdg').val(data[0].sdg_id);
+                  // Hidden fiels TODO
+                  $('#edit-chart-target-id').val(data[0].target_id);
+                  $('#edit-chart-indicator-id').val(data[0].indicator_id);
+                  $('#edit-chart-sdg-id').val(data[0].sdg_id);
+
+               }
+            });
+
         });
 
         // Getting the target data to edit
@@ -1841,17 +2197,6 @@
         cursor: pointer;
     }
 
-    #date-chart-error, #edit-date-chart-error {
-        display: block;
-        clear: both;
-        position: relative;
-        float: right;
-        clear: right;
-        float: left;
-        margin-top: -58px;
-        margin-left: 56px;
-    }
-
     .blue-back {
      background: #00a0d2;
     }
@@ -1898,6 +2243,9 @@
     }
     .inline {
         display:inline-block;
+    }
+    .edit-target-unit-select{
+      display: none;
     }
 </style>
 <script>
