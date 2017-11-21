@@ -208,16 +208,19 @@ if (isset($_GET)) {
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
-             chartDescription = dataChart.description;
+             chartDescription = dataChart.description,
+             chartUnit = dataChart.chart_unit;
              // chartLabel = dataChart.label;
 
          // Target data
          let targetUnit = dataChart.target_unit,
              targetValue = dataChart.target_value.value,
              targetRatioValue = dataChart.target_value.value_b,
+             currentTargetVal = dataChart.target_value.current_value,
+             maxTargetVal = dataChart.target_value.max_value,
              targetYear = dataChart.target_year;
 
-         // console.log(dataChart);
+         console.log(dataChart);
          // console.log(targetUnit);
 
          // HANDLING DATA CHARTS //
@@ -264,6 +267,7 @@ if (isset($_GET)) {
             // Grouping together values per each baseline
             if(targetUnit != 'ratio') {
                   chart_data[baseline].map(columnData => {
+                  // console.log(parseInt(columnData.value));
                   targetBaselinesData[baseline].push(parseInt(columnData.value));
                });
             }
@@ -339,7 +343,7 @@ if (isset($_GET)) {
             });
          }
 
-         // console.log(targetData);
+         // console.log(targetUnit);
 
          //Pushing the target value in targetData
          if(targetUnit == 'increasing-decreasing') {
@@ -356,8 +360,43 @@ if (isset($_GET)) {
                }
                targetData.push(decValue);
             }
-         } else {
+         } else if (targetUnit == 'percentage') {
+            // Format the target data to hide other target data tooltip
+            let dataTargetObjs = [];
+            // targetData.map(targetValue => {
+            //     dataTargetObjs.push({
+            //       name: 'first',
+            //       y: targetValue
+            //    });
+            // });
+
+            // Calculate percentage of chart data
+            targetNumberPer = Math.round(targetValue / 100 * targetData[targetData.length-1]);
+
+            // dataTargetObjs.push({
+            //    name: 'Target',
+            //    y: targetNumberPer
+            // });
+
+            // targetData.pop(targetData[0]);
+            targetData.push(targetNumberPer);
+            // dataTargetObjs.map(dataTargetObj => {
+            //    targetData.push(dataTargetObj);
+            // });
+
+         } else if (targetUnit == 'comperative') {
+            targetData.push(currentTargetVal);
+         }
+         else {
             targetData.push(targetValue);
+         }
+
+         // console.log(targetData);
+
+         // When target unit is comperative add max target value at tooltip
+         maxTargetValueString = '';
+         if (targetUnit == 'comperative') {
+            maxTargetValueString = ' per ' + maxTargetVal;
          }
 
 
@@ -389,96 +428,122 @@ if (isset($_GET)) {
          // console.log(baselines);
 
          // Render the chart
-         Highcharts.chart('container-'+chartId, {
-            chart: {
-               backgroundColor: null
-            },
-            legend: {
-               itemStyle: {
-                  color: 'white'
-               }
-            },
-            plotOptions: {
-                 series: {
-                     marker: {
-                         enabled: false
-                     },
-                     states: {
-                         hover: {
-                             enabled: false
-                         }
-                     }
-                 }
-             },
-            tooltip: {
-               formatter: function() {
-                  if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
-                     return '<b>' + this.series.name + ': ' + this.point.name +'</b>';
-                  } else if (this.point.name == 'first') {
-                     return false;
-                  } else {
-                     // console.log(this.point.name);
-                     return '<b>'+ this.x +'</b><br/>' +
-                                 this.series.name +': '+ this.y;
+         if(targetUnit != 'yes-no') {
+               Highcharts.chart('container-'+chartId, {
+               chart: {
+                  backgroundColor: null
+               },
+               legend: {
+                  itemStyle: {
+                     color: 'white'
                   }
-               }
-            },
-            title: {
-               text: chartTitle,
-               style: {
-                  color: 'white'
-               }
-             },
-            subtitle: {
-               text: chartDescription,
-               style: {
-                  color: 'white'
-               }
-             },
-            yAxis: {
-                labels: {
-                   style: {
-                      color: 'white'
+               },
+               plotOptions: {
+                    series: {
+                        marker: {
+                            enabled: false
+                        },
+                        states: {
+                            hover: {
+                                enabled: false
+                            }
+                        }
+                    }
+                },
+               tooltip: {
+                  formatter: function() {
+                     if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
+                        return '<b>' + this.series.name + ': ' + this.point.name +'</b>';
+                     } else if (this.point.name == 'first') {
+                        return false;
+                     } else {
+                        // console.log(this.point.name);
+                        return '<b>'+ this.x +'</b><br/>' +
+                                    this.series.name +': '+ this.y + maxTargetValueString;
+                     }
+                  }
+               },
+               title: {
+                  text: chartTitle,
+                  style: {
+                     color: 'white'
+                  }
+                },
+               subtitle: {
+                  text: chartDescription,
+                  style: {
+                     color: 'white'
+                  }
+                },
+               yAxis: {
+                   labels: {
+                      style: {
+                         color: 'white'
+                      }
+                   },
+                   title: {
+                      style: {
+                         color: 'white'
+                      }
                    }
                 },
-                title: {
-                   style: {
-                      color: 'white'
-                   }
-                }
-             },
-            exporting: {
-                  enabled: true,
-                  buttons: {
-                      contextButton: {
-                          symbolFill: '#fff',
-                          symbolStroke: '#fff'
-                      }
-                  }
-            },
-            xAxis: {
-                 categories: baselines,
-                 labels: {
-                    style: {
-                       color: 'white'
+               exporting: {
+                     enabled: true,
+                     buttons: {
+                         contextButton: {
+                             symbolFill: '#fff',
+                             symbolStroke: '#fff'
+                         }
+                     }
+               },
+               xAxis: {
+                    categories: baselines,
+                    labels: {
+                       style: {
+                          color: 'white'
+                       }
                     }
-                 }
-            },
-            credits: {
-                enabled: false
-            },
-            labels: {
-               items: [{
-                  html: '',
-                  style: {
-                     left: '50px',
-                     top: '18px',
-                     color: (Highcharts.theme && Highcharts.theme.textColor) || 'red'
-                  }
-              }]
-            },
-            series: series
-         });
+               },
+               credits: {
+                   enabled: false
+               },
+               labels: {
+                  items: [{
+                     html: '',
+                     style: {
+                        left: '50px',
+                        top: '18px',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'red'
+                     }
+                 }]
+               },
+               series: series
+            });
+         } else {
+            $('#container-'+chartId).append('<h3 style="font-size: 18px; text-align: center; margin-bottom: 0px">'+ chartTitle +'</h3>\
+            <p style="margin-bottom: 15px;font-size: 16px; text-align: center">'+ chartDescription +'</p>');
+            $('#container-'+chartId).css('height', '240px').append('<div style="margin-left: 20px;" id="chart-data-boolean"></div>');
+            // console.log(chart_data);
+            // console.log(targetYear);
+            // console.log(targetValue);
+
+            Object.keys(chart_data).forEach(baseline => {
+               console.log(baseline);
+               console.log(chart_data[baseline]);
+
+               $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
+                  <h4 style="margin-bottom: 0px">Baseline: ' + baseline + '</h4><br/>\
+                  <h1 style="text-transform: uppercase;"><b>'+ chart_data[baseline][0].value +'</b></h1>\
+               ');
+            });
+
+            // Add target
+            $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
+               <h4 style="margin-bottom: 0px">Target Year: ' + targetYear + '</h4><br/>\
+               <h1 style="text-transform: uppercase;"><b>'+ targetValue +'</b></h1>\
+            ');
+
+         }
       }
 
       // Styling the borders of panels
