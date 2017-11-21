@@ -538,7 +538,7 @@ if (isset($_GET)) {
             });
 
             // Add target
-            $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
+            $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
                <h4 style="margin-bottom: 0px">Target Year: ' + targetYear + '</h4><br/>\
                <h1 style="text-transform: uppercase;"><b>'+ targetValue +'</b></h1>\
             ');
