@@ -986,9 +986,7 @@
             manageUnits.addButton(selectedUnit, divId, editValue);
           });
 
-          $( ".removeButton" ).click(function() {
-            console.log("removeButton", this);
-
+          $(".removeButton").click(function() {
             $(this).parent().parent().parent().remove();
           });
 
@@ -1013,7 +1011,6 @@
 
       var manageUnits = {
         addButton: function(unit, divId, editValue, editData = 0){
-          console.log("Add Button", unit, divId);
         // clone the div based on id
         var $template = $(divId),
             $clone    = $template
@@ -1036,14 +1033,12 @@
             // Change id and name of input
             jElem.prop('id', name + '-' +  addChartIndex);
             jElem.prop('name', name + '-' +  addChartIndex);
-            // VALL: when editing  add value on added fiels
+            // when editing check  ifadd value on added fiels
             if (editValue === true){
               if (editData != 0){
                 if(editData.hasOwnProperty(slug)){
                   jElem.val(editData[slug]);
                 };
-                console.log("elem", elem, slug, editData[slug]);
-                // jElem.val(('123321');
               }
 
             }
@@ -1915,7 +1910,6 @@
                   var chartUnit = data[0].chart_unit;
                   var targetValue = JSON.parse(data[0].target_value.replace(/&quot;/g,'"'));
                   var chartData = JSON.parse(data[0].chart_data.replace(/&quot;/g,'"'));
-                  console.log('chart data', chartData);
 
                   $('#edit-title-chart').val(data[0].title);
                   $('#edit-target-year').val(data[0].target_year);
@@ -1941,53 +1935,11 @@
                   $.each(chartData , function(key,value) {
                     var year = key;
                     $.each(value, function(index, inputJson) {
-                      //addButton: function(unit, divId, editValue, editData = 0){
                       inputJson['baseline'] = parseInt(key);
                       manageUnits.addButton(chartUnit, divId, true, inputJson )
                     });
 
                   });
-
-
-
-                  // clone the div based on id
-                  // var $template = $(divId),
-                  //     $clone    = $template
-                  //                     .clone()
-                  //                     .removeClass('hide')
-                  //                     .addClass('addedItem')
-                  //                     .removeAttr('id')
-                  //                     .insertAfter($template);
-                  // // Update the id
-                  // $clone.attr("id", divId + '-' + addChartIndex);
-                  //
-                  // // get all the inputs inside the clone
-                  // var inputs = $clone.find('input');
-                  //
-                  // // for each input change its name/id appending the index value
-                  // $.each(inputs, function(index, elem){
-                  //     var jElem = $(elem);
-                  //     var name = jElem.prop('name');
-                  //     // Change id and name of input
-                  //     jElem.prop('id', name + '-' +  addChartIndex);
-                  //     jElem.prop('name', name + '-' +  addChartIndex);
-                  //     // Add generated attr
-                  //     jElem.attr('data-generated', addChartIndex);
-                  // });
-
-
-
-
-                  // $('#').val(data[0].);
-                  // $('#').val(data[0].);
-                  // $('#').val(data[0].);
-                  // $('#').val(data[0].);
-                  // $('#').val(data[0].);
-                  // $('#').val(data[0].);
-                  // $('#edit-source-indicator').val(data[0].source);
-                  // $('#edit-description-indicator').val(data[0].description);
-                  // $('#edit-indicator-id').val(data[0].id);
-                  // $('#edit-indicator-sdg').val(data[0].sdg_id);
                   // Hidden fiels
                   $('#edit-chart-target-id').val(data[0].target_id);
                   $('#edit-chart-indicator-id').val(data[0].indicator_id);
