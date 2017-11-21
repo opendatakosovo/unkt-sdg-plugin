@@ -214,9 +214,11 @@ if (isset($_GET)) {
          // Target data
          let targetUnit = dataChart.target_unit,
              targetValue = dataChart.target_value.value,
+             targetRatioValue = dataChart.target_value.value_b,
              targetYear = dataChart.target_year;
 
          // console.log(dataChart);
+         // console.log(targetUnit);
 
          // HANDLING DATA CHARTS //
          // Data Chart
@@ -260,13 +262,55 @@ if (isset($_GET)) {
             });
 
             // Grouping together values per each baseline
-            chart_data[baseline].map(columnData => {
-               targetBaselinesData[baseline].push(parseInt(columnData.value));
-            });
+            if(targetUnit != 'ratio') {
+                  chart_data[baseline].map(columnData => {
+                  targetBaselinesData[baseline].push(parseInt(columnData.value));
+               });
+            }
          });
+
+         // console.log(obj);
+         // console.log(targetBaselinesData);
+
+         // if ratio
+         ratioTargetsSplines = []
 
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
+
+            // If ratio
+            if(targetUnit == 'ratio') {
+               finalTargetData = [];
+               ffTargetData = [];
+
+               obj[label].map(value => {
+                  finalTargetData.push(value);
+               });
+
+               finalTargetData.map(value => {
+                  let tarObj = {
+                     'name': 'first',
+                     y: value
+                  }
+                  ffTargetData.push(tarObj);
+               });
+
+               let finalTargetValue = Math.round(finalTargetData[finalTargetData.length - 1]/targetRatioValue);
+               ffTargetData.push({'name': label + ' target', y: finalTargetValue});
+
+               let ratioTargetSpline = {
+                  type: 'spline',
+                  name: label + ' target',
+                  data: ffTargetData,
+                  lineWidth: 7,
+                  marker: {
+                     lineWidth: 1,
+                     lineColor: Highcharts.getOptions().colors[0],
+                     fillColor: 'white'
+                  }
+               }
+               ratioTargetsSplines.push(ratioTargetSpline);
+            }
             series.push({
                type: 'column',
                name: label,
@@ -275,60 +319,74 @@ if (isset($_GET)) {
             });
          });
 
+         // console.log(targetBaselinesData);
+         // console.log(obj);
+
          // Getting the biggest values in years and pushing in target
-         Object.keys(targetBaselinesData).forEach(baseline => {
-            // Pushing biggest values from columns data in target data
+         if(targetUnit != 'ratio') {
+            Object.keys(targetBaselinesData).forEach(baseline => {
+               // Pushing biggest values from columns data in target data
 
-            if(targetValue == 'increasing' || targetValue == 'decreasing') {
-               let incValue = {
-                  name: 'first',
-                  y: targetBaselinesData[baseline].max()
+               if(targetValue == 'increasing' || targetValue == 'decreasing') {
+                  let incValue = {
+                     name: 'first',
+                     y: targetBaselinesData[baseline].max()
+                  }
+                  targetData.push(incValue);
+               } else {
+                  targetData.push(targetBaselinesData[baseline].max());
                }
-               targetData.push(incValue);
-            } else {
-               targetData.push(targetBaselinesData[baseline].max());
-            }
-         });
+            });
+         }
 
-         // console.log(targetValue);
+         // console.log(targetData);
 
          //Pushing the target value in targetData
-         if(targetValue == 'increasing') {
-            let incValue = {
-               name: 'Increasing',
-               y: targetData[0].y + Math.round(targetData[0].y)
+         if(targetUnit == 'increasing-decreasing') {
+            if(targetValue == 'increasing') {
+               let incValue = {
+                  name: 'Increasing',
+                  y: targetData[0].y + Math.round(targetData[0].y)
+               }
+               targetData.push(incValue);
+            } else if (targetValue == 'decreasing') {
+               let decValue = {
+                  name: 'Decreasing',
+                  y: targetData[0].y - Math.round(targetData[0].y)
+               }
+               targetData.push(decValue);
             }
-            targetData.push(incValue);
-         } else if (targetValue == 'decreasing') {
-            let decValue = {
-               name: 'Decreasing',
-               y: targetData[0].y - Math.round(targetData[0].y)
-            }
-            targetData.push(decValue);
          } else {
             targetData.push(targetValue);
          }
 
-         console.log(targetData);
 
          // Making the target line
-         let targetSpline = {
-            type: 'spline',
-            name: 'Target',
-            data: targetData,
-            lineWidth: 7,
-            marker: {
-               lineWidth: 1,
-               lineColor: Highcharts.getOptions().colors[0],
-               fillColor: 'white'
+         if(targetUnit == 'ratio') {
+            ratioTargetsSplines.map(ratioTarget => {
+               series.push(ratioTarget);
+            });
+         } else {
+            let targetSpline = {
+               type: 'spline',
+               name: 'Target',
+               data: targetData,
+               lineWidth: 7,
+               marker: {
+                  lineWidth: 1,
+                  lineColor: Highcharts.getOptions().colors[0],
+                  fillColor: 'white'
+               }
             }
+            // Pushing the targetSpline into series
+            series.push(targetSpline);
          }
+
 
          // Adding the target year to the baselines array
          baselines.push(targetYear);
 
-         // Pushing the targetSpline into series
-         series.push(targetSpline);
+         // console.log(baselines);
 
          // Render the chart
          Highcharts.chart('container-'+chartId, {
@@ -340,18 +398,18 @@ if (isset($_GET)) {
                   color: 'white'
                }
             },
-            // plotOptions: {
-            //      series: {
-            //          marker: {
-            //              enabled: false
-            //          },
-            //          states: {
-            //              hover: {
-            //                  enabled: false
-            //              }
-            //          }
-            //      }
-            //  },
+            plotOptions: {
+                 series: {
+                     marker: {
+                         enabled: false
+                     },
+                     states: {
+                         hover: {
+                             enabled: false
+                         }
+                     }
+                 }
+             },
             tooltip: {
                formatter: function() {
                   if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
