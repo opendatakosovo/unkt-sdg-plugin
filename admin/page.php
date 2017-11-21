@@ -472,7 +472,7 @@
                                    <option id="chart-number" value="number" data-show="number"> Number</option>
                                    <option id="chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
                                    <option id="chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                   <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                   <!-- <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
                                    <!-- <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
                                  </select>
                                </div>
@@ -805,13 +805,13 @@
                                      <option id="edit-chart-number" value="number" data-show="number"> Number</option>
                                      <option id="edit-chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
                                      <option id="edit-chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                     <option id="edit-chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
+                                     <!-- <option id="edit-chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
                                      <!-- <option id="edit-chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
                                    </select>
                                  </div>
                                </div>
                                <div class="form-group">
-                                 <div class="col-xs-offset-12 plus-div" style="float:right;">
+                                 <div class="col-xs-offset-12 edit-plus-div" style="float:right;">
                                    <button type="button" class="btn btn-default addButton" data-action="edit" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
                                  </div>
                                </div>
@@ -821,19 +821,19 @@
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label left"> Baseline</label>
                                    <div class="col-xs-9">
-                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-number" data-slug="baseline"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                       <input name="chart-baseline-number"  type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" data-slug="baseline"/>
                                    </div>
                                  </div>
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
                                    <div class="col-xs-9">
-                                     <input name="edit-chart-number-value" type="number" step="any" class="form-control" id="chart-number-value" data-slug="value"/>
+                                     <input name="chart-number-value" type="number" step="any" class="form-control" data-slug="value"/>
+                                   </div>
+                                 </div>
+                                 <div class="form-group">
+                                   <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
+                                   <div class="col-xs-9">
+                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
                                    </div>
                                  </div>
                                  <div class="form-group">
@@ -850,88 +850,19 @@
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label left"> Baseline </label>
                                    <div class="col-xs-9">
-                                       <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="edit-chart-baseline-percentage" data-slug="baseline"/>
+                                       <input  name="chart-baseline-percentage" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" data-slug="baseline"/>
                                    </div>
                                  </div>
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label"> Chart Label</label>
                                    <div class="col-xs-9">
-                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
                                    </div>
                                  </div>
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label">Percentage Value</label>
                                    <div class="col-xs-9">
-                                     <input name="edit-chart-percentage-value" type="number" step="any" class="form-control" id="edit-chart-percentage-value" data-slug="value" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <div class="col-xs-12">
-                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                   </div>
-                                 </div>
-                                 <hr class="separator">
-                               </div>
-                             </div>
-                             <div class="edit-div-chart-unit-ratio">
-                               <div class="edit-chart-unit-select hide edit-chart-unit-ratio" id="edit-chart-unit-ratio">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label"> Baseline </label>
-                                   <div class="col-xs-9">
-                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-ratio" data-slug="baseline" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label"> Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Number</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-ratio-value-a" type="number" step="any" class="form-control" id="edit-edit-chart-ratio-value-a" data-slug="value_a"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Total</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-ratio-value-b" type="number" step="any" class="form-control" id="edit-chart-ratio-value-b" data-slug="value_b"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <div class="col-xs-12">
-                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                   </div>
-                                 </div>
-                                 <hr class="separator">
-                               </div>
-                             </div>
-
-                             <div class="edit-div-chart-unit-comperative">
-                               <div class="edit-chart-unit-select hide edit-chart-unit-comperative" id="edit-chart-unit-comperative">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label"> Baseline </label>
-                                   <div class="col-xs-9">
-                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-comperative" data-slug="baseline" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label"> Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Current Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-comperative-current-value" type="number" step="any" class="form-control" id="edit-chart-comperative-current-value" data-slug="current_value" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Maximum Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-chart-comperative-max-value" type="number" step="any" class="form-control" id="edit-chart-comperative-max-value" data-slug="max_value" />
+                                     <input name="chart-percentage-value" type="number" step="any" class="form-control" data-slug="value" />
                                    </div>
                                  </div>
                                  <div class="form-group">
@@ -944,19 +875,20 @@
                              </div>
 
                                <div class="edit-div-chart-unit-yes-no">
-                               <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
+                                 <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label left"> Baseline </label>
                                    <div class="col-xs-9">
-                                       <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="edit-chart-baseline-yes-no" data-slug="baseline"/>
+                                       <input name="chart-baseline-yes-no" type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" data-slug="baseline"/>
                                    </div>
                                  </div>
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label" for="chart-label-value"> Label</label>
                                    <div class="col-xs-9">
-                                     <input name="chart-label-value" type="text" class="form-control" id="edit-chart-label-value" data-slug="label" />
+                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
                                    </div>
                                  </div>
+                                 <!-- TOCHANGE -->
                                  <div class="form-group">
                                    <label class="col-xs-3 control-label" for="edit-chart-yes-no-value">Values</label>
                                    <div class="col-xs-6">
@@ -975,13 +907,24 @@
                                  </div>
                                  <hr class="separator">
                                </div>
-                             </div>
+                              </div>
                            </div>
                            </div>
                          </div>
                          <!-- End of Chart Data Panel -->
 
+                         <div class="form-group">
+                            <label  class="col-xs-3 control-label">Description</label>
+                             <div class="col-xs-9">
+                                <textarea name="edit-chart-description" type="text" class="form-control" id="edit-chart-description"></textarea>
+                            </div>
+                        </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="edit-chart-button" class="btn btn-primary"
+                                       id="edit-chart-button">
 
+                            </div><!-- /.modal-content -->
 
 
                        </form>
@@ -1032,17 +975,20 @@
           $( ".addButton" ).click(function() {
             addChartIndex ++;
             var action = '';
+            var editValue = false
             if ($(this).data("action") === 'edit'){
-              var action = 'edit-';
+              action = 'edit-';
+              editValue = true;
             }
             var selectId = '#' + action + 'chart-unit-select';
             var selectedUnit = $(selectId).find(":selected").data('show');
             var divId = '#' + action + 'chart-unit-' + selectedUnit;
-            // console.log("Divat:", selectId, divId);
-            manageUnits.addButton(selectedUnit, divId);
+            manageUnits.addButton(selectedUnit, divId, editValue);
           });
 
           $( ".removeButton" ).click(function() {
+            console.log("removeButton", this);
+
             $(this).parent().parent().parent().remove();
           });
 
@@ -1053,21 +999,21 @@
              $('.plus-div').show();
              var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
              var divId = '#chart-unit-' + selectedUnit;
-             manageUnits.addButton(selectedUnit, divId);
+             manageUnits.addButton(selectedUnit, divId, false);
           });
 
           // Chart unit select box on change
           $('#edit-chart-unit-select').change(function() {
              addChartIndex = 0;
              $('.addedItem').remove();
-             $('.plus-div').show();
              var selectedUnit = $('#edit-chart-unit-select').find(":selected").data('show');
              var divId = '#edit-chart-unit-' + selectedUnit;
-             manageUnits.addButton(selectedUnit, divId);
+             manageUnits.addButton(selectedUnit, divId, true);
           });
 
       var manageUnits = {
-        addButton: function(unit, divId){
+        addButton: function(unit, divId, editValue, editData = 0){
+          console.log("Add Button", unit, divId);
         // clone the div based on id
         var $template = $(divId),
             $clone    = $template
@@ -1086,9 +1032,22 @@
         $.each(inputs, function(index, elem){
             var jElem = $(elem);
             var name = jElem.prop('name');
+            var slug = jElem.data('slug');
             // Change id and name of input
             jElem.prop('id', name + '-' +  addChartIndex);
             jElem.prop('name', name + '-' +  addChartIndex);
+            // VALL: when editing  add value on added fiels
+            if (editValue === true){
+              if (editData != 0){
+                if(editData.hasOwnProperty(slug)){
+                  jElem.val(editData[slug]);
+                };
+                console.log("elem", elem, slug, editData[slug]);
+                // jElem.val(('123321');
+              }
+
+            }
+
             // Add generated attr
             jElem.attr('data-generated', addChartIndex);
         });
@@ -1190,9 +1149,12 @@
           $("#chart-unit-select").val("");
           $("#target-unit-select").val("");
         });
+
         $('#edit-chart-modal').on('hidden.bs.modal', function(){
           $(this).find('form')[0].reset();
           $('.edit-target-unit-select').hide();
+          $('.plus-div').hide();
+          $('.addedItem').remove();
        });
 
         // Adding new target from modal
@@ -1950,8 +1912,10 @@
                success: function (data) {
 
                   var targetUnit = data[0].target_unit;
+                  var chartUnit = data[0].chart_unit;
                   var targetValue = JSON.parse(data[0].target_value.replace(/&quot;/g,'"'));
                   var chartData = JSON.parse(data[0].chart_data.replace(/&quot;/g,'"'));
+                  console.log('chart data', chartData);
 
                   $('#edit-title-chart').val(data[0].title);
                   $('#edit-target-year').val(data[0].target_year);
@@ -1959,7 +1923,6 @@
 
                   $.each(targetValue, function(key,value) {
                       if(targetUnit === 'increasing-decreasing' || targetUnit === 'yes-no'){
-                        console.log('input[name=edit-target-' + targetUnit +'][value=' + value + ']');
                         $('input[name=edit-target-' + targetUnit +'][value=' + value + ']').attr('checked', true);
                       }else{
                         key = key.replace('_','-');
@@ -1968,9 +1931,49 @@
                       $('.edit-target-unit-' + targetUnit).show();
                   });
 
+                  $('#edit-label-chart').val(data[0].label);
+                  $('#edit-chart-unit-select').val(chartUnit);
+                  $('#edit-chart-description').val(data[0].description);
+
+                  var divId = '#edit-chart-unit-' + chartUnit;
+                  var selectId = '#chart-unit-select';
+
+                  $.each(chartData , function(key,value) {
+                    var year = key;
+                    $.each(value, function(index, inputJson) {
+                      //addButton: function(unit, divId, editValue, editData = 0){
+                      inputJson['baseline'] = parseInt(key);
+                      manageUnits.addButton(chartUnit, divId, true, inputJson )
+                    });
+
+                  });
 
 
 
+                  // clone the div based on id
+                  // var $template = $(divId),
+                  //     $clone    = $template
+                  //                     .clone()
+                  //                     .removeClass('hide')
+                  //                     .addClass('addedItem')
+                  //                     .removeAttr('id')
+                  //                     .insertAfter($template);
+                  // // Update the id
+                  // $clone.attr("id", divId + '-' + addChartIndex);
+                  //
+                  // // get all the inputs inside the clone
+                  // var inputs = $clone.find('input');
+                  //
+                  // // for each input change its name/id appending the index value
+                  // $.each(inputs, function(index, elem){
+                  //     var jElem = $(elem);
+                  //     var name = jElem.prop('name');
+                  //     // Change id and name of input
+                  //     jElem.prop('id', name + '-' +  addChartIndex);
+                  //     jElem.prop('name', name + '-' +  addChartIndex);
+                  //     // Add generated attr
+                  //     jElem.attr('data-generated', addChartIndex);
+                  // });
 
 
 
@@ -1985,7 +1988,7 @@
                   // $('#edit-description-indicator').val(data[0].description);
                   // $('#edit-indicator-id').val(data[0].id);
                   // $('#edit-indicator-sdg').val(data[0].sdg_id);
-                  // Hidden fiels TODO
+                  // Hidden fiels
                   $('#edit-chart-target-id').val(data[0].target_id);
                   $('#edit-chart-indicator-id').val(data[0].indicator_id);
                   $('#edit-chart-sdg-id').val(data[0].sdg_id);
