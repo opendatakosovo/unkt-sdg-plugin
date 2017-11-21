@@ -216,8 +216,9 @@ if (isset($_GET)) {
              targetValue = dataChart.target_value.value,
              targetYear = dataChart.target_year;
 
-         // HANDLING DATA CHARTS //
+         // console.log(dataChart);
 
+         // HANDLING DATA CHARTS //
          // Data Chart
          let chart_data = dataChart.chart_data;
 
@@ -277,21 +278,49 @@ if (isset($_GET)) {
          // Getting the biggest values in years and pushing in target
          Object.keys(targetBaselinesData).forEach(baseline => {
             // Pushing biggest values from columns data in target data
-            targetData.push(targetBaselinesData[baseline].max());
+
+            if(targetValue == 'increasing' || targetValue == 'decreasing') {
+               let incValue = {
+                  name: 'first',
+                  y: targetBaselinesData[baseline].max()
+               }
+               targetData.push(incValue);
+            } else {
+               targetData.push(targetBaselinesData[baseline].max());
+            }
          });
 
-         // Pushing the target value in targetData
-         targetData.push(targetValue);
+         // console.log(targetValue);
+
+         //Pushing the target value in targetData
+         if(targetValue == 'increasing') {
+            let incValue = {
+               name: 'Increasing',
+               y: targetData[0].y + Math.round(targetData[0].y)
+            }
+            targetData.push(incValue);
+         } else if (targetValue == 'decreasing') {
+            let decValue = {
+               name: 'Decreasing',
+               y: targetData[0].y - Math.round(targetData[0].y)
+            }
+            targetData.push(decValue);
+         } else {
+            targetData.push(targetValue);
+         }
+
+         console.log(targetData);
 
          // Making the target line
          let targetSpline = {
             type: 'spline',
             name: 'Target',
             data: targetData,
+            lineWidth: 7,
             marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[0],
-                fillColor: 'white'
+               lineWidth: 1,
+               lineColor: Highcharts.getOptions().colors[0],
+               fillColor: 'white'
             }
          }
 
@@ -311,19 +340,44 @@ if (isset($_GET)) {
                   color: 'white'
                }
             },
-             title: {
+            // plotOptions: {
+            //      series: {
+            //          marker: {
+            //              enabled: false
+            //          },
+            //          states: {
+            //              hover: {
+            //                  enabled: false
+            //              }
+            //          }
+            //      }
+            //  },
+            tooltip: {
+               formatter: function() {
+                  if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
+                     return '<b>' + this.series.name + ': ' + this.point.name +'</b>';
+                  } else if (this.point.name == 'first') {
+                     return false;
+                  } else {
+                     // console.log(this.point.name);
+                     return '<b>'+ this.x +'</b><br/>' +
+                                 this.series.name +': '+ this.y;
+                  }
+               }
+            },
+            title: {
                text: chartTitle,
                style: {
                   color: 'white'
                }
              },
-             subtitle: {
+            subtitle: {
                text: chartDescription,
                style: {
                   color: 'white'
                }
              },
-             yAxis: {
+            yAxis: {
                 labels: {
                    style: {
                       color: 'white'
@@ -335,7 +389,7 @@ if (isset($_GET)) {
                    }
                 }
              },
-             exporting: {
+            exporting: {
                   enabled: true,
                   buttons: {
                       contextButton: {
@@ -343,29 +397,29 @@ if (isset($_GET)) {
                           symbolStroke: '#fff'
                       }
                   }
-              },
-             xAxis: {
+            },
+            xAxis: {
                  categories: baselines,
                  labels: {
                     style: {
                        color: 'white'
                     }
                  }
-             },
-             credits: {
+            },
+            credits: {
                 enabled: false
-             },
-             labels: {
-                 items: [{
-                     html: '',
-                     style: {
-                         left: '50px',
-                         top: '18px',
-                         color: (Highcharts.theme && Highcharts.theme.textColor) || 'red'
-                     }
-                 }]
-             },
-             series: series
+            },
+            labels: {
+               items: [{
+                  html: '',
+                  style: {
+                     left: '50px',
+                     top: '18px',
+                     color: (Highcharts.theme && Highcharts.theme.textColor) || 'red'
+                  }
+              }]
+            },
+            series: series
          });
       }
 
@@ -406,7 +460,7 @@ if (isset($_GET)) {
 
    <!-- Indicators -->
    <div class="tabs">
-      <h2>Indicators</h2>
+      <h2>Targets with indicators</h2>
       <div class="panel-group" id="accordion">
       </div>
    </div>
