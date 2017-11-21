@@ -278,28 +278,47 @@ if (isset($_GET)) {
          // Getting the biggest values in years and pushing in target
          Object.keys(targetBaselinesData).forEach(baseline => {
             // Pushing biggest values from columns data in target data
-            targetData.push(targetBaselinesData[baseline].max());
+
+            if(targetValue == 'increasing' || targetValue == 'decreasing') {
+               let incValue = {
+                  name: 'first',
+                  y: targetBaselinesData[baseline].max()
+               }
+               targetData.push(incValue);
+            } else {
+               targetData.push(targetBaselinesData[baseline].max());
+            }
          });
 
          // console.log(targetValue);
 
-         // Pushing the target value in targetData
-         if(targetValue == 'increasing' || targetValue == 'decreasing') {
-            targetData.push(targetData[0] + Math.round(targetData[0]));
-            console.log(targetData);
+         //Pushing the target value in targetData
+         if(targetValue == 'increasing') {
+            let incValue = {
+               name: 'Increasing',
+               y: targetData[0].y + Math.round(targetData[0].y)
+            }
+            targetData.push(incValue);
+         } else if (targetValue == 'decreasing') {
+            let decValue = {
+               name: 'Decreasing',
+               y: targetData[0].y - Math.round(targetData[0].y)
+            }
+            targetData.push(decValue);
          } else {
             targetData.push(targetValue);
          }
 
-         // console.log(targetData);
+         console.log(targetData);
 
          // Making the target line
          let targetSpline = {
             type: 'spline',
             name: 'Target',
             data: targetData,
+            lineWidth: 7,
             marker: {
-               lineWidth: 2,
+               lineWidth: 1,
                lineColor: Highcharts.getOptions().colors[0],
                fillColor: 'white'
             }
@@ -319,6 +338,31 @@ if (isset($_GET)) {
             legend: {
                itemStyle: {
                   color: 'white'
+               }
+            },
+            // plotOptions: {
+            //      series: {
+            //          marker: {
+            //              enabled: false
+            //          },
+            //          states: {
+            //              hover: {
+            //                  enabled: false
+            //              }
+            //          }
+            //      }
+            //  },
+            tooltip: {
+               formatter: function() {
+                  if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
+                     return '<b>' + this.series.name + ': ' + this.point.name +'</b>';
+                  } else if (this.point.name == 'first') {
+                     return false;
+                  } else {
+                     // console.log(this.point.name);
+                     return '<b>'+ this.x +'</b><br/>' +
+                                 this.series.name +': '+ this.y;
+                  }
                }
             },
             title: {
