@@ -676,11 +676,11 @@
                        <h4 class="modal-title">Edit Chart</h4>
                    </div>
                    <div class="modal-body">
-                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form">
+                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form" method="POST">
+                         <input id="edit-chart-id">
                          <input id="edit-chart-target-id">
                          <input id="edit-chart-indicator-id">
                          <input id="edit-chart-sdg-id">
-
                          <div class="form-group">
                            <label class="col-xs-3 control-label left">Title</label>
                            <div class="col-xs-9">
@@ -975,7 +975,7 @@
           $( '.addButton' ).click(function() {
             addChartIndex ++;
             var action = '';
-            var editValue = false
+            var editValue = false;
             // Check if action is edit and not add
             if ($(this).data('action') === 'edit'){
               action = 'edit-';
@@ -1130,8 +1130,8 @@
         // Hide all taget unit fields and show them based on selected unit
         $('.target-unit-select').hide();
         $('#target-unit-select').change(function() {
-         $('.target-unit-select').hide();
-         $('.target-unit-' + $('option:selected', this).data('show')).show();
+        $('.target-unit-select').hide();
+        $('.target-unit-' + $('option:selected', this).data('show')).show();
       });
 
         // when chart modal is closed remove all added fields and hide displayed divs
@@ -1347,7 +1347,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 10,11,12 ],
+                                        "targets": [  ], //10,11,12
                                         className: 'hidden'
                                     }
                                 ],
@@ -1621,7 +1621,7 @@
 
            $.ajax({
                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-               type: 'POST', //or POST
+               type: 'POST',
                dataType: 'json',
                data: {
                    'sdg_id': sdg_short_name,
@@ -1697,7 +1697,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 10,11,12 ],
+                                   "targets": [  ], //10,11,12
                                    className: 'hidden'
                                }
                            ],
@@ -1710,12 +1710,119 @@
 
                    $('#add-chart-modal').modal('hide');
                    $('#add-chart-form')[0].reset();
+               }
+           });
+          event.preventDefault();
+        });
 
+        // Adding new chart
+        $('#edit-chart-form').on('submit', function (e) {
+          //
+          var chart_id = $('#edit-chart-id').val();
+          var indicator_id = $('#edit-chart-indicator-id').val();
+          var target_id = $('#edit-chart-target-id').val();
+          var sdg_id = $('#edit-chart-sdg-id').val();
+          var targetUnit = $("#edit-target-unit-select").val();
+          var chartUnit = $("#edit-chart-unit-select").val();
+
+           $.ajax({
+               url: "<?php echo admin_url('admin-ajax.php'); ?>",
+               type: 'POST',
+               dataType: 'json',
+               data: {
+                   'chart_id': chart_id,
+                   'sdg_id': sdg_id,
+                   'target_id': target_id,
+                   'indicator_id': indicator_id,
+                   'title': $('#edit-title-chart').val(),
+                   'target_year': $("#edit-target-year").val(),
+                   'target_unit': targetUnit,
+                   'target_value': manageUnits.targetValue(targetUnit),
+                   'chart_unit': chartUnit,
+                   'chart_data': manageUnits.chartData(chartUnit),
+                   'description': $("#edit-chart-description").val(),
+                   'label': $("#edit-label-chart").val(),
+                   'action': 'update_chart'
+               },
+               success: function (data) {
+                   var indicator_id  = data[0].indicator_id;
+                   var target_id = data[0].target_id;
+                   var sdg_id = data[0].sdg_id;
+                   $("#chartTable_" + indicator_id + '_' + target_id).dataTable().fnDestroy();
+
+                   oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
+                       "bJQueryUI": true,
+                       "bFilter": true,
+                       "aaData": data,
+                       "bSort": true, // disables sorting
+                       "info": true,
+                       "aoColumns": [
+                           {"mDataProp": "id"},
+                           {"mDataProp": "title"},
+                           {"mDataProp": "target_unit"},
+                           {"mDataProp": "target_year"},
+                           {"mDataProp": "target_value"},
+                           {"mDataProp": "chart_unit"},
+                           {"mDataProp": "chart_data"},
+                           {"mDataProp": "description"},
+                           {"mDataProp": "label"},
+                           {"sDefaultContent": "<a data-toggle='modal' href='#edit-chart-modal' class='edit-modal-chart' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-chart'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
+                           {"sDefaultContent": target_id},
+                           {"sDefaultContent": indicator_id},
+                           {"sDefaultContent": sdg_id},
+                       ],
+                       "bPaginate": true,
+                       "oLanguage": {
+                           "sInfo": "_TOTAL_ entries"
+                       },
+                       "dom": 'Bfrtip',
+                       "buttons": [
+                           {
+                               "extend": 'copyHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'excelHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'pdfHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           },
+                           {
+                               "extend": 'csvHtml5',
+                               "exportOptions": {
+                                   "columns": [1, 2, 3, 4, 5]
+                               }
+                           }
+                       ],
+                       "columnDefs": [
+                               {
+                                   "targets": [  ], //10,11,12
+                                   className: 'hidden'
+                               }
+                           ],
+                   });
+
+                   $(this).attr('id', indicator_id);
+                   // Updating the info of datatable with the button to create new indicator
+                   $('tr.chart-details .dataTables_info').html('');
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+
+                   $('#edit-chart-modal').modal('hide');
+                   $('#edit-chart-form')[0].reset();
+                   e.preventDefault();
                }
            });
 
-          event.preventDefault();
         });
+
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1844,6 +1951,7 @@
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
+                                {"sDefaultContent": sdg_id }
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -1878,7 +1986,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6 ],
+                                        "targets": [ 6, 7 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1937,13 +2045,12 @@
                       inputJson['baseline'] = parseInt(key);
                       manageUnits.addButton(chartUnit, divId, true, inputJson, chartUnit);
                     });
-
                   });
                   // Hidden fiels
+                  $('#edit-chart-id').val(data[0].id);
                   $('#edit-chart-target-id').val(data[0].target_id);
                   $('#edit-chart-indicator-id').val(data[0].indicator_id);
                   $('#edit-chart-sdg-id').val(data[0].sdg_id);
-
                }
             });
 
