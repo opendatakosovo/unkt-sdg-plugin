@@ -357,20 +357,20 @@ if (isset($_GET)) {
             });
          }
 
-         // console.log(targetUnit);
+         // console.log(targetData);
 
          //Pushing the target value in targetData
          if(targetUnit == 'increasing-decreasing') {
             if(targetValue == 'increasing') {
                let incValue = {
                   name: 'Increasing',
-                  y: targetData[0].y + Math.round(targetData[0].y).toFixed(2)
+                  y: targetData[targetData.length-1].y + parseInt(Math.round(targetData[0].y).toFixed(2))
                }
                targetData.push(incValue);
             } else if (targetValue == 'decreasing') {
                let decValue = {
                   name: 'Decreasing',
-                  y: targetData[0].y - Math.round(targetData[0].y).toFixed(2)
+                  y: targetData[targetData.length-1].y - parseInt(Math.round(targetData[0].y).toFixed(2))
                }
                targetData.push(decValue);
             }
@@ -384,7 +384,7 @@ if (isset($_GET)) {
             //    });
             // });
 
-            // console.log(targetValue);
+            // console.log(targetData);
 
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
@@ -418,7 +418,7 @@ if (isset($_GET)) {
             targetData.push(targetValue);
          }
 
-         // console.log(targetData);
+         console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
          let maxTargetValueString = '';
