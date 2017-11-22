@@ -921,17 +921,13 @@
                         </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="edit-chart-button" class="btn btn-primary"
-                                       id="edit-chart-button">
-
-                            </div><!-- /.modal-content -->
-
-
+                                <input type="submit" value="Save changes" name="edit-chart-button" class="btn btn-primary" id="edit-chart-button">
+                            </div>
+                            <!-- /.modal-content -->
                        </form>
                    </div>
                </div><!-- /.modal-dialog -->
            </div><!-- /.modal -->
-
            <!-- end of edit modal -->
        </div>
 
@@ -972,11 +968,17 @@
           var addChartIndex = 0;
           $('.plus-div').hide();
 
-          $( ".addButton" ).click(function() {
+          // On removeButton click, delete the appended input group
+          $(document).on('click','.removeButton',function(){
+              $(this).parent().parent().parent().remove();
+          });
+
+          $( '.addButton' ).click(function() {
             addChartIndex ++;
             var action = '';
             var editValue = false
-            if ($(this).data("action") === 'edit'){
+            // Check if action is edit and not add
+            if ($(this).data('action') === 'edit'){
               action = 'edit-';
               editValue = true;
             }
@@ -984,10 +986,6 @@
             var selectedUnit = $(selectId).find(":selected").data('show');
             var divId = '#' + action + 'chart-unit-' + selectedUnit;
             manageUnits.addButton(selectedUnit, divId, editValue);
-          });
-
-          $(".removeButton").click(function() {
-            $(this).parent().parent().parent().remove();
           });
 
           // Chart unit select box on change
@@ -1025,7 +1023,7 @@
         // get all the inputs inside the clone
         var inputs = $clone.find('input');
 
-        // for each input change its name/id appending the index value
+        // for each input change its name/id appending the index value and values
         $.each(inputs, function(index, elem){
             var jElem = $(elem);
             var name = jElem.prop('name');
@@ -1033,9 +1031,10 @@
             // Change id and name of input
             jElem.prop('id', name + '-' +  addChartIndex);
             jElem.prop('name', name + '-' +  addChartIndex);
-            // when editing check  ifadd value on added fiels
+            // when action is editing, check if argument for edit values is given
             if (editValue === true){
               if (editData != 0){
+                // if slug is exists ad json key then add value for that imput
                 if(editData.hasOwnProperty(slug)){
                   jElem.val(editData[slug]);
                 };
@@ -1106,7 +1105,7 @@
                       }
                       insert = true;
 
-                      if (chartUnit === 'yes-no' && slug != 'baseline'){
+                      if (chartUnit === 'yes-no' && slug != 'baseline'  && slug != 'label'){
                         value = e.value;
                         if ( e.checked === false){
                           insert = false;
