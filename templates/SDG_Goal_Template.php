@@ -207,7 +207,7 @@ if (isset($_GET)) {
          console.log(dataChartObj);
          $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
             <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
-            </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
+            </div><br/><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
          prepareAndRenderChart(dataChartObj);
       }
 
@@ -540,19 +540,23 @@ if (isset($_GET)) {
             // console.log(targetValue);
 
             Object.keys(chart_data).forEach(baseline => {
-
                $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
-                  <h4 style="margin-bottom: 0px">Baseline: ' + baseline + '</h4><br/>\
+                  <h4 style="margin-bottom: 10px">Baseline: ' + baseline + '</h4>\
+                  <p style="margin-bottom: 0px; font-size: 15px;">Label: '+ chart_data[baseline][0].label +'</p>\
                   <h1 style="text-transform: uppercase;"><b>'+ chart_data[baseline][0].value +'</b></h1>\
                ');
             });
 
             // Add target
-            $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
-               <h4 style="margin-bottom: 0px">Target Year: ' + targetYear + '</h4><br/>\
+            $('#chart-data-boolean').append('<div style="float: left; text-align: center; padding: 30px; margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
+               <h4 style="margin-bottom: 10px">Target Year: ' + targetYear + '</h4>\
+               <div class="labels-cont"></div>\
                <h1 style="text-transform: uppercase;"><b>'+ targetValue +'</b></h1>\
             ');
 
+            Object.keys(chart_data).forEach(baseline => {
+               $('.labels-cont').append('<p style="display: inline; font-size: 15px;">' + chart_data[baseline][0].label +' </p>');
+            });
          }
       }
 
