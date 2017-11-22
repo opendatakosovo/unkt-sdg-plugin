@@ -268,7 +268,6 @@ if (isset($_GET)) {
          Object.keys(chart_data).forEach(baseline => {
             baselines.push(baseline);
 
-
             // Grouping together values per each same labels for baselines in order
             labelArray.map((item, i) => {
                chart_data[baseline].map((element, j) => {
@@ -278,7 +277,6 @@ if (isset($_GET)) {
                   }
                });
             });
-
 
             // Grouping together values per each baseline
             if(targetUnit != 'ratio') {
@@ -376,7 +374,7 @@ if (isset($_GET)) {
                }
                targetData.push(decValue);
             }
-         } else if (targetUnit == 'percentage') {
+         } else if (targetUnit == 'percentage' && chartUnit == 'number') {
             // Format the target data to hide other target data tooltip
             let dataTargetObjs = [];
             // targetData.map(targetValue => {
@@ -394,7 +392,7 @@ if (isset($_GET)) {
             // console.log(targetValue);
 
             // If negative num
-            if(targetValue < 0) {
+            if(targetValue < 0){
                var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
             } else {
                var finalValue = targetNumberPer;
@@ -427,7 +425,10 @@ if (isset($_GET)) {
          if (targetUnit == 'comperative') {
             // console.log(targetUnit);
             maxTargetValueString = ' per ' + maxTargetVal;
-         } else {
+         } else if (targetUnit == 'percentage' && chartUnit == 'percentage') {
+            maxTargetValueString = ' %';
+         }
+         else {
             maxTargetValueString = '';
          }
 
@@ -451,7 +452,6 @@ if (isset($_GET)) {
             // Pushing the targetSpline into series
             series.push(targetSpline);
          }
-
 
          // Adding the target year to the baselines array
          baselines.push(targetYear);
