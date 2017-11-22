@@ -1043,8 +1043,6 @@
                 };
               }
             }
-
-
             // Add generated attr
             jElem.attr('data-generated', addChartIndex);
         });

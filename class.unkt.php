@@ -44,6 +44,7 @@ class Unkt
             add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
             add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart')); //remove chart
             add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected')); //edit chart
+            add_action('wp_ajax_update_chart', array('Unkt', 'update_chart')); //update chart
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
@@ -466,6 +467,33 @@ class Unkt
         INSERT INTO `{$wpdb->prefix}charts`( sdg_id, target_id, indicator_id, title, target_year, target_unit, target_value, chart_unit, chart_data, description,label, updated_date )
         VALUES('$sdg_id','$target_id','$indicator_id', '$title', '$target_year', '$target_unit', '$target_value', '$chart_unit' ,'$chart_data', '$description','$label', NOW()); ";
         $wpdb->query($insert);
+
+        $query_charts = $wpdb->get_results("
+              SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
+        echo json_encode($query_charts);
+        die();
+    }
+    public static function update_chart() {
+
+        global $wpdb;
+        $chart_id = htmlspecialchars($_POST["chart_id"]);
+        $sdg_text = htmlspecialchars($_POST["sdg_id"]);
+        $target_id = htmlspecialchars($_POST["target_id"]);
+        $indicator_id = htmlspecialchars($_POST["indicator_id"]);
+        $title = htmlspecialchars($_POST["title"]);
+        $target_year = htmlspecialchars($_POST["target_year"]);
+        $target_unit = htmlspecialchars($_POST["target_unit"]);
+        $target_value = htmlspecialchars($_POST["target_value"]);
+        $chart_unit = htmlspecialchars($_POST["chart_unit"]);
+        $chart_data = htmlspecialchars($_POST["chart_data"]);
+        $label = htmlspecialchars($_POST["label"]);
+        $description = htmlspecialchars($_POST["description"]);
+
+        $update = "
+           UPDATE wp_targets
+           SET sdg_id='$sdg_id',target_id='$target_id',indicator_id='$indicator_id', title='$title', target_year='$target_year', target_unit='$target_unit', target_value='$target_value', chart_unit='$chart_unit' ,chart_data='$chart_data', description='$description',label='$label',updated_date=NOW()
+           WHERE id='$chart_id'";
+        $wpdb->query($update);
 
         $query_charts = $wpdb->get_results("
               SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
