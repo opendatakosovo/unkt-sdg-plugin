@@ -676,12 +676,11 @@
                        <h4 class="modal-title">Edit Chart</h4>
                    </div>
                    <div class="modal-body">
-                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form">
+                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form" method="POST">
                          <input id="edit-chart-id">
                          <input id="edit-chart-target-id">
                          <input id="edit-chart-indicator-id">
                          <input id="edit-chart-sdg-id">
-
                          <div class="form-group">
                            <label class="col-xs-3 control-label left">Title</label>
                            <div class="col-xs-9">
@@ -976,7 +975,7 @@
           $( '.addButton' ).click(function() {
             addChartIndex ++;
             var action = '';
-            var editValue = false
+            var editValue = false;
             // Check if action is edit and not add
             if ($(this).data('action') === 'edit'){
               action = 'edit-';
@@ -1718,7 +1717,7 @@
 
         // Adding new chart
         $('#edit-chart-form').on('submit', function (e) {
-          // e.preventDefault();
+          //
           var chart_id = $('#edit-chart-id').val();
           var indicator_id = $('#edit-chart-indicator-id').val();
           var target_id = $('#edit-chart-target-id').val();
@@ -1818,6 +1817,7 @@
 
                    $('#edit-chart-modal').modal('hide');
                    $('#edit-chart-form')[0].reset();
+                   e.preventDefault();
                }
            });
 
@@ -1951,6 +1951,7 @@
                                 {"mDataProp": "description"},
                                 {"sDefaultContent": "<a data-toggle='modal' href='#edit-indicator-modal' class='edit-modal-indicator' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-indicator'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"},
                                 {"sDefaultContent": target_id},
+                                {"sDefaultContent": sdg_id }
                             ],
                             "bPaginate": true,
                             "oLanguage": {
@@ -1985,7 +1986,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6 ],
+                                        "targets": [ 6, 7 ],
                                         className: 'hidden'
                                     }
                                 ],

@@ -470,7 +470,7 @@ class Unkt
 
         global $wpdb;
         $chart_id = htmlspecialchars($_POST["chart_id"]);
-        $sdg_text = htmlspecialchars($_POST["sdg_id"]);
+        $sdg_id = htmlspecialchars($_POST["sdg_id"]);
         $target_id = htmlspecialchars($_POST["target_id"]);
         $indicator_id = htmlspecialchars($_POST["indicator_id"]);
         $title = htmlspecialchars($_POST["title"]);
@@ -483,11 +483,10 @@ class Unkt
         $description = htmlspecialchars($_POST["description"]);
 
         $update = "
-           UPDATE wp_targets
+           UPDATE wp_charts
            SET sdg_id='$sdg_id',target_id='$target_id',indicator_id='$indicator_id', title='$title', target_year='$target_year', target_unit='$target_unit', target_value='$target_value', chart_unit='$chart_unit' ,chart_data='$chart_data', description='$description',label='$label',updated_date=NOW()
            WHERE id='$chart_id'";
         $wpdb->query($update);
-        echo "<script>console.log( 'Update::::','$update');</script>";
         $query_charts = $wpdb->get_results("
               SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
         echo json_encode($query_charts);
