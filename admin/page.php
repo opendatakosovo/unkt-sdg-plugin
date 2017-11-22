@@ -667,7 +667,6 @@
            <!-- end of charts modal -->
         </div>
 
-<!-- TODO -->
         <!-- Edit Chart Modal -->
         <div id="edit-chart-modal" class="modal fade" tabindex="-1">
            <div class="modal-dialog">
@@ -890,13 +889,13 @@
                                  </div>
                                  <!-- TOCHANGE -->
                                  <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="edit-chart-yes-no-value">Values</label>
+                                   <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
                                    <div class="col-xs-6">
                                      <label class="radio-inline">
-                                     <input type="radio" name="edit-chart-yes-no" value="yes" data-slug="value">Yes
+                                     <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
                                      </label>
                                      <label class="radio-inline">
-                                     <input type="radio" name="edit-chart-yes-no" value="no" data-slug="value">No
+                                     <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
                                      </label>
                                    </div>
                                  </div>
@@ -1008,7 +1007,7 @@
           });
 
       var manageUnits = {
-        addButton: function(unit, divId, editValue, editData = 0){
+        addButton: function(unit, divId, editValue, editData = 0, chartUnit = 0){
         // clone the div based on id
         var $template = $(divId),
             $clone    = $template
@@ -1034,13 +1033,17 @@
             // when action is editing, check if argument for edit values is given
             if (editValue === true){
               if (editData != 0){
-                // if slug is exists ad json key then add value for that imput
+                // if slug is exists ad json key then add value for that input
                 if(editData.hasOwnProperty(slug)){
-                  jElem.val(editData[slug]);
+                  if(chartUnit === 'yes-no' && name === 'chart-yes-no') {
+                    $('input[name=chart-' + chartUnit + '-' +  addChartIndex +'][value=' + editData[slug] + ']').attr('checked', true);
+                  }else{
+                    jElem.val(editData[slug]);
+                  }
                 };
               }
-
             }
+
 
             // Add generated attr
             jElem.attr('data-generated', addChartIndex);
@@ -1106,7 +1109,6 @@
                       insert = true;
 
                       if (chartUnit === 'yes-no' && slug != 'baseline'  && slug != 'label'){
-                        value = e.value;
                         if ( e.checked === false){
                           insert = false;
                         }
@@ -1893,7 +1895,7 @@
             }
         });
 
-        // Getting the chart data to edit TODO
+        // Getting the chart data to edit
         $('body').on('click', '.edit-modal-chart', function (e) {
             e.preventDefault();
             // Get the id of chart which we want to edit
@@ -1935,7 +1937,7 @@
                     var year = key;
                     $.each(value, function(index, inputJson) {
                       inputJson['baseline'] = parseInt(key);
-                      manageUnits.addButton(chartUnit, divId, true, inputJson )
+                      manageUnits.addButton(chartUnit, divId, true, inputJson, chartUnit);
                     });
 
                   });
