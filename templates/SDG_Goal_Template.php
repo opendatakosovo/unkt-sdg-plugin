@@ -39,6 +39,10 @@ if (isset($_GET)) {
 
         // console.log(data);
 
+        if(data.length <= 0) {
+           $('.tabs').hide();
+        }
+
         $('.sdg-title').text(sdg_title);
         $('.sdg-description').append('<span>');
         $('.sdg-description').append(sdgData[0]['s_text']);

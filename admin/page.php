@@ -108,7 +108,7 @@
         </table>
    </div>
 
-      <div class="col-md-12">
+      <div style="padding-left: 0px;" class="col-md-12">
          <!-- Add Indicator Modal -->
          <div id="add-indicator-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
@@ -190,11 +190,9 @@
          </div>
 
          <!-- Add Target Button -->
-         <div class="col-md-12" style="margin-top:20px">
-            <div class="col-md-2">
-                <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
-                   style="width:100%;">+ Add target</a>
-            </div>
+         <div style="padding: 0px" class="col-md-2">
+             <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
+                style="width:100%;">+ Add target</a>
          </div>
 
          <!-- Add Target Modal -->
@@ -1299,7 +1297,7 @@
                         this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
                         // Adding new row below the indicator row for inner table
-                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details');
+                        oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details chart-table');
                         // Rendering the chart data in inner table of selected indicator
                         oInnerInnerTable = $("#chartTable_" + indicator_id + '_' + target_id).dataTable({
                             "bJQueryUI": true,
@@ -1307,6 +1305,7 @@
                             "aaData": data,
                             "bSort": true, // disables sorting
                             "info": true,
+                            "paging": false,
                             "aoColumns": [
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
@@ -1420,13 +1419,14 @@
                             this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
                             // Adding new row below the target row for inner table
-                            oTable.fnOpen(nTr, fnFormatDetails(targets_id, detailsTableHtml), 'details');
+                            oTable.fnOpen(nTr, fnFormatDetails(targets_id, detailsTableHtml), 'details indicator-table');
 
                             // Rendering the indicator data in inner table
                             oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                                 "bJQueryUI": true,
                                 "bFilter": true,
                                 "aaData": data,
+                                "paging": false,
                                 "bSort": true, // disables sorting
                                 "info": true,
                                 "aoColumns": [
@@ -1510,7 +1510,7 @@
                 'columnDefs': [
                     {'max-width': '20%', 'targets': 0}
                  ],
-                "bPaginate": true,
+                "paging": false,
                 "order": [1, 'asc'],
                 "aoColumns": [
                     {
@@ -2320,7 +2320,7 @@
     }
 
     #exampleTable thead tr {
-        background: #00a0d2;
+        background: #0e4588;
     }
 
     #exampleTable thead tr th {

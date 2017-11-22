@@ -9,7 +9,7 @@ td:first-child {
    width: 100px!important;
 }
 
-.chartsTable thead tr {
+#chartsTable thead tr {
    background-color: #000;
 }
 
@@ -23,7 +23,25 @@ td {
     text-overflow: ellipsis;
 }
 
+td.indicator-table table thead tr {
+   background-color: #1c67c3!important;
+}
 
+.add-indicator {
+   background-color: #1c67c3!important;
+}
+
+td.chart-table table thead tr {
+   background-color: #2084ff!important;
+}
+
+.add-chart {
+   background-color: #2084ff!important;
+}
+
+#add-targets-link {
+   background-color: #0e4588;
+}
 
 .remove-indicator {
     padding: 15px;
