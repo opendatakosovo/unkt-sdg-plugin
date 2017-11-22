@@ -320,7 +320,8 @@ if (isset($_GET)) {
                   type: 'spline',
                   name: label + ' target',
                   data: ffTargetData,
-                  lineWidth: 7,
+                  lineWidth: 4,
+                  color: '#000e3e',
                   marker: {
                      lineWidth: 1,
                      lineColor: Highcharts.getOptions().colors[0],
@@ -442,7 +443,8 @@ if (isset($_GET)) {
                type: 'spline',
                name: 'Target',
                data: targetData,
-               lineWidth: 7,
+               lineWidth: 4,
+               color: '#000e3e',
                marker: {
                   lineWidth: 1,
                   lineColor: Highcharts.getOptions().colors[0],
