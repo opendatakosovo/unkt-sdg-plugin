@@ -386,10 +386,21 @@ if (isset($_GET)) {
             //    });
             // });
 
+            // console.log(targetValue);
+
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
 
-            // console.log(targetNumberPer);
+            // console.log(targetValue);
+
+            // If negative num
+            if(targetValue < 0) {
+               var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
+            } else {
+               var finalValue = targetNumberPer;
+            }
+
+            // console.log(finalValue);
 
             // dataTargetObjs.push({
             //    name: 'Target',
@@ -397,7 +408,7 @@ if (isset($_GET)) {
             // });
 
             // targetData.pop(targetData[0]);
-            targetData.push(Math.abs(targetNumberPer));
+            targetData.push(finalValue);
             // dataTargetObjs.map(dataTargetObj => {
             //    targetData.push(dataTargetObj);
             // });
@@ -547,7 +558,7 @@ if (isset($_GET)) {
             Object.keys(chart_data).forEach(baseline => {
                $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
                   <h4 style="margin-bottom: 10px">Baseline: ' + baseline + '</h4>\
-                  <p style="margin-bottom: 0px; font-size: 15px;">Label: '+ chart_data[baseline][0].label +'</p>\
+                  <p style="margin-bottom: 0px; font-size: 15px;">'+ chart_data[baseline][0].label +'</p>\
                   <h1 style="text-transform: uppercase;"><b>'+ chart_data[baseline][0].value +'</b></h1>\
                ');
             });
