@@ -67,7 +67,7 @@
 
    <!-- Chart Table -->
    <div style="display:none" id="div-sub-sub-table" style="background:#337ab7;height:auto;">
-        <table id="chartsTable" class="table-bordered">
+        <table id="chartsTable" class="table-bordered chart-table">
             <thead>
             <tr>
                 <th>ID</th>
@@ -280,7 +280,11 @@
                                 <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
                                        placeholder="Target">
                             </div>
+<<<<<<< HEAD
                             <input type="hidden" id="edit-target-id"/>
+=======
+                            <input id="edit-target-id"/>
+>>>>>>> 6a793db39b6770325ac3a2e75eff84f804864489
                             <div class="form-group">
                                 <label for='edit-sdg-type'>SDG</label>
                                 <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
@@ -1276,7 +1280,6 @@
                 this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
             }
             // GET Request for rendering chart table
-
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'GET',
@@ -1440,6 +1443,13 @@
                                     {"sDefaultContent": targets_id},
                                     {"sDefaultContent": s_id},
                                 ],
+                                columnDefs: [{
+                                   render: function (data, type, full, meta) {
+                                       return "<div class='text-wrap width-200'>" + data + "</div>";
+                                   },
+                                   targets: 0
+                                  }
+                               ],
                                 "bPaginate": true,
                                 "oLanguage": {
                                     "sInfo": "_TOTAL_ entries"
@@ -1496,6 +1506,9 @@
 
                 "bJQueryUI": true,
                 "aaData": newRowData,
+                'columnDefs': [
+                    {'max-width': '20%', 'targets': 0}
+                 ],
                 "bPaginate": true,
                 "order": [1, 'asc'],
                 "aoColumns": [
@@ -1769,6 +1782,9 @@
                        "bJQueryUI": true,
                        "bFilter": true,
                        "aaData": data,
+                       'columnDefs': [
+                           {'max-width': '20%', 'targets': 0}
+                        ],
                        "bSort": true, // disables sorting
                        "info": true,
                        "aoColumns": [
@@ -1869,6 +1885,9 @@
                         oInnerTable = $("#exampleTable_" + targets_id).dataTable({
                             "bFilter": true,
                             "aaData": data,
+                            'columnDefs': [
+                                {'max-width': '20%', 'targets': 0}
+                             ],
                             "bSort": true, // disables sorting
                             "aoColumns": [
                                 {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
@@ -1957,6 +1976,9 @@
                         oInnerTable = $("#exampleTable_" + target_id).dataTable({
                             "bJQueryUI": true,
                             "aaData": data,
+                            'columnDefs': [
+                                {'max-width': '20%', 'targets': 0}
+                             ],
                             "bSort": true, // disables sorting
                             "aoColumns": [
                                 {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
@@ -2258,6 +2280,8 @@
 
         var targets_array = <?php echo json_encode($query_targets); ?>;
     });
+
+
 </script>
 
 <style>
