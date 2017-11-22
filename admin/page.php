@@ -1352,7 +1352,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 10,11,12 ],
+                                        "targets": [ 0,10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1469,7 +1469,7 @@
                                 ],
                                 "columnDefs": [
                                         {
-                                            "targets": [ 6,7 ],
+                                            "targets": [ 1,6,7 ],
                                             className: 'hidden'
                                         }
                                     ],
@@ -1702,7 +1702,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 10,11,12 ],
+                                   "targets": [ 0,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1809,7 +1809,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 10,11,12 ],
+                                   "targets": [ 0,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1903,7 +1903,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6,7 ],
+                                        "targets": [ 1,6,7 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1991,7 +1991,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6,7 ],
+                                        "targets": [ 1,6,7 ],
                                         className: 'hidden'
                                     }
                                 ],
