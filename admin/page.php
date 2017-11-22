@@ -1741,7 +1741,7 @@
                    $('#add-chart-form')[0].reset();
                }
            });
-          event.preventDefault();
+          e.preventDefault();
         });
 
         // Adding new chart
@@ -2128,82 +2128,47 @@
         // Remove target
         $('body').on('click', '.remove-targets', function (e) {
             e.preventDefault();
-            var targets_id = $($(this).parent().parent().children()[1]).text();
-            var check_if_is_empty = 0;
-            $.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: {'id': targets_id, 'action': 'check_targets_is_empty'},
-                success: function (data) {
-                    check_if_is_empty = data['a'];
-                    if (check_if_is_empty == 1) {
-                        BootstrapDialog.show({
-                            message: 'The targets has measurements, are you sure you want to delete',
-                            buttons: [{
-                                icon: 'glyphicon glyphicon-send',
-                                label: 'OK',
-                                cssClass: 'btn-primary',
-                                autospin: false,
-                                action: function (dialogRef) {
-                                    $.ajax({
-                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                                        type: 'POST', //or POST
-                                        dataType: 'json',
-                                        data: {'id': targets_id, 'action': 'remove_targets_measurements'},
-                                        success: function (data) {
-                                            oTable.fnClearTable(0);
-                                            oTable.fnAddData(data);
-                                            oTable.fnDraw();
-                                        }
-                                    });
-                                    setTimeout(function () {
-                                        dialogRef.close();
-                                    }, 100);
-                                }
-                            }, {
-                                label: 'Close',
-                                action: function (dialogRef) {
-                                    dialogRef.close();
-                                }
-                            }]
-                        });
-                    } else {
-                        BootstrapDialog.show({
-                            message: 'Are you sure you want to delete the targets?',
-                            buttons: [{
-                                icon: 'glyphicon glyphicon-send',
-                                label: 'OK',
-                                cssClass: 'btn-primary',
-                                autospin: false,
-                                action: function (dialogRef) {
-                                    $.ajax({
-                                        url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                                        type: 'POST', //or POST
-                                        dataType: 'json',
-                                        data: {'id': targets_id, 'action': 'remove_targets'},
-                                        success: function (data) {
-                                            oTable.fnClearTable(0);
-                                            oTable.fnAddData(data);
-                                            oTable.fnDraw();
+            var row = $($(this).parent().parent());
+            var target_id = $($(this).parent().parent().children()[1]).text();
 
-                                        }
-                                    });
-                                    setTimeout(function () {
-                                        dialogRef.close();
-                                    }, 100);
-                                }
-                            }, {
-                                label: 'Close',
-                                action: function (dialogRef) {
-                                    dialogRef.close();
-                                }
-                            }]
+            BootstrapDialog.show({
+                    title: 'Confirm Delete',
+                    type: BootstrapDialog.TYPE_DANGER,
+                    message: 'When you delete a specific target of the SDG, all of other data including indicators and charts will be erased. Are you sure you want to delete this target?',
+                    buttons: [{
+                    icon: 'glyphicon glyphicon-remove',
+                    label: 'Delete',
+                    cssClass: 'btn btn-danger',
+                    autospin: false,
+                    action: function (dialogRef) {
+                        $.ajax({
+                            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                            type: 'POST', //or POST
+                            dataType: 'json',
+                            data: {'id': target_id, 'action': 'remove_targets'},
+                            success: function (data) {
+                              oTable.fnClearTable(0);
+                              if (!jQuery.isEmptyObject(data)){
+                                  oTable.fnAddData(data);
+                              }
+                              oTable.fnDraw();
+
+                            }
                         });
+                        setTimeout(function () {
+                            dialogRef.close();
+                        }, 100);
                     }
-                }
+                }, {
+                    label: 'Close',
+                    action: function (dialogRef) {
+                        dialogRef.close();
+                    }
+                }]
             });
-        });
+         });
+
+
 
         // Remove indicator
         $('body').on('click', '.remove-indicator', function (e) {
@@ -2212,15 +2177,17 @@
             var indicator_id = $($(this).parent().parent().children()[1]).text();
 
             BootstrapDialog.show({
-                message: 'Are you sure you want to delete the indicator?',
-                buttons: [{
-                    icon: 'glyphicon glyphicon-send',
-                    label: 'OK',
-                    cssClass: 'btn-primary',
+                  title: 'Confirm Delete',
+                  type: BootstrapDialog.TYPE_DANGER,
+                  message: 'When you delete a specific indicator, all of other data including charts will be erased. Are you sure you want to delete this indicator?',
+                  buttons: [{
+                  icon: 'glyphicon glyphicon-remove',
+                  label: 'Delete',
+                  cssClass: 'btn btn-danger',
                     autospin: false,
                     action: function (dialogRef) {
                         $.ajax({
-                            url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
+                            url: "<?php echo admin_url('admin-ajax.php'); ?>",
                             type: 'POST', //or POST
                             dataType: 'json',
                             data: {
@@ -2253,11 +2220,13 @@
              var indicator_id = $($(this).parent().parent().children()[11]).text();
              var sdg_short_name = $($(this).parent().parent().children()[12]).text();
              BootstrapDialog.show({
-                 message: 'Are you sure you want to delete the chart?',
+                 title: 'Confirm Delete',
+                 type: BootstrapDialog.TYPE_DANGER,
+                 message: 'Are you sure you want to delete this chart?',
                  buttons: [{
-                     icon: 'glyphicon glyphicon-send',
-                     label: 'OK',
-                     cssClass: 'btn-primary',
+                     icon: 'glyphicon glyphicon-remove',
+                     label: 'Delete',
+                     cssClass: 'btn btn-danger',
                      autospin: false,
                      action: function (dialogRef) {
                          $.ajax({
