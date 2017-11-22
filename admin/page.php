@@ -1130,9 +1130,14 @@
         // Hide all taget unit fields and show them based on selected unit
         $('.target-unit-select').hide();
         $('#target-unit-select').change(function() {
-        $('.target-unit-select').hide();
-        $('.target-unit-' + $('option:selected', this).data('show')).show();
-      });
+          $('.target-unit-select').hide();
+          $('.target-unit-' + $('option:selected', this).data('show')).show();
+        });
+        // Hide all edit taget unit fields and show them based on selected unit
+        $('#edit-target-unit-select').change(function() {
+          $('.edit-target-unit-select').hide();
+          $('.edit-target-unit-' + $('option:selected', this).data('show')).show();
+        });
 
         // when chart modal is closed remove all added fields and hide displayed divs
         $('#add-chart-modal').on('hidden.bs.modal', function () {
@@ -1347,7 +1352,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [  ], //10,11,12
+                                        "targets": [ 10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1697,7 +1702,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [  ], //10,11,12
+                                   "targets": [ 10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1706,7 +1711,7 @@
                    $(this).attr('id', indicator_id);
                    // Updating the info of datatable with the button to create new indicator
                    $('tr.chart-details .dataTables_info').html('');
-                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_id  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
 
                    $('#add-chart-modal').modal('hide');
                    $('#add-chart-form')[0].reset();
@@ -1804,7 +1809,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [  ], //10,11,12
+                                   "targets": [ 10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1813,14 +1818,14 @@
                    $(this).attr('id', indicator_id);
                    // Updating the info of datatable with the button to create new indicator
                    $('tr.chart-details .dataTables_info').html('');
-                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_id  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
 
                    $('#edit-chart-modal').modal('hide');
                    $('#edit-chart-form')[0].reset();
-                   e.preventDefault();
+
                }
            });
-
+          e.preventDefault();
         });
 
 
@@ -1986,7 +1991,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 6, 7 ],
+                                        "targets": [ 6,7 ],
                                         className: 'hidden'
                                     }
                                 ],
