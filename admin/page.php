@@ -1280,8 +1280,9 @@
                 dataType: 'json',
                 data: {'id': indicator_id, 'target_id': target_id, 'action': 'get_target_indicator_charts'},
                 success: function (data) {
+                    var sdg_id;
                     if ( !data ){
-                      var sdg_id = data[0].sdg_id;
+                       sdg_id = data[0].sdg_id;
                     }
                     // Checking if table is closed or opened
                     if (oInnerTable.fnIsOpen(nTr)) {
@@ -1537,7 +1538,13 @@
                         }
                     }
                 ],
-                "aaSorting": [[7, 'desc']]
+                "aaSorting": [[7, 'desc']],
+                "columnDefs": [
+                        {
+                            "targets": [ 1],
+                            className: 'hidden'
+                        }
+                    ],
             });
         }
 
