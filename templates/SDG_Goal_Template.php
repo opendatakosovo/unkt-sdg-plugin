@@ -384,6 +384,10 @@ if (isset($_GET)) {
 
             // Calculate percentage of chart data
             targetNumberPer = Math.round(targetValue / 100 * targetData[targetData.length-1]);
+            // targetNumberPer = Math.abs(targetNumberPer);
+
+
+            // console.log(targetNumberPer);
 
             // dataTargetObjs.push({
             //    name: 'Target',
@@ -391,7 +395,7 @@ if (isset($_GET)) {
             // });
 
             // targetData.pop(targetData[0]);
-            targetData.push(targetNumberPer);
+            targetData.push(Math.abs(targetNumberPer));
             // dataTargetObjs.map(dataTargetObj => {
             //    targetData.push(dataTargetObj);
             // });
@@ -403,7 +407,7 @@ if (isset($_GET)) {
             targetData.push(targetValue);
          }
 
-         // console.log(targetData);
+         console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
          maxTargetValueString = '';
