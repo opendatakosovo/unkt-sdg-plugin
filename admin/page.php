@@ -113,7 +113,7 @@
          <div id="add-indicator-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header indicator-color">
                         <button class="close" type="button" data-dismiss="modal">x</button>
                         <h4 class="modal-title">Add Indicator</h4>
                     </div>
@@ -138,7 +138,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary"
+                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary indicator-color"
                                        id="add-measuremnt-button">
 
                             </div><!-- /.modal-content -->
@@ -153,7 +153,7 @@
          <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header indicator-color">
                         <button class="close" type="button" data-dismiss="modal">x</button>
                         <h4 class="modal-title">Edit Indicator</h4>
                     </div>
@@ -179,7 +179,7 @@
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                                 <input type="submit" value="Save changes" name="edit-indicator"
-                                       class="btn btn-primary" id="edit-indicator-button">
+                                       class="btn btn-primary indicator-color" id="edit-indicator-button">
 
                             </div><!-- /.modal-content -->
                         </form>
@@ -199,7 +199,7 @@
          <div id="add-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                     <div class="modal-header">
+                     <div class="modal-header target-color">
                         <button class="close" type="button" data-dismiss="modal">x</button>
                         <h4 class="modal-title">Add New Target</h4>
                      </div>
@@ -255,7 +255,7 @@
 
                            <div class="modal-footer">
                               <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary" id="add-targets-button">
+                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color" id="add-targets-button">
                            </div>
                         </form>
                      </div>
@@ -267,7 +267,7 @@
          <div id="edit-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header target-color" >
                         <button class="close" type="button" data-dismiss="modal">x</button>
                         <h4 class="modal-title">Edit target</h4>
                     </div>
@@ -322,8 +322,8 @@
                             </div>
 
                             <div class="modal-footer">
-                             <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                             <input type="submit" value="Save changes" name="createInd" class="btn btn-primary"
+                             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                             <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color"
                                     id="edit-targets-button">
 
                             </div><!-- /.modal-content -->
@@ -339,7 +339,7 @@
         <div id="add-chart-modal" class="modal fade" tabindex="-1">
            <div class="modal-dialog">
                <div class="modal-content">
-                   <div class="modal-header">
+                   <div class="modal-header chart-color">
                        <button class="close" type="button" data-dismiss="modal">x</button>
                        <h4 class="modal-title">Add Chart</h4>
                    </div>
@@ -653,7 +653,7 @@
                       </div>
                           <div class="modal-footer">
                               <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                              <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary"
+                              <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary chart-color"
                                      id="add-chart-button">
 
                           </div><!-- /.modal-content -->
@@ -917,7 +917,7 @@
                             </div>
                         </div>
                             <div class="modal-footer">
-                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                                 <input type="submit" value="Save changes" name="edit-chart-button" class="btn btn-primary" id="edit-chart-button">
                             </div>
                             <!-- /.modal-content -->
@@ -932,6 +932,29 @@
       </div>
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="alert-success-modal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"> Information! </h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success">
+          <strong>Success!</strong> Record has been successfully updated.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 <script type="text/javascript" charset="utf-8">
 
@@ -1213,6 +1236,10 @@
                         oTable.fnAddData(data);
                         oTable.fnDraw();
                         $('#edit-targets-modal').modal('hide');
+                        $('#alert-success-modal').modal('show');
+                        setTimeout(function(){
+                           $('#alert-success-modal').modal('hide')
+                       }, 3000);
                     }
                 });
             }
@@ -1849,12 +1876,15 @@
 
                    $('#edit-chart-modal').modal('hide');
                    $('#edit-chart-form')[0].reset();
-
+                   $('#alert-success-modal').modal('show');
+                   setTimeout(function(){
+                      $('#alert-success-modal').modal('hide')
+                  }, 3000);
                }
+
            });
           e.preventDefault();
         });
-
 
         // Adding new Indicator
         $('#add-indicator-form').validate({
@@ -1947,6 +1977,9 @@
                         $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + targets_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#add-indicator-modal').modal('hide');
                         $('#add-indicator-form')[0].reset();
+                        setTimeout(function() {
+                            $('#').fadeOut('fast');
+                        }, 1000);
 
                     }
                 });
@@ -2043,6 +2076,10 @@
                         $('tr.details .dataTables_info').append("<a data-toggle='modal' id='" + target_id + "' data-sdg='" + sdg_id + "' href='#add-indicator-modal' class='add-indicator btn btn-primary'>+ Add indicator</a>");
                         $('#edit-indicator-modal').modal('hide');
                         $('.form-control').val('');
+                        $('#alert-success-modal').modal('show');
+                        setTimeout(function(){
+                           $('#alert-success-modal').modal('hide')
+                       }, 3000);
                     }
                 });
             }
@@ -2325,6 +2362,15 @@
     }
     .edit-target-unit-select{
       display: none;
+    }
+    .target-color{
+      background: #0e4588 !important;
+    }
+    .indicator-color{
+      background: #1c67c3 !important;
+    }
+    .chart-color{
+      background: #2084ff !important;
     }
 </style>
 <script>
