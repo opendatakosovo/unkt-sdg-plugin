@@ -227,6 +227,7 @@ if (isset($_GET)) {
          // Target data
          let targetUnit = dataChart.target_unit,
              targetValue = dataChart.target_value.value,
+             targetRatioFirstVal = dataChart.target_value.value_a,
              targetRatioValue = dataChart.target_value.value_b,
              currentTargetVal = dataChart.target_value.current_value,
              maxTargetVal = dataChart.target_value.max_value,
@@ -267,20 +268,23 @@ if (isset($_GET)) {
          Object.keys(chart_data).forEach(baseline => {
             baselines.push(baseline);
 
+
             // Grouping together values per each same labels for baselines in order
             labelArray.map((item, i) => {
                chart_data[baseline].map((element, j) => {
                   if(chart_data[baseline][j].label == item){
-                     obj[chart_data[baseline][j].label].push(parseInt(chart_data[baseline][j].value));
+
+                     obj[chart_data[baseline][j].label].push(parseFloat(chart_data[baseline][j].value));
                   }
                });
             });
+
 
             // Grouping together values per each baseline
             if(targetUnit != 'ratio') {
                   chart_data[baseline].map(columnData => {
                   // console.log(parseInt(columnData.value));
-                  targetBaselinesData[baseline].push(parseInt(columnData.value));
+                  targetBaselinesData[baseline].push(parseFloat(columnData.value));
                });
             }
          });
@@ -311,7 +315,7 @@ if (isset($_GET)) {
                   ffTargetData.push(tarObj);
                });
 
-               let finalTargetValue = Math.round(finalTargetData[finalTargetData.length - 1]/targetRatioValue);
+               let finalTargetValue = Math.round((finalTargetData[finalTargetData.length - 1] * targetRatioFirstVal ) / targetRatioValue);
                ffTargetData.push({'name': label + ' target', y: finalTargetValue});
 
                let ratioTargetSpline = {
@@ -362,13 +366,13 @@ if (isset($_GET)) {
             if(targetValue == 'increasing') {
                let incValue = {
                   name: 'Increasing',
-                  y: targetData[0].y + Math.round(targetData[0].y)
+                  y: targetData[0].y + Math.round(targetData[0].y).toFixed(2)
                }
                targetData.push(incValue);
             } else if (targetValue == 'decreasing') {
                let decValue = {
                   name: 'Decreasing',
-                  y: targetData[0].y - Math.round(targetData[0].y)
+                  y: targetData[0].y - Math.round(targetData[0].y).toFixed(2)
                }
                targetData.push(decValue);
             }
@@ -383,9 +387,7 @@ if (isset($_GET)) {
             // });
 
             // Calculate percentage of chart data
-            targetNumberPer = Math.round(targetValue / 100 * targetData[targetData.length-1]);
-            // targetNumberPer = Math.abs(targetNumberPer);
-
+            targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
 
             // console.log(targetNumberPer);
 
@@ -407,14 +409,13 @@ if (isset($_GET)) {
             targetData.push(targetValue);
          }
 
-         console.log(targetData);
+         // console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
          maxTargetValueString = '';
          if (targetUnit == 'comperative') {
             maxTargetValueString = ' per ' + maxTargetVal;
          }
-
 
          // Making the target line
          if(targetUnit == 'ratio') {
