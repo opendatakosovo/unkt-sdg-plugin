@@ -1427,7 +1427,12 @@
                                 "bSort": true, // disables sorting
                                 "info": true,
                                 "aoColumns": [
-                                    {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                                    // {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                                    {
+                                       "mDataProp": null,
+                                       "sClass": "control text-center",
+                                       "sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+                                   },
                                     {"mDataProp": "id"},
                                     {"mDataProp": "title"},
                                     {"mDataProp": "source"},
@@ -1883,7 +1888,11 @@
                              ],
                             "bSort": true, // disables sorting
                             "aoColumns": [
-                                {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                                {
+                                   "mDataProp": null,
+                                   "sClass": "control text-center",
+                                   "sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+                               },
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
                                 {"mDataProp": "source"},
@@ -1974,7 +1983,12 @@
                              ],
                             "bSort": true, // disables sorting
                             "aoColumns": [
-                                {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                                // {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
+                                {
+                                   "mDataProp": null,
+                                   "sClass": "control text-center",
+                                   "sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+                               },
                                 {"mDataProp": "id"},
                                 {"mDataProp": "title"},
                                 {"mDataProp": "source"},
