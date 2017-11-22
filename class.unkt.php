@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: partin
- * Date: 3/15/17
- * Time: 2:24 PM
- */
 class Unkt
 {
     private $my_plugin_screen_name;
@@ -42,15 +35,15 @@ class Unkt
             add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator')); //add indicator
             add_action('check_size_of_indicator', array('Unkt', 'check_size_of_indicator'));
             add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
-            add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart')); //remove chart
-            add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected')); //edit chart
-            add_action('wp_ajax_update_chart', array('Unkt', 'update_chart')); //update chart
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
             add_action('wp_ajax_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
             add_action('wp_ajax_add_chart', array('Unkt', 'add_chart'));
+            add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart'));
+            add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected'));
+            add_action('wp_ajax_update_chart', array('Unkt', 'update_chart'));
         }
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
@@ -494,7 +487,7 @@ class Unkt
            SET sdg_id='$sdg_id',target_id='$target_id',indicator_id='$indicator_id', title='$title', target_year='$target_year', target_unit='$target_unit', target_value='$target_value', chart_unit='$chart_unit' ,chart_data='$chart_data', description='$description',label='$label',updated_date=NOW()
            WHERE id='$chart_id'";
         $wpdb->query($update);
-
+        echo "<script>console.log( 'Update::::','$update');</script>";
         $query_charts = $wpdb->get_results("
               SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
         echo json_encode($query_charts);
