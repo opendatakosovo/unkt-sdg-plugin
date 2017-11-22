@@ -423,9 +423,12 @@ if (isset($_GET)) {
          // console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
-         maxTargetValueString = '';
+         let maxTargetValueString = '';
          if (targetUnit == 'comperative') {
+            // console.log(targetUnit);
             maxTargetValueString = ' per ' + maxTargetVal;
+         } else {
+            maxTargetValueString = '';
          }
 
          // Making the target line
