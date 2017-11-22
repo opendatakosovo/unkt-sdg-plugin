@@ -37,6 +37,8 @@ if (isset($_GET)) {
         var sdg_text = document.createTextNode(sdgData[0]['s_text']);
         var sdg_title = sdgData[0]['long_name'];
 
+        // console.log(data);
+
         $('.sdg-title').text(sdg_title);
         $('.sdg-description').append('<span>');
         $('.sdg-description').append(sdgData[0]['s_text']);
@@ -86,7 +88,8 @@ if (isset($_GET)) {
          for(var i = 0; i < data[key].length; i++) {
             $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
-               <p style='font-size: 15px;'>" + data[key][i].indicator_description + "</p>\
+               <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
+               <p style='font-size: 15px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
             </div>");
          }
          counter++;
@@ -158,6 +161,7 @@ if (isset($_GET)) {
                description: currentObj.description,
                sdg_id: currentObj.sdg_id,
                indicator_id: currentObj.indicator_id,
+               indicator_source: currentObj.indicator_source,
                target_id: currentObj.target_id,
                target_year: currentObj.target_year,
                target_unit: currentObj.target_unit,
@@ -528,8 +532,6 @@ if (isset($_GET)) {
             // console.log(targetValue);
 
             Object.keys(chart_data).forEach(baseline => {
-               console.log(baseline);
-               console.log(chart_data[baseline]);
 
                $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
                   <h4 style="margin-bottom: 0px">Baseline: ' + baseline + '</h4><br/>\
