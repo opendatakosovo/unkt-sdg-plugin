@@ -33,3 +33,11 @@ a.edit-modal-measurement {
 .edit-targets{
     padding: 10px;
 }
+
+.modal-dialog {
+   width: 730px!important;
+}
+
+/*@media (min-width: 768px) {
+
+}*/

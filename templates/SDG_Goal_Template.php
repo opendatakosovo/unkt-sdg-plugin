@@ -89,9 +89,7 @@ if (isset($_GET)) {
             $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
-               <hr style='width: 50%; float: left; border-top: 1px solid rgb(255, 255, 255); display: block;'/><br />\
-               <p style='display: inline-block; font-size: 15px; margin-bottom:0px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
-               <hr style='display: inline-block; width: 50%; float: left; border-top: 1px solid rgb(255, 255, 255);'/><br /><br />\
+               <p style='border-bottom: 2px solid #fff; border-top: 2px solid #fff; padding: 10px 170px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
             </div>");
          }
          counter++;
@@ -207,7 +205,7 @@ if (isset($_GET)) {
          console.log(dataChartObj);
          $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
             <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
-            </div><br/><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
+            </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
          prepareAndRenderChart(dataChartObj);
       }
 
@@ -268,7 +266,6 @@ if (isset($_GET)) {
          Object.keys(chart_data).forEach(baseline => {
             baselines.push(baseline);
 
-
             // Grouping together values per each same labels for baselines in order
             labelArray.map((item, i) => {
                chart_data[baseline].map((element, j) => {
@@ -278,7 +275,6 @@ if (isset($_GET)) {
                   }
                });
             });
-
 
             // Grouping together values per each baseline
             if(targetUnit != 'ratio') {
@@ -322,7 +318,8 @@ if (isset($_GET)) {
                   type: 'spline',
                   name: label + ' target',
                   data: ffTargetData,
-                  lineWidth: 7,
+                  lineWidth: 4,
+                  color: '#000e3e',
                   marker: {
                      lineWidth: 1,
                      lineColor: Highcharts.getOptions().colors[0],
@@ -359,24 +356,24 @@ if (isset($_GET)) {
             });
          }
 
-         // console.log(targetUnit);
+         // console.log(targetData);
 
          //Pushing the target value in targetData
          if(targetUnit == 'increasing-decreasing') {
             if(targetValue == 'increasing') {
                let incValue = {
                   name: 'Increasing',
-                  y: targetData[0].y + Math.round(targetData[0].y).toFixed(2)
+                  y: targetData[targetData.length-1].y + parseInt(Math.round(targetData[0].y).toFixed(2))
                }
                targetData.push(incValue);
             } else if (targetValue == 'decreasing') {
                let decValue = {
                   name: 'Decreasing',
-                  y: targetData[0].y - Math.round(targetData[0].y).toFixed(2)
+                  y: targetData[targetData.length-1].y - parseInt(Math.round(targetData[0].y).toFixed(2))
                }
                targetData.push(decValue);
             }
-         } else if (targetUnit == 'percentage') {
+         } else if (targetUnit == 'percentage' && chartUnit == 'number') {
             // Format the target data to hide other target data tooltip
             let dataTargetObjs = [];
             // targetData.map(targetValue => {
@@ -386,10 +383,21 @@ if (isset($_GET)) {
             //    });
             // });
 
+            // console.log(targetData);
+
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
 
-            // console.log(targetNumberPer);
+            // console.log(targetValue);
+
+            // If negative num
+            if(targetValue < 0){
+               var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
+            } else {
+               var finalValue = targetNumberPer;
+            }
+
+            // console.log(finalValue);
 
             // dataTargetObjs.push({
             //    name: 'Target',
@@ -397,7 +405,7 @@ if (isset($_GET)) {
             // });
 
             // targetData.pop(targetData[0]);
-            targetData.push(Math.abs(targetNumberPer));
+            targetData.push(finalValue);
             // dataTargetObjs.map(dataTargetObj => {
             //    targetData.push(dataTargetObj);
             // });
@@ -409,12 +417,18 @@ if (isset($_GET)) {
             targetData.push(targetValue);
          }
 
-         // console.log(targetData);
+         console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
-         maxTargetValueString = '';
+         let maxTargetValueString = '';
          if (targetUnit == 'comperative') {
+            // console.log(targetUnit);
             maxTargetValueString = ' per ' + maxTargetVal;
+         } else if (targetUnit == 'percentage' && chartUnit == 'percentage') {
+            maxTargetValueString = ' %';
+         }
+         else {
+            maxTargetValueString = '';
          }
 
          // Making the target line
@@ -427,7 +441,8 @@ if (isset($_GET)) {
                type: 'spline',
                name: 'Target',
                data: targetData,
-               lineWidth: 7,
+               lineWidth: 4,
+               color: '#000e3e',
                marker: {
                   lineWidth: 1,
                   lineColor: Highcharts.getOptions().colors[0],
@@ -437,7 +452,6 @@ if (isset($_GET)) {
             // Pushing the targetSpline into series
             series.push(targetSpline);
          }
-
 
          // Adding the target year to the baselines array
          baselines.push(targetYear);
@@ -547,7 +561,7 @@ if (isset($_GET)) {
             Object.keys(chart_data).forEach(baseline => {
                $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
                   <h4 style="margin-bottom: 10px">Baseline: ' + baseline + '</h4>\
-                  <p style="margin-bottom: 0px; font-size: 15px;">Label: '+ chart_data[baseline][0].label +'</p>\
+                  <p style="margin-bottom: 0px; font-size: 15px;">'+ chart_data[baseline][0].label +'</p>\
                   <h1 style="text-transform: uppercase;"><b>'+ chart_data[baseline][0].value +'</b></h1>\
                ');
             });
