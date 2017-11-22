@@ -110,7 +110,7 @@
 
       <div class="col-md-12">
          <!-- Add Indicator Modal -->
-         <div id="add-indicator-modal" class="modal fade" tabindex="-1"> <!-- old: add-measurement-modal -->
+         <div id="add-indicator-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -118,9 +118,9 @@
                         <h4 class="modal-title">Add Indicator</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="add-indicator-form" name="add-indicator"> <!-- add-measurement-form -->
-                            <input id="indicator-target-id"/> <!-- measurement_targets_id -->
-                            <input id="indicator-sdg"/><!-- measurement_sdg  -->
+                        <form id="add-indicator-form" name="add-indicator">
+                            <input type="hidden" id="indicator-target-id"/>
+                            <input type="hidden" id="indicator-sdg"/>
                             <div class="form-group">
                                 <label for="title-indicator">Title</label>
                                 <input name="title-indicator" type="text" class="form-control"
@@ -159,8 +159,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="edit-indicator-form" name="edit-indicator">
-                            <input type="" id="edit-indicator-id"/> <!-- old: indicator_targets_id -->
-                            <input type="" id="edit-indicator-sdg"/> <!-- old: measurement_sdg -->
+                            <input type="hidden" id="edit-indicator-id"/>
+                            <input type="hidden" id="edit-indicator-sdg"/>
                             <div class="form-group">
                                 <label for="title-indicator">Name</label>
                                 <input name="title-indicator" type="text" class="form-control"
@@ -280,7 +280,7 @@
                                 <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
                                        placeholder="Target">
                             </div>
-                            <input id="edit-target-id"/>
+                            <input type="hidden" id="edit-target-id"/>
                             <div class="form-group">
                                 <label for='edit-sdg-type'>SDG</label>
                                 <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
@@ -347,9 +347,9 @@
                    </div>
                    <div class="modal-body">
                      <form id="add-chart-form" class="form-horizontal" method="POST">
-                        <input id="chart-target-id" >
-                        <input id="chart-indicator-id">
-                        <input id="chart-sdg-short-name">
+                        <input type="hidden" id="chart-target-id">
+                        <input type="hidden" id="chart-indicator-id">
+                        <input type="hidden" id="chart-sdg-short-name">
                        <div class="form-group">
                          <label class="col-xs-3 control-label left">Title</label>
                          <div class="col-xs-9">
@@ -677,10 +677,10 @@
                    </div>
                    <div class="modal-body">
                        <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form" method="POST">
-                         <input id="edit-chart-id">
-                         <input id="edit-chart-target-id">
-                         <input id="edit-chart-indicator-id">
-                         <input id="edit-chart-sdg-id">
+                         <input type="hidden" id="edit-chart-id">
+                         <input type="hidden" id="edit-chart-target-id">
+                         <input type="hidden" id="edit-chart-indicator-id">
+                         <input type="hidden" id="edit-chart-sdg-id">
                          <div class="form-group">
                            <label class="col-xs-3 control-label left">Title</label>
                            <div class="col-xs-9">
@@ -1047,9 +1047,12 @@
             jElem.attr('data-generated', addChartIndex);
         });
       },
-      targetValue: function(targetUnit){
+      targetValue: function(targetUnit, action){
           var targetValue = {};
-          $('.target-unit-' + targetUnit + " :input").each(function(e){
+          if(action === 'edit'){
+            action = 'edit-';
+          }
+          $('.' + action + 'target-unit-' + targetUnit + " :input").each(function(e){
             var slug = $(this).data("slug");
             var value = $(this).val();
             if(parseInt(value,10).toString() === value) {
@@ -1352,7 +1355,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 0,10,11,12 ],
+                                        "targets": [ 0,4,6,10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1555,7 +1558,7 @@
                 "aaSorting": [[7, 'desc']],
                 "columnDefs": [
                         {
-                            "targets": [ 1],
+                            "targets": [ 1 ],
                             className: 'hidden'
                         }
                     ],
@@ -1656,7 +1659,7 @@
                    'title': $('#title-chart').val(),
                    'target_year': $("#target-year").val(),
                    'target_unit': targetUnit,
-                   'target_value': manageUnits.targetValue(targetUnit),
+                   'target_value': manageUnits.targetValue(targetUnit, ''),
                    'chart_unit': chartUnit,
                    'chart_data': manageUnits.chartData(chartUnit),
                    'description': $("#chart-description").val(),
@@ -1723,7 +1726,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 0,10,11,12 ],
+                                   "targets": [ 0,4,6,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1763,7 +1766,7 @@
                    'title': $('#edit-title-chart').val(),
                    'target_year': $("#edit-target-year").val(),
                    'target_unit': targetUnit,
-                   'target_value': manageUnits.targetValue(targetUnit),
+                   'target_value': manageUnits.targetValue(targetUnit, 'edit'),
                    'chart_unit': chartUnit,
                    'chart_data': manageUnits.chartData(chartUnit),
                    'description': $("#edit-chart-description").val(),
@@ -1833,7 +1836,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 0,10,11,12 ],
+                                   "targets": [ 0,4,6,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
