@@ -280,11 +280,7 @@
                                 <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
                                        placeholder="Target">
                             </div>
-<<<<<<< HEAD
                             <input type="hidden" id="edit-target-id"/>
-=======
-                            <input id="edit-target-id"/>
->>>>>>> 6a793db39b6770325ac3a2e75eff84f804864489
                             <div class="form-group">
                                 <label for='edit-sdg-type'>SDG</label>
                                 <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
@@ -1359,7 +1355,7 @@
                             ],
                             "columnDefs": [
                                     {
-                                        "targets": [ 0,10,11,12 ],
+                                        "targets": [ 0,4,6,10,11,12 ],
                                         className: 'hidden'
                                     }
                                 ],
@@ -1725,7 +1721,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 0,10,11,12 ],
+                                   "targets": [ 0,4,6,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
@@ -1835,7 +1831,7 @@
                        ],
                        "columnDefs": [
                                {
-                                   "targets": [ 0,10,11,12 ],
+                                   "targets": [ 0,4,6,10,11,12 ],
                                    className: 'hidden'
                                }
                            ],
