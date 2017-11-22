@@ -5,17 +5,26 @@ div.row{
 	background-color: #f1f1f1;
 }
 
+td:first-child {
+   width: 100px!important;
+}
+
 .chartsTable thead tr {
    background-color: #000;
 }
 
 table {
-    table-layout:fixed;
+    table-layout: fixed;
+    width: 150px;
 }
-td{
-    overflow:hidden;
+
+td {
+    overflow: hidden;
     text-overflow: ellipsis;
 }
+
+
+
 .remove-indicator {
     padding: 15px;
     cursor: pointer;
