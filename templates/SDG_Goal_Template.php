@@ -227,6 +227,7 @@ if (isset($_GET)) {
          // Target data
          let targetUnit = dataChart.target_unit,
              targetValue = dataChart.target_value.value,
+             targetRatioFirstVal = dataChart.target_value.value_a,
              targetRatioValue = dataChart.target_value.value_b,
              currentTargetVal = dataChart.target_value.current_value,
              maxTargetVal = dataChart.target_value.max_value,
@@ -314,7 +315,7 @@ if (isset($_GET)) {
                   ffTargetData.push(tarObj);
                });
 
-               let finalTargetValue = Math.round(finalTargetData[finalTargetData.length - 1]/targetRatioValue);
+               let finalTargetValue = Math.round((finalTargetData[finalTargetData.length - 1] * targetRatioFirstVal ) / targetRatioValue);
                ffTargetData.push({'name': label + ' target', y: finalTargetValue});
 
                let ratioTargetSpline = {
@@ -415,7 +416,6 @@ if (isset($_GET)) {
          if (targetUnit == 'comperative') {
             maxTargetValueString = ' per ' + maxTargetVal;
          }
-
 
          // Making the target line
          if(targetUnit == 'ratio') {
