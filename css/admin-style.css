@@ -4,6 +4,18 @@ div#wrapper {
 div.row{
 	background-color: #f1f1f1;
 }
+
+.chartsTable thead tr {
+   background-color: #000;
+}
+
+table {
+    table-layout:fixed;
+}
+td{
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
 .remove-indicator {
     padding: 15px;
     cursor: pointer;

@@ -95,13 +95,6 @@ if (isset($_GET)) {
          counter++;
       });
 
-//       width: 50%;
-// float: left;
-// border-top: 1px solid rgb(255, 255, 255);
-// }
-
-
-
       const firstTargetId = $('.panel-heading h4 a').first().data('target-id');
       const firstIndicatorsId = $('.panel-heading h4 a').first().data('indicator-id');
 
