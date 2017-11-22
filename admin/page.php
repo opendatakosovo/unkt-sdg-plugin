@@ -1730,7 +1730,7 @@
                    $(this).attr('id', indicator_id);
                    // Updating the info of datatable with the button to create new indicator
                    $('tr.chart-details .dataTables_info').html('');
-                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_id  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
+                   $('tr.chart-details .dataTables_info').append("<a data-toggle='modal' href='#add-chart-modal' data-indicator-id='" + indicator_id + "' data-target-id='" + target_id  + "' data-sdg-short-name='" + sdg_short_name  +  "' class='add-chart btn btn-primary'> + Add Chart </a>");
 
                    $('#add-chart-modal').modal('hide');
                    $('#add-chart-form')[0].reset();
@@ -2117,8 +2117,8 @@
             var targets_id = $($(this).parent().parent().children()[1]).text();
             var check_if_is_empty = 0;
             $.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
-                type: 'POST', //or POST
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                type: 'POST',
                 dataType: 'json',
                 data: {'id': targets_id, 'action': 'check_targets_is_empty'},
                 success: function (data) {
