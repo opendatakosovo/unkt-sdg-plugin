@@ -89,11 +89,20 @@ if (isset($_GET)) {
             $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
-               <p style='font-size: 15px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
+               <hr style='width: 50%; float: left; border-top: 1px solid rgb(255, 255, 255); display: block;'/><br />\
+               <p style='display: inline-block; font-size: 15px; margin-bottom:0px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
+               <hr style='display: inline-block; width: 50%; float: left; border-top: 1px solid rgb(255, 255, 255);'/><br /><br />\
             </div>");
          }
          counter++;
       });
+
+//       width: 50%;
+// float: left;
+// border-top: 1px solid rgb(255, 255, 255);
+// }
+
+
 
       const firstTargetId = $('.panel-heading h4 a').first().data('target-id');
       const firstIndicatorsId = $('.panel-heading h4 a').first().data('indicator-id');
@@ -161,7 +170,6 @@ if (isset($_GET)) {
                description: currentObj.description,
                sdg_id: currentObj.sdg_id,
                indicator_id: currentObj.indicator_id,
-               indicator_source: currentObj.indicator_source,
                target_id: currentObj.target_id,
                target_year: currentObj.target_year,
                target_unit: currentObj.target_unit,
@@ -196,10 +204,10 @@ if (isset($_GET)) {
 
       const generateChartContainer = (dataChartObj) => {
          //[data-target-id='" + dataChartObj.target_id + "']
-         // console.log(dataChartObj);
+         console.log(dataChartObj);
          $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
             <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
-            </div><br/><br/>");
+            </div><br/><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
          prepareAndRenderChart(dataChartObj);
       }
 
@@ -224,7 +232,7 @@ if (isset($_GET)) {
              maxTargetVal = dataChart.target_value.max_value,
              targetYear = dataChart.target_year;
 
-         console.log(dataChart);
+         // console.log(dataChart);
          // console.log(targetUnit);
 
          // HANDLING DATA CHARTS //
@@ -524,7 +532,7 @@ if (isset($_GET)) {
                series: series
             });
          } else {
-            $('#container-'+chartId).append('<h3 style="font-size: 18px; text-align: center; margin-bottom: 0px">'+ chartTitle +'</h3>\
+            $('#container-'+chartId).append('<h3 style="display: inline-block; font-size: 18px; text-align: center; margin-bottom: 0px">'+ chartTitle +'</h3>\
             <p style="margin-bottom: 15px;font-size: 16px; text-align: center">'+ chartDescription +'</p>');
             $('#container-'+chartId).css('height', '240px').append('<div style="margin-left: 20px;" id="chart-data-boolean"></div>');
             // console.log(chart_data);
@@ -532,19 +540,23 @@ if (isset($_GET)) {
             // console.log(targetValue);
 
             Object.keys(chart_data).forEach(baseline => {
-
                $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
-                  <h4 style="margin-bottom: 0px">Baseline: ' + baseline + '</h4><br/>\
+                  <h4 style="margin-bottom: 10px">Baseline: ' + baseline + '</h4>\
+                  <p style="margin-bottom: 0px; font-size: 15px;">Label: '+ chart_data[baseline][0].label +'</p>\
                   <h1 style="text-transform: uppercase;"><b>'+ chart_data[baseline][0].value +'</b></h1>\
                ');
             });
 
             // Add target
-            $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
-               <h4 style="margin-bottom: 0px">Target Year: ' + targetYear + '</h4><br/>\
+            $('#chart-data-boolean').append('<div style="float: left; text-align: center; padding: 30px; margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
+               <h4 style="margin-bottom: 10px">Target Year: ' + targetYear + '</h4>\
+               <div class="labels-cont"></div>\
                <h1 style="text-transform: uppercase;"><b>'+ targetValue +'</b></h1>\
             ');
 
+            Object.keys(chart_data).forEach(baseline => {
+               $('.labels-cont').append('<p style="display: inline; font-size: 15px;">' + chart_data[baseline][0].label +' </p>');
+            });
          }
       }
 
