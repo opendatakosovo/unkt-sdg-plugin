@@ -16,6 +16,8 @@ class Unkt
         return self::$instance;
     }
 
+
+
     /**
      * Initializes WordPress hooks
      */
@@ -23,8 +25,6 @@ class Unkt
     {
         self::$initiated = true;
 
-
-        if (is_admin()) {
             add_action('wp_ajax_add_targets', array('Unkt', 'add_targets'));
             add_action('wp_ajax_update_target', array('Unkt', 'update_target'));
             add_action('wp_ajax_remove_targets_measurements', array('Unkt', 'remove_targets_measurements'));
@@ -44,7 +44,11 @@ class Unkt
             add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected'));
             add_action('wp_ajax_update_chart', array('Unkt', 'update_chart'));
             add_filter( 'admin_footer_text', '__return_false' );
-        }
+
+            function change_footer_version() {
+             return '';
+           }
+           add_filter( 'update_footer', 'change_footer_version', 9999 );
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
         add_action('admin_menu', array('Unkt', 'SDGPluginMenu'));

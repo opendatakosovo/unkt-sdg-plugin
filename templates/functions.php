@@ -19,6 +19,7 @@ function get_targets($sdg_id) {
     return json_encode($query_targets, JSON_PRETTY_PRINT);
 }
 
+
 function get_indicators($target_id) {
    global $wpdb;
    $query_indicators = $wpdb->get_results("
