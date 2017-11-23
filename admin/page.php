@@ -1005,7 +1005,6 @@ $(document).ready(function () {
         if(slug === 'baseline'){
           jElem.addClass('baseline-year');
         }
-        jElem.val(9999);
 				// when action is editing, check if argument for edit values is given
 				if(editValue === true) {
 					if(editData != 0) {
