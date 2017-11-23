@@ -1,4 +1,14 @@
 <?php
+/**
+ * Plugin Name: SDGs & targets
+ * Plugin URI: http://opendatakosovo.org
+ * Description:
+ * Version: 1.0.0
+ * Author: Open Data Kosovo
+ * Author URI: http://opendatakosovo.org
+ * License: GPL2
+ */
+
 define('SDGS__PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SDGS__PLUGIN_DIR', plugin_dir_path(__FILE__));
 require_once(SDGS__PLUGIN_DIR . 'class.unkt.php');
