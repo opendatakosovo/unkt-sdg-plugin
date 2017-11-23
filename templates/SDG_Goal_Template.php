@@ -372,7 +372,7 @@ if (isset($_GET)) {
             }
          } else if (targetUnit == 'percentage' && chartUnit == 'number') {
             // Format the target data to hide other target data tooltip
-            let dataTargetObjs = [];
+            // let dataTargetObjs = [];
             // targetData.map(targetValue => {
             //     dataTargetObjs.push({
             //       name: 'first',
@@ -385,27 +385,36 @@ if (isset($_GET)) {
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
 
-            // console.log(targetValue);
-
             // If negative num
             if(targetValue < 0){
                var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
             } else {
                var finalValue = targetNumberPer;
             }
-
-            // console.log(finalValue);
-
             // dataTargetObjs.push({
             //    name: 'Target',
             //    y: targetNumberPer
             // });
 
-            // targetData.pop(targetData[0]);
             targetData.push(finalValue);
             // dataTargetObjs.map(dataTargetObj => {
             //    targetData.push(dataTargetObj);
             // });
+
+         } else if (targetUnit == 'percentage' && chartUnit == 'percentage') {
+
+            // console.log(targetValue);
+            // console.log(targetData);
+            // Calculate percentage of chart data
+            targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
+
+            if(targetValue < 0){
+               var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
+            } else {
+               var finalValue = targetValue;
+            }
+
+            targetData.push(finalValue);
 
          } else if (targetUnit == 'comperative') {
             targetData.push(currentTargetVal);
@@ -414,7 +423,7 @@ if (isset($_GET)) {
             targetData.push(targetValue);
          }
 
-         console.log(targetData);
+         // console.log(targetData);
 
          // When target unit is comperative add max target value at tooltip
          let maxTargetValueString = '';
@@ -597,7 +606,6 @@ if (isset($_GET)) {
 </script>
 
 <div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
-
    <!-- SDG information -->
    <div class="col-md-11 col-sm-12 col-xs-12">
       <div class="sdg-title">
@@ -617,7 +625,6 @@ if (isset($_GET)) {
       <div class="panel-group" id="accordion">
       </div>
    </div>
-
 </div>
 
 <style>
