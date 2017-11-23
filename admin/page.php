@@ -926,7 +926,7 @@ function fnFormatCharts(table_id, html) {
 	sOut += "</table>";
 	return sOut;
 }
-var newRowData = <? php echo json_encode($query_targets); ?> ;
+var newRowData = <?php echo json_encode($query_targets); ?> ;
 //console.log(newRowData);
 
 var iTableCounter = 1;
@@ -1215,8 +1215,7 @@ $(document).ready(function () {
 	var nCloneTd = document.createElement('td');
 
 	// Making table data as "+" sign
-	nCloneTd.innerHTML = '<img src="<?php echo SDGS__PLUGIN_URL . '
-	img / plus.png ' ?>" class="show-sub-table" style="width:20px"/>';
+	nCloneTd.innerHTML = '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px"/>';
 	nCloneTd.className = "text-center";
 
 	// Adding an empty column table head for "+" and "-"
@@ -1254,12 +1253,10 @@ $(document).ready(function () {
 			if(oInnerTable.fnIsOpen(nTr)) {
 				/* This row is already open - close it */
 				// If the sub table is closed make the "-" to "+"
-				this.src = '<?php echo SDGS__PLUGIN_URL . '
-				img / plus.png ' ?>';
+				this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
 			} else {
 				// If the sub table is opened make the "+" to "-"
-				this.src = '<?php echo SDGS__PLUGIN_URL . '
-				img / minus.png ' ?>';
+				this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 			}
 			// GET Request for rendering chart table
 			$.ajax({
@@ -1279,16 +1276,14 @@ $(document).ready(function () {
 					// Checking if table is closed or opened
 					if(oInnerTable.fnIsOpen(nTr)) {
 						/* This row is already open - close it */
-						this.src = '<?php echo SDGS__PLUGIN_URL . '
-						img / plus.png ' ?>';
+						this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
 						this.id = indicator_id;
 						oInnerTable.fnClose(nTr);
 					}
 					// Opened
 					else {
 						// Changing the plus to minus
-						this.src = '<?php echo SDGS__PLUGIN_URL . '
-						img / minus.png ' ?>';
+						this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
 						// Adding new row below the indicator row for inner table
 						oInnerTable.fnOpen(nTr, fnFormatCharts(indicator_id + '_' + target_id, chartTableHtml), 'chart-details chart-table');
@@ -1391,12 +1386,10 @@ $(document).ready(function () {
 			if(oTable.fnIsOpen(nTr)) {
 				/* This row is already open - close it */
 				// If the sub table is closed make the "-" to "+"
-				this.src = '<?php echo SDGS__PLUGIN_URL . '
-				img / plus.png ' ?>';
+				this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
 			} else {
 				// If the sub table is opened make the "+" to "-"
-				this.src = '<?php echo SDGS__PLUGIN_URL . '
-				img / minus.png ' ?>';
+				this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 			}
 
 			// GET Request for rendering indicator table
@@ -1412,16 +1405,14 @@ $(document).ready(function () {
 					// Checking if table is closed or opened
 					if(oTable.fnIsOpen(nTr)) {
 						/* This row is already open - close it */
-						this.src = '<?php echo SDGS__PLUGIN_URL . '
-						img / plus.png ' ?>';
+						this.src = '<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>';
 						this.id = targets_id;
 						oTable.fnClose(nTr);
 					}
 					// Opened
 					else {
 						// Changing the plus to minus
-						this.src = '<?php echo SDGS__PLUGIN_URL . '
-						img / minus.png ' ?>';
+						this.src = '<?php echo SDGS__PLUGIN_URL . 'img/minus.png' ?>';
 
 						// Adding new row below the target row for inner table
 						oTable.fnOpen(nTr, fnFormatDetails(targets_id, detailsTableHtml), 'details indicator-table');
@@ -1435,12 +1426,10 @@ $(document).ready(function () {
 							"bSort": true, // disables sorting
 							"info": true,
 							"aoColumns": [
-								// {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
 								{
 									"mDataProp": null,
 									"sClass": "control text-center",
-									"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . '
-									img / plus.png ' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+									"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
 								}, {
 									"mDataProp": "id"
 								}, {
@@ -1521,8 +1510,7 @@ $(document).ready(function () {
 			"aoColumns": [{
 				"mDataProp": null,
 				"sClass": "control text-center",
-				"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . '
-				img / plus.png ' ?>" class="show-sub-table" style="width:20px;"/>'
+				"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
 			}, {
 				"mDataProp": "id"
 			}, {
@@ -1921,8 +1909,7 @@ $(document).ready(function () {
 						"aoColumns": [{
 							"mDataProp": null,
 							"sClass": "control text-center",
-							"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . '
-							img / plus.png ' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+							"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
 						}, {
 							"mDataProp": "id"
 						}, {
@@ -2014,12 +2001,10 @@ $(document).ready(function () {
 						}],
 						"bSort": true, // disables sorting
 						"aoColumns": [
-							// {"sDefaultContent": '<img src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px"/>'},
 							{
 								"mDataProp": null,
 								"sClass": "control text-center",
-								"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . '
-								img / plus.png ' ?>" class="show-sub-sub-table" style="width:20px;"/>'
+								"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-sub-table" style="width:20px;"/>'
 							}, {
 								"mDataProp": "id"
 							}, {
@@ -2295,7 +2280,7 @@ $(document).ready(function () {
 		});
 	});
 
-	var targets_array = <? php echo json_encode($query_targets); ?> ;
+	var targets_array = <?php echo json_encode($query_targets); ?>;
 });
 
 </script>
