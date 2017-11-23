@@ -43,6 +43,7 @@ class Unkt
             add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart'));
             add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected'));
             add_action('wp_ajax_update_chart', array('Unkt', 'update_chart'));
+            add_filter( 'admin_footer_text', '__return_false' );
         }
 
         add_action('get_header', array('Unkt', 'clean_meta_generators'), 100);
