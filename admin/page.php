@@ -984,6 +984,7 @@ $(document).ready(function () {
 				// Change id and name of input
 				jElem.prop('id', name + '-' + addChartIndex);
 				jElem.prop('name', name + '-' + addChartIndex);
+        jElem.attr("required", "true");
 				// when action is editing, check if argument for edit values is given
 				if(editValue === true) {
 					if(editData != 0) {
