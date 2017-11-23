@@ -304,7 +304,7 @@
                         <h4 class="modal-title">Add Chart</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="add-chart-form" class="form-horizontal" method="POST">
+                        <form id="add-chart-form" class="form-horizontal" method="POST" onSubmit="return validateForm()">
                             <input type="hidden" id="chart-target-id">
                             <input type="hidden" id="chart-indicator-id">
                             <input type="hidden" id="chart-sdg-short-name">
@@ -936,17 +936,34 @@ var oInnerInnerTable;
 var detailsTableHtml;
 var chartTableHtml;
 
+
+
 //Run On HTML Build
 $(document).ready(function () {
 	var addChartIndex = 0;
 	$('.plus-div').hide();
 
+    //
+    // var baselineInput = document.getElementsByClassName("baseline-year");
+    //
+    // baselineInput.addEventListener("input", function (event) {
+    //   targetYear = parseInt($('#target-year').val());
+    //
+    //       alert(this.value);
+    //       if(this.value > targetYear ){
+    //         console.log("YY",targetYear, this.value);
+    //         baselineInput.setCustomValidity('The target year should be greater than baseline.');
+    //       }
+    // });
+    //document.getElementsByName("add-chart-button")[0].onclick = checkTargetChartYear;
+
+// onkeydown="if($('#target-year').val() < this.value){ $('#target-year').setCustomValidity('The target year should be greater than baseline.')};"
 	// On removeButton click, delete the appended input group
 	$(document).on('click', '.removeButton', function () {
 		$(this).parent().parent().parent().remove();
 	});
 
-	$('.addButton').click(function () {
+  $('.addButton').click(function () {
 		addChartIndex++;
 		var action = '';
 		var editValue = false;
@@ -985,6 +1002,10 @@ $(document).ready(function () {
 				jElem.prop('id', name + '-' + addChartIndex);
 				jElem.prop('name', name + '-' + addChartIndex);
         jElem.attr("required", "true");
+        if(slug === 'baseline'){
+          jElem.addClass('baseline-year');
+        }
+        jElem.val(9999);
 				// when action is editing, check if argument for edit values is given
 				if(editValue === true) {
 					if(editData != 0) {
@@ -1031,7 +1052,6 @@ $(document).ready(function () {
 			var textInputs = $(':input');
 			var datas = textInputs.filter('[data-generated]');
 			var previewIndex, inputYear;
-
 			var allData = {};
 			var years = [];
 			datas.each(
@@ -1640,7 +1660,6 @@ $(document).ready(function () {
 	// Adding new chart
 	$('#add-chart-form').validate({
 		rules: {
-
 		},
 		submitHandler: function (form) {
 			var indicator_id = $('#chart-indicator-id').val();
