@@ -37,7 +37,6 @@ class Unkt
             add_action('wp_ajax_remove_indicator', array('Unkt', 'remove_indicator'));
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
-            add_action('wp_ajax_check_targets_is_empty', array('Unkt', 'check_targets_is_empty'));
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
             add_action('wp_ajax_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
             add_action('wp_ajax_add_chart', array('Unkt', 'add_chart'));
@@ -541,26 +540,6 @@ class Unkt
           SELECT * From wp_charts WHERE indicator_id='$indicator_id' AND target_id='$target_id'");
       echo json_encode($query_target_indicator_charts);
       die();
-    }
-
-    public static function check_targets_is_empty()
-    {
-        global $wpdb;
-
-        $id = intval(htmlspecialchars($_POST['id']));
-        $query_targets = $wpdb->get_results("
-            SELECT iid
-            From wp_measurement
-            WHERE iid='$id'");
-        $count = sizeof($query_targets);
-        if ($count > 0) {
-            $arr = array('a' => 1);
-            echo json_encode($arr);
-        } else {
-            $arr = array('a' => 0);
-            echo json_encode($arr);
-        }
-        die();
     }
 
     public static function get_data()

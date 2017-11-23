@@ -50,67 +50,67 @@
 
 <div class="wrap" style="margin-top:60px; height:auto; min-height:1000px;">
 
-   <!-- Target Table -->
-   <table id="exampleTable" class="table-bordered">
+    <!-- Target Table -->
+    <table id="exampleTable" class="table-bordered">
         <thead>
-           <tr>
-               <th>ID</th>
-               <th>Target Title</th>
-               <th>SDG</th>
-               <th>Updated date</th>
-               <th>Description</th>
-               <th>Actions</th>
-           </tr>
+            <tr>
+                <th>ID</th>
+                <th>Target Title</th>
+                <th>SDG</th>
+                <th>Updated date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody></tbody>
-   </table>
+    </table>
 
-   <!-- Chart Table -->
-   <div style="display:none" id="div-sub-sub-table" style="background:#337ab7;height:auto;">
+    <!-- Chart Table -->
+    <div style="display:none" id="div-sub-sub-table" style="background:#337ab7;height:auto;">
         <table id="chartsTable" class="table-bordered chart-table">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Target Unit</th>
-                <th>Target Year</th>
-                <th>Target Value</th>
-                <th>Chart Unit</th>
-                <th>Chart Data</th>
-                <th>Description</th>
-                <th>General Label</th>
-                <th>Actions</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Target Unit</th>
+                    <th>Target Year</th>
+                    <th>Target Value</th>
+                    <th>Chart Unit</th>
+                    <th>Chart Data</th>
+                    <th>Description</th>
+                    <th>General Label</th>
+                    <th>Actions</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>
-   </div>
+    </div>
 
-   <!-- Indicator Table -->
-   <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
+    <!-- Indicator Table -->
+    <div style="display:none" id="div-sub-table" style="background:#337ab7;height:auto;">
         <table id="detailsTable" class="table-bordered">
             <thead>
-            <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Indicator Title</th>
-                <th>Source</th>
-                <th>Description</th>
-                <th>Actions</th>
-                <th>Indicator Id</th>
-                <th>SDG</th>
-            </tr>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Indicator Title</th>
+                    <th>Source</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                    <th>Indicator Id</th>
+                    <th>SDG</th>
+                </tr>
             </thead>
             <tbody></tbody>
         </table>
-   </div>
+    </div>
 
-      <div style="padding-left: 0px;" class="col-md-12">
-         <!-- Add Indicator Modal -->
-         <div id="add-indicator-modal" class="modal fade" tabindex="-1">
+    <div style="padding-left: 0px;" class="col-md-12">
+        <!-- Add Indicator Modal -->
+        <div id="add-indicator-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header indicator-color">
@@ -118,39 +118,34 @@
                         <h4 class="modal-title">Add Indicator</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="add-indicator-form" name="add-indicator">
+                        <form id="add-indicator-form" name="add-indicator-form" method="POST">
                             <input type="hidden" id="indicator-target-id"/>
                             <input type="hidden" id="indicator-sdg"/>
                             <div class="form-group">
                                 <label for="title-indicator">Title</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                          id="title-indicator" placeholder="Title"></input>
+                                <input name="title-indicator" type="text" class="form-control" id="title-indicator" required/>
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                       id="source-indicator" placeholder="Source">
+                                <input name="source-indicator" type="text" class="form-control" id="source-indicator"/>
                             </div>
                             <div class="form-group">
                                 <label for="description-indicator">Description</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                          id="description-indicator" placeholder="Description"></textarea>
+                                <textarea name="description-indicator" type="text" class="form-control" id="description-indicator"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary indicator-color"
-                                       id="add-measuremnt-button">
-
-                            </div><!-- /.modal-content -->
+                                <input type="submit" value="Save changes" name="add-measurement" class="btn btn-primary indicator-color" id="add-measuremnt-button"/>
+                            </div>
                         </form>
                     </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of indicator modal -->
-         </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of indicator modal -->
 
-         <!-- Edit Indicator Modal -->
-         <div id="edit-indicator-modal" class="modal fade" tabindex="-1"> <!-- edit-measurement-modal -->
+        <!-- Start of Edit Indicator Modal -->
+        <div id="edit-indicator-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header indicator-color">
@@ -159,115 +154,97 @@
                     </div>
                     <div class="modal-body">
                         <form id="edit-indicator-form" name="edit-indicator">
-                            <input type="hidden" id="edit-indicator-id"/>
-                            <input type="hidden" id="edit-indicator-sdg"/>
+                            <input type="hidden" id="edit-indicator-id" />
+                            <input type="hidden" id="edit-indicator-sdg" />
                             <div class="form-group">
                                 <label for="title-indicator">Name</label>
-                                <input name="title-indicator" type="text" class="form-control"
-                                          id="edit-title-indicator" placeholder="Name"></input>
+                                <input name="title-indicator" type="text" class="form-control" id="edit-title-indicator" required/>
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source</label>
-                                <input name="source-indicator" type="text" class="form-control"
-                                       id="edit-source-indicator" placeholder="Source">
+                                <input name="source-indicator" type="text" class="form-control" id="edit-source-indicator">
                             </div>
                             <div class="form-group">
                                 <label for="description-indicator">Description</label>
-                                <textarea name="description-indicator" type="text" class="form-control"
-                                          id="edit-description-indicator" placeholder="Description"></textarea>
+                                <textarea name="description-indicator" type="text" class="form-control" id="edit-description-indicator"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                                <input type="submit" value="Save changes" name="edit-indicator"
-                                       class="btn btn-primary indicator-color" id="edit-indicator-button">
-
-                            </div><!-- /.modal-content -->
+                                <input type="submit" value="Save changes" name="edit-indicator" class="btn btn-primary indicator-color" id="edit-indicator-button">
+                            </div>
                         </form>
                     </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- end of load edit indicator modal -->
-         </div>
-
-         <!-- Add Target Button -->
-         <div style="padding: 0px" class="col-md-2">
-             <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link"
-                style="width:100%;">+ Add target</a>
-         </div>
-
-         <!-- Add Target Modal -->
-         <div id="add-targets-modal" class="modal fade" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                     <div class="modal-header target-color">
-                        <button class="close" type="button" data-dismiss="modal">x</button>
-                        <h4 class="modal-title">Add New Target</h4>
-                     </div>
-                     <div class="modal-body">
-                        <form id="add-targets-form" name="add_targets" method="POST">
-                           <div class="form-group">
-                              <label for="target-title">Target Title</label>
-                              <input name="target-title" type="text" class="form-control" id="target-title" placeholder="Target Title">
-                           </div>
-
-                           <div class="form-group">
-                              <label for='sdg-type'>SDG</label>
-                              <select id="sdg-type" name="sdg-type" class="form-control" title="SDG is required">
-                              <option value="">Select SDG</option>
-                              <option id="1" value="poverty">1-Poverty</option>
-                              <option id="2" value="zero-hunger">2-Zero hunger</option>
-                              <option id="3" value="good-health-and-well-being">3-Good health and well being
-                              </option>
-                              <option id="4" value="quality-education">4-Quality education</option>
-                              <option id="5" value="gender-equality">5-Gender equality</option>
-                              <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
-                              </option>
-                              <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
-                              </option>
-                              <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
-                                  growth
-                              </option>
-                              <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
-                                  and infrastructure
-                              </option>
-                              <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-                              <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
-                                  communities
-                              </option>
-                              <option id="12" value="responsible-consumption-and-production">12-Responsible
-                                  consumption and production
-                              </option>
-                              <option id="13" value="climate-action">13-Climate action</option>
-                              <option id="14" value="life-below-water">14-Life below water</option>
-                              <option id="15" value="life-on-land">15-Life on land</option>
-                              <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
-                                  strong institutions
-                              </option>
-                              <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
-                              </option>
-                           </select>
-                           </div>
-
-                           <div class="form-group">
-                              <label for="description">Description</label>
-                              <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
-                           </div>
-
-                           <div class="modal-footer">
-                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                              <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color" id="add-targets-button">
-                           </div>
-                        </form>
-                     </div>
                 </div>
             </div>
-         </div>
+        </div>
+        <!-- End of load edit indicator modal -->
 
-         <!-- Edit Target Modal -->
-         <div id="edit-targets-modal" class="modal fade" tabindex="-1">
+        <!-- Add Target Button -->
+        <div style="padding: 0px" class="col-md-2">
+            <a class="btn btn-primary" href="#add-targets-modal" data-toggle="modal" id="add-targets-link" style="width:100%;">+ Add target</a>
+        </div>
+
+        <!-- Start of Add Target Modal -->
+        <div id="add-targets-modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header target-color" >
+                    <div class="modal-header target-color">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add New Target</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-targets-form" name="add-targets-form" method="POST">
+                            <div class="form-group">
+                                <label for="target-title">Target Title</label>
+                                <input name="target-title" type="text" class="form-control" id="target-title" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for='sdg-type'>SDG</label>
+                                <select id="sdg-type" name="sdg-type" class="form-control" required>
+                                    <option value="">Select SDG</option>
+                                    <option id="1" value="poverty">1-Poverty</option>
+                                    <option id="2" value="zero-hunger">2-Zero hunger</option>
+                                    <option id="3" value="good-health-and-well-being">3-Good health and well being </option>
+                                    <option id="4" value="quality-education">4-Quality education</option>
+                                    <option id="5" value="gender-equality">5-Gender equality</option>
+                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation </option>
+                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy </option>
+                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth </option>
+                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
+                                    <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
+                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities </option>
+                                    <option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
+                                    <option id="13" value="climate-action">13-Climate action</option>
+                                    <option id="14" value="life-below-water">14-Life below water</option>
+                                    <option id="15" value="life-on-land">15-Life on land</option>
+                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions </option>
+                                    <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color" id="add-targets-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Add Target Modal -->
+
+        <!-- Start of Edit Target Modal -->
+        <div id="edit-targets-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header target-color">
                         <button class="close" type="button" data-dismiss="modal">x</button>
                         <h4 class="modal-title">Edit target</h4>
                     </div>
@@ -275,667 +252,644 @@
                         <form id="edit-targets-form" name="edit_targets_form">
                             <div class="form-group">
                                 <label for="edit-target-title">Targets</label>
-                                <input name="edit-target-title" type="text" class="form-control" id="edit-target-title"
-                                       placeholder="Target">
+                                <input name="edit-target-title" type="text" class="form-control" id="edit-target-title" required/>
                             </div>
-                            <input type="hidden" id="edit-target-id"/>
+                            <input type="hidden" id="edit-target-id" />
                             <div class="form-group">
                                 <label for='edit-sdg-type'>SDG</label>
-                                <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" title="SDG is required">
+                                <select id="edit-sdg-type" name="edit-sdg-type" class="form-control" required>
+                                    <option value=""> Select SDG </option>
                                     <option id="1" value="poverty">1-Poverty</option>
                                     <option id="2" value="zero-hunger">2-Zero hunger</option>
-                                    <option id="3" value="good-health-and-well-being">3-Good health and well being
-                                    </option>
+                                    <option id="3" value="good-health-and-well-being">3-Good health and well being</option>
                                     <option id="4" value="quality-education">4-Quality education</option>
                                     <option id="5" value="gender-equality">5-Gender equality</option>
-                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation
-                                    </option>
-                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy
-                                    </option>
-                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic
-                                        growth
-                                    </option>
-                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation
-                                        and infrastructure
-                                    </option>
+                                    <option id="6" value="clean-water-and-sanitation">6-Clean water and sanitation</option>
+                                    <option id="7" value="affordable-and-clean-energy">7-Affordable and clean energy</option>
+                                    <option id="8" value="decent-work-and-economic-growth">8-Decent work and economic growth</option>
+                                    <option id="9" value="industry-innovation-and-infrastructure">9-Industry innovation and infrastructure</option>
                                     <option id="10" value="reduced-inequalities">10-Reduced Inequalities</option>
-                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and
-                                        communities
-                                    </option>
-                                    <option id="12" value="responsible-consumption-and-production">12-Responsible
-                                        consumption and production
-                                    </option>
+                                    <option id="11" value="sustainable-cities-and-communities">11-Sustainable cities and communities</option>
+                                    <option id="12" value="responsible-consumption-and-production">12-Responsible consumption and production</option>
                                     <option id="13" value="climate-action">13-Climate action</option>
                                     <option id="14" value="life-below-water">14-Life below water</option>
                                     <option id="15" value="life-on-land">15-Life on land</option>
-                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and
-                                        strong institutions
-                                    </option>
+                                    <option id="16" value="peace-justice-and-strong-institutions">16-Peace justice and strong institutions</option>
                                     <option id="17" value="partnerships-for-the-goal">17-Partnerships for the goal
                                     </option>
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <label for="edit-sdg-description">Description</label>
-                                <textarea name="edit-sdg-description" class="form-control" id="edit-sdg-description" placeholder="Description"></textarea>
+                                <textarea name="edit-sdg-description" class="form-control" id="edit-sdg-description"></textarea>
                             </div>
-
                             <div class="modal-footer">
-                             <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
-                             <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color"
-                                    id="edit-targets-button">
-
-                            </div><!-- /.modal-content -->
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                                <input type="submit" value="Save changes" name="createInd" class="btn btn-primary target-color" id="edit-targets-button">
+                            </div>
                         </form>
                     </div>
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-
-            <!-- end of edit modal -->
+                </div>
+            </div>
         </div>
+        <!-- End of Edit Target Modal -->
 
-        <!-- Add Chart Modal -->
+
+        <!-- Start of Add Chart Modal -->
         <div id="add-chart-modal" class="modal fade" tabindex="-1">
-           <div class="modal-dialog">
-               <div class="modal-content">
-                   <div class="modal-header chart-color">
-                       <button class="close" type="button" data-dismiss="modal">x</button>
-                       <h4 class="modal-title">Add Chart</h4>
-                   </div>
-                   <div class="modal-body">
-                     <form id="add-chart-form" class="form-horizontal" method="POST">
-                        <input type="hidden" id="chart-target-id">
-                        <input type="hidden" id="chart-indicator-id">
-                        <input type="hidden" id="chart-sdg-short-name">
-                       <div class="form-group">
-                         <label class="col-xs-3 control-label left">Title</label>
-                         <div class="col-xs-9">
-                           <input type="text" class="form-control" name="title-chart" id="title-chart" required/>
-                         </div>
-                       </div>
-                       <!-- Target Data Panel-->
-                       <div class="panel-group">
-                         <div class="panel panel-default">
-                           <div class="panel-heading">
-                             <h3 class="panel-title chart-target-panel">Target Data</h3>
-                           </div>
-                           <div class="panel-body">
-                             <div class="form-group">
-                               <label class="col-xs-3 control-label">Target Year</label>
-                               <div class="col-xs-9">
-                                   <input name="target-year" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" id="target-year" required/>
-                               </div>
-                             </div>
-                             <div class="form-group">
-                               <label for="target-unit" class="col-xs-3 control-label">Unit</label>
-                               <div class="col-xs-9">
-                                 <select id="target-unit-select" name="target-unit" class="form-control">
-                                   <option value="">Select Unit</option>
-                                   <option id="target-number" value="number" data-show="number"> Number</option>
-                                   <option id="target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
-                                   <option id="target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                   <option id="target-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
-                                   <option id="target-ratio" value="ratio"  data-show="ratio">Ratio</option>
-                                   <option id="target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
-                                 </select>
-                               </div>
-                             </div>
-                             <div class="form-group target-unit-select target-unit-number">
-                               <label class="col-xs-3 control-label" for="target-number-value">Number Value</label>
-                               <div class="col-xs-9">
-                                 <input name="target-number-value" type="number" step="any" class="form-control" id="target-number-value" data-slug="value"/>
-                               </div>
-                             </div>
-                             <div class="form-group target-unit-select target-unit-percentage">
-                               <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value</label>
-                               <div class="col-xs-9">
-                                 <input name="target-percentage-value" type="number" step="any" class="form-control" id="target-percentage-value" data-slug="value" />
-                               </div>
-                             </div>
-                             <div class="target-unit-select target-unit-ratio">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
-                                 <div class="col-xs-9">
-                                   <input name="target-ratio-value-a" type="number" step="any" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
-                                 <div class="col-xs-9">
-                                   <input name="target-ratio-value-b" type="number" step="any" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
-                                 </div>
-                               </div>
-                             </div>
-                             <div class="target-unit-select target-unit-comperative">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="target-comperative-current-value" step="any" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="target-comperative-max-value" step="any" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
-                                 </div>
-                               </div>
-                             </div>
-                             <div class="form-group target-unit-select target-unit-yes-no">
-                               <label class="col-xs-3 control-label" for="target-yes-no-value">Value</label>
-                               <div class="col-xs-6">
-                                 <label class="radio-inline">
-                                 <input type="radio" name="target-yes-no" value="yes" data-slug="value">Yes
-                                 </label>
-                                 <label class="radio-inline">
-                                 <input type="radio" name="target-yes-no" value="no" data-slug="value">No
-                                 </label>
-                               </div>
-                             </div>
-
-                             <div class="form-group target-unit-select target-unit-increasing-decreasing">
-                               <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
-                               <div class="col-xs-6">
-                                 <label class="radio-inline">
-                                 <input type="radio" name="target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
-                                 </label>
-                                 <label class="radio-inline">
-                                 <input type="radio" name="target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
-                                 </label>
-                               </div>
-                             </div>
-
-                           </div>
-                         </div>
-                       </div>
-                       <!-- End of Target Data Panel -->
-                       <!-- Chart Data Panel-->
-                       <div class="panel-group">
-                         <div class="panel panel-default">
-                           <div class="panel-heading">
-                             <h3 class="panel-title chart-target-panel">Chart Data</h3>
-                           </div>
-                           <div class="panel-body">
-                             <div class="form-group">
-                               <label class="col-xs-3 control-label"> General Label </label>
-                               <div class="col-xs-9">
-                                 <input type="text" class="form-control" name="label-chart" id="label-chart"/>
-                               </div>
-                             </div>
-                             <div class="form-group">
-                               <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
-                               <div class="col-xs-9">
-                                 <select id="chart-unit-select" name="chart-unit" class="form-control">
-                                   <option value="">Select Unit</option>
-                                   <option id="chart-number" value="number" data-show="number"> Number</option>
-                                   <option id="chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
-                                   <option id="chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                   <!-- <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
-                                   <!-- <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
-                                 </select>
-                               </div>
-                             </div>
-                             <div class="form-group">
-                               <div class="col-xs-offset-12 plus-div" style="float:right;">
-                                 <button type="button" class="btn btn-default addButton" data-action="add" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
-                               </div>
-                             </div>
-
-                             <div class="div-chart-unit-number">
-                             <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Baseline</label>
-                                 <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-number" data-slug="baseline"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-number-value" type="number" step="any" class="form-control" id="chart-number-value" data-slug="value"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-12">
-                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                 </div>
-                               </div>
-                               <hr class="separator">
-                             </div>
-                           </div>
-
-                           <div class="div-chart-unit-percentage">
-                             <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Baseline </label>
-                                 <div class="col-xs-9">
-                                     <input type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" name="chart-baseline-percentage" data-slug="baseline"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value"> Chart Label</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-percentage-value" type="number" step="any" class="form-control" id="chart-percentage-value" data-slug="value" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-12">
-                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                 </div>
-                               </div>
-                               <hr class="separator">
-                             </div>
-                           </div>
-                           <div class="div-chart-unit-ratio">
-                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Baseline </label>
-                                 <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-ratio" data-slug="baseline" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-ratio-value-a" type="number" step="any" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-ratio-value-b" type="number" step="any" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-12">
-                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                 </div>
-                               </div>
-                               <hr class="separator">
-                             </div>
-                           </div>
-
-                           <div class="div-chart-unit-comperative">
-                             <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Baseline </label>
-                                 <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-comperative" data-slug="baseline" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-comperative-value-a" type="number" step="any" class="form-control" id="chart-comperative-current-value" data-slug="current_value" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-comperative-value-b" type="number" step="any" class="form-control" id="chart-comperative-value-max-value" data-slug="max_value" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-12">
-                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                 </div>
-                               </div>
-                               <hr class="separator">
-                             </div>
-                           </div>
-
-                             <div class="div-chart-unit-yes-no">
-                             <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label left"> Baseline </label>
-                                 <div class="col-xs-9">
-                                     <input type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" name="chart-baseline-yes-no" data-slug="baseline"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                 <div class="col-xs-9">
-                                   <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
-                                 <div class="col-xs-6">
-                                   <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
-                                   </label>
-                                   <label class="radio-inline">
-                                   <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
-                                   </label>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-12">
-                                   <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                 </div>
-                               </div>
-                               <hr class="separator">
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                       </div>
-                       <!-- End of Chart Data Panel -->
-                       <div class="form-group">
-                          <label  class="col-xs-3 control-label" for="chart-description">Description</label>
-                           <div class="col-xs-9">
-                              <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
-                          </div>
-                      </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                              <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary chart-color"
-                                     id="add-chart-button">
-
-                          </div><!-- /.modal-content -->
-                     </form>
-
-                   </div>
-               </div><!-- /.modal-dialog -->
-           </div><!-- /.modal -->
-           <!-- end of charts modal -->
-        </div>
-
-        <!-- Edit Chart Modal -->
-        <div id="edit-chart-modal" class="modal fade" tabindex="-1">
-           <div class="modal-dialog">
-               <div class="modal-content">
-                   <div class="modal-header">
-                       <button class="close" type="button" data-dismiss="modal">x</button>
-                       <h4 class="modal-title">Edit Chart</h4>
-                   </div>
-                   <div class="modal-body">
-                       <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form" method="POST">
-                         <input type="hidden" id="edit-chart-id">
-                         <input type="hidden" id="edit-chart-target-id">
-                         <input type="hidden" id="edit-chart-indicator-id">
-                         <input type="hidden" id="edit-chart-sdg-id">
-                         <div class="form-group">
-                           <label class="col-xs-3 control-label left">Title</label>
-                           <div class="col-xs-9">
-                             <input type="text" class="form-control" name="edit-title-chart" id="edit-title-chart" required/>
-                           </div>
-                         </div>
-                         <!-- Edit Target Data Panel-->
-                         <div class="panel-group">
-                           <div class="panel panel-default">
-                             <div class="panel-heading">
-                               <h3 class="panel-title chart-target-panel">Target Data</h3>
-                             </div>
-                             <div class="panel-body">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label">Target Year</label>
-                                 <div class="col-xs-9">
-                                     <input name="edit-target-year" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" id="edit-target-year" required/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label for="target-unit" class="col-xs-3 control-label">Unit</label>
-                                 <div class="col-xs-9">
-                                   <select id="edit-target-unit-select" name="edit-target-unit" class="form-control">
-                                     <option value="">Select Unit</option>
-                                     <option id="edit-target-number" value="number" data-show="number"> Number</option>
-                                     <option id="edit-target-percentage" value="percentage"  data-show="percentage"> Percentage </option>
-                                     <option id="edit-target-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                     <option id="edit-target-comperative" value="comperative"  data-show="comperative">Comperative Value</option>
-                                     <option id="edit-target-ratio" value="ratio"  data-show="ratio">Ratio</option>
-                                     <option id="edit-target-increasing-decreasing" value="increasing-decreasing"  data-show="increasing-decreasing"> Increasing/Decreasing </option>
-                                   </select>
-                                 </div>
-                               </div>
-                               <div class="form-group edit-target-unit-select edit-target-unit-number">
-                                 <label class="col-xs-3 control-label">Number Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="edit-target-number-value" type="number" step="any" class="form-control" id="edit-target-number-value" data-slug="value"/>
-                                 </div>
-                               </div>
-                               <div class="form-group edit-target-unit-select edit-target-unit-percentage">
-                                 <label class="col-xs-3 control-label">Percentage Value</label>
-                                 <div class="col-xs-9">
-                                   <input name="edit-target-percentage-value" type="number" step="any" class="form-control" id="edit-target-percentage-value" data-slug="value" />
-                                 </div>
-                               </div>
-                               <div class="edit-target-unit-select edit-target-unit-ratio">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Number</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-target-ratio-value-a" type="number" step="any" class="form-control" id="edit-target-ratio-value-a" data-slug="value_a"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Total</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-target-ratio-value-b" type="number" step="any" class="form-control" id="edit-target-ratio-value-b" data-slug="value_b"/>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="edit-target-unit-select edit-target-unit-comperative">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Current Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-target-comperative-current-value" step="any" type="number" class="form-control" id="edit-target-comperative-current-value" data-slug="current_value"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Maximum Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="edit-target-comperative-max-value" step="any" type="number" class="form-control" id="edit-target-comperative-max-value" data-slug="max_value"/>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="form-group edit-target-unit-select edit-target-unit-yes-no">
-                                 <label class="col-xs-3 control-label">Value</label>
-                                 <div class="col-xs-6">
-                                   <label class="radio-inline">
-                                   <input type="radio" id="edit-target-yes" name="edit-target-yes-no" value="yes" data-slug="value">Yes
-                                   </label>
-                                   <label class="radio-inline">
-                                   <input type="radio" id="edit-target-no" name="edit-target-yes-no" value="no" data-slug="value">No
-                                   </label>
-                                 </div>
-                               </div>
-
-                               <div class="form-group edit-target-unit-select edit-target-unit-increasing-decreasing">
-                                 <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
-                                 <div class="col-xs-6">
-                                   <label class="radio-inline">
-                                   <input type="radio" id="edit-target-increasing" name="edit-target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
-                                   </label>
-                                   <label class="radio-inline">
-                                   <input type="radio" id="edit-target-decreasing" name="edit-target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
-                                   </label>
-                                 </div>
-                               </div>
-
-                             </div>
-                           </div>
-                         </div>
-                         <!-- End of Edit Target Data Panel -->
-
-                         <!-- Edit Chart Data Panel-->
-                         <div class="panel-group">
-                           <div class="panel panel-default">
-                             <div class="panel-heading">
-                               <h3 class="panel-title chart-target-panel">Chart Data</h3>
-                             </div>
-                             <div class="panel-body">
-                               <div class="form-group">
-                                 <label class="col-xs-3 control-label"> General Label </label>
-                                 <div class="col-xs-9">
-                                   <input type="text" class="form-control" name="edit-label-chart" id="edit-label-chart"/>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
-                                 <div class="col-xs-9">
-                                   <select id="edit-chart-unit-select" name="edit-chart-unit" class="form-control">
-                                     <option value="">Select Unit</option>
-                                     <option id="edit-chart-number" value="number" data-show="number"> Number</option>
-                                     <option id="edit-chart-percentage" value="percentage"  data-show="percentage"> Percentage </option>
-                                     <option id="edit-chart-yes-no" value="yes-no"  data-show="yes-no"> Yes/No </option>
-                                     <!-- <option id="edit-chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
-                                     <!-- <option id="edit-chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
-                                   </select>
-                                 </div>
-                               </div>
-                               <div class="form-group">
-                                 <div class="col-xs-offset-12 edit-plus-div" style="float:right;">
-                                   <button type="button" class="btn btn-default addButton" data-action="edit" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
-                                 </div>
-                               </div>
-
-                               <div class="edit-div-chart-unit-number">
-                               <div class="chart-unit-select hide edit-chart-unit-number" id="edit-chart-unit-number">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label left"> Baseline</label>
-                                   <div class="col-xs-9">
-                                       <input name="chart-baseline-number"  type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" data-slug="baseline"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="chart-number-value" type="number" step="any" class="form-control" data-slug="value"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <div class="col-xs-12">
-                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                   </div>
-                                 </div>
-                                 <hr class="separator">
-                               </div>
-                             </div>
-
-                             <div class="edit-div-chart-unit-percentage">
-                               <div class="chart-unit-select hide edit-chart-unit-percentage" id="edit-chart-unit-percentage">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label left"> Baseline </label>
-                                   <div class="col-xs-9">
-                                       <input  name="chart-baseline-percentage" type="number" maxlength="4" pattern="[0-9]{4}" class="form-control" data-slug="baseline"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label"> Chart Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label">Percentage Value</label>
-                                   <div class="col-xs-9">
-                                     <input name="chart-percentage-value" type="number" step="any" class="form-control" data-slug="value" />
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <div class="col-xs-12">
-                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                   </div>
-                                 </div>
-                                 <hr class="separator">
-                               </div>
-                             </div>
-
-                               <div class="edit-div-chart-unit-yes-no">
-                                 <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label left"> Baseline </label>
-                                   <div class="col-xs-9">
-                                       <input name="chart-baseline-yes-no" type="number" class="form-control" maxlength="4" pattern="[0-9]{4}" data-slug="baseline"/>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
-                                   <div class="col-xs-9">
-                                     <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
-                                   </div>
-                                 </div>
-                                 <!-- TOCHANGE -->
-                                 <div class="form-group">
-                                   <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
-                                   <div class="col-xs-6">
-                                     <label class="radio-inline">
-                                     <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
-                                     </label>
-                                     <label class="radio-inline">
-                                     <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
-                                     </label>
-                                   </div>
-                                 </div>
-                                 <div class="form-group">
-                                   <div class="col-xs-12">
-                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                   </div>
-                                 </div>
-                                 <hr class="separator">
-                               </div>
-                              </div>
-                           </div>
-                           </div>
-                         </div>
-                         <!-- End of Chart Data Panel -->
-
-                         <div class="form-group">
-                            <label  class="col-xs-3 control-label">Description</label>
-                             <div class="col-xs-9">
-                                <textarea name="edit-chart-description" type="text" class="form-control" id="edit-chart-description"></textarea>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header chart-color">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Add Chart</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-chart-form" class="form-horizontal" method="POST">
+                            <input type="hidden" id="chart-target-id">
+                            <input type="hidden" id="chart-indicator-id">
+                            <input type="hidden" id="chart-sdg-short-name">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label left">Title</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" name="title-chart" id="title-chart" required/>
+                                </div>
                             </div>
-                        </div>
+                            <!-- Target Data Panel-->
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title chart-target-panel">Target Data</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Target Year</label>
+                                            <div class="col-xs-9">
+                                                <input name="target-year" type="number" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" id="target-year" required/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="target-unit" class="col-xs-3 control-label">Unit</label>
+                                            <div class="col-xs-9">
+                                                <select id="target-unit-select" name="target-unit" class="form-control" required/>
+                                                    <option value="">Select Unit</option>
+                                                    <option id="target-number" value="number" data-show="number"> Number</option>
+                                                    <option id="target-percentage" value="percentage" data-show="percentage"> Percentage </option>
+                                                    <option id="target-yes-no" value="yes-no" data-show="yes-no"> Yes/No </option>
+                                                    <option id="target-comperative" value="comperative" data-show="comperative">Comperative Value</option>
+                                                    <option id="target-ratio" value="ratio" data-show="ratio">Ratio</option>
+                                                    <option id="target-increasing-decreasing" value="increasing-decreasing" data-show="increasing-decreasing"> Increasing/Decreasing </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group target-unit-select target-unit-number">
+                                            <label class="col-xs-3 control-label" for="target-number-value">Number Value</label>
+                                            <div class="col-xs-9">
+                                                <input name="target-number-value" type="number" step="any" class="form-control" id="target-number-value" data-slug="value"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group target-unit-select target-unit-percentage">
+                                            <label class="col-xs-3 control-label" for="target-percentage-value">Percentage Value</label>
+                                            <div class="col-xs-9">
+                                                <input name="target-percentage-value" type="number" step="any" class="form-control" id="target-percentage-value" data-slug="value"/>
+                                            </div>
+                                        </div>
+                                        <div class="target-unit-select target-unit-ratio">
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label" for="target-ratio-value-a">Number</label>
+                                                <div class="col-xs-9">
+                                                    <input name="target-ratio-value-a" type="number" step="any" class="form-control" id="target-ratio-value-a" data-slug="value_a"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label" for="target-ratio-value-b">Total</label>
+                                                <div class="col-xs-9">
+                                                    <input name="target-ratio-value-b" type="number" step="any" class="form-control" id="target-ratio-value-b" data-slug="value_b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="target-unit-select target-unit-comperative">
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label" for="target-comperative-value-a">Current Value</label>
+                                                <div class="col-xs-9">
+                                                    <input name="target-comperative-current-value" step="any" type="number" class="form-control" id="target-comperative-current-value" data-slug="current_value"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label" for="target-comperative-value-b">Maximum Value</label>
+                                                <div class="col-xs-9">
+                                                    <input name="target-comperative-max-value" step="any" type="number" class="form-control" id="target-comperative-max-value" data-slug="max_value"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group target-unit-select target-unit-yes-no">
+                                            <label class="col-xs-3 control-label" for="target-yes-no-value">Value</label>
+                                            <div class="col-xs-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="target-yes-no" value="yes" data-slug="value"/>Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="target-yes-no" value="no" data-slug="value"/>No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group target-unit-select target-unit-increasing-decreasing">
+                                            <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
+                                            <div class="col-xs-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="target-increasing-decreasing" value="increasing" data-slug="value"/> Increasing
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="target-increasing-decreasing" value="decreasing" data-slug="value"/> Decreasing
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Target Data Panel -->
+
+                            <!-- Chart Data Panel-->
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title chart-target-panel">Chart Data</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label"> General Label </label>
+                                            <div class="col-xs-9">
+                                                <input type="text" class="form-control" name="label-chart" id="label-chart" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
+                                            <div class="col-xs-9">
+                                                <select id="chart-unit-select" name="chart-unit" class="form-control" required>
+                                                    <option value="">Select Unit</option>
+                                                    <option id="chart-number" value="number" data-show="number"> Number</option>
+                                                    <option id="chart-percentage" value="percentage" data-show="percentage"> Percentage </option>
+                                                    <option id="chart-yes-no" value="yes-no" data-show="yes-no"> Yes/No </option>
+                                                    <!-- <option id="chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
+                                                    <!-- <option id="chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-offset-12 plus-div" style="float:right;">
+                                                <button type="button" class="btn btn-default addButton" data-action="add" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="div-chart-unit-number">
+                                            <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline</label>
+                                                    <div class="col-xs-9">
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-number" data-slug="baseline"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-number-value" type="number" step="any" class="form-control" id="chart-number-value" data-slug="value"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+
+                                        <div class="div-chart-unit-percentage">
+                                            <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input type="number" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" name="chart-baseline-percentage" data-slug="baseline"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-percentage-value">Percentage Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-percentage-value" type="number" step="any" class="form-control" id="chart-percentage-value" data-slug="value"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value"> Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+                                        <div class="div-chart-unit-ratio">
+                                            <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-ratio" data-slug="baseline"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-ratio-value-a">Number</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-ratio-value-a" type="number" step="any" class="form-control" id="chart-ratio-value-a" data-slug="value_a"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-ratio-value-b">Total</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-ratio-value-b" type="number" step="any" class="form-control" id="chart-ratio-value-b" data-slug="value_b"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+
+                                        <div class="div-chart-unit-comperative">
+                                            <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-comperative" data-slug="baseline" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-comperative-value-a">Current Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-comperative-value-a" type="number" step="any" class="form-control" id="chart-comperative-current-value" data-slug="current_value"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-comperative-value-b">Maximum Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-comperative-value-b" type="number" step="any" class="form-control" id="chart-comperative-value-max-value" data-slug="max_value"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+
+                                        <div class="div-chart-unit-yes-no">
+                                            <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-yes-no" data-slug="baseline" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
+                                                    <div class="col-xs-6">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="chart-yes-no" value="yes" data-slug="value"/>Yes
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="chart-yes-no" value="no" data-slug="value"/>No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" id="chart-label-value" data-slug="label"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Chart Data Panel -->
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="chart-description">Description</label>
+                                <div class="col-xs-9">
+                                    <textarea name="chart-description" type="text" class="form-control" id="chart-description"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                                <input type="submit" value="Save changes" name="add-chart-button" class="btn btn-primary chart-color" id="add-chart-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Add Chart Modal -->
+
+        <!-- Start of Edit Chart Modal -->
+        <div id="edit-chart-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title">Edit Chart</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-chart-form" class="form-horizontal" name="edit_chart_form" method="POST">
+                            <input type="hidden" id="edit-chart-id">
+                            <input type="hidden" id="edit-chart-target-id">
+                            <input type="hidden" id="edit-chart-indicator-id">
+                            <input type="hidden" id="edit-chart-sdg-id">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label left">Title</label>
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control" name="edit-title-chart" id="edit-title-chart" required/>
+                                </div>
+                            </div>
+                            <!-- Edit Target Data Panel-->
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title chart-target-panel">Target Data</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Target Year</label>
+                                            <div class="col-xs-9">
+                                                <input name="edit-target-year" type="number" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" id="edit-target-year" required/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="target-unit" class="col-xs-3 control-label">Unit</label>
+                                            <div class="col-xs-9">
+                                                <select id="edit-target-unit-select" name="edit-target-unit" class="form-control" required>
+                                                    <option value="">Select Unit</option>
+                                                    <option id="edit-target-number" value="number" data-show="number"> Number</option>
+                                                    <option id="edit-target-percentage" value="percentage" data-show="percentage"> Percentage </option>
+                                                    <option id="edit-target-yes-no" value="yes-no" data-show="yes-no"> Yes/No </option>
+                                                    <option id="edit-target-comperative" value="comperative" data-show="comperative">Comperative Value</option>
+                                                    <option id="edit-target-ratio" value="ratio" data-show="ratio">Ratio</option>
+                                                    <option id="edit-target-increasing-decreasing" value="increasing-decreasing" data-show="increasing-decreasing"> Increasing/Decreasing </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group edit-target-unit-select edit-target-unit-number">
+                                            <label class="col-xs-3 control-label">Number Value</label>
+                                            <div class="col-xs-9">
+                                                <input name="edit-target-number-value" type="number" step="any" class="form-control" id="edit-target-number-value" data-slug="value" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group edit-target-unit-select edit-target-unit-percentage">
+                                            <label class="col-xs-3 control-label">Percentage Value</label>
+                                            <div class="col-xs-9">
+                                                <input name="edit-target-percentage-value" type="number" step="any" class="form-control" id="edit-target-percentage-value" data-slug="value" />
+                                            </div>
+                                        </div>
+                                        <div class="edit-target-unit-select edit-target-unit-ratio">
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label">Number</label>
+                                                <div class="col-xs-9">
+                                                    <input name="edit-target-ratio-value-a" type="number" step="any" class="form-control" id="edit-target-ratio-value-a" data-slug="value_a" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label">Total</label>
+                                                <div class="col-xs-9">
+                                                    <input name="edit-target-ratio-value-b" type="number" step="any" class="form-control" id="edit-target-ratio-value-b" data-slug="value_b" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="edit-target-unit-select edit-target-unit-comperative">
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label">Current Value</label>
+                                                <div class="col-xs-9">
+                                                    <input name="edit-target-comperative-current-value" step="any" type="number" class="form-control" id="edit-target-comperative-current-value" data-slug="current_value" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label">Maximum Value</label>
+                                                <div class="col-xs-9">
+                                                    <input name="edit-target-comperative-max-value" step="any" type="number" class="form-control" id="edit-target-comperative-max-value" data-slug="max_value" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group edit-target-unit-select edit-target-unit-yes-no">
+                                            <label class="col-xs-3 control-label">Value</label>
+                                            <div class="col-xs-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="edit-target-yes" name="edit-target-yes-no" value="yes" data-slug="value">Yes
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="edit-target-no" name="edit-target-yes-no" value="no" data-slug="value">No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group edit-target-unit-select edit-target-unit-increasing-decreasing">
+                                            <label class="col-xs-3 control-label" for="target-increasing-decreasing-value">Value</label>
+                                            <div class="col-xs-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="edit-target-increasing" name="edit-target-increasing-decreasing" value="increasing" data-slug="value"> Increasing
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="edit-target-decreasing" name="edit-target-increasing-decreasing" value="decreasing" data-slug="value"> Decreasing
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Edit Target Data Panel -->
+
+                            <!-- Edit Chart Data Panel-->
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title chart-target-panel">Chart Data</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label"> General Label </label>
+                                            <div class="col-xs-9">
+                                                <input type="text" class="form-control" name="edit-label-chart" id="edit-label-chart" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="chart-data-unit" class="col-xs-3 control-label">Unit</label>
+                                            <div class="col-xs-9">
+                                                <select id="edit-chart-unit-select" name="edit-chart-unit" class="form-control" required>
+                                                    <option value="">Select Unit</option>
+                                                    <option id="edit-chart-number" value="number" data-show="number"> Number</option>
+                                                    <option id="edit-chart-percentage" value="percentage" data-show="percentage"> Percentage </option>
+                                                    <option id="edit-chart-yes-no" value="yes-no" data-show="yes-no"> Yes/No </option>
+                                                    <!-- <option id="edit-chart-comperative" value="comperative"  data-show="comperative">Comperative Value</option> -->
+                                                    <!-- <option id="edit-chart-ratio" value="ratio"  data-show="ratio">Ratio</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-offset-12 edit-plus-div" style="float:right;">
+                                                <button type="button" class="btn btn-default addButton" data-action="edit" style="margin-right: 15px;"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="edit-div-chart-unit-number">
+                                            <div class="chart-unit-select hide edit-chart-unit-number" id="edit-chart-unit-number">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-baseline-number" type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="baseline" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-number-value">Number Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-number-value" type="number" step="any" class="form-control" data-slug="value" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+
+                                        <div class="edit-div-chart-unit-percentage">
+                                            <div class="chart-unit-select hide edit-chart-unit-percentage" id="edit-chart-unit-percentage">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-baseline-percentage" type="number" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" data-slug="baseline" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label"> Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label">Percentage Value</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-percentage-value" type="number" step="any" class="form-control" data-slug="value" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+
+                                        <div class="edit-div-chart-unit-yes-no">
+                                            <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-baseline-yes-no" type="number" class="form-control" min="1900" max="9999" step="1" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="baseline" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-label-value">Chart Label</label>
+                                                    <div class="col-xs-9">
+                                                        <input name="chart-label-value" type="text" class="form-control" data-slug="label" />
+                                                    </div>
+                                                </div>
+                                                <!-- TOCHANGE -->
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label" for="chart-yes-no-value">Values</label>
+                                                    <div class="col-xs-6">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="chart-yes-no" value="yes" data-slug="value">Yes
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="chart-yes-no" value="no" data-slug="value">No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
+                                                    </div>
+                                                </div>
+                                                <hr class="separator">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Chart Data Panel -->
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Description</label>
+                                <div class="col-xs-9">
+                                    <textarea name="edit-chart-description" type="text" class="form-control" id="edit-chart-description"></textarea>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                                 <input type="submit" value="Save changes" name="edit-chart-button" class="btn btn-primary" id="edit-chart-button">
                             </div>
-                            <!-- /.modal-content -->
-                       </form>
-                   </div>
-               </div><!-- /.modal-dialog -->
-           </div><!-- /.modal -->
-           <!-- end of edit modal -->
-       </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Edit Chart Modal -->
 
-
-      </div>
+    </div>
 </div>
 
 
-
-
-<!-- Modal -->
+<!-- Successfully Updated Modal -->
 <div class="modal fade" id="alert-success-modal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -1007,26 +961,6 @@
             var divId = '#' + action + 'chart-unit-' + selectedUnit;
             manageUnits.addButton(selectedUnit, divId, editValue);
           });
-
-          // Chart unit select box on change
-          $('#chart-unit-select').change(function() {
-             addChartIndex = 0;
-             $('.addedItem').remove();
-             $('.plus-div').show();
-             var selectedUnit = $('#chart-unit-select').find(":selected").data('show');
-             var divId = '#chart-unit-' + selectedUnit;
-             manageUnits.addButton(selectedUnit, divId, false);
-          });
-
-          // Chart unit select box on change
-          $('#edit-chart-unit-select').change(function() {
-             addChartIndex = 0;
-             $('.addedItem').remove();
-             var selectedUnit = $('#edit-chart-unit-select').find(":selected").data('show');
-             var divId = '#edit-chart-unit-' + selectedUnit;
-             manageUnits.addButton(selectedUnit, divId, true);
-          });
-
       var manageUnits = {
         addButton: function(unit, divId, editValue, editData = 0, chartUnit = 0){
         // clone the div based on id
@@ -1150,17 +1084,45 @@
               return JSON.stringify(allData);
           }
         };
-
+        function onTargetUnitSelect(selectedUnit, label ){
+          $('.' + label + 'target-unit-select').hide();
+          $('#' + label +'chart-unit-select').attr('disabled',false);
+          $('.' + label +'target-unit-' + selectedUnit).show();
+          if(selectedUnit === 'yes-no'){
+            addChartIndex = 0;
+            $('#' + label +'chart-unit-select').val('yes-no');
+            $('.addedItem').remove();
+            $('.plus-div').show();
+            manageUnits.addButton('yes-no', '#' + label +'chart-unit-yes-no', false);
+            $('#' + label + 'chart-unit-select').attr('disabled',true);
+          }
+          }
         // Hide all taget unit fields and show them based on selected unit
         $('.target-unit-select').hide();
         $('#target-unit-select').change(function() {
-          $('.target-unit-select').hide();
-          $('.target-unit-' + $('option:selected', this).data('show')).show();
+          onTargetUnitSelect($('option:selected', this).val(), '');
         });
         // Hide all edit taget unit fields and show them based on selected unit
         $('#edit-target-unit-select').change(function() {
-          $('.edit-target-unit-select').hide();
-          $('.edit-target-unit-' + $('option:selected', this).data('show')).show();
+            onTargetUnitSelect($('option:selected', this).val(), 'edit-');
+        });
+
+        function onChartUnitSelect(selectedUnit, label, actionFlag ){
+          addChartIndex = 0;
+          $('.addedItem').remove();
+          var divId = '#' + label + 'chart-unit-' + selectedUnit;
+          manageUnits.addButton(selectedUnit, divId, actionFlag);
+        }
+
+        // Chart unit select box on change
+        $('#chart-unit-select').change(function() {
+           $('.plus-div').show();
+           onChartUnitSelect($('option:selected', this).val(), '', false);
+        });
+
+        // Chart unit select box on change
+        $('#edit-chart-unit-select').change(function() {
+           onChartUnitSelect($('option:selected', this).val(), 'edit-', true);
         });
 
         // when chart modal is closed remove all added fields and hide displayed divs
@@ -1181,7 +1143,11 @@
        });
 
         // Adding new target from modal
-        $('#add-targets-form').on('submit', function (e) {
+        $('#add-targets-form').validate({
+            rules: {
+
+            },
+            submitHandler: function (form) {
             $.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
                 type: 'POST',
@@ -1202,21 +1168,14 @@
                     $('#add-targets-modal').modal('hide');
                 }
             });
-            e.preventDefault();
+            // e.preventDefault();
+          }
         });
 
         // Edit existing target from modal
         $('#edit-targets-form').validate({
             rules: {
-                // edit-target-title: {
-                //     required: true,
-                // },
-                // edit_add_sdg: {
-                //     required: true,
-                // },
-                // edit_add_unit: {
-                //     required: true,
-                // },
+
             },
             submitHandler: function (form) {
                 $.ajax({
@@ -1667,8 +1626,11 @@
         });
 
         // Adding new chart
-        $('#add-chart-form').on('submit', function (e) {
+          $('#add-chart-form').validate({
+              rules: {
 
+              },
+              submitHandler: function (form) {
           var indicator_id = $('#chart-indicator-id').val();
           var target_id = $('#chart-target-id').val();
           var sdg_short_name = $('#chart-sdg-short-name').val();
@@ -1768,12 +1730,19 @@
                    $('#add-chart-form')[0].reset();
                }
            });
-          e.preventDefault();
+         }
         });
 
         // Adding new chart
-        $('#edit-chart-form').on('submit', function (e) {
-          //
+        // add the rule here
+        //$('#edit-chart-form').on('submit', function (e) {
+        $('#edit-chart-form').validate({
+            rules: {
+
+
+
+            },
+            submitHandler: function (form) {
           var chart_id = $('#edit-chart-id').val();
           var indicator_id = $('#edit-chart-indicator-id').val();
           var target_id = $('#edit-chart-target-id').val();
@@ -1883,15 +1852,15 @@
                }
 
            });
-          e.preventDefault();
+         }
         });
-
+        // name: {
+        //     required: true,
+        // }
         // Adding new Indicator
         $('#add-indicator-form').validate({
             rules: {
-                name: {
-                    required: true,
-                }
+
             },
             submitHandler: function (form) {
 
@@ -1989,10 +1958,7 @@
         // Posting the edited Data
         $('#edit-indicator-form').validate({
             rules: {
-                name: {
-                    required: true,
 
-                }
             },
             submitHandler: function (form) {
                 var indicator_id = $('#edit-indicator-id').val();
