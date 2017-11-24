@@ -32,8 +32,9 @@
        $pages = get_posts($args);
     ?>
 
-    <div class="col-xs-10">
-        <h3>Welcome, you can view your SDG Goals page/s below:</h3><br/>
+    <div>
+        <h2>Manage targets, indicators and charts in Sustainable Developement Goals.</h2>
+        <h4>Note: If you need help on how to use this plugin please consider downloading the document guide of this plugin: <a class="btn btn-success" href=<?php echo SDGS__PLUGIN_URL . 'uploads/guide.docx' ?> download>Download UNKT SGDs and Targets Guide</a></h4>
     </div>
     <!-- <div class="col-md-11 col-md-offset-1">
         <ol>
