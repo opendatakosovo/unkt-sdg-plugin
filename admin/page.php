@@ -35,7 +35,7 @@
     <div>
       <br/>
         <h2>Manage targets, indicators and charts in Sustainable Developement Goals.</h2>
-        <h4>Note: If you need help on how to use this plugin please consider reading the document guide of this plugin <a style="border-radius: 5px; margin-right: 10px;" class="btn btn-info" href=<?php echo SDGS__PLUGIN_URL . 'uploads/guide.pdf' ?> target="_blank">Read UNKT SDGs and Targets Guide</a><a style="border-radius: 5px" class="btn btn-default" href=<?php echo SDGS__PLUGIN_URL . 'uploads/guide.pdf' ?> download>Download Document Guide</a></h4>
+        <h4>Note: If you need help on how to use this plugin please consider reading the document guide of this plugin <a style="border-radius: 5px; margin-right: 10px;" class="btn btn-info" href=<?php echo SDGS__PLUGIN_URL . 'uploads/unkt_sdgs_targets_guide.pdf' ?> target="_blank">Read UNKT SDGs and Targets Guide</a><a style="border-radius: 5px" class="btn btn-default" href=<?php echo SDGS__PLUGIN_URL . 'uploads/unkt_sdgs_targets_guide.pdf' ?> download>Download Document Guide</a></h4>
     </div>
     <!-- <div class="col-md-11 col-md-offset-1">
         <ol>
