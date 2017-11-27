@@ -1121,7 +1121,6 @@ $(document).ready(function () {
           $('#' + label + 'chart-unit-select').removeAttr('readonly');
         }
 			}
-		}
 		// Hide all taget unit fields and show them based on selected unit
 	$('.target-unit-select').hide();
 	$('#target-unit-select').change(function () {
