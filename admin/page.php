@@ -949,22 +949,7 @@ $(document).ready(function () {
 	var addChartIndex = 0;
 	$('.plus-div').hide();
 
-    //
-    // var baselineInput = document.getElementsByClassName("baseline-year");
-    //
-    // baselineInput.addEventListener("input", function (event) {
-    //   targetYear = parseInt($('#target-year').val());
-    //
-    //       alert(this.value);
-    //       if(this.value > targetYear ){
-    //         console.log("YY",targetYear, this.value);
-    //         baselineInput.setCustomValidity('The target year should be greater than baseline.');
-    //       }
-    // });
-    //document.getElementsByName("add-chart-button")[0].onclick = checkTargetChartYear;
-
-// onkeydown="if($('#target-year').val() < this.value){ $('#target-year').setCustomValidity('The target year should be greater than baseline.')};"
-	// On removeButton click, delete the appended input group
+  // On removeButton click, delete the appended input group
 	$(document).on('click', '.removeButton', function () {
 		$(this).parent().parent().parent().remove();
 	});
@@ -1120,9 +1105,11 @@ $(document).ready(function () {
 				$('.addedItem').remove();
 				$('.plus-div').show();
 				manageUnits.addButton('yes-no', '#' + label + 'chart-unit-yes-no', false);
-				$('#' + label + 'chart-unit-select').attr('readonly', 'readonly');}
+				$('#' + label + 'chart-unit-select').attr('readonly', 'readonly');
+        $('#chart-unit-select').attr('disabled', 'disabled');}
         else{
           $('#' + label + 'chart-unit-select').removeAttr('readonly');
+          $('#chart-unit-select').removeAttr('disabled');
         }
 			}
 		// Hide all taget unit fields and show them based on selected unit
@@ -1665,10 +1652,9 @@ $(document).ready(function () {
 	});
 
 	// Adding new chart
-	$('#add-chart-form').validate({
-		rules: {
-		},
-		submitHandler: function (form) {
+	$('#add-chart-form').on('submit', function (e) {
+      e.preventDefault();
+      $('#chart-unit-select').removeAttr('disabled');
 			var indicator_id = $('#chart-indicator-id').val();
 			var target_id = $('#chart-target-id').val();
 			var sdg_short_name = $('#chart-sdg-short-name').val();
@@ -1773,15 +1759,12 @@ $(document).ready(function () {
 					$('#add-chart-form')[0].reset();
 				}
 			});
-		}
-	});
+		});
 
-	// Adding new chart
-	$('#edit-chart-form').validate({
-		rules: {
-
-		},
-		submitHandler: function (form) {
+	// Editing new chart
+	$('#edit-chart-form').on('submit', function (e) {
+      e.preventDefault();
+      $('#edit-chart-unit-select').removeAttr('disabled');
 			var chart_id = $('#edit-chart-id').val();
 			var indicator_id = $('#edit-chart-indicator-id').val();
 			var target_id = $('#edit-chart-target-id').val();
@@ -1895,10 +1878,8 @@ $(document).ready(function () {
 						$('#alert-success-modal').modal('hide')
 					}, 3000);
 				}
-
 			});
-		}
-	});
+		});
 
 	// Adding new Indicator
 	$('#add-indicator-form').validate({
@@ -2122,6 +2103,7 @@ $(document).ready(function () {
 						$('input[name=edit-target-' + targetUnit + '][value=' + value + ']').attr('checked', true);
             if(targetUnit == 'yes-no'){
               $('#edit-chart-unit-select').attr('readonly', 'readonly');
+              $('#edit-chart-unit-select').attr('disabled', 'disabled');
             }
 					} else {
 						key = key.replace('_', '-');
