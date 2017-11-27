@@ -38,7 +38,10 @@ class Unkt
             add_action('wp_ajax_remove_last_indicator_targets', array('Unkt', 'remove_last_indicator_targets'));
             add_action('wp_ajax_get_targets_indicators', array('Unkt', 'get_targets_indicators')); //get indicators
             add_action('wp_ajax_get_targets', array('Unkt', 'get_targets'));
+
             add_action('wp_ajax_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
+            add_action('wp_ajax_nopriv_get_target_indicator_charts', array('Unkt','get_target_indicator_charts'));
+
             add_action('wp_ajax_add_chart', array('Unkt', 'add_chart'));
             add_action('wp_ajax_remove_chart', array('Unkt', 'remove_chart'));
             add_action('wp_ajax_load_chart_selected', array('Unkt', 'load_chart_selected'));
@@ -62,7 +65,6 @@ class Unkt
         remove_action('admin_print_styles', 'print_emoji_styles');
 
         add_action('wp_enqueue_scripts', array('Unkt', 'prefix_enqueue_tools'));
-
     }
 
     //Remove All Meta Generators
