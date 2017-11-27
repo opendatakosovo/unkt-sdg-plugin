@@ -1038,8 +1038,8 @@ $(document).ready(function () {
 				targetValue[slug] = parseInt(value);
 
 				if(targetUnit == 'yes-no' || targetUnit == 'increasing-decreasing') {
-					slug = $('input[type=radio][name=target-' + targetUnit + ']:checked').data("slug");
-					value = $('input[type=radio][name=target-' + targetUnit + ']:checked').val();
+					slug = $('input[type=radio][name='+ action +'target-' + targetUnit + ']:checked').data("slug");
+					value = $('input[type=radio][name='+ action +'target-' + targetUnit + ']:checked').val();
 					targetValue[slug] = value;
 					return false;
 				}
@@ -1116,7 +1116,10 @@ $(document).ready(function () {
 				$('.addedItem').remove();
 				$('.plus-div').show();
 				manageUnits.addButton('yes-no', '#' + label + 'chart-unit-yes-no', false);
-				$('#' + label + 'chart-unit-select').attr('disabled', true);
+				$('#' + label + 'chart-unit-select').attr('readonly', 'readonly');}
+        else{
+          $('#' + label + 'chart-unit-select').removeAttr('readonly');
+        }
 			}
 		}
 		// Hide all taget unit fields and show them based on selected unit
@@ -2114,6 +2117,9 @@ $(document).ready(function () {
 				$.each(targetValue, function (key, value) {
 					if(targetUnit === 'increasing-decreasing' || targetUnit === 'yes-no') {
 						$('input[name=edit-target-' + targetUnit + '][value=' + value + ']').attr('checked', true);
+            if(targetUnit == 'yes-no'){
+              $('#edit-chart-unit-select').attr('readonly', 'readonly');
+            }
 					} else {
 						key = key.replace('_', '-');
 						$('#edit-target-' + targetUnit + '-' + key).val(value);
