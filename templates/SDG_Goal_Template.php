@@ -93,7 +93,7 @@ if (isset($_GET)) {
             $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
-               <p style='border-bottom: 2px solid #fff; border-top: 2px solid #fff; padding: 10px 170px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
+               <p style='border-bottom: 2px solid #fff; width: 99%; border-top: 2px solid #fff; padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: <a target='blank' href="+data[key][i].indicator_source+">" + data[key][i].indicator_source + "</a></p>\
             </div>");
          }
          counter++;
