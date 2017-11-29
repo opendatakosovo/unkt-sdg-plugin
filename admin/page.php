@@ -505,6 +505,7 @@
                                                 <hr class="separator">
                                             </div>
                                         </div>
+
                                         <div class="div-chart-unit-ratio">
                                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                                 <div class="form-group">
@@ -607,6 +608,12 @@
                                                 </div>
                                                 <hr class="separator">
                                             </div>
+                                        </div>
+
+                                        <div class="container-fluid">
+                                            <div class="alert alert-info">
+                                               <p> <b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
@@ -869,6 +876,11 @@
                                                 <hr class="separator">
                                             </div>
                                         </div>
+                                        <div class="container-fluid">
+                                            <div class="alert alert-info">
+                                               <p><b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -946,7 +958,6 @@ window.checkTargetNumber = function(action)  {
       if(e.getAttribute('data-slug') === 'baseline') {
         var chartYear = parseInt(e.value);
         if ( targetYear <= chartYear){
-          console.log("000", parseInt(e.value) , targetYear );
           $('#' + action + 'target-year')[0].setCustomValidity('The target year should be greater than the baselines.');
           return false;
         }else{
@@ -995,6 +1006,7 @@ $(document).ready(function () {
 	});
 	var manageUnits = {
 		addButton: function (unit, divId, editValue, editData = 0, chartUnit = 0) {
+      addChartIndex++;
 			// clone the div based on id
 			var $template = $(divId),
 				$clone = $template
@@ -1084,7 +1096,6 @@ $(document).ready(function () {
 				function (i, e) {
 					var currentIndex = parseInt(e.getAttribute('data-generated'));
 					var slug, value, insert;
-
 					if(previewIndex != currentIndex && typeof previewIndex != 'undefined') {
 						allData[inputYear].push(chartElement);
 						chartElement = {};
