@@ -475,18 +475,18 @@ if (isset($_GET)) {
                      color: 'white'
                   }
                },
-               plotOptions: {
-                    series: {
-                        marker: {
-                            enabled: false
-                        },
-                        states: {
-                            hover: {
-                                enabled: false
-                            }
-                        }
-                    }
-                },
+               // plotOptions: {
+               //      series: {
+               //          marker: {
+               //              enabled: false
+               //          },
+               //          states: {
+               //              hover: {
+               //                  enabled: false
+               //              }
+               //          }
+               //      }
+               //  },
                tooltip: {
                   formatter: function() {
                      if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
