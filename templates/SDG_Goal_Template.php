@@ -199,7 +199,7 @@ if (isset($_GET)) {
 
       const generateChartContainer = (dataChartObj) => {
          //[data-target-id='" + dataChartObj.target_id + "']
-         console.log(dataChartObj);
+         // console.log(dataChartObj);
          $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
             <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
             </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
@@ -364,9 +364,12 @@ if (isset($_GET)) {
                }
                targetData.push(incValue);
             } else if (targetValue == 'decreasing') {
+              var currentDecreasingValue = targetData[targetData.length-1].y - parseInt(Math.round(targetData[0].y).toFixed(2));
+              var finalDecreasingValue = currentDecreasingValue < 0 ? 0 : currentDecreasingValue;
+
                let decValue = {
                   name: 'Decreasing',
-                  y: targetData[targetData.length-1].y - parseInt(Math.round(targetData[0].y).toFixed(2))
+                  y: finalDecreasingValue
                }
                targetData.push(decValue);
             }
