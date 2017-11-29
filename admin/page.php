@@ -505,6 +505,7 @@
                                                 <hr class="separator">
                                             </div>
                                         </div>
+
                                         <div class="div-chart-unit-ratio">
                                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                                 <div class="form-group">
@@ -607,6 +608,12 @@
                                                 </div>
                                                 <hr class="separator">
                                             </div>
+                                        </div>
+
+                                        <div class="container-fluid">
+                                            <div class="alert alert-info">
+                                               <p> <b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
@@ -868,6 +875,11 @@
                                                 </div>
                                                 <hr class="separator">
                                             </div>
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div class="alert alert-info">
+                                               <p><b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                           </div>
                                         </div>
                                     </div>
                                 </div>
