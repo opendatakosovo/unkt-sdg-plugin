@@ -946,7 +946,6 @@ window.checkTargetNumber = function(action)  {
       if(e.getAttribute('data-slug') === 'baseline') {
         var chartYear = parseInt(e.value);
         if ( targetYear <= chartYear){
-          console.log("000", parseInt(e.value) , targetYear );
           $('#' + action + 'target-year')[0].setCustomValidity('The target year should be greater than the baselines.');
           return false;
         }else{
@@ -995,6 +994,7 @@ $(document).ready(function () {
 	});
 	var manageUnits = {
 		addButton: function (unit, divId, editValue, editData = 0, chartUnit = 0) {
+      addChartIndex++;
 			// clone the div based on id
 			var $template = $(divId),
 				$clone = $template
@@ -1084,7 +1084,6 @@ $(document).ready(function () {
 				function (i, e) {
 					var currentIndex = parseInt(e.getAttribute('data-generated'));
 					var slug, value, insert;
-
 					if(previewIndex != currentIndex && typeof previewIndex != 'undefined') {
 						allData[inputYear].push(chartElement);
 						chartElement = {};
