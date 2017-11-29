@@ -17,20 +17,22 @@ $SDGPlugin = Unkt::init();
 // Add the template option so when we create a page we can make it an SDG Template page.
 require_once(SDGS__PLUGIN_DIR . 'sdg-page.php');
 
-// Register activation and deactivation hooks
 
-register_activation_hook(__FILE__, 'activate');
-register_deactivation_hook(__FILE__, 'deactivate');
-function activate()
-{
+function activate_sdg_plugin(){
+   error_log();
     global $wpdb;
-    // Register On activation actions.
-    // Everything inside the on_activate function is executed
-    // once, when the plugin is activated.
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-    $create_sdg_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sdg` (
+    // Register On activation actions.
+    // Everything inside the activate_sdg_plugin function is executed
+    // once, when the plugin is activated.
+
+    // Define table names
+    $db_tb_sdg = $wpdb->prefix . 'sdg';
+    $db_tb_targets = $wpdb->prefix . 'targets';
+    $db_tb_indicators = $wpdb->prefix . 'indicators';
+    $db_tb_charts = $wpdb->prefix . 'charts';
+
+    $create_sdg_table_query = "CREATE TABLE IF NOT EXISTS $db_tb_sdg (
               id bigint(20)  NOT NULL  AUTO_INCREMENT,
               s_number bigint(20) NOT NULL,
               short_name text NOT NULL,
@@ -38,43 +40,33 @@ function activate()
               s_text text NOT NULL,
               UNIQUE KEY (s_number),
               PRIMARY KEY  (id)
-            ) engine=InnoDB CHARSET=utf8;
-        ";
+            ) engine=InnoDB CHARSET=utf8;";
 
-    dbDelta($create_sdg_table_query);
-
-    $create_targets_table_query = "
-            CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}targets` (
+    $create_targets_table_query = "CREATE TABLE IF NOT EXISTS $db_tb_targets (
               id bigint(20)  NOT NULL AUTO_INCREMENT,
               sdg_id bigint(20)  NOT NULL,
               title text NOT NULL,
               description text NOT NULL,
               updated_date text NOT NULL,
               PRIMARY KEY (`id`),
-              CONSTRAINT fk_sdg FOREIGN KEY (sdg_id) REFERENCES {$wpdb->prefix}sdg(s_number)
+              CONSTRAINT fk_sdg_targets FOREIGN KEY (sdg_id) REFERENCES $db_tb_sdg(s_number)
               ON DELETE CASCADE
               ON UPDATE CASCADE
-            ) ENGINE=INNODB CHARSET=utf8;
-        ";
-    dbDelta($create_targets_table_query);
+            ) ENGINE=INNODB CHARSET=utf8;";
 
-    $create_indicators_table_query = "
-           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}indicators` (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            sdg_id bigint(20) NOT NULL,
-            target_id bigint(20) NOT NULL,
-            title text NOT NULL,
-            description text NOT NULL,
-            source text NOT NULL,
-            PRIMARY KEY (id),
-            CONSTRAINT fk_sdg_number FOREIGN KEY (sdg_id) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT fk_targets_number FOREIGN KEY (target_id) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE
-        ) ENGINE = INNODB CHARSET = utf8;
-        ";
-    dbDelta($create_indicators_table_query);
+      $create_indicators_table_query = "CREATE TABLE IF NOT EXISTS $db_tb_indicators (
+              id bigint(20) NOT NULL AUTO_INCREMENT,
+              sdg_id bigint(20) NOT NULL,
+              target_id bigint(20) NOT NULL,
+              title text NOT NULL,
+              description text NOT NULL,
+              source text NOT NULL,
+              PRIMARY KEY (id),
+              CONSTRAINT fk_sdg_number_indicators FOREIGN KEY (sdg_id) REFERENCES $db_tb_sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE,
+              CONSTRAINT fk_targets_number_indicators FOREIGN KEY (target_id) REFERENCES $db_tb_targets(id) ON DELETE CASCADE ON UPDATE CASCADE
+          ) ENGINE = INNODB CHARSET = utf8;";
 
-    $create_charts_table_query = "
-           CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}charts` (
+    $create_charts_table_query = "CREATE TABLE IF NOT EXISTS $db_tb_charts (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             sdg_id bigint(20) NOT NULL,
             target_id bigint(20) NOT NULL,
@@ -89,16 +81,13 @@ function activate()
             description text NOT NULL,
             updated_date text NOT NULL,
             PRIMARY KEY (id),
-            CONSTRAINT fk_sdg_number FOREIGN KEY (sdg_id) REFERENCES {$wpdb -> prefix}sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT fk_targets_number FOREIGN KEY (target_id) REFERENCES {$wpdb -> prefix}targets(id) ON DELETE CASCADE ON UPDATE CASCADE,
-            CONSTRAINT fk_indicators_number FOREIGN KEY (indicator_id) REFERENCES {$wpdb -> prefix}indicators(id) ON DELETE CASCADE ON UPDATE CASCADE
-        ) ENGINE = INNODB CHARSET = utf8;
-        ";
+            CONSTRAINT fk_sdg_number_charts FOREIGN KEY (sdg_id) REFERENCES $db_tb_sdg(s_number) ON DELETE CASCADE ON UPDATE CASCADE,
+            CONSTRAINT fk_targets_number_charts FOREIGN KEY (target_id) REFERENCES $db_tb_targets(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            CONSTRAINT fk_indicators_number_charts FOREIGN KEY (indicator_id) REFERENCES $db_tb_indicators(id) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE = INNODB CHARSET = utf8;";
 
-    dbDelta($create_charts_table_query);
     // Insert SDG's
-    $insert_sdgs = "
-            INSERT INTO `{$wpdb->prefix}sdg`( s_number, short_name, long_name, s_text )
+    $insert_sdgs = "INSERT INTO $db_tb_sdg( s_number, short_name, long_name, s_text )
             VALUES(1,'poverty','End poverty in all its forms everywhere','Extreme poverty rates have been cut by more than half since 1990. While this is a remarkable achievement, one in five people in developing regions still live on less than $1.25 a day, and there are millions more who make little more than this daily amount, plus many people risk slipping back into poverty.Poverty is more than the lack of income and resources to ensure a sustainable livelihood. Its manifestations include hunger and malnutrition, limited access to education and other basic services, social discrimination and exclusion as well as the lack of participation in decision-making. Economic growth must be inclusive to provide sustainable jobs and promote equality.'),
             (2,'zero-hunger','End hunger, achieve food security and improved nutrition and promote sustainable agriculture','It is time to rethink how we grow, share and consume our food.If done right, agriculture, forestry and fisheries can provide nutritious food for all and generate decent incomes, while supporting people-centred rural development and protecting the environment.Right now, our soils, freshwater, oceans, forests and biodiversity are being rapidly degraded. Climate change is putting even more pressure on the resources we depend on, increasing risks associated with disasters such as droughts and floods. Many rural women and men can no longer make ends meet on their land, forcing them to migrate to cities in search of opportunities.A profound change of the global food and agriculture system is needed if we are to nourish today’s 795 million hungry and the additional 2 billion people expected by 2050.The food and agriculture sector offers key solutions for development, and is central for hunger and poverty eradication.'),
             (3,'good-health-and-well-being','Ensure healthy lives and promote well-being for all at all ages','Ensuring healthy lives and promoting the well-being for all at all ages is essential to sustainable development. Significant strides have been made in increasing life expectancy and reducing some of the common killers associated with child and maternal mortality. Major progress has been made on increasing access to clean water and sanitation, reducing malaria, tuberculosis, polio and the spread of HIV/AIDS. However, many more efforts are needed to fully eradicate a wide range of diseases and address many different persistent and emerging health issues.'),
@@ -118,15 +107,32 @@ function activate()
             (17,'partnerships-for-the-goal','Revitalize the global partnership for sustainable development','A successful sustainable development agenda requires partnerships between governments, the private sector and civil society. These inclusive partnerships built upon principles and values, a shared vision, and shared goals that place people and the planet at the centre, are needed at the global, regional, national and local level.\nUrgent action is needed to mobilize, redirect and unlock the transformative power of trillions of dollars of private resources to deliver on sustainable development objectives. Long-term investments, including foreign direct investment, are needed in critical sectors, especially in developing countries. These include sustainable energy, infrastructure and transport, as well as information and communications technologies. The public sector will need to set a clear direction. Review and monitoring frameworks, regulations and incentive structures that enable such investments must be retooled to attract investments and reinforce sustainable development. National oversight mechanisms such as supreme audit institutions and oversight functions by legislatures should be strengthened.')
             ON DUPLICATE KEY UPDATE `s_number` = `s_number`;
         ";
-    dbDelta($insert_sdgs);
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+    dbDelta( $create_sdg_table_query );
+    dbDelta( $create_targets_table_query );
+    dbDelta( $create_indicators_table_query );
+    dbDelta( $create_charts_table_query );
+    dbDelta( $insert_sdgs );
 }
 
-function deactivate()
-{
+
+function deactivate_sdg_plugin(){
     global $wpdb;
+    // Define table names
+    $db_tb_charts = $wpdb->prefix . 'charts';
+    $db_tb_indicators = $wpdb->prefix . 'indicators';
+    $db_tb_targets = $wpdb->prefix . 'targets';
+    $db_tb_sdg = $wpdb->prefix . 'sdg';
+
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}charts`");
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}indicators`");
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}targets`");
-    dbDelta("DROP TABLE IF EXISTS `{$wpdb->prefix}sdg`");
+    $wpdb->query("DROP TABLE IF EXISTS $db_tb_charts;");
+    $wpdb->query("DROP TABLE IF EXISTS $db_tb_indicators;");
+    $wpdb->query("DROP TABLE IF EXISTS $db_tb_targets;");
+    $wpdb->query("DROP TABLE IF EXISTS $db_tb_sdg;");
 }
+
+// Register activation and deactivation hooks
+register_activation_hook(__FILE__, 'activate_sdg_plugin');
+register_deactivation_hook(__FILE__, 'deactivate_sdg_plugin');
