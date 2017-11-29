@@ -528,7 +528,7 @@ if (isset($_GET)) {
                    }
                 },
                exporting: {
-                     enabled: true,
+                     enabled: false,
                      buttons: {
                          contextButton: {
                              symbolFill: '#fff',
