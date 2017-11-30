@@ -90,10 +90,10 @@ if (isset($_GET)) {
 
          // Adding indicator divs foreach indicator-id
          for(var i = 0; i < data[key].length; i++) {
-            $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
+            $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
-               <p style='border-bottom: 2px solid #fff; width: 99%; border-top: 2px solid #fff; padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: " + data[key][i].indicator_source + "</p>\
+               <p style='border-bottom: 1px solid rgba(0, 0, 0, 0.1); width: 99%; border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: " + data[key][i].indicator_source + "</p>\
             </div>");
          }
          counter++;
@@ -288,6 +288,64 @@ if (isset($_GET)) {
          // if ratio
          ratioTargetsSplines = []
 
+
+         //TODO
+          var sdgNumberId = <?php echo $_GET['goal'] ?>;
+          var sdgColor;
+          switch (sdgNumberId) {
+              case 1:
+                sdgColor = '#e5233b';
+                break;
+              case 2:
+                sdgColor = '#dda73a';
+                break;
+              case 3:
+                sdgColor = '#4ca146';
+                break;
+              case 4:
+                sdgColor = '#c7212f';
+                break;
+              case 5:
+                sdgColor = '#ef402d';
+                break;
+              case 6:
+                sdgColor = '#27bfe6';
+                break;
+              case 7:
+                sdgColor = '#fbc412';
+                break;
+              case 8:
+                sdgColor = '#a31c44';
+                break;
+              case 9:
+                sdgColor = '#f26a2e';
+                break;
+              case 10:
+                sdgColor = '#de1768';
+                break;
+              case 11:
+                sdgColor = '#f89d2a';
+                break;
+              case 12:
+                sdgColor = '#bf8d2c';
+                break;
+              case 13:
+                sdgColor = '#407f46';
+                break;
+              case 14:
+                sdgColor = '#1f97d4';
+                break;
+              case 15:
+                sdgColor = '#59ba47';
+                break;
+              case 16:
+                sdgColor = '#136a9f';
+                break;
+              case 17:
+                sdgColor = '#14496b';
+                break;
+          }
+
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
 
@@ -320,7 +378,7 @@ if (isset($_GET)) {
                   marker: {
                      lineWidth: 1,
                      lineColor: Highcharts.getOptions().colors[0],
-                     fillColor: 'white'
+                     fillColor: sdgColor
                   }
                }
                ratioTargetsSplines.push(ratioTargetSpline);
@@ -329,7 +387,7 @@ if (isset($_GET)) {
                type: 'column',
                name: label,
                data: obj[label],
-               color: 'white'
+               color: sdgColor
             });
          });
 
@@ -455,7 +513,7 @@ if (isset($_GET)) {
                marker: {
                   lineWidth: 1,
                   lineColor: Highcharts.getOptions().colors[0],
-                  fillColor: 'white'
+                  fillColor: sdgColor
                }
             }
             // Pushing the targetSpline into series
@@ -475,7 +533,7 @@ if (isset($_GET)) {
                },
                legend: {
                   itemStyle: {
-                     color: 'white'
+                     color: sdgColor
                   }
                },
                // plotOptions: {
@@ -506,24 +564,24 @@ if (isset($_GET)) {
                title: {
                   text: chartTitle,
                   style: {
-                     color: 'white'
+                     color: sdgColor
                   }
                 },
                subtitle: {
                   text: chartDescription,
                   style: {
-                     color: 'white'
+                     color: sdgColor
                   }
                 },
                yAxis: {
                    labels: {
                       style: {
-                         color: 'white'
+                         color: '#373a3c'
                       }
                    },
                    title: {
                       style: {
-                         color: 'white'
+                         color: '#373a3c'
                       }
                    }
                 },
@@ -531,8 +589,8 @@ if (isset($_GET)) {
                      enabled: false,
                      buttons: {
                          contextButton: {
-                             symbolFill: '#fff',
-                             symbolStroke: '#fff'
+                             symbolFill: '#373a3c',
+                             symbolStroke: '#373a3c'
                          }
                      }
                },
@@ -540,7 +598,7 @@ if (isset($_GET)) {
                     categories: baselines,
                     labels: {
                        style: {
-                          color: 'white'
+                          color: '#373a3c'
                        }
                     }
                },
@@ -608,7 +666,8 @@ if (isset($_GET)) {
     }
 </script>
 
-<div class="sdg-goal-page sdg-goal-page-<?php echo $_GET['goal'] ?>">
+<div class="sdg-goal-page" style="padding-top: 0px !important;">
+  <div class="sdg-goal-page sdg-description-part sdg-goal-page-<?php echo $_GET['goal'] ?>">
    <!-- SDG information -->
    <div class="col-md-11 col-sm-12 col-xs-12">
       <div class="sdg-title">
@@ -621,11 +680,14 @@ if (isset($_GET)) {
 
    <div class="col-md-8 col-md-offset-0 col-xs-11 col-xs-offset-1 sdg-description">
    </div>
-
+ </div>
    <!-- Indicators -->
    <div class="tabs">
       <h2>Targets with indicators</h2>
       <div class="panel-group" id="accordion">
+      </div>
+      <div class="well">
+          <p style="float:right;">These data are not finalized. We are still working on! </p>
       </div>
    </div>
 </div>
@@ -644,12 +706,12 @@ if (isset($_GET)) {
 
    .panel-body {
       padding: 15px 30px;
-      color: #fff;
+      color: #373a3c;
    }
 
    .panel-collapse {
-      border-right: 1px solid #fff;
-      border-left: 1px solid #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
    }
 
    .panel-title {
@@ -666,11 +728,11 @@ if (isset($_GET)) {
    }
 
    .tabs a {
-      color: #fff;
+      color: #373a3c;
    }
 
    .tabs a:hover {
-      color: #000e3e;
+      color: #000e3e; /*TODO*/
    }
 
    .tabs h2 {
@@ -683,5 +745,6 @@ if (isset($_GET)) {
     .sidebar {
         /*margin-left: 16px !important;*/
         width: 26%;
+        background-color:  white !important;
     }
 </style>
