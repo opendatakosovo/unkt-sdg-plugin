@@ -424,6 +424,12 @@
                                     </div>
                                     <div class="panel-body add-chart-panel">
                                         <div class="form-group">
+                                            <label class="col-xs-3 control-label left"> Baseline </label>
+                                            <div class="col-xs-9">
+                                                <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline"  id="chart-baseline" data-slug="baseline"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-xs-3 control-label"> General Label </label>
                                             <div class="col-xs-9">
                                                 <input type="text" class="form-control" name="label-chart" id="label-chart" />
@@ -451,9 +457,9 @@
                                         <div class="div-chart-unit-number">
                                             <div class="chart-unit-select hide chart-unit-number" id="chart-unit-number">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline</label>
+                                                    <label class="col-xs-3 control-label left"> Year</label>
                                                     <div class="col-xs-9">
-                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-number" data-slug="baseline"/>
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-year-number" data-slug="year"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -480,9 +486,9 @@
                                         <div class="div-chart-unit-percentage">
                                             <div class="chart-unit-select hide chart-unit-percentage" id="chart-unit-percentage">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input type="number" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" name="chart-baseline-percentage" data-slug="baseline"/>
+                                                        <input type="number" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" name="chart-year-percentage" data-slug="year"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -509,9 +515,9 @@
                                         <div class="div-chart-unit-ratio">
                                             <div class="chart-unit-select hide chart-unit-ratio" id="chart-unit-ratio">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-ratio" data-slug="baseline"/>
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-year-ratio" data-slug="year"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -544,9 +550,9 @@
                                         <div class="div-chart-unit-comperative">
                                             <div class="chart-unit-select hide chart-unit-comperative" id="chart-unit-comperative">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-comperative" data-slug="baseline" />
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-year-comperative" data-slug="year" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -579,9 +585,9 @@
                                         <div class="div-chart-unit-yes-no">
                                             <div class="chart-unit-select hide chart-unit-yes-no" id="chart-unit-yes-no">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-baseline-yes-no" data-slug="baseline" />
+                                                        <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="chart-year-yes-no" data-slug="year" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -612,7 +618,7 @@
 
                                         <div class="container-fluid">
                                             <div class="alert alert-info">
-                                               <p> <b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                               <p> <b> Note </b>: In order to add more than one value for the same label for different years, the label must be the same in all years. And in one year you can add different labels with their values.</p>
                                            </div>
                                         </div>
                                     </div>
@@ -760,6 +766,12 @@
                                     </div>
                                     <div class="panel-body edit-chart-panel">
                                         <div class="form-group">
+                                            <label class="col-xs-3 control-label left"> Baseline </label>
+                                            <div class="col-xs-9">
+                                                <input type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" name="edit-chart-baseline"  id="edit-chart-baseline" data-slug="baseline"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-xs-3 control-label"> General Label </label>
                                             <div class="col-xs-9">
                                                 <input type="text" class="form-control" name="edit-label-chart" id="edit-label-chart" />
@@ -787,9 +799,9 @@
                                         <div class="edit-div-chart-unit-number">
                                             <div class="chart-unit-select hide edit-chart-unit-number" id="edit-chart-unit-number">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline</label>
+                                                    <label class="col-xs-3 control-label left"> Year</label>
                                                     <div class="col-xs-9">
-                                                        <input name="chart-baseline-number" type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="baseline" />
+                                                        <input name="chart-year-number" type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="year" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -816,9 +828,9 @@
                                         <div class="edit-div-chart-unit-percentage">
                                             <div class="chart-unit-select hide edit-chart-unit-percentage" id="edit-chart-unit-percentage">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input name="chart-baseline-percentage" type="number" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" data-slug="baseline" />
+                                                        <input name="chart-year-percentage" type="number" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" class="form-control" data-slug="year" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -845,9 +857,9 @@
                                         <div class="edit-div-chart-unit-yes-no">
                                             <div class="chart-unit-select hide edit-chart-unit-yes-no" id="edit-chart-unit-yes-no">
                                                 <div class="form-group">
-                                                    <label class="col-xs-3 control-label left"> Baseline </label>
+                                                    <label class="col-xs-3 control-label left"> Year </label>
                                                     <div class="col-xs-9">
-                                                        <input name="chart-baseline-yes-no" type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="baseline" />
+                                                        <input name="chart-year-yes-no" type="number" class="form-control" min="1900" max="9999" step="1" onblur="checkTargetNumber('edit-')" onKeyDown="if(this.value.length==4 && event.keyCode>47 && event.keyCode < 58)return false;" data-slug="year" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -878,7 +890,7 @@
                                         </div>
                                         <div class="container-fluid">
                                             <div class="alert alert-info">
-                                               <p><b> Note </b>: In order to add more than one value for the same label for different baselines, the label must be the same in all baselines. And in one baseline you can add different labels with their values.</p>
+                                               <p><b> Note </b>: In order to add more than one value for the same label for different years, the label must be the same in all years. And in one year you can add different labels with their values.</p>
                                            </div>
                                         </div>
                                     </div>
@@ -955,10 +967,10 @@ window.checkTargetNumber = function(action)  {
   var datas = textInputs.filter('[data-generated]');
   datas.each(
     function (i, e) {
-      if(e.getAttribute('data-slug') === 'baseline') {
+      if(e.getAttribute('data-slug') === 'year') {
         var chartYear = parseInt(e.value);
         if ( targetYear <= chartYear){
-          $('#' + action + 'target-year')[0].setCustomValidity('The target year should be greater than the baselines.');
+          $('#' + action + 'target-year')[0].setCustomValidity('The target year should be greater than the chart years.');
           return false;
         }else{
           $('#' + action + 'target-year')[0].setCustomValidity('');
@@ -1030,8 +1042,8 @@ $(document).ready(function () {
 				jElem.prop('id', name + '-' + addChartIndex);
 				jElem.prop('name', name + '-' + addChartIndex);
         jElem.attr("required", "true");
-        if(slug === 'baseline'){
-          jElem.addClass('baseline-year');
+        if(slug === 'year'){
+          jElem.addClass('year-year');
         }
 				// when action is editing, check if argument for edit values is given
 				if(editValue === true) {
@@ -1073,7 +1085,7 @@ $(document).ready(function () {
 
 			return JSON.stringify(targetValue);
 		},
-		chartData: function (chartUnit) {
+		chartData: function (chartUnit, chartBaseline) {
 
 			var chartElement = {};
 			var textInputs = $(':input');
@@ -1083,7 +1095,7 @@ $(document).ready(function () {
 			var years = [];
 			datas.each(
 				function (i, e) {
-					if(e.getAttribute('data-slug') === 'baseline') {
+					if(e.getAttribute('data-slug') === 'year') {
 						if(years.indexOf(e.value) === -1) {
 							years.push(e.value);
 							allData[e.value] = [];
@@ -1101,7 +1113,7 @@ $(document).ready(function () {
 						chartElement = {};
 					}
 					slug = e.getAttribute('data-slug');
-					if(slug === 'baseline') {
+					if(slug === 'year') {
 						inputYear = e.value;
 					} else {
 						value = e.value;
@@ -1110,7 +1122,7 @@ $(document).ready(function () {
 						}
 						insert = true;
 
-						if(chartUnit === 'yes-no' && slug != 'baseline' && slug != 'label') {
+						if(chartUnit === 'yes-no' && slug != 'year' && slug != 'label') {
 							if(e.checked === false) {
 								insert = false;
 							}
@@ -1127,6 +1139,7 @@ $(document).ready(function () {
 					previewIndex = currentIndex;
 
 				});
+      allData['baseline'] = chartBaseline;   //TODO
 			return JSON.stringify(allData);
 		}
 	};
@@ -1703,6 +1716,7 @@ $(document).ready(function () {
 			var sdg_short_name = $('#chart-sdg-short-name').val();
 			var targetUnit = $("#target-unit-select").val();
 			var chartUnit = $("#chart-unit-select").val();
+      var chartBaseline = $('#chart-baseline').val(); //TODO
 
 			$.ajax({
 				url: "<?php echo admin_url('admin-ajax.php'); ?>", //this is the submit URL
@@ -1717,7 +1731,7 @@ $(document).ready(function () {
 					'target_unit': targetUnit,
 					'target_value': manageUnits.targetValue(targetUnit, ''),
 					'chart_unit': chartUnit,
-					'chart_data': manageUnits.chartData(chartUnit),
+					'chart_data': manageUnits.chartData(chartUnit, chartBaseline),
 					'description': $("#chart-description").val(),
 					'label': $("#label-chart").val(),
 					'action': 'add_chart'
@@ -1815,6 +1829,7 @@ $(document).ready(function () {
 			var sdg_id = $('#edit-chart-sdg-id').val();
 			var targetUnit = $("#edit-target-unit-select").val();
 			var chartUnit = $("#edit-chart-unit-select").val();
+      var chartBaseline = $('#edit-chart-baseline').val();
 
 			$.ajax({
 				url: "<?php echo admin_url('admin-ajax.php'); ?>",
@@ -1830,7 +1845,7 @@ $(document).ready(function () {
 					'target_unit': targetUnit,
 					'target_value': manageUnits.targetValue(targetUnit, 'edit'),
 					'chart_unit': chartUnit,
-					'chart_data': manageUnits.chartData(chartUnit),
+					'chart_data': manageUnits.chartData(chartUnit, chartBaseline),
 					'description': $("#edit-chart-description").val(),
 					'label': $("#edit-label-chart").val(),
 					'action': 'update_chart'
@@ -2133,6 +2148,7 @@ $(document).ready(function () {
 			url: "<?php echo admin_url('admin-ajax.php'); ?>",
 			success: function (data) {
 
+
 				var targetUnit = data[0].target_unit;
 				var chartUnit = data[0].chart_unit;
 				var targetValue = JSON.parse(data[0].target_value.replace(/&quot;/g, '"'));
@@ -2155,7 +2171,7 @@ $(document).ready(function () {
 					}
 					$('.edit-target-unit-' + targetUnit).show();
 				});
-
+        $('#edit-chart-baseline').val(chartData.baseline);
 				$('#edit-label-chart').val(data[0].label);
 				$('#edit-chart-unit-select').val(chartUnit);
 				$('#edit-chart-description').val(data[0].description);
@@ -2164,11 +2180,13 @@ $(document).ready(function () {
 				var selectId = '#chart-unit-select';
 
 				$.each(chartData, function (key, value) {
-					var year = key;
-					$.each(value, function (index, inputJson) {
-						inputJson['baseline'] = parseInt(key);
-						manageUnits.addButton(chartUnit, divId, true, inputJson, chartUnit);
-					});
+          if (key !== 'baseline'){
+  					var year = key;
+  					$.each(value, function (index, inputJson) {
+  						inputJson['year'] = parseInt(key);
+  						manageUnits.addButton(chartUnit, divId, true, inputJson, chartUnit);
+  					});
+          }
 				});
 				// Hidden fiels
 				$('#edit-chart-id').val(data[0].id);
