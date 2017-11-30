@@ -687,7 +687,7 @@ if (isset($_GET)) {
       <div class="panel-group" id="accordion">
       </div>
       <div class="well">
-          <p style="float:right;">These data are not finalized. We are still working on! </p>
+          <p style="float:right;font-style:italic;">These data are not finalized. We are still working on! </p>
       </div>
    </div>
 </div>
