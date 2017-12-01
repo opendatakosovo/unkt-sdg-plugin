@@ -232,7 +232,7 @@
 
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                                <textarea name="description" class="form-control" id="description"></textarea>
                             </div>
 
                             <div class="modal-footer">
