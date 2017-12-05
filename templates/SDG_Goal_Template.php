@@ -55,6 +55,62 @@ if (isset($_GET)) {
       $('.sdg-description').append('</span>');
 
 
+      var sdgNumberId = <?php echo $_GET['goal'] ?>;
+      var sdgColor;
+      switch (sdgNumberId) {
+           case 1:
+             sdgColor = '#e5233b';
+             break;
+           case 2:
+             sdgColor = '#dda73a';
+             break;
+           case 3:
+             sdgColor = '#4ca146';
+             break;
+           case 4:
+             sdgColor = '#c7212f';
+             break;
+           case 5:
+             sdgColor = '#ef402d';
+             break;
+           case 6:
+             sdgColor = '#27bfe6';
+             break;
+           case 7:
+             sdgColor = '#fbc412';
+             break;
+           case 8:
+             sdgColor = '#a31c44';
+             break;
+           case 9:
+             sdgColor = '#f26a2e';
+             break;
+           case 10:
+             sdgColor = '#de1768';
+             break;
+           case 11:
+             sdgColor = '#f89d2a';
+             break;
+           case 12:
+             sdgColor = '#bf8d2c';
+             break;
+           case 13:
+             sdgColor = '#407f46';
+             break;
+           case 14:
+             sdgColor = '#1f97d4';
+             break;
+           case 15:
+             sdgColor = '#59ba47';
+             break;
+           case 16:
+             sdgColor = '#136a9f';
+             break;
+           case 17:
+             sdgColor = '#14496b';
+             break;
+      }
+
       var counter = 0;
       Object.keys(data).forEach(key => {
          const indicator_id = [];
@@ -73,8 +129,8 @@ if (isset($_GET)) {
          $('#accordion').append("<div class='panel'>\
             <div class='panel-heading'>\
                <h4 class='panel-title'>\
-                 <a data-toggle='collapse' data-clicked='' id='panel-title' data-target-id='" + data[key][0].target_id + "' data-indicator-id='"+ indicator_id +"'  data-parent='#accordion' href='#panel-"+counter+"'>\
-                  " + key + "</a>\
+                 <a class='target-title' data-toggle='collapse' data-clicked='' id='panel-title' data-target-id='" + data[key][0].target_id + "' data-indicator-id='" + indicator_id + "'  data-parent='#accordion' href='#panel-"+counter+"'>\
+                  <i class='fa ico fa-arrow-right' aria-hidden='true'></i> " + key + "</a>\
                </h4>\
             </div>\
             <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
@@ -203,28 +259,26 @@ if (isset($_GET)) {
             <div class='panel'>\
                <div class='panel-heading'>\
                   <h4 class='panel-title'>\
-                    <a style='text-decoration: underline;' data-toggle='collapse' data-parent='#"+ dataChartObj.indicator_id +"' id='panel-title' href='#panel-" + dataChartObj.id + "'>\
-                    "+ dataChartObj.title +"</a>\
+                    <a style='' class='chart-title' data-toggle='collapse' data-parent='#"+ dataChartObj.indicator_id +"' id='panel-title' href='#panel-" + dataChartObj.id + "'>\
+                    <i class='fa fa-bar-chart' aria-hidden='true'></i> " + dataChartObj.title +"</a>\
                   </h4>\
                </div>\
                <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
-                           <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
-                              <div class='col-md-offset-4 col-md-4'>\
-                                 <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
-                              </div>\
-                              <div class='col-md-4'>\
-                                 <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
-                              </div>\
-                           </div>\
-                        </div>\
+                     <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
+                     <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
                      </div>\
                   </div>\
                </div>\
             </div>\
          ");
          $('.panel-collapse').find("[data-chart-indicator-id='" + dataChartObj.indicator_id + "']").first().addClass('in');
+
+         $('.target-title').first().addClass('active').css('color', sdgColor).find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+
+         $('.chart-title').first().addClass('active').css('color', sdgColor)
+
          prepareAndRenderChart(dataChartObj);
       }
 
@@ -234,7 +288,7 @@ if (isset($_GET)) {
       };
 
       const prepareAndRenderChart = (dataChart) => {
-         console.log(dataChart);
+         // console.log(dataChart);
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
@@ -315,61 +369,32 @@ if (isset($_GET)) {
          // if ratio
          ratioTargetsSplines = []
 
-         var sdgNumberId = <?php echo $_GET['goal'] ?>;
-         var sdgColor;
-         switch (sdgNumberId) {
-              case 1:
-                sdgColor = '#e5233b';
-                break;
-              case 2:
-                sdgColor = '#dda73a';
-                break;
-              case 3:
-                sdgColor = '#4ca146';
-                break;
-              case 4:
-                sdgColor = '#c7212f';
-                break;
-              case 5:
-                sdgColor = '#ef402d';
-                break;
-              case 6:
-                sdgColor = '#27bfe6';
-                break;
-              case 7:
-                sdgColor = '#fbc412';
-                break;
-              case 8:
-                sdgColor = '#a31c44';
-                break;
-              case 9:
-                sdgColor = '#f26a2e';
-                break;
-              case 10:
-                sdgColor = '#de1768';
-                break;
-              case 11:
-                sdgColor = '#f89d2a';
-                break;
-              case 12:
-                sdgColor = '#bf8d2c';
-                break;
-              case 13:
-                sdgColor = '#407f46';
-                break;
-              case 14:
-                sdgColor = '#1f97d4';
-                break;
-              case 15:
-                sdgColor = '#59ba47';
-                break;
-              case 16:
-                sdgColor = '#136a9f';
-                break;
-              case 17:
-                sdgColor = '#14496b';
-                break;
-          }
+         $(".target-title, .chart-title").mouseover(function() {
+            $(this).css('color', sdgColor);
+         }).mouseout(function() {
+            $(this).css('color', '#373a3c');
+            $('.active').css('color', sdgColor);
+         });
+
+         $('.chart-title').on('click', function(){
+            $('.chart-title.active').removeClass('active').css('color', '#373a3c');
+
+            $(this).addClass('active');
+            $('.active').css('color', sdgColor);
+         });
+
+         $('.target-title').on('click', function(){
+            $('.target-title.active').removeClass('active').css('color', '#373a3c');
+            $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
+
+            $(this).addClass('active');
+            $('.active').css('color', sdgColor);
+            $('.target-title.active').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+         });
+
+          $('.fa-arrow-right').css('color', sdgColor);
+
+
          var targetUnitText = targetUnit;
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
@@ -587,7 +612,6 @@ if (isset($_GET)) {
 
          // console.log(series);
 
-
          // Render the chart
          if(targetUnit != 'yes-no') {
                Highcharts.chart('container-'+chartId, {
@@ -789,6 +813,10 @@ if (isset($_GET)) {
 
    .sdg-goal-page {
       overflow-x: hidden;
+   }
+
+   .target-title {
+      font-weight: bold;
    }
 
    .panel-heading {
