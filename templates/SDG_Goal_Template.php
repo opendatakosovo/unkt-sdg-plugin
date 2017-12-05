@@ -373,6 +373,19 @@ if (isset($_GET)) {
          var targetUnitText = targetUnit;
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
+           // Getting the index of baseline column
+           let baselineIndexYear = $.inArray(chartBaseline, years);
+           let lighterSDGColor = shadeColor2(sdgColor, '0.4');
+
+           // Changing the color of baseline column
+           obj[label][baselineIndexYear] = {y: obj[label][baselineIndexYear], color: sdgColor};
+
+           series.push({
+              type: 'column',
+              name: label,
+              data: obj[label],
+              color: lighterSDGColor
+           });
 
             // If ratio
             if(targetUnit == 'ratio') {
@@ -432,20 +445,6 @@ if (isset($_GET)) {
                }
                series.push(ratioTargetSpline);
             }
-
-            // Getting the index of baseline column
-            let baselineIndexYear = $.inArray(chartBaseline, years);
-            let lighterSDGColor = shadeColor2(sdgColor, '0.4');
-
-            // Changing the color of baseline column
-            obj[label][baselineIndexYear] = {y: obj[label][baselineIndexYear], color: sdgColor};
-
-            series.push({
-               type: 'column',
-               name: label,
-               data: obj[label],
-               color: lighterSDGColor
-            });
          });
 
          // Getting the biggest values in years and pushing in target
