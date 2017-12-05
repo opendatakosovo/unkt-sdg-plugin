@@ -340,7 +340,7 @@ if (isset($_GET)) {
                 sdgColor = '#14496b';
                 break;
           }
-
+         var targetUnitText = targetUnit;
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
 
@@ -369,7 +369,11 @@ if (isset($_GET)) {
                let baselineIndexYearRatio = $.inArray(chartBaseline, years);
                let targetIndexYearRatio = years.length;
                let targetValueRatio = Math.round((finalTargetData[baselineIndexYearRatio] * targetRatioFirstVal ) / targetRatioValue);
-               var ratioTargetLinePoints = [[baselineIndexYearRatio, finalTargetData[baselineIndexYearRatio]], [targetIndexYearRatio, targetValueRatio]];
+               let ratioBaselineValue = finalTargetData[baselineIndexYearRatio];
+               if(targetUnit === 'ratio') {
+                 ratioBaselineValue =  finalTargetData[baselineIndexYearRatio];
+               }
+               var ratioTargetLinePoints = [[baselineIndexYearRatio, ratioBaselineValue], [targetIndexYearRatio, targetValueRatio]];
 
                let ratioTargetLine = {
                  name: 'Target',
@@ -377,7 +381,8 @@ if (isset($_GET)) {
                  lineWidth: 4,
                  shadow: false,
                  color: '#000e3e',
-                 data: ratioTargetLinePoints
+                 data: ratioTargetLinePoints,
+                 label: "ratio"
                };
                ratioTargetsSplines.push(ratioTargetLine);
 
@@ -424,12 +429,16 @@ if (isset($_GET)) {
          //Pushing the target value in targetData
          if(targetUnit == 'increasing-decreasing') {
             if(targetValue == 'increasing') {
+              targetUnitText = 'increasing';
                let incValue = {
                   name: 'Increasing',
                   y: targetData[targetData.length-1].y + parseInt(Math.round(targetData[0].y).toFixed(2))
                }
+               targetValue = incValue.y;
                targetData.push(incValue);
+
             } else if (targetValue == 'decreasing') {
+              targetUnitText = 'decreasing';
               var currentDecreasingValue = targetData[targetData.length-1].y - parseInt(Math.round(targetData[0].y).toFixed(2));
               var finalDecreasingValue = currentDecreasingValue < 0 ? 0 : currentDecreasingValue;
 
@@ -437,17 +446,11 @@ if (isset($_GET)) {
                   name: 'Decreasing',
                   y: finalDecreasingValue
                }
+               targetValue = decValue.y;
                targetData.push(decValue);
             }
+
          } else if (targetUnit == 'percentage' && chartUnit == 'number') {
-            // Format the target data to hide other target data tooltip
-            // let dataTargetObjs = [];
-            // targetData.map(targetValue => {
-            //     dataTargetObjs.push({
-            //       name: 'first',
-            //       y: targetValue
-            //    });
-            // });
 
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
@@ -458,15 +461,8 @@ if (isset($_GET)) {
             } else {
                var finalValue = targetNumberPer;
             }
-            // dataTargetObjs.push({
-            //    name: 'Target',
-            //    y: targetNumberPer
-            // });
-
+            targetValue = finalValue;
             targetData.push(finalValue);
-            // dataTargetObjs.map(dataTargetObj => {
-            //    targetData.push(dataTargetObj);
-            // });
 
          } else if (targetUnit == 'percentage' && chartUnit == 'percentage') {
 
@@ -475,13 +471,15 @@ if (isset($_GET)) {
 
             if(targetValue < 0){
                var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
+               targetValue = finalValue;
             } else {
                var finalValue = targetValue;
             }
-
+            targetValue = finalValue;
             targetData.push(finalValue);
 
          } else if (targetUnit == 'comperative') {
+            targetValue = currentTargetVal;
             targetData.push(currentTargetVal);
          }
          else {
@@ -502,7 +500,12 @@ if (isset($_GET)) {
          // Define Target Line Points
          let baselineIndexYear = $.inArray(chartBaseline, years);
          let targetIndexYear = years.length;
-         var targetLinePoints = [[baselineIndexYear, targetData[baselineIndexYear]], [targetIndexYear, targetValue]];
+         var baselineValue = targetData[baselineIndexYear];
+         if(targetUnit == 'increasing-decreasing') {
+           baselineValue =  targetData[baselineIndexYear].y;
+         }
+         // Set target points
+         var targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, targetValue]];
 
          // Making the target line
          if(targetUnit == 'ratio') {
@@ -512,30 +515,30 @@ if (isset($_GET)) {
          } else {
             let targetLine = {
               name: 'Target',
-              dashStyle: 'shortdot',
-              lineWidth: 4,
+              dashStyle: 'dash',
+              lineWidth: 2,
               shadow: false,
               color: '#000e3e',
-              data: targetLinePoints
+              data: targetLinePoints,
+              label: targetUnitText
             };
-            // Pushing the trendSpline and targetLine into series
-            series.push(targetLine);
-
 
             // TODO: trend
-            // let trendSpline = {
-            //    type: 'spline',
-            //    name: 'Target',
-            //    data: targetData,
-            //    lineWidth: 4,
-            //    color: '#000e3e',
-            //    marker: {
-            //       lineWidth: 1,
-            //       lineColor: Highcharts.getOptions().colors[0],
-            //       fillColor: sdgColor
-            //    }
-            // }
+            let trendSpline = {
+               type: 'spline',
+               name: 'Target',
+               data: targetData,
+               lineWidth: 4,
+               color: '#000e3e',
+               marker: {
+                  lineWidth: 1,
+                  lineColor: Highcharts.getOptions().colors[0],
+                  fillColor: sdgColor
+               }
+            }
+            // Pushing the trendSpline and targetLine into series
             // series.push(trendSpline);
+            series.push(targetLine);
          }
 
          // Adding the target year to the years array
@@ -552,27 +555,14 @@ if (isset($_GET)) {
                      color: sdgColor
                   }
                },
-               // plotOptions: {
-               //      series: {
-               //          marker: {
-               //              enabled: false
-               //          },
-               //          states: {
-               //              hover: {
-               //                  enabled: false
-               //              }
-               //          }
-               //      }
-               //  },
                tooltip: {
-                  formatter: function() {
-                     if(this.point.name == 'Increasing' || this.point.name == 'Decreasing') {
-                        return '<b>' + this.series.name + ': ' + this.point.name +'</b>';
+                 formatter: function() {
+                     if(this.point.series.userOptions.label === 'decreasing'  || this.point.series.userOptions.label === 'increasing') {
+                        return '<b> Target: ' + this.point.series.userOptions.label +'</b>';
                      } else if (this.point.name == 'first') {
                         return false;
                      } else {
-                        return '<b>'+ this.x +'</b><br/>' +
-                                    this.series.name +': '+ this.y + maxTargetValueString;
+                        return '<b>'+ this.x +'</b><br/>' + this.series.name +': '+ this.y + maxTargetValueString;
                      }
                   }
                },
