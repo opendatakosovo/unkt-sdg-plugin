@@ -87,10 +87,12 @@ if (isset($_GET)) {
 
          // Adding indicator divs foreach indicator-id
          for(var i = 0; i < data[key].length; i++) {
-            $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; border: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
+            $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
                <p style='border-bottom: 1px solid rgba(0, 0, 0, 0.1); width: 99%; border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: " + data[key][i].indicator_source + "</p>\
+               <div style='margin-top: 20px;' class='panel-group' id='" + data[key][i].indicator_id + "'>\
+               </div>\
             </div>");
          }
          counter++;
@@ -194,11 +196,42 @@ if (isset($_GET)) {
          });
       }
 
+
       const generateChartContainer = (dataChartObj) => {
-         $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
-            <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
-            </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
+         // console.log(dataChartObj);
+
+         // var counter2 = 0;
+         // var openPanel = '';
+         //
+         // if(counter2 == 0){
+         //    openPanel = 'in';
+         // }
+
+         $('.panel-collapse').find("[id='" + dataChartObj.indicator_id + "']").append("\
+            <div class='panel'>\
+               <div class='panel-heading'>\
+                  <h4 class='panel-title'>\
+                    <a data-toggle='collapse' data-parent='#"+ dataChartObj.indicator_id +"' id='panel-title' href='#panel-" + dataChartObj.id + "'>\
+                    "+ dataChartObj.title +"</a>\
+                  </h4>\
+               </div>\
+               <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
+                  <div class='panel-body row'>\
+                     <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
+                     <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>\
+                     </div>\
+                  </div>\
+               </div>\
+            </div>\
+         ");
+
+         $('.panel-collapse').find("[data-chart-indicator-id='" + dataChartObj.indicator_id + "']").first().addClass('in');
          prepareAndRenderChart(dataChartObj);
+
+         // $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
+         //    <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
+         //    </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
+         // prepareAndRenderChart(dataChartObj);
       }
 
       // Get max number from array, need for target values in earlier years
@@ -277,7 +310,6 @@ if (isset($_GET)) {
                  });
                }
               }
-
          });
 
          // if ratio
@@ -721,6 +753,7 @@ if (isset($_GET)) {
 </div>
 
 <style>
+
    .sdg-goal-page {
       overflow-x: hidden;
    }
