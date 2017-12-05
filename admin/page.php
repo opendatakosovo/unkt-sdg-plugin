@@ -133,7 +133,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source</label>
-                                <input name="source-indicator" type="text" class="form-control" id="source-indicator"/>
+                                <textarea name="source-indicator" type="text" class="form-control" id="source-indicator"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="description-indicator">Description</label>
@@ -168,7 +168,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="source-indicator">Source</label>
-                                <input name="source-indicator" type="text" class="form-control" id="edit-source-indicator">
+                                <textarea name="source-indicator" type="text" class="form-control" id="edit-source-indicator"> </textarea>
                             </div>
                             <div class="form-group">
                                 <label for="description-indicator">Description</label>
