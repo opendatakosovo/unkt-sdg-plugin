@@ -215,7 +215,7 @@ if (isset($_GET)) {
                                  <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
                               </div>\
                               <div class='col-md-4'>\
-                                 <i><span style='float: right; font-size: 13px;'>Baseline is: "+ JSONBaseline +"</span></i>\
+                                 <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
                               </div>\
                            </div>\
                         </div>\
