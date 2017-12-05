@@ -385,7 +385,12 @@ if (isset($_GET)) {
          });
 
          $('.target-title').click(function(){
-            $('.target-title.active').removeClass('active').css('color', '#373a3c');
+            $('.target-title').each(function(i, e) {
+               $(e).removeClass('active').css('color', '#373a3c');
+            });
+            // $('.target-title.active').removeClass('active').css('color', '#373a3c');
+
+
             $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
 
             $(this).addClass('active');
