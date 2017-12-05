@@ -199,39 +199,33 @@ if (isset($_GET)) {
 
       const generateChartContainer = (dataChartObj) => {
          // console.log(dataChartObj);
-
-         // var counter2 = 0;
-         // var openPanel = '';
-         //
-         // if(counter2 == 0){
-         //    openPanel = 'in';
-         // }
-
          $('.panel-collapse').find("[id='" + dataChartObj.indicator_id + "']").append("\
             <div class='panel'>\
                <div class='panel-heading'>\
                   <h4 class='panel-title'>\
-                    <a data-toggle='collapse' data-parent='#"+ dataChartObj.indicator_id +"' id='panel-title' href='#panel-" + dataChartObj.id + "'>\
+                    <a style='text-decoration: underline;' data-toggle='collapse' data-parent='#"+ dataChartObj.indicator_id +"' id='panel-title' href='#panel-" + dataChartObj.id + "'>\
                     "+ dataChartObj.title +"</a>\
                   </h4>\
                </div>\
                <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
-                     <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>\
+                           <div style='display: flex; align-items: center;' class='col-md-12'>\
+                              <div class='col-md-offset-4 col-md-4'>\
+                                 <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
+                              </div>\
+                              <div class='col-md-4'>\
+                                 <i><span style='float: right; font-size: 13px;'>Baseline is: "+ JSONBaseline +"</span></i>\
+                              </div>\
+                           </div>\
+                        </div>\
                      </div>\
                   </div>\
                </div>\
             </div>\
          ");
-
          $('.panel-collapse').find("[data-chart-indicator-id='" + dataChartObj.indicator_id + "']").first().addClass('in');
          prepareAndRenderChart(dataChartObj);
-
-         // $('.panel-collapse').find("[data-indicator-id='" + dataChartObj.indicator_id + "']").append("\
-         //    <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'>\
-         //    </div><p style='text-align: center; font-size: 15px; margin-bottom: 0px;'>"+ dataChartObj.label +"</p><br/>");
-         // prepareAndRenderChart(dataChartObj);
       }
 
       // Get max number from array, need for target values in earlier years
@@ -240,12 +234,13 @@ if (isset($_GET)) {
       };
 
       const prepareAndRenderChart = (dataChart) => {
+         // console.log(dataChart);
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
              chartDescription = dataChart.description,
              chartUnit = dataChart.chart_unit,
-             chartBaseline = dataChart.chart_data.baseline ;
+             chartBaseline = dataChart.chart_data.baseline;
              // chartLabel = dataChart.label;
 
          // Target data
@@ -287,39 +282,37 @@ if (isset($_GET)) {
          // For each year we push in created obj the values from same labels in their array
          // Also we take the array of all years to pass in the categories of chart
          Object.keys(chart_data).forEach(year => {
-           if(year !== 'baseline'){
-              years.push(year);
+            if(year !== 'baseline'){
+               years.push(year);
             }
-              // Grouping together values per each same labels for years in order
-              labelArray.map((item, i) => {
-                if(year !== 'baseline'){
-                   chart_data[year].map((element, j) => {
-                      if(chart_data[year][j].label == item){
 
-                         obj[chart_data[year][j].label].push(parseFloat(chart_data[year][j].value));
-                      }
-                   });
-                 }
-              });
-
-              // Grouping together values per each year
-              if(targetUnit != 'ratio') {
-                if(year !== 'baseline'){
-                    chart_data[year].map(columnData => {
-                    targetYearsData[year].push(parseFloat(columnData.value));
-                 });
+            // Grouping together values per each same labels for years in order
+            labelArray.map((item, i) => {
+               if(year !== 'baseline'){
+                  chart_data[year].map((element, j) => {
+                     if(chart_data[year][j].label == item){
+                        obj[chart_data[year][j].label].push(parseFloat(chart_data[year][j].value));
+                     }
+                  });
                }
-              }
+            });
+
+           // Grouping together values per each year
+           if(targetUnit != 'ratio') {
+                  if(year !== 'baseline'){
+                     chart_data[year].map(columnData => {
+                     targetYearsData[year].push(parseFloat(columnData.value));
+                  });
+               }
+            }
          });
 
          // if ratio
          ratioTargetsSplines = []
 
-
-         //TODO
-          var sdgNumberId = <?php echo $_GET['goal'] ?>;
-          var sdgColor;
-          switch (sdgNumberId) {
+         var sdgNumberId = <?php echo $_GET['goal'] ?>;
+         var sdgColor;
+         switch (sdgNumberId) {
               case 1:
                 sdgColor = '#e5233b';
                 break;
@@ -372,6 +365,12 @@ if (isset($_GET)) {
                 sdgColor = '#14496b';
                 break;
           }
+
+
+         function shadeColor2(color, percent) {
+            var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+            return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+         }
 
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
@@ -427,11 +426,19 @@ if (isset($_GET)) {
                //    }
                // }
             }
+
+            // Getting the index of baseline column
+            let baselineIndexYear = $.inArray(chartBaseline, years);
+            let lighterSDGColor = shadeColor2(sdgColor, '0.4');
+
+            // Changing the color of baseline column
+            obj[label][baselineIndexYear] = {y: obj[label][baselineIndexYear], color: sdgColor};
+
             series.push({
                type: 'column',
                name: label,
                data: obj[label],
-               color: sdgColor
+               color: lighterSDGColor
             });
          });
 
@@ -449,7 +456,7 @@ if (isset($_GET)) {
                } else {
                   targetData.push(targetYearsData[year].max());
                }
-             }
+            }
             });
          }
 
@@ -505,7 +512,7 @@ if (isset($_GET)) {
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
 
-            if(targetValue < 0){
+            if(targetValue < 0) {
                var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
             } else {
                var finalValue = targetValue;
@@ -550,6 +557,7 @@ if (isset($_GET)) {
               color: '#000e3e',
               data: targetLinePoints
             };
+
             // Pushing the trendSpline and targetLine into series
             series.push(targetLine);
 
@@ -573,17 +581,19 @@ if (isset($_GET)) {
          // Adding the target year to the years array
          years.push(targetYear);
 
+         // console.log(series);
+
          // Render the chart
          if(targetUnit != 'yes-no') {
                Highcharts.chart('container-'+chartId, {
-               chart: {
-                  backgroundColor: null
-               },
-               legend: {
-                  itemStyle: {
-                     color: sdgColor
-                  }
-               },
+               // chart: {
+               //    backgroundColor: null
+               // },
+               // legend: {
+               //    itemStyle: {
+               //       color: sdgColor
+               //    }
+               // },
                // plotOptions: {
                //      series: {
                //          marker: {
@@ -610,15 +620,15 @@ if (isset($_GET)) {
                },
                title: {
                   text: chartTitle,
-                  style: {
-                     color: sdgColor
-                  }
+               //    style: {
+               //       color: sdgColor
+               //    }
                 },
                subtitle: {
                   text: chartDescription,
-                  style: {
-                     color: sdgColor
-                  }
+                  // style: {
+                  //    color: sdgColor
+                  // }
                 },
                yAxis: {
                    labels: {
