@@ -418,19 +418,21 @@ if (isset($_GET)) {
                };
                ratioTargetsSplines.push(ratioTargetLine);
 
+               let ratioTrendData = ffTargetData.splice(0, ffTargetData.length-1);
                // TODO: trend
-               // let ratioTargetSpline = {
-               //    type: 'spline',
-               //    name: label + ' target',
-               //    data: ffTargetData,
-               //    lineWidth: 4,
-               //    color: '#000e3e',
-               //    marker: {
-               //       lineWidth: 1,
-               //       lineColor: Highcharts.getOptions().colors[0],
-               //       fillColor: sdgColor
-               //    }
-               // }
+               let ratioTargetSpline = {
+                  type: 'spline',
+                  name: 'Trend Line',
+                  data: ratioTrendData,
+                  lineWidth: 1,
+                  color: '#000e3e',
+                  marker: {
+                     lineWidth: 1,
+                     lineColor: Highcharts.getOptions().colors[0],
+                     fillColor: sdgColor
+                  }
+               }
+               series.push(ratioTargetSpline);
             }
             series.push({
                type: 'column',
@@ -555,21 +557,22 @@ if (isset($_GET)) {
               label: targetUnitText
             };
 
-            // TODO: trend
+            let trendData = targetData.splice(0, targetData.length-1);
+
             let trendSpline = {
                type: 'spline',
-               name: 'Target',
-               data: targetData,
-               lineWidth: 4,
+               name: 'Trend Line',
+               data: trendData,
+               lineWidth: 1,
                color: '#000e3e',
                marker: {
                   lineWidth: 1,
                   lineColor: Highcharts.getOptions().colors[0],
                   fillColor: sdgColor
-               }
+               },
             }
             // Pushing the trendSpline and targetLine into series
-            // series.push(trendSpline);
+            series.push(trendSpline);
             series.push(targetLine);
          }
 
@@ -589,6 +592,9 @@ if (isset($_GET)) {
                },
                tooltip: {
                  formatter: function() {
+                   if (this.series.options.type === 'spline') { // the spline chart
+                       return "Trend Line";
+                   } else {
                      if(this.point.series.userOptions.label === 'decreasing'  || this.point.series.userOptions.label === 'increasing') {
                         return '<b> Target: ' + this.point.series.userOptions.label +'</b>';
                      } else if (this.point.name == 'first') {
@@ -596,6 +602,9 @@ if (isset($_GET)) {
                      } else {
                         return '<b>'+ this.x +'</b><br/>' + this.series.name +': '+ this.y + maxTargetValueString;
                      }
+                   }
+
+
                   }
                },
                title: {
