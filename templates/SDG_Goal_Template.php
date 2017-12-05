@@ -210,7 +210,7 @@ if (isset($_GET)) {
                <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
-                           <div style='display: flex; align-items: center;' class='col-md-12'>\
+                           <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
                               <div class='col-md-offset-4 col-md-4'>\
                                  <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
                               </div>\
@@ -234,7 +234,7 @@ if (isset($_GET)) {
       };
 
       const prepareAndRenderChart = (dataChart) => {
-         // console.log(dataChart);
+         console.log(dataChart);
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
@@ -587,12 +587,13 @@ if (isset($_GET)) {
 
          // console.log(series);
 
+
          // Render the chart
          if(targetUnit != 'yes-no') {
                Highcharts.chart('container-'+chartId, {
-               // chart: {
-               //    backgroundColor: null
-               // },
+               chart: {
+                  // backgroundColor: null
+               },
                // legend: {
                //    itemStyle: {
                //       color: sdgColor
@@ -610,6 +611,7 @@ if (isset($_GET)) {
                //          }
                //      }
                //  },
+
                tooltip: {
                  formatter: function() {
                    if (this.series.options.type === 'spline') { // the spline chart
@@ -623,8 +625,6 @@ if (isset($_GET)) {
                         return '<b>'+ this.x +'</b><br/>' + this.series.name +': '+ this.y + maxTargetValueString;
                      }
                    }
-
-
                   }
                },
                title: {
@@ -685,26 +685,30 @@ if (isset($_GET)) {
             });
          } else {
             $('#container-'+chartId).append('<h3 style="display: inline-block; font-size: 18px; text-align: center; margin-bottom: 0px">'+ chartTitle +'</h3>\
-            <p style="margin-bottom: 15px;font-size: 16px; text-align: center">'+ chartDescription +'</p>');
-            $('#container-'+chartId).css('height', '240px').append('<div style="margin-left: 20px;" id="chart-data-boolean"></div>');
+            <p style="margin-bottom: 10px; font-size: 16px; text-align: center">'+ chartDescription +'</p>');
+            $('#container-'+chartId).css('height', '240px').append('<div style="margin-left: 20px; margin-bottom: 10px;" id="chart-data-boolean"></div>');
 
             Object.keys(chart_data).forEach(year => {
-               $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px;margin-right: 20px; height: 170px; border: 4px solid #fff; border-radius: 10px;">\
-                  <h4 style="margin-bottom: 10px">Year: ' + year + '</h4>\
-                  <p style="margin-bottom: 0px; font-size: 15px;">'+ chart_data[year][0].label +'</p>\
-                  <h1 style="text-transform: uppercase;"><b>'+ chart_data[year][0].value +'</b></h1>\
-               ');
+               if(year != 'baseline') {
+                  $('#chart-data-boolean').append('<div style="float: left; text-align: center;padding: 30px; margin-right: 20px; height: 170px; border: 2px solid #eaeaea; border-radius: 5px;">\
+                     <h4 style="margin-bottom: 10px">Year: ' + year + '</h4>\
+                     <p style="margin-bottom: 0px; font-size: 15px;">'+ chart_data[year][0].label +'</p>\
+                     <h1 style="text-transform: uppercase;"><b>'+ chart_data[year][0].value +'</b></h1>\
+                  ');
+               }
             });
 
             // Add target
-            $('#chart-data-boolean').append('<div style="float: left; text-align: center; padding: 30px; margin-right: 20px; height: 170px; border: 8px dotted #fff; border-radius: 10px;">\
+            $('#chart-data-boolean').append('<div style="float: left; text-align: center; padding: 30px; margin-right: 20px; height: 170px; border: 3px dotted #eaeaea; border-radius: 5px;">\
                <h4 style="margin-bottom: 10px">Target Year: ' + targetYear + '</h4>\
                <div class="labels-cont"></div>\
                <h1 style="text-transform: uppercase;"><b>'+ targetValue +'</b></h1>\
             ');
 
             Object.keys(chart_data).forEach(year => {
-               $('.labels-cont').append('<p style="display: inline; font-size: 15px;">' + chart_data[year][0].label +' </p>');
+               if(year != 'baseline') {
+                  $('.labels-cont').append('<p style="display: inline; font-size: 15px;">' + chart_data[year][0].label +' </p>');
+               }
             });
          }
 
