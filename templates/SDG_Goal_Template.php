@@ -370,37 +370,6 @@ if (isset($_GET)) {
          // if ratio
          ratioTargetsSplines = []
 
-         $(".target-title, .chart-title").mouseover(function() {
-            $(this).css('color', sdgColor);
-         }).mouseout(function() {
-            $(this).css('color', '#373a3c');
-            $('.active').css('color', sdgColor);
-         });
-
-         $('.chart-title').click(function(){
-            $('.chart-title.active').removeClass('active').css('color', '#373a3c');
-
-            $(this).addClass('active');
-            $('.active').css('color', sdgColor);
-         });
-
-         $('.target-title').click(function(){
-            $('.target-title').each(function(i, e) {
-               $(e).removeClass('active').css('color', '#373a3c');
-            });
-            // $('.target-title.active').removeClass('active').css('color', '#373a3c');
-
-
-            $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
-
-            $(this).addClass('active');
-            $('.active').css('color', sdgColor);
-            $('.target-title.active').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
-         });
-
-          $('.fa-arrow-right').css('color', sdgColor);
-
-
          var targetUnitText = targetUnit;
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
@@ -750,6 +719,34 @@ if (isset($_GET)) {
                }
             });
          }
+
+         $(".target-title, .chart-title").mouseover(function() {
+            $(this).css('color', sdgColor);
+         }).mouseout(function() {
+            $(this).css('color', '#373a3c');
+            $('.active').css('color', sdgColor);
+         });
+
+         $('.chart-title').click(function(){
+            $('.chart-title.active').removeClass('active').css('color', '#373a3c');
+
+            $(this).addClass('active');
+            $('.active').css('color', sdgColor);
+         });
+
+         $('.target-title').click(function(){
+            $('.target-title').each(function(i, e) {
+               $(e).removeClass('active').css('color', '#373a3c');
+            });
+            // $('.target-title.active').removeClass('active').css('color', '#373a3c');
+            $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
+
+            $(this).addClass('active');
+            $('.active').css('color', sdgColor);
+            $('.target-title.active').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+         });
+
+          $('.fa-arrow-right').css('color', sdgColor);
 
 
          // //yearsTargetData[chartBaseline.toString()] = "xona";
