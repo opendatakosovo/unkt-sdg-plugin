@@ -211,12 +211,12 @@ if (isset($_GET)) {
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
                            <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
-                              <div class='col-md-offset-4 col-md-4'>\
+                              <div class='col-md-12'>\
                                  <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
-                              </div>\
-                              <div class='col-md-4'>\
+                              </div> </div> <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
+                              <div class='col-md-12'>\
                                  <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
-                              </div>\
+                              </div> </div>\
                            </div>\
                         </div>\
                      </div>\
