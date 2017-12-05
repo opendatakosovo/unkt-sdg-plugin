@@ -377,14 +377,14 @@ if (isset($_GET)) {
             $('.active').css('color', sdgColor);
          });
 
-         $('.chart-title').on('click', function(){
+         $('.chart-title').click(function(){
             $('.chart-title.active').removeClass('active').css('color', '#373a3c');
 
             $(this).addClass('active');
             $('.active').css('color', sdgColor);
          });
 
-         $('.target-title').on('click', function(){
+         $('.target-title').click(function(){
             $('.target-title.active').removeClass('active').css('color', '#373a3c');
             $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
 
