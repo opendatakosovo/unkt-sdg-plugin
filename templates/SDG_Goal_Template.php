@@ -407,8 +407,8 @@ if (isset($_GET)) {
 
                let ratioTargetLine = {
                  name: 'Target',
-                 dashStyle: 'shortdot',
-                 lineWidth: 4,
+                 dashStyle: 'dash',
+                 lineWidth: 2,
                  shadow: false,
                  color: '#000e3e',
                  data: ratioTargetLinePoints,
