@@ -373,19 +373,6 @@ if (isset($_GET)) {
          var targetUnitText = targetUnit;
          // Foreach labels in obj create column for series, and push in targetData biggest values
          Object.keys(obj).forEach(label => {
-           // Getting the index of baseline column
-           let baselineIndexYear = $.inArray(chartBaseline, years);
-           let lighterSDGColor = shadeColor2(sdgColor, '0.4');
-
-           // Changing the color of baseline column
-           obj[label][baselineIndexYear] = {y: obj[label][baselineIndexYear], color: sdgColor};
-
-           series.push({
-              type: 'column',
-              name: label,
-              data: obj[label],
-              color: lighterSDGColor
-           });
 
             // If ratio
             if(targetUnit == 'ratio') {
@@ -423,6 +410,7 @@ if (isset($_GET)) {
                  dashStyle: 'dash',
                  lineWidth: 2,
                  shadow: false,
+                 zIndex: 2,
                  color: '#000e3e',
                  data: ratioTargetLinePoints,
                  label: "ratio"
@@ -436,6 +424,7 @@ if (isset($_GET)) {
                   name: 'Trend Line',
                   data: ratioTrendData,
                   lineWidth: 1,
+                  zIndex: 2,
                   color: '#000e3e',
                   marker: {
                      lineWidth: 1,
@@ -443,8 +432,25 @@ if (isset($_GET)) {
                      fillColor: sdgColor
                   }
                }
-               series.push(ratioTargetSpline);
+               if(ratioTrendData.length > 1){
+                 series.push(ratioTargetSpline);
+               }
             }
+
+            // Getting the index of baseline column
+            let baselineIndexYear = $.inArray(chartBaseline, years);
+            let lighterSDGColor = shadeColor2(sdgColor, '0.4');
+
+            // Changing the color of baseline column
+            obj[label][baselineIndexYear] = {y: obj[label][baselineIndexYear], color: sdgColor};
+
+            series.push({
+               type: 'column',
+               name: label,
+               data: obj[label],
+               color: lighterSDGColor,
+               zIndex: 1
+            });
          });
 
          // Getting the biggest values in years and pushing in target
@@ -557,6 +563,7 @@ if (isset($_GET)) {
               dashStyle: 'dash',
               lineWidth: 2,
               shadow: false,
+              zIndex: 2,
               color: '#000e3e',
               data: targetLinePoints,
               label: targetUnitText
@@ -568,6 +575,7 @@ if (isset($_GET)) {
                type: 'spline',
                name: 'Trend Line',
                data: trendData,
+               zIndex: 2,
                lineWidth: 1,
                color: '#000e3e',
                marker: {
@@ -577,7 +585,9 @@ if (isset($_GET)) {
                },
             }
             // Pushing the trendSpline and targetLine into series
-            series.push(trendSpline);
+            if(trendData.length > 1){
+              series.push(trendSpline);
+            }
             series.push(targetLine);
          }
 
