@@ -727,14 +727,14 @@ if (isset($_GET)) {
             $('.active').css('color', sdgColor);
          });
 
-         $('.chart-title').click(function(){
+         $(document).on('click', '.chart-title', function() {
             $('.chart-title.active').removeClass('active').css('color', '#373a3c');
 
             $(this).addClass('active');
             $('.active').css('color', sdgColor);
          });
 
-         $('.target-title').click(function(){
+         $(document).on('click', '.target-title', function() {
             $('.target-title').each(function(i, e) {
                $(e).removeClass('active').css('color', '#373a3c');
             });
