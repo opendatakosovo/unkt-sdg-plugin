@@ -266,8 +266,20 @@ if (isset($_GET)) {
                <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
+<<<<<<< HEAD
                      <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
                      <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
+=======
+                           <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
+                              <div class='col-md-12'>\
+                                 <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
+                              </div> </div> <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
+                              <div class='col-md-12'>\
+                                 <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
+                              </div> </div>\
+                           </div>\
+                        </div>\
+>>>>>>> 8983f703e0233f741525eb4c51cade5ca74edfc0
                      </div>\
                   </div>\
                </div>\
@@ -432,9 +444,10 @@ if (isset($_GET)) {
 
                let ratioTargetLine = {
                  name: 'Target',
-                 dashStyle: 'shortdot',
-                 lineWidth: 4,
+                 dashStyle: 'dash',
+                 lineWidth: 2,
                  shadow: false,
+                 zIndex: 2,
                  color: '#000e3e',
                  data: ratioTargetLinePoints,
                  label: "ratio"
@@ -448,6 +461,7 @@ if (isset($_GET)) {
                   name: 'Trend Line',
                   data: ratioTrendData,
                   lineWidth: 1,
+                  zIndex: 2,
                   color: '#000e3e',
                   marker: {
                      lineWidth: 1,
@@ -455,7 +469,9 @@ if (isset($_GET)) {
                      fillColor: sdgColor
                   }
                }
-               series.push(ratioTargetSpline);
+               if(ratioTrendData.length > 1){
+                 series.push(ratioTargetSpline);
+               }
             }
 
             // Getting the index of baseline column
@@ -469,7 +485,8 @@ if (isset($_GET)) {
                type: 'column',
                name: label,
                data: obj[label],
-               color: lighterSDGColor
+               color: lighterSDGColor,
+               zIndex: 1
             });
          });
 
@@ -583,6 +600,7 @@ if (isset($_GET)) {
               dashStyle: 'dash',
               lineWidth: 2,
               shadow: false,
+              zIndex: 2,
               color: '#000e3e',
               data: targetLinePoints,
               label: targetUnitText
@@ -594,6 +612,7 @@ if (isset($_GET)) {
                type: 'spline',
                name: 'Trend Line',
                data: trendData,
+               zIndex: 2,
                lineWidth: 1,
                color: '#000e3e',
                marker: {
@@ -603,7 +622,9 @@ if (isset($_GET)) {
                },
             }
             // Pushing the trendSpline and targetLine into series
-            series.push(trendSpline);
+            if(trendData.length > 1){
+              series.push(trendSpline);
+            }
             series.push(targetLine);
          }
 
