@@ -266,10 +266,8 @@ if (isset($_GET)) {
                <div id='panel-" + dataChartObj.id + "' data-chart-indicator-id='"+ dataChartObj.indicator_id +"' style='border: none!important' class='panel-collapse collapse chart-panel'>\
                   <div class='panel-body row'>\
                      <div id='container-" + dataChartObj.id + "' style='min-width: 310px; height: 400px; margin: 0 auto' style='margin: 30px 0px' data-chart-id='" + dataChartObj.id + "'></div>\
-<<<<<<< HEAD
                      <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
                      <i><span style='float: right; font-size: 13px;'>Baseline: "+ JSONBaseline +"</span></i>\
-=======
                            <div style='display: flex; align-items: center; margin-top: 10px;' class='col-md-12'>\
                               <div class='col-md-12'>\
                                  <p style='text-align: center; font-size: 15px; margin-bottom: 0px;'><b>"+ dataChartObj.label +"</b></p>\
@@ -279,7 +277,6 @@ if (isset($_GET)) {
                               </div> </div>\
                            </div>\
                         </div>\
->>>>>>> 8983f703e0233f741525eb4c51cade5ca74edfc0
                      </div>\
                   </div>\
                </div>\
