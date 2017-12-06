@@ -720,6 +720,15 @@ if (isset($_GET)) {
             });
          }
 
+         $('.collapse').on('shown.bs.collapse', function(event){
+            event.stopPropagation();
+            // console.log('opened');
+            // $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+         }).on('hidden.bs.collapse', function(){
+            // console.log('closed');
+            // $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+         });
+
          $(".target-title, .chart-title").mouseover(function() {
             $(this).css('color', sdgColor);
          }).mouseout(function() {
@@ -746,7 +755,7 @@ if (isset($_GET)) {
             $('.target-title.active').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
          });
 
-          $('.fa-arrow-right').css('color', sdgColor);
+          // $('.fa-arrow-right').css('color', sdgColor);
 
 
          // //yearsTargetData[chartBaseline.toString()] = "xona";
