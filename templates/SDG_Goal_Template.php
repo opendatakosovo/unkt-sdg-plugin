@@ -635,12 +635,12 @@ if (isset($_GET)) {
                    }
                   }
                },
-               title: {
-                  text: chartTitle,
+               // title: {
+                  // text: chartTitle,
                //    style: {
                //       color: sdgColor
                //    }
-                },
+                // },
                subtitle: {
                   text: chartDescription,
                   // style: {
