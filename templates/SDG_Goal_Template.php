@@ -133,7 +133,7 @@ if (isset($_GET)) {
                   <i class='fa ico fa-arrow-right' aria-hidden='true'></i> " + key + "</a>\
                </h4>\
             </div>\
-            <div id='panel-"+counter+"' class='panel-collapse collapse "+ openPanel +"'>\
+            <div id='panel-" + counter + "' class='panel-collapse collapse "+ openPanel +"'>\
                <div data-target-id='" + data[key][0].target_id + "' class='panel-cont panel-body row'>\
                " + data[key][0].target_description + " <div data-targetId-indicators='" + data[key][0].target_id + "' id='indicators-container' </div>\
                <br/>\
@@ -276,9 +276,9 @@ if (isset($_GET)) {
          ");
          $('.panel-collapse').find("[data-chart-indicator-id='" + dataChartObj.indicator_id + "']").first().addClass('in');
 
-         $('.target-title').first().addClass('active').css('color', sdgColor).find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+         $('.target-title').first().addClass('active-target').css('color', sdgColor).find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
 
-         $('.chart-title').first().addClass('active').css('color', sdgColor)
+         $('.chart-title').first().addClass('active-target').css('color', sdgColor)
 
          prepareAndRenderChart(dataChartObj);
       }
@@ -733,26 +733,30 @@ if (isset($_GET)) {
             $(this).css('color', sdgColor);
          }).mouseout(function() {
             $(this).css('color', '#373a3c');
-            $('.active').css('color', sdgColor);
+            $('.active-target').css('color', sdgColor);
          });
 
          $(document).on('click', '.chart-title', function() {
-            $('.chart-title.active').removeClass('active').css('color', '#373a3c');
+            $('.chart-title.active-target').removeClass('active-target').css('color', '#373a3c');
 
-            $(this).addClass('active');
-            $('.active').css('color', sdgColor);
+            $(this).addClass('active-target');
+            $('.active-target').css('color', sdgColor);
          });
 
-         $(document).on('click', '.target-title', function() {
-            $('.target-title').each(function(i, e) {
-               $(e).removeClass('active').css('color', '#373a3c');
-            });
-            // $('.target-title.active').removeClass('active').css('color', '#373a3c');
-            $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
 
-            $(this).addClass('active');
-            $('.active').css('color', sdgColor);
-            $('.target-title.active').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+         $(document).on('click', '.target-title', function() {
+            setTimeout(() => {
+               $('.target-title').each(function(i, e) {
+                  $(e).removeClass('active-target').css('color', '#373a3c');
+               });
+               $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
+            }, 200)
+
+            setTimeout(() => {
+               $(this).addClass('active-target');
+               $('.active-target').css('color', sdgColor);
+               $('.target-title.active-target').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
+            }, 350);
          });
 
           // $('.fa-arrow-right').css('color', sdgColor);
