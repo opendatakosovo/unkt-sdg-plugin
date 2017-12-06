@@ -61,6 +61,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>SDG ID</th>
                 <th>Target Title</th>
                 <th>SDG</th>
                 <th>Updated date</th>
@@ -981,7 +982,6 @@ window.checkTargetNumber = function(action)  {
 }
 
 var newRowData = <?php echo json_encode($query_targets); ?> ;
-//console.log(newRowData);
 
 var iTableCounter = 1;
 var oTable;
@@ -1576,7 +1576,7 @@ $(document).ready(function () {
 				'targets': 0
 			}],
 			"paging": false,
-			"order": [1, 'asc'],
+			"order": [2, 'asc'],
 			"aoColumns": [{
 				"mDataProp": null,
 				"sClass": "control text-center",
@@ -1584,6 +1584,8 @@ $(document).ready(function () {
 			}, {
 				"mDataProp": "id"
 			}, {
+				"mDataProp": "sdg_id"
+			},{
 				"mDataProp": "title"
 			}, {
 				"mDataProp": "short_name"
@@ -1623,7 +1625,7 @@ $(document).ready(function () {
 				[7, 'desc']
 			],
 			"columnDefs": [{
-				"targets": [1],
+				"targets": [1, 2],
 				className: 'hidden'
 			}],
 		});
