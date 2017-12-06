@@ -146,7 +146,7 @@ if (isset($_GET)) {
             $('.panel-collapse').find("[data-targetId-indicators='" + data[key][i].target_id + "']").append("<div style='margin-bottom: 20px; padding: 10px 0 10px 7px' data-indicator-id='"+ data[key][i].indicator_id +"' >\
                <p style='margin-bottom: 5px; font-size: 18px; font-weight: bold;'>" + data[key][i].indicator_title + "</p>\
                <p style='font-size: 15px;margin-bottom: 0px;'>" + data[key][i].indicator_description + "</p>\
-               <p style='border-bottom: 1px solid rgba(0, 0, 0, 0.1); width: 99%; border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Indicator Source: " + data[key][i].indicator_source + "</p>\
+               <p style='border-bottom: 1px solid rgba(0, 0, 0, 0.1); width: 99%; border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 10px 30px 10px 0px; text-align: left; display: inline-block; font-size: 15px; margin-bottom: 0px; margin-top: 15px;'>Source: " + data[key][i].indicator_source + "</p>\
                <div style='margin-top: 20px;' class='panel-group' id='" + data[key][i].indicator_id + "'>\
                </div>\
             </div>");
@@ -692,8 +692,7 @@ if (isset($_GET)) {
                series: series
             });
          } else {
-            $('#container-'+chartId).append('<h3 style="display: inline-block; font-size: 18px; text-align: center; margin-bottom: 0px">'+ chartTitle +'</h3>\
-            <p style="margin-bottom: 10px; font-size: 16px; text-align: center">'+ chartDescription +'</p>');
+            $('#container-'+chartId).append('<p style="margin-bottom: 10px; font-size: 16px; text-align: center">'+ chartDescription +'</p>');
             $('#container-'+chartId).css('height', '240px').append('<div style="margin-left: 20px; margin-bottom: 10px;" id="chart-data-boolean"></div>');
 
             Object.keys(chart_data).forEach(year => {
