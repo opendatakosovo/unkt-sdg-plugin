@@ -990,8 +990,6 @@ var oInnerInnerTable;
 var detailsTableHtml;
 var chartTableHtml;
 
-
-
 //Run On HTML Build
 $(document).ready(function () {
 	var addChartIndex = 0;
