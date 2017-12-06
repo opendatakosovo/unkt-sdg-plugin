@@ -15,9 +15,6 @@ class Unkt
         }
         return self::$instance;
     }
-
-
-
     /**
      * Initializes WordPress hooks
      */
@@ -29,7 +26,6 @@ class Unkt
             add_action('wp_ajax_update_target', array('Unkt', 'update_target'));
             add_action('wp_ajax_remove_targets_measurements', array('Unkt', 'remove_targets_measurements'));
             add_action('wp_ajax_remove_targets', array('Unkt', 'remove_targets'));
-            add_action('wp_ajax_get_measurement_data', array('Unkt', 'get_measurement_data'));
             add_action('wp_ajax_edit_indicator', array('Unkt', 'edit_indicator')); //edit indicator
             add_action('wp_ajax_load_indicator_selected', array('Unkt', 'load_indicator_selected')); //edit indicator
             add_action('wp_ajax_add_indicator', array('Unkt', 'add_indicator')); //add indicator
@@ -129,7 +125,8 @@ class Unkt
           SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description, wp_targets.sdg_id, wp_targets.updated_date, wp_targets.id, wp_sdg.s_number
           From wp_targets
           INNER JOIN wp_sdg
-          ON  wp_targets.sdg_id=wp_sdg.s_number");
+          ON  wp_targets.sdg_id=wp_sdg.s_number
+          ORDER BY wp_sdg.id ");
         // Include the admin HTML page
         require_once(SDGS__PLUGIN_DIR . 'admin/page.php');
 
@@ -292,18 +289,6 @@ class Unkt
             WHERE id=$id;
         ");
         echo self::get_data();
-        die();
-    }
-
-    public static function get_measurement_data()
-    {
-
-        global $wpdb;
-
-        $targets_id = htmlspecialchars($_POST['targets_id']);
-        $query_targets = $wpdb->get_results("
-        SELECT * From wp_measurement WHERE iid='$targets_id'");
-        echo json_encode($query_targets);
         die();
     }
 
@@ -556,7 +541,8 @@ class Unkt
           SELECT wp_sdg.short_name, wp_targets.title, wp_targets.description, wp_targets.updated_date, wp_targets.sdg_id,wp_targets.id,wp_sdg.s_number
           From wp_targets
           INNER JOIN  wp_sdg
-          ON  wp_targets.sdg_id=wp_sdg.s_number");
+          ON  wp_targets.sdg_id=wp_sdg.s_number
+          ORDER BY wp_sdg.id");
         return json_encode($query_targets);
 
     }
