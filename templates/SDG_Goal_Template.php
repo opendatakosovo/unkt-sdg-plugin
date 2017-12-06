@@ -278,7 +278,7 @@ if (isset($_GET)) {
 
          $('.target-title').first().addClass('active-target').css('color', sdgColor).find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
 
-         $('.chart-title').first().addClass('active-target').css('color', sdgColor)
+         $('.panel-collapse').find("[id='" + dataChartObj.indicator_id + "']").find('.chart-title').first().addClass('active-chart').css('color', sdgColor)
 
          prepareAndRenderChart(dataChartObj);
       }
@@ -359,7 +359,7 @@ if (isset($_GET)) {
 
            // Grouping together values per each year
            if(targetUnit != 'ratio') {
-                  if(year !== 'baseline'){
+                  if(year !== 'baseline') {
                      chart_data[year].map(columnData => {
                      targetYearsData[year].push(parseFloat(columnData.value));
                   });
@@ -719,27 +719,28 @@ if (isset($_GET)) {
             });
          }
 
-         $('.collapse').on('shown.bs.collapse', function(event){
-            event.stopPropagation();
+         // $('.collapse').on('shown.bs.collapse', function(event){
+            // event.stopPropagation();
             // console.log('opened');
             // $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-         }).on('hidden.bs.collapse', function(){
+         // }).on('hidden.bs.collapse', function(){
             // console.log('closed');
             // $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-         });
+         // });
 
          $(".target-title, .chart-title").mouseover(function() {
             $(this).css('color', sdgColor);
          }).mouseout(function() {
             $(this).css('color', '#373a3c');
             $('.active-target').css('color', sdgColor);
+            $('.active-chart').css('color', sdgColor);
          });
 
          $(document).on('click', '.chart-title', function() {
-            $('.chart-title.active-target').removeClass('active-target').css('color', '#373a3c');
+            $('.chart-title.active-chart').removeClass('active-chart').css('color', '#373a3c');
 
-            $(this).addClass('active-target');
-            $('.active-target').css('color', sdgColor);
+            $(this).addClass('active-chart');
+            $('.active-chart').css('color', sdgColor);
          });
 
 
@@ -749,41 +750,15 @@ if (isset($_GET)) {
                   $(e).removeClass('active-target').css('color', '#373a3c');
                });
                $('.target-title').find('.ico').removeClass('fa-arrow-down').addClass('fa-arrow-right');
-            }, 200)
+            }, 400)
 
             setTimeout(() => {
                $(this).addClass('active-target');
                $('.active-target').css('color', sdgColor);
                $('.target-title.active-target').find('.ico').removeClass('fa-arrow-right').addClass('fa-arrow-down');
-            }, 350);
+            }, 410);
          });
 
-          // $('.fa-arrow-right').css('color', sdgColor);
-
-
-         // //yearsTargetData[chartBaseline.toString()] = "xona";
-         // $.map( targetArray, function(value, index){
-         //       if (index < baselineIndex){
-         //           targetArray[index]= 0;
-         //       }else if (index === baselineIndex){
-         //           targetArray[index] = baselineValue;
-         //       }else if (index === countTargetItems){
-         //           targetArray[index] = targetValue;
-         //       }else{
-         //          targetArray[index] = 0;
-         //       }
-         //  });
-         //  generateLinePoints(10, 0, )
-         //  function generateLinePoints(start, end, length){
-         //    var arrayPoints = [];
-         //    for(var i == 1;i<length; i++){
-         //      var devide = i+2;
-         //      arrayPoints.push(start/i+2);
-         //    }
-         //    arrayPoints[0] = start;
-         //    arrayPoints[length-1] = end;
-         //  }
-         //
       }
 
       // Styling the borders of panels
