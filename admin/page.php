@@ -317,7 +317,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label left">Title</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="title-chart" id="title-chart" required/>
+                                    <input type="text" class="form-control" name="title-chart" id="title-chart"/>
                                 </div>
                             </div>
                             <!-- Target Data Panel-->
@@ -659,7 +659,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label left">Title</label>
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control" name="edit-title-chart" id="edit-title-chart" required/>
+                                    <input type="text" class="form-control" name="edit-title-chart" id="edit-title-chart"/>
                                 </div>
                             </div>
                             <!-- Edit Target Data Panel-->
