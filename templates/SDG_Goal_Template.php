@@ -484,6 +484,7 @@ if (isset($_GET)) {
                   y: targetData[targetData.length-1].y + parseInt(Math.round(targetData[0].y).toFixed(2))
                }
                targetValue = incValue.y;
+               targetBaselineArrayValues.push(targetValue);
                targetData.push(incValue);
 
             } else if (targetValue == 'decreasing') {
@@ -496,6 +497,7 @@ if (isset($_GET)) {
                   y: finalDecreasingValue
                }
                targetValue = decValue.y;
+               targetBaselineArrayValues.push(targetValue);
                targetData.push(decValue);
             }
 
@@ -553,9 +555,11 @@ if (isset($_GET)) {
 
          } else if (targetUnit == 'comperative') {
             targetValue = currentTargetVal;
+            targetBaselineArrayValues.push(targetValue);
             targetData.push(currentTargetVal);
          }
          else {
+            targetBaselineArrayValues.push(targetValue);
             targetData.push(targetValue);
          }
 
@@ -632,32 +636,12 @@ if (isset($_GET)) {
          // Adding the target year to the years array
          years.push(targetYear);
 
-         // console.log(series);
-
          // Render the chart
          if(targetUnit != 'yes-no') {
                Highcharts.chart('container-'+chartId, {
                chart: {
                   // backgroundColor: null
                },
-               // legend: {
-               //    itemStyle: {
-               //       color: sdgColor
-               //    }
-               // },
-               // plotOptions: {
-               //      series: {
-               //          marker: {
-               //              enabled: false
-               //          },
-               //          states: {
-               //              hover: {
-               //                  enabled: false
-               //              }
-               //          }
-               //      }
-               //  },
-
                tooltip: {
                  formatter: function() {
                    if (this.series.options.type === 'spline') { // the spline chart
