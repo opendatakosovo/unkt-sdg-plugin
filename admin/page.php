@@ -61,12 +61,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>SDG ID</th>
                 <th>Target Title</th>
                 <th>SDG</th>
                 <th>Updated date</th>
                 <th>Description</th>
                 <th>Actions</th>
+                <th>SDG ID</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -1574,15 +1574,13 @@ $(document).ready(function () {
 				'targets': 0
 			}],
 			"paging": false,
-			"order": [2, 'asc'],
+			"order": [7, 'asc'],
 			"aoColumns": [{
 				"mDataProp": null,
 				"sClass": "control text-center",
 				"sDefaultContent": '<img title="Indicators" src="<?php echo SDGS__PLUGIN_URL . 'img/plus.png' ?>" class="show-sub-table" style="width:20px;"/>'
 			}, {
 				"mDataProp": "id"
-			}, {
-				"mDataProp": "sdg_id"
 			},{
 				"mDataProp": "title"
 			}, {
@@ -1593,6 +1591,8 @@ $(document).ready(function () {
 				"mDataProp": "description"
 			}, {
 				"sDefaultContent": "<a data-toggle='modal' href='#edit-targets-modal' class='edit-modal-targets' id=''><i class='fa fa-pencil-square-o fa-lg edit-targets' aria-hidden='true'></i></a>" + "<a href='#' class='remove-targets'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>"
+			}, {
+				"mDataProp": "sdg_id"
 			}, ],
 			"oLanguage": {
 				"sInfo": "_TOTAL_ entries"
@@ -1623,7 +1623,7 @@ $(document).ready(function () {
 				[7, 'desc']
 			],
 			"columnDefs": [{
-				"targets": [1, 2],
+				"targets": [1,7],
 				className: 'hidden'
 			}],
 		});
