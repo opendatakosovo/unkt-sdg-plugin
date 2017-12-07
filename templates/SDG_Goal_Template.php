@@ -319,6 +319,8 @@ if (isset($_GET)) {
          let targetData = [];
          let obj = {};
          let targetYearsData = {};
+         let targetBaselineArray = [];
+         let targetBaselineArrayValues = [];
 
          // Take only first year and create an array with its labels, and
          // create Object where keys are labels with empty arrays
@@ -418,7 +420,6 @@ if (isset($_GET)) {
                ratioTargetsSplines.push(ratioTargetLine);
 
                let ratioTrendData = ffTargetData.splice(0, ffTargetData.length-1);
-               // TODO: trend
                let ratioTargetSpline = {
                   type: 'spline',
                   name: 'Trend Line',
@@ -465,6 +466,9 @@ if (isset($_GET)) {
                   }
                   targetData.push(incValue);
                } else {
+                  // console.log("targetYearsData[year]", targetYearsData[year]);
+                  // targetData.push(targetYearsData[year].max());
+                  targetBaselineArray = targetYearsData[chartBaseline];
                   targetData.push(targetYearsData[year].max());
                }
             }
@@ -496,6 +500,19 @@ if (isset($_GET)) {
             }
 
          } else if (targetUnit == 'percentage' && chartUnit == 'number') {
+           console.log("targetBaselineArray:", targetBaselineArray);
+           // Go through values in target baseline array and calculate specific target
+            targetBaselineArray.map((item, i) => {
+               var itemVal = parseFloat(item);
+               var finalItemValue;
+               // If negative num
+               if(targetValue < 0){
+                  finalItemValue = itemVal - Math.abs(targetValue / 100 * itemVal.toFixed(2));
+               } else {
+                  finalItemValue = itemVal + (targetValue / 100 * itemVal.toFixed(2));
+               }
+               targetBaselineArrayValues.push(finalItemValue);
+            });
 
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
@@ -510,10 +527,21 @@ if (isset($_GET)) {
             targetData.push(finalValue);
 
          } else if (targetUnit == 'percentage' && chartUnit == 'percentage') {
+            // Go through values in target baseline array and calculate specific target
+            targetBaselineArray.map((item, i) => {
+               var itemVal = parseFloat(item);
+               var finalItemValue;
+               // Calculate percentage of chart data
+               if(targetValue < 0) {
+                  finalItemValue = itemVal - Math.abs(targetValue / 100 * itemVal.toFixed(2));
+               } else {
+                  finalItemValue = targetValue;
+               }
+               targetBaselineArrayValues.push(finalItemValue);
+            });
 
             // Calculate percentage of chart data
             targetNumberPer = targetValue / 100 * targetData[targetData.length-1].toFixed(2);
-
             if(targetValue < 0) {
                var finalValue = targetData[targetData.length-1] - Math.abs(targetNumberPer);
                targetValue = finalValue;
@@ -543,14 +571,14 @@ if (isset($_GET)) {
          }
 
          // Define Target Line Points
-         let baselineIndexYear = $.inArray(chartBaseline, years);
-         let targetIndexYear = years.length;
-         var baselineValue = targetData[baselineIndexYear];
-         if(targetUnit == 'increasing-decreasing') {
-           baselineValue =  targetData[baselineIndexYear].y;
-         }
-         // Set target points
-         var targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, targetValue]];
+         // let baselineIndexYear = $.inArray(chartBaseline, years);
+         // let targetIndexYear = years.length;
+         // var baselineValue = targetData[baselineIndexYear];
+         // if(targetUnit == 'increasing-decreasing') {
+         //   baselineValue =  targetData[baselineIndexYear].y;
+         // }
+         // // Set target points
+         // var targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, targetValue]];
 
          // Making the target line
          if(targetUnit == 'ratio') {
@@ -558,19 +586,8 @@ if (isset($_GET)) {
                series.push(ratioTarget);
             });
          } else {
-            let targetLine = {
-              name: 'Target',
-              dashStyle: 'dash',
-              lineWidth: 2,
-              shadow: false,
-              zIndex: 2,
-              color: '#000e3e',
-              data: targetLinePoints,
-              label: targetUnitText
-            };
-
+           // Trend Line
             let trendData = targetData.splice(0, targetData.length-1);
-
             let trendSpline = {
                type: 'spline',
                name: 'Trend Line',
@@ -588,7 +605,28 @@ if (isset($_GET)) {
             if(trendData.length > 1){
               series.push(trendSpline);
             }
-            series.push(targetLine);
+
+            // Define Target Line Points TODO
+            let baselineIndexYear = $.inArray(chartBaseline, years);
+            let targetIndexYear = years.length;
+            chart_data[chartBaseline].map((item, i) => {
+              let baselineValue = parseFloat(item.value);
+              let baselineTargetValue = targetBaselineArrayValues[i];
+              console.log("chart_data[chartBaseline]", chart_data[chartBaseline],' \n', "baselineTargetValue", targetBaselineArrayValues, targetValue);
+              // Set target points
+              let targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, baselineTargetValue]];
+              var targetLine = {
+                name: 'Target ' + item.label + ' ',
+                dashStyle: 'dash',
+                lineWidth: 2,
+                shadow: false,
+                zIndex: 2,
+                color: '#000e3e',
+                data: targetLinePoints,
+                label: targetUnitText
+              };
+              series.push(targetLine);
+            });
          }
 
          // Adding the target year to the years array
