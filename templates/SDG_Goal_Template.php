@@ -616,10 +616,6 @@ if (isset($_GET)) {
                 color: '#000e3e',
                 data: targetLinePoints,
                 label: targetUnitText
-                // tooltip: {
-                //    headerFormat: '<b>{series.name}</b><br>',
-                //    pointFormat: '{point.name}: {point.y}'
-                //  },
               };
               series.push(targetLine);
             });
