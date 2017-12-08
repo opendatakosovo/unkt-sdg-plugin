@@ -254,7 +254,6 @@ if (isset($_GET)) {
 
 
       const generateChartContainer = (dataChartObj) => {
-         // console.log(dataChartObj);
          $('.panel-collapse').find("[id='" + dataChartObj.indicator_id + "']").append("\
             <div class='panel'>\
                <div class='panel-heading'>\
@@ -289,7 +288,6 @@ if (isset($_GET)) {
       };
 
       const prepareAndRenderChart = (dataChart) => {
-         // console.log(dataChart);
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
@@ -500,7 +498,6 @@ if (isset($_GET)) {
             }
 
          } else if (targetUnit == 'percentage' && chartUnit == 'number') {
-           console.log("targetBaselineArray:", targetBaselineArray);
            // Go through values in target baseline array and calculate specific target
             targetBaselineArray.map((item, i) => {
                var itemVal = parseFloat(item);
@@ -585,10 +582,10 @@ if (isset($_GET)) {
                name: 'Trend Line',
                data: trendData,
                zIndex: 2,
-               lineWidth: 1,
+               lineWidth: 2,
                color: '#000e3e',
                marker: {
-                  lineWidth: 1,
+                  lineWidth: 3,
                   lineColor: Highcharts.getOptions().colors[0],
                   fillColor: sdgColor
                },
@@ -606,9 +603,9 @@ if (isset($_GET)) {
               let baselineTargetValue = targetBaselineArrayValues[i];
 
               // Set target points
-              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYear, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
+              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYear, y:baselineValue, pointStart: 0.5}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue , pointStart: 0.5}];
               var targetLine = {
-                name: "Target Line",
+                name: "Target Line", //+ item.label,
                 dashStyle: 'dash',
                 lineWidth: 2,
                 shadow: false,
@@ -731,15 +728,6 @@ if (isset($_GET)) {
                }
             });
          }
-
-         // $('.collapse').on('shown.bs.collapse', function(event){
-            // event.stopPropagation();
-            // console.log('opened');
-            // $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
-         // }).on('hidden.bs.collapse', function(){
-            // console.log('closed');
-            // $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
-         // });
 
          $(".target-title, .chart-title").mouseover(function() {
             $(this).css('color', sdgColor);
