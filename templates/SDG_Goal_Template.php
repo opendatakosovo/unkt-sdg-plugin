@@ -466,8 +466,6 @@ if (isset($_GET)) {
                   }
                   targetData.push(incValue);
                } else {
-                  // console.log("targetYearsData[year]", targetYearsData[year]);
-                  // targetData.push(targetYearsData[year].max());
                   targetBaselineArray = targetYearsData[chartBaseline];
                   targetData.push(targetYearsData[year].max());
                }
@@ -574,16 +572,6 @@ if (isset($_GET)) {
             maxTargetValueString = '';
          }
 
-         // Define Target Line Points
-         // let baselineIndexYear = $.inArray(chartBaseline, years);
-         // let targetIndexYear = years.length;
-         // var baselineValue = targetData[baselineIndexYear];
-         // if(targetUnit == 'increasing-decreasing') {
-         //   baselineValue =  targetData[baselineIndexYear].y;
-         // }
-         // // Set target points
-         // var targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, targetValue]];
-
          // Making the target line
          if(targetUnit == 'ratio') {
             ratioTargetsSplines.map(ratioTarget => {
@@ -616,11 +604,11 @@ if (isset($_GET)) {
             chart_data[chartBaseline].map((item, i) => {
               let baselineValue = parseFloat(item.value);
               let baselineTargetValue = targetBaselineArrayValues[i];
-              console.log("chart_data[chartBaseline]", chart_data[chartBaseline],' \n', "baselineTargetValue", targetBaselineArrayValues, targetValue);
+
               // Set target points
-              let targetLinePoints = [[baselineIndexYear, baselineValue], [targetIndexYear, baselineTargetValue]];
+              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYear, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
               var targetLine = {
-                name: 'Target ' + item.label + ' ',
+                name: "Target Line",
                 dashStyle: 'dash',
                 lineWidth: 2,
                 shadow: false,
@@ -628,11 +616,14 @@ if (isset($_GET)) {
                 color: '#000e3e',
                 data: targetLinePoints,
                 label: targetUnitText
+                // tooltip: {
+                //    headerFormat: '<b>{series.name}</b><br>',
+                //    pointFormat: '{point.name}: {point.y}'
+                //  },
               };
               series.push(targetLine);
             });
          }
-
          // Adding the target year to the years array
          years.push(targetYear);
 
@@ -645,12 +636,16 @@ if (isset($_GET)) {
                tooltip: {
                  formatter: function() {
                    if (this.series.options.type === 'spline') { // the spline chart
-                       return "Trend Line";
+                       return "<b> Trend Line <b>";
                    } else {
-                     if(this.point.series.userOptions.label === 'decreasing'  || this.point.series.userOptions.label === 'increasing') {
-                        return '<b> Target: ' + this.point.series.userOptions.label +'</b>';
-                     } else if (this.point.name == 'first') {
+                     if(this.point.series.userOptions.label === 'decreasing'){
+                        return '<b> Target: Decreasing</b>';
+                     } if(this.point.series.userOptions.label === 'increasing'){
+                        return '<b> Target: Increasing</b>';
+                     }else if (this.point.name === 'first') {
                         return false;
+                     }else if (this.point.name === 'Actual Value' || this.point.name === 'Target'){
+                        return  '<b>' + this.series.name + '</b><br> ' + this.point.name + ': ' + this.y + maxTargetValueString;
                      } else {
                         return '<b>'+ this.x +'</b><br/>' + this.series.name +': '+ this.y + maxTargetValueString;
                      }
