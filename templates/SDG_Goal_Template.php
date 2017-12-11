@@ -307,8 +307,17 @@ if (isset($_GET)) {
 
          // HANDLING DATA CHARTS //
          // Data Chart
-         let chart_data = dataChart.chart_data;
+         let chart_data_unsorted = dataChart.chart_data;
 
+         var newArr = [];
+          for(let i in chart_data_unsorted){
+            if(i !== 'baseline'){
+              chart_data_unsorted[i] = chart_data_unsorted[i].sort(function(a, b) {
+                return a.value - b.value;
+              });
+            }
+          }
+         let chart_data = chart_data_unsorted;
          // Get first year
          let firstObjectYear = Object.keys(chart_data)[0];
          let series = [];
@@ -403,15 +412,15 @@ if (isset($_GET)) {
                if(targetUnit === 'ratio') {
                  ratioBaselineValue =  finalTargetData[baselineIndexYearRatio];
                }
-               var ratioTargetLinePoints = [[baselineIndexYearRatio, ratioBaselineValue], [targetIndexYearRatio, targetValueRatio]];
+               var ratioTargetLinePoints = [{name:'Actual Value', x: baselineIndexYearRatio, y:ratioBaselineValue}, { name: 'Target',x:targetIndexYearRatio, y:targetValueRatio}];
 
                let ratioTargetLine = {
-                 name: 'Target',
+                 name: 'Target Line',
                  dashStyle: 'dash',
                  lineWidth: 2,
                  shadow: false,
                  zIndex: 2,
-                 color: '#000e3e',
+                 // color: '#000e3e',
                  data: ratioTargetLinePoints,
                  label: "ratio"
                };
@@ -422,7 +431,7 @@ if (isset($_GET)) {
                   type: 'spline',
                   name: 'Trend Line',
                   data: ratioTrendData,
-                  lineWidth: 1,
+                  lineWidth: 2,
                   zIndex: 2,
                   color: '#000e3e',
                   marker: {
@@ -594,23 +603,62 @@ if (isset($_GET)) {
             if(trendData.length > 1){
               series.push(trendSpline);
             }
-
-            // Define Target Line Points TODO
-            let baselineIndexYear = $.inArray(chartBaseline, years);
+            function xToFloat(sign,x,decimal){
+              return parseFloat(sign + x + '.' + decimal);
+            }
+            // Define Target Line Points
+            let baselineIndexYear,index = $.inArray(chartBaseline, years);
             let targetIndexYear = years.length;
+
+            let countBaselineElements = chart_data[chartBaseline].length;
+            let baselineIndexYearArray;
+            switch (countBaselineElements){
+                 case 2:
+                  baselineIndexYearArray = [xToFloat("-",index,15), xToFloat("+",index,15)];
+                  break;
+                 case 3:
+                  baselineIndexYearArray = [xToFloat("-",index,2),index,xToFloat("+",index,2)];
+                  break;
+                 case 4:
+                  baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),xToFloat("-",index,1), xToFloat("+",index,2)];
+                  break;
+                 case 5:
+                  baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),index,xToFloat("-",index,1), xToFloat("+",index,2)];
+                  break;
+                 case 6:
+                  baselineIndexYearArray = [xToFloat("-",index,25), xToFloat("-",index,15), xToFloat("-",index,"05"), xToFloat("+",index,"05"), xToFloat("+",index,"15"), xToFloat("+",index,25)];
+                  break;
+                 case 7:
+                  baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11),xToFloat("+",index,19), xToFloat("+",index,26)];
+                  break;
+                 case 8:
+                  baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11), xToFloat("+",index,19),  xToFloat("+",index,26)];
+                  break;
+                 case 9:
+                  baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,2), xToFloat("-",index,13), xToFloat("-",index,"06"), index, xToFloat("+",index,"06"), xToFloat("+",index,13), xToFloat("+",index,2), xToFloat("+",index,27)];
+                  break;
+                 case 10:
+                  baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,21), xToFloat("-",index,15), xToFloat("-",index,"09"), xToFloat("-",index,"02"), xToFloat("+",index,"03"), xToFloat("+",index,"09"), xToFloat("+",index,15), xToFloat("+",index,21), xToFloat("+",index,27)];
+                  break;
+                 default:
+                  baselineIndexYearArray = [baselineIndexYear];
+            }
             chart_data[chartBaseline].map((item, i) => {
+
               let baselineValue = parseFloat(item.value);
               let baselineTargetValue = targetBaselineArrayValues[i];
 
+              //TODO change to baselineIndexYear with index
+              let baselineIndexYearValue  = baselineIndexYearArray[i];
               // Set target points
-              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYear, y:baselineValue, pointStart: 0.5}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue , pointStart: 0.5}];
+              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYearValue, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
               var targetLine = {
-                name: "Target Line", //+ item.label,
+                name: "Target Line",
                 dashStyle: 'dash',
                 lineWidth: 2,
                 shadow: false,
                 zIndex: 2,
-                color: '#000e3e',
+                // color: '#000e3e',
                 data: targetLinePoints,
                 label: targetUnitText
               };
