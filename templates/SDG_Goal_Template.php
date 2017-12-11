@@ -375,6 +375,44 @@ if (isset($_GET)) {
                }
             }
          });
+         function xToFloat(sign,x,decimal){
+           return parseFloat(sign + x + '.' + decimal);
+         }
+         function getTargetBarPoints(countBaselineElements,index, baselineIndexYear){
+           let baselineIndexYearArray;
+           switch (countBaselineElements){
+                case 2:
+                 baselineIndexYearArray = [xToFloat("-",index,15), xToFloat("+",index,15)];
+                 break;
+                case 3:
+                 baselineIndexYearArray = [xToFloat("-",index,2),index,xToFloat("+",index,2)];
+                 break;
+                case 4:
+                 baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),xToFloat("-",index,1), xToFloat("+",index,2)];
+                 break;
+                case 5:
+                 baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),index,xToFloat("-",index,1), xToFloat("+",index,2)];
+                 break;
+                case 6:
+                 baselineIndexYearArray = [xToFloat("-",index,25), xToFloat("-",index,15), xToFloat("-",index,"05"), xToFloat("+",index,"05"), xToFloat("+",index,"15"), xToFloat("+",index,25)];
+                 break;
+                case 7:
+                 baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,17), xToFloat("-",index,"08"), index, xToFloat("+",index,"08"), xToFloat("+",index,17),xToFloat("+",index,26)];
+                 break;
+                case 8:
+                 baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11), xToFloat("+",index,19),  xToFloat("+",index,26)];
+                 break;
+                case 9:
+                 baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,2), xToFloat("-",index,13), xToFloat("-",index,"06"), index, xToFloat("+",index,"06"), xToFloat("+",index,13), xToFloat("+",index,2), xToFloat("+",index,27)];
+                 break;
+                case 10:
+                 baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,21), xToFloat("-",index,15), xToFloat("-",index,"09"), xToFloat("-",index,"02"), xToFloat("+",index,"03"), xToFloat("+",index,"09"), xToFloat("+",index,15), xToFloat("+",index,21), xToFloat("+",index,27)];
+                 break;
+                default:
+                 baselineIndexYearArray = [baselineIndexYear];
+           }
+           return baselineIndexYearArray;
+         }
 
          // if ratio
          ratioTargetsSplines = []
@@ -603,46 +641,14 @@ if (isset($_GET)) {
             if(trendData.length > 1){
               series.push(trendSpline);
             }
-            function xToFloat(sign,x,decimal){
-              return parseFloat(sign + x + '.' + decimal);
-            }
+
             // Define Target Line Points
             let baselineIndexYear,index = $.inArray(chartBaseline, years);
             let targetIndexYear = years.length;
 
             let countBaselineElements = chart_data[chartBaseline].length;
-            let baselineIndexYearArray;
-            switch (countBaselineElements){
-                 case 2:
-                  baselineIndexYearArray = [xToFloat("-",index,15), xToFloat("+",index,15)];
-                  break;
-                 case 3:
-                  baselineIndexYearArray = [xToFloat("-",index,2),index,xToFloat("+",index,2)];
-                  break;
-                 case 4:
-                  baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),xToFloat("-",index,1), xToFloat("+",index,2)];
-                  break;
-                 case 5:
-                  baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),index,xToFloat("-",index,1), xToFloat("+",index,2)];
-                  break;
-                 case 6:
-                  baselineIndexYearArray = [xToFloat("-",index,25), xToFloat("-",index,15), xToFloat("-",index,"05"), xToFloat("+",index,"05"), xToFloat("+",index,"15"), xToFloat("+",index,25)];
-                  break;
-                 case 7:
-                  baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11),xToFloat("+",index,19), xToFloat("+",index,26)];
-                  break;
-                 case 8:
-                  baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11), xToFloat("+",index,19),  xToFloat("+",index,26)];
-                  break;
-                 case 9:
-                  baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,2), xToFloat("-",index,13), xToFloat("-",index,"06"), index, xToFloat("+",index,"06"), xToFloat("+",index,13), xToFloat("+",index,2), xToFloat("+",index,27)];
-                  break;
-                 case 10:
-                  baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,21), xToFloat("-",index,15), xToFloat("-",index,"09"), xToFloat("-",index,"02"), xToFloat("+",index,"03"), xToFloat("+",index,"09"), xToFloat("+",index,15), xToFloat("+",index,21), xToFloat("+",index,27)];
-                  break;
-                 default:
-                  baselineIndexYearArray = [baselineIndexYear];
-            }
+            var baselineIndexYearArray = getTargetBarPoints(countBaselineElements, index, baselineIndexYear);
+
             chart_data[chartBaseline].map((item, i) => {
 
               let baselineValue = parseFloat(item.value);
