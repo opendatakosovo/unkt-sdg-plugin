@@ -450,6 +450,7 @@ if (isset($_GET)) {
                if(targetUnit === 'ratio') {
                  ratioBaselineValue =  finalTargetData[baselineIndexYearRatio];
                }
+               // TODO here use function getTargetBarPoints(countBaselineElements, index, baselineIndexYear); to generate baselineIndexYearRatio
                var ratioTargetLinePoints = [{name:'Actual Value', x: baselineIndexYearRatio, y:ratioBaselineValue}, { name: 'Target',x:targetIndexYearRatio, y:targetValueRatio}];
 
                let ratioTargetLine = {
@@ -654,7 +655,7 @@ if (isset($_GET)) {
               let baselineValue = parseFloat(item.value);
               let baselineTargetValue = targetBaselineArrayValues[i];
 
-              //TODO change to baselineIndexYear with index
+              //Change to baselineIndexYear with index
               let baselineIndexYearValue  = baselineIndexYearArray[i];
               // Set target points
               let targetLinePoints = [{name:'Actual Value', x: baselineIndexYearValue, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
@@ -908,7 +909,7 @@ if (isset($_GET)) {
    }
 
    .tabs a:hover {
-      color: #000e3e; /*TODO*/
+      color: #000e3e;
    }
 
    .tabs h2 {
