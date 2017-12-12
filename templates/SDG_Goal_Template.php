@@ -254,6 +254,7 @@ if (isset($_GET)) {
 
 
       const generateChartContainer = (dataChartObj) => {
+         // console.log(dataChartObj);
          $('.panel-collapse').find("[id='" + dataChartObj.indicator_id + "']").append("\
             <div class='panel'>\
                <div class='panel-heading'>\
@@ -288,6 +289,7 @@ if (isset($_GET)) {
       };
 
       const prepareAndRenderChart = (dataChart) => {
+         // console.log(dataChart);
          // Main data
          let chartTitle = dataChart.title,
              chartId = dataChart.id,
@@ -307,17 +309,8 @@ if (isset($_GET)) {
 
          // HANDLING DATA CHARTS //
          // Data Chart
-         let chart_data_unsorted = dataChart.chart_data;
+         let chart_data = dataChart.chart_data;
 
-         var newArr = [];
-          for(let i in chart_data_unsorted){
-            if(i !== 'baseline'){
-              chart_data_unsorted[i] = chart_data_unsorted[i].sort(function(a, b) {
-                return a.value - b.value;
-              });
-            }
-          }
-         let chart_data = chart_data_unsorted;
          // Get first year
          let firstObjectYear = Object.keys(chart_data)[0];
          let series = [];
@@ -375,44 +368,6 @@ if (isset($_GET)) {
                }
             }
          });
-         function xToFloat(sign,x,decimal){
-           return parseFloat(sign + x + '.' + decimal);
-         }
-         function getTargetBarPoints(countBaselineElements,index, baselineIndexYear){
-           let baselineIndexYearArray;
-           switch (countBaselineElements){
-                case 2:
-                 baselineIndexYearArray = [xToFloat("-",index,15), xToFloat("+",index,15)];
-                 break;
-                case 3:
-                 baselineIndexYearArray = [xToFloat("-",index,2),index,xToFloat("+",index,2)];
-                 break;
-                case 4:
-                 baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),xToFloat("-",index,1), xToFloat("+",index,2)];
-                 break;
-                case 5:
-                 baselineIndexYearArray = [xToFloat("-",index,2), xToFloat("-",index,1),index,xToFloat("-",index,1), xToFloat("+",index,2)];
-                 break;
-                case 6:
-                 baselineIndexYearArray = [xToFloat("-",index,25), xToFloat("-",index,15), xToFloat("-",index,"05"), xToFloat("+",index,"05"), xToFloat("+",index,"15"), xToFloat("+",index,25)];
-                 break;
-                case 7:
-                 baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,17), xToFloat("-",index,"08"), index, xToFloat("+",index,"08"), xToFloat("+",index,17),xToFloat("+",index,26)];
-                 break;
-                case 8:
-                 baselineIndexYearArray = [xToFloat("-",index,26), xToFloat("-",index,19), xToFloat("-",index,11), xToFloat("-",index,"04"), xToFloat("+",index,"04"), xToFloat("+",index,11), xToFloat("+",index,19),  xToFloat("+",index,26)];
-                 break;
-                case 9:
-                 baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,2), xToFloat("-",index,13), xToFloat("-",index,"06"), index, xToFloat("+",index,"06"), xToFloat("+",index,13), xToFloat("+",index,2), xToFloat("+",index,27)];
-                 break;
-                case 10:
-                 baselineIndexYearArray = [xToFloat("-",index,27), xToFloat("-",index,21), xToFloat("-",index,15), xToFloat("-",index,"09"), xToFloat("-",index,"02"), xToFloat("+",index,"03"), xToFloat("+",index,"09"), xToFloat("+",index,15), xToFloat("+",index,21), xToFloat("+",index,27)];
-                 break;
-                default:
-                 baselineIndexYearArray = [baselineIndexYear];
-           }
-           return baselineIndexYearArray;
-         }
 
          // if ratio
          ratioTargetsSplines = []
@@ -450,16 +405,15 @@ if (isset($_GET)) {
                if(targetUnit === 'ratio') {
                  ratioBaselineValue =  finalTargetData[baselineIndexYearRatio];
                }
-               // TODO here use function getTargetBarPoints(countBaselineElements, index, baselineIndexYear); to generate baselineIndexYearRatio
-               var ratioTargetLinePoints = [{name:'Actual Value', x: baselineIndexYearRatio, y:ratioBaselineValue}, { name: 'Target',x:targetIndexYearRatio, y:targetValueRatio}];
+               var ratioTargetLinePoints = [[baselineIndexYearRatio, ratioBaselineValue], [targetIndexYearRatio, targetValueRatio]];
 
                let ratioTargetLine = {
-                 name: 'Target Line',
+                 name: 'Target',
                  dashStyle: 'dash',
                  lineWidth: 2,
                  shadow: false,
                  zIndex: 2,
-                 // color: '#000e3e',
+                 color: '#000e3e',
                  data: ratioTargetLinePoints,
                  label: "ratio"
                };
@@ -470,7 +424,7 @@ if (isset($_GET)) {
                   type: 'spline',
                   name: 'Trend Line',
                   data: ratioTrendData,
-                  lineWidth: 2,
+                  lineWidth: 1,
                   zIndex: 2,
                   color: '#000e3e',
                   marker: {
@@ -546,6 +500,7 @@ if (isset($_GET)) {
             }
 
          } else if (targetUnit == 'percentage' && chartUnit == 'number') {
+           console.log("targetBaselineArray:", targetBaselineArray);
            // Go through values in target baseline array and calculate specific target
             targetBaselineArray.map((item, i) => {
                var itemVal = parseFloat(item);
@@ -630,10 +585,10 @@ if (isset($_GET)) {
                name: 'Trend Line',
                data: trendData,
                zIndex: 2,
-               lineWidth: 2,
+               lineWidth: 1,
                color: '#000e3e',
                marker: {
-                  lineWidth: 3,
+                  lineWidth: 1,
                   lineColor: Highcharts.getOptions().colors[0],
                   fillColor: sdgColor
                },
@@ -643,29 +598,22 @@ if (isset($_GET)) {
               series.push(trendSpline);
             }
 
-            // Define Target Line Points
-            let baselineIndexYear,index = $.inArray(chartBaseline, years);
+            // Define Target Line Points TODO
+            let baselineIndexYear = $.inArray(chartBaseline, years);
             let targetIndexYear = years.length;
-
-            let countBaselineElements = chart_data[chartBaseline].length;
-            var baselineIndexYearArray = getTargetBarPoints(countBaselineElements, index, baselineIndexYear);
-
             chart_data[chartBaseline].map((item, i) => {
-
               let baselineValue = parseFloat(item.value);
               let baselineTargetValue = targetBaselineArrayValues[i];
 
-              //Change to baselineIndexYear with index
-              let baselineIndexYearValue  = baselineIndexYearArray[i];
               // Set target points
-              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYearValue, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
+              let targetLinePoints = [{name:'Actual Value', x: baselineIndexYear, y:baselineValue}, { name: 'Target',x:targetIndexYear, y:baselineTargetValue}];
               var targetLine = {
                 name: "Target Line",
                 dashStyle: 'dash',
                 lineWidth: 2,
                 shadow: false,
                 zIndex: 2,
-                // color: '#000e3e',
+                color: '#000e3e',
                 data: targetLinePoints,
                 label: targetUnitText
               };
@@ -783,6 +731,15 @@ if (isset($_GET)) {
                }
             });
          }
+
+         // $('.collapse').on('shown.bs.collapse', function(event){
+            // event.stopPropagation();
+            // console.log('opened');
+            // $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+         // }).on('hidden.bs.collapse', function(){
+            // console.log('closed');
+            // $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+         // });
 
          $(".target-title, .chart-title").mouseover(function() {
             $(this).css('color', sdgColor);
@@ -909,7 +866,7 @@ if (isset($_GET)) {
    }
 
    .tabs a:hover {
-      color: #000e3e;
+      color: #000e3e; /*TODO*/
    }
 
    .tabs h2 {
