@@ -798,16 +798,16 @@ if (isset($_GET)) {
 <div class="sdg-goal-page" style="padding-top: 0px !important;">
   <div class="sdg-goal-page sdg-description-part sdg-goal-page-<?php echo $_GET['goal'] ?>">
    <!-- SDG information -->
-   <div class="col-md-11 col-sm-12 col-xs-12">
-      <div class="sdg-title">
-      </div>
-   </div>
+   <!-- <div class="col-md-11 col-sm-12 col-xs-12"> -->
+      <!-- <div class="sdg-title"> -->
+      <!-- </div> -->
+   <!-- </div> -->
 
    <div class="col-md-4 col-xs-11">
       <img class="single-goal-image img-responsive" alt="Sustainable Developement Goals" src="<?php echo SDGS__PLUGIN_URL . 'img/E_SDG_Icons-' . $_GET['goal'] . '.jpg' ?>"/>
    </div>
 
-   <div class="col-md-8 col-md-offset-0 col-xs-11 col-xs-offset-1 sdg-description">
+   <div class="col-md-8 col-md-offset-0 col-xs-11 col-xs-offset-1 sdg-title">
    </div>
  </div>
    <!-- Indicators -->

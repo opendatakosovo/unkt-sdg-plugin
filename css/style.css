@@ -117,7 +117,7 @@
 }
 
 .sdg-title {
-    color: white !important;
+    color: white!important;
     font-family: Roboto;
     font-weight: 500;
     font-size: 31pt;
@@ -125,6 +125,7 @@
     line-height: 40px;
     margin-left: 55px;
     margin-bottom: 20px;
+    margin-top: 40px;
     text-transform: none;
 }
 
